@@ -1,7 +1,7 @@
 GIMPTOOL = /usr/bin/gimptool-2.0
 
 %: %.c
-	CFLAGS=$(CFLAGS) $(GIMPTOOL) --build $<
+	CFLAGS="$(CFLAGS)" $(GIMPTOOL) --build $<
 
 build: $(PLUGIN)
 

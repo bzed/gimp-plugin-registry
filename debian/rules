@@ -24,7 +24,7 @@ build-stamp:
 	dh_testdir
 
 	for plugin in $(PLUGINS); do \
-	    $(MAKE) -C $$plugin CFLAGS="$(CFLAGS)" build ;\
+	    $(MAKE) -C $$plugin CFLAGS="$(CFLAGS)" build  || exit 1 ;\
 	done
 
 	touch $@
@@ -50,7 +50,7 @@ install: build
 		$(MAKE) -C $$plugin DESTDIR=$(CURDIR)/debian/gimp-plugin-registry \
                                     PLUGINBINDIR=/usr/lib/gimp/2.0/plug-ins  \
 	                            PLUGINSCRIPTDIR=/usr/share/gimp/2.0/scripts \
-                                    install ;\
+                                    install || exit 1 ;\
 	done
 
 
