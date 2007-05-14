@@ -1,0 +1,110 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+CFLAGS = -Wall -g
+ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+	CFLAGS += -O0
+else
+	CFLAGS += -O2
+endif
+
+
+
+PLUGINS = $(shell find . -mindepth 2 -maxdepth 2 -name Makefile | \
+                  sed 's,^\./,,g;s,/.*,,g;' | \
+                  sort)
+
+
+build: build-stamp
+
+build-stamp:
+	dh_testdir
+
+	for plugin in $(PLUGINS); do \
+	    $(MAKE) -C $$plugin CFLAGS="$(CFLAGS)" build ;\
+	done
+
+	touch $@
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp configure-stamp
+
+	-for plugin in $(PLUGINS); do \
+	    $(MAKE) -C $$plugin clean ;\
+	done
+
+	dh_clean 
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k 
+	dh_installdirs
+
+	for plugin in $(PLUGINS); do \
+		$(MAKE) -C $$plugin DESTDIR=$(CURDIR)/debian/gimp-plugin-registry \
+                                    PLUGINDIR=/usr/lib/gimp/2.0/plug-ins  \
+                                    install ;\
+	done
+
+
+# Build architecture-independent files here.
+binary-indep: build install
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs 
+	dh_installdocs
+	dh_link
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install configure \
+        update-copyright print-description watch
+
+update-copyright:
+	( cat debian/copyright.in ;\
+	  for plugin in $(PLUGINS); do \
+	      echo; echo ;\
+	      echo '************************************************************' ;\
+	      echo "$$plugin:" ;\
+	      echo ;\
+	      echo "The plugin was downloaded from:" ;\
+	      cat $$plugin/url ;\
+	      echo;
+	      cat $$plugin/copyright ;\
+	  done ;\
+	) > debian/copyright
+
+print-description:
+	for plugin in $(PLUGINS); do \
+	    cat $$plugin/description ;\
+	done
+
+update-url-md5:
+	for plugin in $(PLUGINS); do \
+	    wget -q -O - `cat $$plugin/url` | md5sum | awk '{print $$1}' > $$plugin/url.md5sum ;\
+	done
+
+watch:
+	for plugin in $(PLUGINS); do \
+	    url=`cat $$plugin/url` ;\
+	    if ! [ `wget -q -O - $$url | md5sum | awk '{print $$1}'` = `cat $$plugin/url.md5sum` ]; then \
+	        echo "$$plugin changed! $$url" ;\
+	    fi ;\
+	done
