@@ -1,0 +1,5 @@
+CFLAGS += "-O2 -DG_DISABLE_ASSERT -DFBLUR_PREVIEW=1 -DENABLE_NLS"
+PLUGIN = fblur
+
+include ../common.mk
+

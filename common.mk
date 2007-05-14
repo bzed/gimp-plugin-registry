@@ -1,6 +1,14 @@
 GIMPTOOL = /usr/bin/gimptool-2.0
-GIMPTOOL_CFLAGS = $(shell $(GIMPTOOL) --cflags)
-GIMPTOOL_LDFLAGS = $(shell $(GIMPTOOL) --libs)
 
-%: %.c:
-	gcc $(GIMPTOOL_CFLAGS) $(CFLAGS) -o $@ $< $(GIMPTOOL_LDFLAGS) $(LDFLAGS)
+%: %.c
+	CFLAGS=$(CFLAGS) $(GIMPTOOL) --build $<
+
+build: $(PLUGIN)
+
+install:
+	install -m 755 $(PLUGIN) $(DESTDIR)$(PLUGINBINDIR)
+
+clean:
+	rm -f $(PLUGIN)
+
+.PHONY: install clean

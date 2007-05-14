@@ -48,7 +48,8 @@ install: build
 
 	for plugin in $(PLUGINS); do \
 		$(MAKE) -C $$plugin DESTDIR=$(CURDIR)/debian/gimp-plugin-registry \
-                                    PLUGINDIR=/usr/lib/gimp/2.0/plug-ins  \
+                                    PLUGINBINDIR=/usr/lib/gimp/2.0/plug-ins  \
+	                            PLUGINSCRIPTDIR=/usr/share/gimp/2.0/scripts \
                                     install ;\
 	done
 
@@ -86,7 +87,7 @@ update-copyright:
 	      echo ;\
 	      echo "The plugin was downloaded from:" ;\
 	      cat $$plugin/url ;\
-	      echo;
+	      echo ;\
 	      cat $$plugin/copyright ;\
 	  done ;\
 	) > debian/copyright

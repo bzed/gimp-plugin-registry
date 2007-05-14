@@ -2,13 +2,24 @@ Source: gimp-plugin-registry
 Section: graphics
 Priority: optional
 Maintainer: Bernd Zeimetz <bernd@bzed.de>
-Build-Depends: debhelper (>= 5)
+Build-Depends: debhelper (>= 5), libgimp2.0-dev
 Standards-Version: 3.7.2
 
 Package: gimp-plugin-registry
 Architecture: any
 Depends: gimp (>= 2.2.0), ${shlibs:Depends}, ${misc:Depends}
 Description: A repository of optional extensions for The GIMP
- The package contains:
+ The package contains the following plugins:
  .
-   * 
+ * Black and White Film Simulation:
+   Converts the selected layer into Black and White using
+   the channel mixer. Tries to produce results resembling
+   tonal qualities of film.
+ * Fix-CA:
+   Correct chromatic aberration in photos
+ * Focus-Blur:
+   This plugin tries to simulate an out-of-focus blur
+ * Periodic Screenshot Saver:
+   This script tries to save the Images of screen at
+   periodic intervals, in file names like file1.png,
+   file2.png etc.
