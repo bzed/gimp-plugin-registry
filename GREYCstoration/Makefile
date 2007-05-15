@@ -1,17 +1,20 @@
 
 PLUGIN = greycstoration4gimp
 
-build: $(PLUGIN)
-	g++ -o $(PLUGIN) $(PLUGIN).cpp \
-            $(CFLAGS) \
-            `/usr/bin/gimptool-2.0 --cflags` \
-            `/usr/bin/gimptool-2.0 --libs` \
-            -lpthread
+GT_CFLAGS = $(shell /usr/bin/gimptool-2.0 --cflags)
+GT_LDFLAGS = $(shell /usr/bin/gimptool-2.0 --libs)
+
+
+build: build-stamp
+
+build-stamp:
+	g++ -o $(PLUGIN) $(PLUGIN).cpp -I/usr/include/CImg $(CFLAGS) $(GT_CFLAGS) $(GT_LDFLAGS) -lpthread
+	touch build-stamp
 
 install:
 	install -m 755 $(PLUGIN) $(DESTDIR)$(PLUGINBINDIR)
 
 clean:
-	rm -f $(PLUGIN)
+	rm -f $(PLUGIN) build-stamp
 
-.PHONY: install clean
+.PHONY: install clean build
