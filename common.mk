@@ -5,7 +5,7 @@ GIMPTOOL = /usr/bin/gimptool-2.0
 
 build: $(PLUGIN)
 
-install:
+install: $(PLUGIN)
 	install -m 755 $(PLUGIN) $(DESTDIR)$(PLUGINBINDIR)
 
 clean:
