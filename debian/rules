@@ -11,8 +11,6 @@ else
 	CFLAGS += -O2
 endif
 
-
-
 PLUGINS = $(shell find . -mindepth 2 -maxdepth 2 -name Makefile | \
                   sed 's,^\./,,g;s,/.*,,g;' | \
                   sort)
@@ -20,7 +18,7 @@ PLUGINS = $(shell find . -mindepth 2 -maxdepth 2 -name Makefile | \
 
 build: build-stamp
 
-build-stamp:
+build-stamp: 
 	dh_testdir
 
 	for plugin in $(PLUGINS); do \
@@ -29,7 +27,7 @@ build-stamp:
 
 	touch $@
 
-clean:
+clean: 
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp configure-stamp
@@ -76,7 +74,7 @@ binary-arch: build install
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure \
-        update-copyright print-description watch
+        update-copyright update-description update-url-md5 watch
 
 update-copyright:
 	( cat debian/copyright.in ;\
@@ -92,10 +90,12 @@ update-copyright:
 	  done ;\
 	) > debian/copyright
 
-print-description:
-	for plugin in $(PLUGINS); do \
+update-description:
+	( cat debian/control.in ;\
+	  for plugin in $(PLUGINS); do \
 	    cat $$plugin/description ;\
-	done
+	  done ;\
+	) > debian/control
 
 update-url-md5:
 	for plugin in $(PLUGINS); do \
