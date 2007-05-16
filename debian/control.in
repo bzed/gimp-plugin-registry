@@ -1,0 +1,13 @@
+Source: gimp-plugin-registry
+Section: graphics
+Priority: optional
+Maintainer: Bernd Zeimetz <bernd@bzed.de>
+Build-Depends: debhelper (>= 5), libgimp2.0-dev, cimg-dev
+Standards-Version: 3.7.2
+
+Package: gimp-plugin-registry
+Architecture: any
+Depends: gimp (>= 2.2.0), ${shlibs:Depends}, ${misc:Depends}
+Description: A repository of optional extensions for The GIMP
+ The package contains the following plugins:
+ .
