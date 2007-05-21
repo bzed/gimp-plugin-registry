@@ -2,7 +2,7 @@ Source: gimp-plugin-registry
 Section: graphics
 Priority: optional
 Maintainer: Bernd Zeimetz <bernd@bzed.de>
-Build-Depends: debhelper (>= 5), libgimp2.0-dev, cimg-dev
+Build-Depends: debhelper (>= 5), libgimp2.0-dev, cimg-dev, libcv-dev
 Standards-Version: 3.7.2
 
 Package: gimp-plugin-registry
@@ -15,6 +15,8 @@ Description: A repository of optional extensions for The GIMP
      Converts the selected layer into Black and White using
      the channel mixer. Tries to produce results resembling
      tonal qualities of film.
+   * Dustcleaner:
+     Plugin to detect and remove dust spots in digital images
    * Fix-CA:
      Corrects chromatic aberration in photos
    * Focus-Blur:

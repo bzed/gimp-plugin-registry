@@ -49,6 +49,9 @@ install: build
                                     PLUGINBINDIR=/usr/lib/gimp/2.0/plug-ins  \
 	                            PLUGINSCRIPTDIR=/usr/share/gimp/2.0/scripts \
                                     install || exit 1 ;\
+	        if [ -r $$plugin/README ]; then \
+	            dh_install $$plugin/README usr/share/doc/gimp-plugin-registry/$$plugin ;\
+	        fi ;\
 	done
 
 
@@ -74,7 +77,12 @@ binary-arch: build install
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure \
-        update-copyright update-description update-url-md5 watch
+        update-all update-copyright update-description update-url-md5 watch
+
+update-all:
+	debian/rules update-url-md5
+	debian/rules update-description
+	debian/rules update-copyright
 
 update-copyright:
 	( cat debian/copyright.in ;\
