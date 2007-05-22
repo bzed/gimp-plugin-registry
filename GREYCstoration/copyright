@@ -1,16 +1,6 @@
-   Copyright:
-
-    Grzegorz Szwoch (GIMP plugin code)
-    David Tschumperle (GREYCstoration API) - http://www.greyc.ensicaen.fr/~dtschump/
-
-    Plug-in version: 1.1
-    Version history:
-    1.1 (2007.03.31)
-        - Added support for GimpZoomPreview (optional)
-        - Make plug-in work for 1 bpp images
-        - Added button to reset parameters to the initial state
-    1.0 (2007.03.09)
-        - Initial release
+  Grzegorz Szwoch (GIMP plugin code)
+  David Tschumperle (GREYCstoration API)
+                             - http://www.greyc.ensicaen.fr/~dtschump/
 
   This software is governed by the CeCILL  license under French law and
   abiding by the rules of distribution of free software.  You can  use,

@@ -573,7 +573,7 @@ The plugin was downloaded from:
 http://registry.gimp.org/plugin?id=8668
 
  Copyright (c) 2006, 2007 Kriang Lerdsuwanakij
- email:          lerdsuwa@users.sourceforge.net
+                          <lerdsuwa@users.sourceforge.net>
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -598,9 +598,6 @@ http://registry.gimp.org/plugin?id=4123
 
  Copyright (C) 2002-2006 Kyoichiro Suda
 
- The GIMP -- an image manipulation program
- Copyright (C) 1995 Spencer Kimball and Peter Mattis
-
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation; either version 2 of the License, or
@@ -622,19 +619,9 @@ GREYCstoration:
 The plugin was downloaded from:
 http://cimg.cvs.sourceforge.net/*checkout*/cimg/CImg/examples/greycstoration4gimp.cpp
 
-   Copyright:
-
-    Grzegorz Szwoch (GIMP plugin code)
-    David Tschumperle (GREYCstoration API) - http://www.greyc.ensicaen.fr/~dtschump/
-
-    Plug-in version: 1.1
-    Version history:
-    1.1 (2007.03.31)
-        - Added support for GimpZoomPreview (optional)
-        - Make plug-in work for 1 bpp images
-        - Added button to reset parameters to the initial state
-    1.0 (2007.03.09)
-        - Initial release
+  Grzegorz Szwoch (GIMP plugin code)
+  David Tschumperle (GREYCstoration API)
+                             - http://www.greyc.ensicaen.fr/~dtschump/
 
   This software is governed by the CeCILL  license under French law and
   abiding by the rules of distribution of free software.  You can  use,
