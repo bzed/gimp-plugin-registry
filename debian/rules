@@ -125,7 +125,7 @@ watch:
 build-tgz:
 	set -e ;\
 	version=$$(dpkg-parsechangelog  | grep '^Version' | sed 's,.* ,,g;s,-.*,,g') ;\
-	exp_dir="gimp-plugin-repository_$$version.orig" ;\
+	exp_dir="gimp-plugin-registry_$$version.orig" ;\
 	svn export . ../build-area/$$exp_dir ;\
 	cd ../build-area ;\
 	rm -rf $$exp_dir/debian ;\
