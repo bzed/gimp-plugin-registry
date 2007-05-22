@@ -9,3 +9,5 @@ The plug-in takes a film (multilayer image), cuts a slice of
 selectable width and position out of each layer and puts the
 slices together to the streak image.
 
+Please see http://www.macgeisler.de/gimp/the_gimp.html#streak
+for an example on how to use streak.

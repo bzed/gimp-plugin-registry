@@ -11,10 +11,6 @@ Depends: gimp (>= 2.2.0), ${shlibs:Depends}, ${misc:Depends}
 Description: A repository of optional extensions for The GIMP
  The package contains the following plugins:
  .
-   * Black and White Film Simulation:
-     Converts the selected layer into Black and White using
-     the channel mixer. Tries to produce results resembling
-     tonal qualities of film.
    * Dustcleaner:
      Plugin to detect and remove dust spots in digital images
    * Fix-CA:
@@ -26,3 +22,9 @@ Description: A repository of optional extensions for The GIMP
    * Planet Render:
      Creates a planet. Color, size and sun orientation
      can be set.
+   * Streak-Camera simulation:
+     A streak camera images an object through a slit -
+     thus getting a "one dimensional image". This image is
+     propagated along the second dimension of the image plane
+     at a constant speed. The result is a picture of the time
+     dependency of the object.
