@@ -77,7 +77,11 @@ binary-arch: build install
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure \
-        update-all update-copyright update-description update-url-md5 watch
+        update-all update-copyright update-description update-url-md5 watch build-tgz
+
+
+#### the following stuff is not needed to build the package,
+#### it's only for lazy maintainers.
 
 update-all:
 	debian/rules update-url-md5
@@ -117,3 +121,13 @@ watch:
 	        echo "$$plugin changed! $$url" ;\
 	    fi ;\
 	done
+
+build-tgz:
+	set -e ;\
+	version=$$(dpkg-parsechangelog  | grep '^Version' | sed 's,.* ,,g;s,-.*,,g') ;\
+	exp_dir="gimp-plugin-repository_$$version.orig" ;\
+	svn export . ../build-area/$$exp_dir ;\
+	cd ../build-area ;\
+	rm -rf $$exp_dir/debian ;\
+	tar cf - $$exp_dir | gzip -9 > $$exp_dir.tar.gz ;\
+	mv $$exp_dir.tar.gz ../tarballs ;\
