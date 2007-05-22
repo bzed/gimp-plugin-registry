@@ -131,3 +131,4 @@ build-tgz:
 	rm -rf $$exp_dir/debian ;\
 	tar cf - $$exp_dir | gzip -9 > $$exp_dir.tar.gz ;\
 	mv $$exp_dir.tar.gz ../tarballs ;\
+	rm -rf $$exp_dir
