@@ -1,3 +1,12 @@
+gimp-plugin-registry (0.1-2) unstable; urgency=low
+
+  * debian/control:
+      - Adding better version info to the cimg-dev/libcv-dev
+        Build-Dep. to make backporters' life more easy.
+        (Closes: #427251)
+
+ -- Bernd Zeimetz <bernd@bzed.de>  Sat, 02 Jun 2007 20:38:16 +0200
+
 gimp-plugin-registry (0.1-1) unstable; urgency=low
 
   * Initial Release (Closes: #422392)
