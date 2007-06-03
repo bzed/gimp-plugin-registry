@@ -1,9 +1,9 @@
 
 
-OC_LIBS=$(shell pkg-config --libs opencv)
-OC_INC=$(shell pkg-config --cflags opencv)
-GIMP_LIBS=$(shell gimptool-2.0 --libs)
-GIMP_INC=$(shell gimptool-2.0 --cflags)
+OC_LIBS = `pkg-config --libs opencv`
+OC_INC = `pkg-config --cflags opencv`
+GIMP_LIBS = `gimptool-2.0 --libs`
+GIMP_INC = `gimptool-2.0 --cflags`
 
 build: build-stamp
 build-stamp:

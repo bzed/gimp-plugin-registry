@@ -11,6 +11,10 @@ Depends: gimp (>= 2.2.0), ${shlibs:Depends}, ${misc:Depends}
 Description: A repository of optional extensions for The GIMP
  The package contains the following plugins:
  .
+   * DBP:
+     David's Batch Processor is a simple batch processing plugin
+     for The Gimp - it allows the user to automatically perform
+     operations (such as resize) on a collection of image files.
    * Dustcleaner:
      Plugin to detect and remove dust spots in digital images
    * Fix-CA:

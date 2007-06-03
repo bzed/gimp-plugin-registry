@@ -1,8 +1,8 @@
 
 PLUGIN = greycstoration4gimp
 
-GT_CFLAGS = $(shell /usr/bin/gimptool-2.0 --cflags)
-GT_LDFLAGS = $(shell /usr/bin/gimptool-2.0 --libs)
+GT_CFLAGS = `/usr/bin/gimptool-2.0 --cflags`
+GT_LDFLAGS = `/usr/bin/gimptool-2.0 --libs`
 
 
 build: build-stamp

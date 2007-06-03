@@ -48,6 +48,7 @@ install: build
 		$(MAKE) -C $$plugin DESTDIR=$(CURDIR)/debian/gimp-plugin-registry \
                                     PLUGINBINDIR=/usr/lib/gimp/2.0/plug-ins  \
 	                            PLUGINSCRIPTDIR=/usr/share/gimp/2.0/scripts \
+				    DOCDIR=/usr/share/doc/gimp-plugin-registry/$$plugin \
                                     install || exit 1 ;\
 	        if [ -r $$plugin/README ]; then \
 	            dh_install $$plugin/README usr/share/doc/gimp-plugin-registry/$$plugin ;\
