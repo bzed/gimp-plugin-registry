@@ -1,7 +1,7 @@
 
 build: build-stamp
 build-stamp:
-	make -C src CPPFLAGS=$(CFLAGS) dbp
+	make -C src CPPFLAGS="$(CFLAGS)" dbp
 	touch build-stamp
 
 clean:
