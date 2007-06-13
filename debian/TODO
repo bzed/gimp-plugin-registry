@@ -1,6 +1,7 @@
 TODO list of plugins I want to add to this package:
 
 * Plugins which work with Gimp 2.3 only:
-  http://registry.gimp.org/plugin?id=8799 (Save for web)
+  - http://registry.gimp.org/plugin?id=8799 (Save for web)
+  - http://cue.yellowmagic.info/softwares/separate.html (Separate+)
 
 -- Bernd Zeimetz <bernd@bzed.de>  Tue, 15 May 2007 02:36:31 +0200
