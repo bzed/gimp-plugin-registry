@@ -1,3 +1,3 @@
-SCRIPT = BW-Film-Simulation-1.1-2.3fix.scm
+SCRIPT = BW-Film-Simulation-1.1.scm
 
 include ../common-script.mk
