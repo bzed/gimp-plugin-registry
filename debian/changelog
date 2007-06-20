@@ -10,6 +10,9 @@ gimp-plugin-registry (0.2-1) unstable; urgency=low
   * DBP:
       - adding a new plugin for batch-processing of images,
         thanks to Aurore D. for the suggestion
+  * bw-simulation:
+      - adding a new plugin for simulating tonal qualities of
+        several b/w films
 
  -- Bernd Zeimetz <bernd@bzed.de>  Sat, 02 Jun 2007 20:38:16 +0200
 
