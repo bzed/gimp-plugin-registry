@@ -615,6 +615,27 @@ http://registry.gimp.org/plugin?id=9349
 
 
 ************************************************************
+extended-borders:
+
+The plugin was downloaded from:
+http://registry.gimp.org/plugin?id=4923
+
+ extended-border.scm - Gimp script to add configurable borders
+ Copyright (C) 2004  Stig E Sandø
+
+ Based on photo-border.scm, (C) 2004  Pavel Antokolsky
+
+ THIS SOFTWARE IS IN THE PUBLIC DOMAIN.
+
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose and without fee is hereby granted, without any
+ conditions or restrictions.
+
+ THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT EXPRESS OR IMPLIED WARRANTY.
+
+
+
+************************************************************
 fix-ca:
 
 The plugin was downloaded from:
@@ -697,6 +718,47 @@ http://cimg.cvs.sourceforge.net/*checkout*/cimg/CImg/examples/greycstoration4gim
   The fact that you are presently reading this means that you have had
   knowledge of the CeCILL license and that you accept its terms.
 
+
+
+************************************************************
+layer-effects:
+
+The plugin was downloaded from:
+http://registry.gimp.org/plugin?id=6988
+
+ The GIMP -- an image manipulation program©
+ Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ 
+ A set of layer effects script  for GIMP 1.2
+ Copyright (C) 2001 Iccii <iccii@hotmail.com>
+ 
+ --------------------------------------------------------------------
+ version 0.1  by Iccii 2001/08/06
+ version 0.2  by Iccii 2001/08/07
+ version 0.3  by Iccii 2001/08/09
+ version 0.4  by Iccii 2001/08/10
+ version 0.5  by Iccii 2001/08/14
+ version 0.5a by Iccii 2003/05/29
+ version 0.6 corrections made by Michael Hoelzen <MichaelHoelzen@aol.com>
+ Version 0.6a changes made by eddy_verlinden@hotmail.com
+---------------------------------------------------------------------
+ Version 2.0
+ Identical to version 06b but now declared stable
+---------------------------------------------------------------------
+ 
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.  
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 
 ************************************************************

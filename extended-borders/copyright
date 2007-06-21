@@ -1,0 +1,13 @@
+ extended-border.scm - Gimp script to add configurable borders
+ Copyright (C) 2004  Stig E Sandø
+
+ Based on photo-border.scm, (C) 2004  Pavel Antokolsky
+
+ THIS SOFTWARE IS IN THE PUBLIC DOMAIN.
+
+ Permission to use, copy, modify, and distribute this software and its
+ documentation for any purpose and without fee is hereby granted, without any
+ conditions or restrictions.
+
+ THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT EXPRESS OR IMPLIED WARRANTY.
+

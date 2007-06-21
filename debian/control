@@ -21,12 +21,22 @@ Description: A repository of optional extensions for The GIMP
      operations (such as resize) on a collection of image files.
    * Dustcleaner:
      Plugin to detect and remove dust spots in digital images
+   * Extended Borders:
+     This script allows you to add double borders, add copyright
+     notice and title, as well as decide fonts, font-sizes and
+     positions of the title and copyright notice. Support for
+     blurring the copyright and title is also included.
    * Fix-CA:
      Corrects chromatic aberration in photos
    * Focus-Blur:
      This plugin tries to simulate an out-of-focus blur
    * GREYCstoration:
      A tool to denoise, inpaint and resize images
+   * layer-effects:
+     This script implements the following effects:
+     add border, bevel and emboss, color overlay, drop shadow,
+     gradient overlay, inner glow, inner shadow, outer glow,
+     pattern overlay, satin.
    * Planet Render:
      Creates a planet. Color, size and sun orientation
      can be set.
