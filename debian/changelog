@@ -4,17 +4,15 @@ gimp-plugin-registry (0.2-1) unstable; urgency=low
       - Adding better version info to the cimg-dev/libcv-dev
         Build-Dep. to make backporters' life more easy.
         (Closes: #427251)
+  * new plugins/scripts:
+      - DBP
+      - bw-simulation
+      - extended-borders
   * planet-render:
       - Install the right plugin version, depending on the
         installed Gimp version, thanks to Aurore D.
-  * DBP:
-      - adding a new plugin for batch-processing of images,
-        thanks to Aurore D. for the suggestion
-  * bw-simulation:
-      - adding a new plugin for simulating tonal qualities of
-        several b/w films
 
- -- Bernd Zeimetz <bernd@bzed.de>  Sat, 02 Jun 2007 20:38:16 +0200
+ -- Bernd Zeimetz <bernd@bzed.de>  Wed, 27 Jun 2007 23:55:21 +0200
 
 gimp-plugin-registry (0.1-1) unstable; urgency=low
 

@@ -110,7 +110,7 @@ update-description:
 	  done ;\
 	) > debian/control
 
-update-url-md5:
+update-url-md5: watch
 	for plugin in $(PLUGINS); do \
 	    wget -q -O - `cat $$plugin/url` | md5sum | awk '{print $$1}' > $$plugin/url.md5sum ;\
 	done
