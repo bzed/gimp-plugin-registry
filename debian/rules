@@ -15,6 +15,7 @@ PLUGINS = $(shell find . -mindepth 2 -maxdepth 2 -name Makefile | \
                   sed 's,^\./,,g;s,/.*,,g;' | \
                   sort)
 
+GIMPVER=$(shell dpkg -s libgimp2.0-dev | grep Version | awk '{print $$2}')
 
 build: build-stamp
 
@@ -22,7 +23,7 @@ build-stamp:
 	dh_testdir
 
 	for plugin in $(PLUGINS); do \
-	    $(MAKE) -C $$plugin CFLAGS="$(CFLAGS)" build  || exit 1 ;\
+	    $(MAKE) -C $$plugin CFLAGS="$(CFLAGS)" GIMPVER="$(GIMPVER)" build  || exit 1 ;\
 	done
 
 	touch $@
@@ -33,7 +34,7 @@ clean:
 	rm -f build-stamp configure-stamp
 
 	-for plugin in $(PLUGINS); do \
-	    $(MAKE) -C $$plugin clean ;\
+	    $(MAKE) -C $$plugin GIMPVER="$(GIMPVER)" clean ;\
 	done
 
 	dh_clean 
@@ -49,6 +50,7 @@ install: build
                                     PLUGINBINDIR=/usr/lib/gimp/2.0/plug-ins  \
 	                            PLUGINSCRIPTDIR=/usr/share/gimp/2.0/scripts \
 				    DOCDIR=/usr/share/doc/gimp-plugin-registry/$$plugin \
+	                            GIMPVER="$(GIMPVER)" \
                                     install || exit 1 ;\
 	        if [ -r $$plugin/README ]; then \
 	            dh_install $$plugin/README usr/share/doc/gimp-plugin-registry/$$plugin ;\
