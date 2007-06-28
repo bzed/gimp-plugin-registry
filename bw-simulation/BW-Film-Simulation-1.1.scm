@@ -19,6 +19,8 @@
 ; 		- added saturation option
 ;		- Gimp 2.3.15+ support
 ;
+; Version 1.1.1 Various fixes by Ari Pollak - thanks!
+;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
 ; the Free Software Foundation; either version 2 of the License, or
@@ -35,157 +37,155 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  
 (define (create-new-layer img drawable) 
-   (let* (layer drawable)) 
-   (set! layer (car (gimp-layer-copy drawable TRUE)))
-   (gimp-image-add-layer img layer -1)
-   layer)
+  (let ((layer drawable)) 
+	(set! layer (car (gimp-layer-copy drawable TRUE)))
+	(gimp-image-add-layer img layer -1)
+	layer))
 
       
 (define (script-fu-bw-film  img drawable film filter rename new-layer increase-local-contrast auto-levels drop-gamma saturate )
-    
-	(gimp-image-undo-group-start img) ; Start an undo group.  
-    
-	(let* 
-		((bw-layer img)
-		 (chan-name ""))
-	
-    
-    (if (equal? new-layer TRUE) 
-        (set! bw-layer (create-new-layer img drawable))
-    	(set! bw-layer drawable)
-    )
+	(let 
+	  ((bw-layer nil)
+	   (chan-name ""))
 
-;   (if (equal? auto-levels TRUE) (gimp-levels-stretch bw-layer) ())
- 
-   (if (equal? saturate TRUE) 
-    	(plug-in-colors-channel-mixer 1 img bw-layer FALSE 1.3 -0.15 -0.15 -0.15 1.3 -0.15 -0.15 -0.15 1.3)
-        ())
-           
-   (if (equal? drop-gamma TRUE) (gimp-levels bw-layer 0 0 255 0.9 0 255) ())    
+	  (gimp-image-undo-group-start img) ; Start an undo group.  
 
-   
-      
-    (cond
+
+
+	  (if (equal? new-layer TRUE) 
+		(set! bw-layer (create-new-layer img drawable))
+		(set! bw-layer drawable)
+		)
+
+	  ;   (if (equal? auto-levels TRUE) (gimp-levels-stretch bw-layer) ())
+
+	  (if (equal? saturate TRUE) 
+		(plug-in-colors-channel-mixer 1 img bw-layer FALSE 1.3 -0.15 -0.15 -0.15 1.3 -0.15 -0.15 -0.15 1.3)
+		())
+
+	  (if (equal? drop-gamma TRUE) (gimp-levels bw-layer 0 0 255 0.9 0 255) ())    
+
+
+
+	  (cond
 		; Yellow Filter	
-    	((= filter 1)
-            (gimp-hue-saturation bw-layer 0 -5 0 33)    	
-    		(set! chan-name (string-append chan-name " Yellow Filter")))	
-    	; Orange Filter	
-    	((= filter 2)
-            (gimp-hue-saturation bw-layer 0 -20 0 25)    	
-    		(set! chan-name (string-append chan-name " Orange Filter")))	
+		((= filter 1)
+		 (gimp-hue-saturation bw-layer 0 -5 0 33)    	
+		 (set! chan-name (string-append chan-name " Yellow Filter")))	
+		; Orange Filter	
+		((= filter 2)
+		 (gimp-hue-saturation bw-layer 0 -20 0 25)    	
+		 (set! chan-name (string-append chan-name " Orange Filter")))	
 		; Red Filter	
-    	((= filter 3)
-            (gimp-hue-saturation bw-layer 0 -41 0 25)    	
-    		(set! chan-name (string-append chan-name " Red Filter")))	
+		((= filter 3)
+		 (gimp-hue-saturation bw-layer 0 -41 0 25)    	
+		 (set! chan-name (string-append chan-name " Red Filter")))	
 		; Green Filter
-    	((= filter 4)
-            (gimp-hue-saturation bw-layer 0 90 0 33)    	
-    	    (set! chan-name (string-append chan-name " Green Filter")))	
+		((= filter 4)
+		 (gimp-hue-saturation bw-layer 0 90 0 33)    	
+		 (set! chan-name (string-append chan-name " Green Filter")))	
 		; Blue Filter
-    	((= filter 5)
-            (gimp-hue-saturation bw-layer 0 -145 0 25)    	
-    	    (set! chan-name (string-append chan-name " Blue Filter")))	
-      )
-
-            
-   (cond
-; Agfa 200X
-    	((= film 0)
-    		(set! chan-name (string-append chan-name " Agfa 200X"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.18 0.41 0.41 0.18 0.41 0.41 0.18 0.41 0.41 ))
-; Agfapan 25
-    	((= film 1)  
-    		(set! chan-name (string-append chan-name " Agfapan 25"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.25 0.39 0.36 0.25 0.39 0.36 0.25 0.39 0.36 ))
-; Agfapan 100
-    	((= film 2)  
-    	    (set! chan-name (string-append chan-name " Agfapan 100"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.21 0.40 0.39 0.21 0.40 0.39 0.21 0.40 0.39 ))
-; Agfapan 400
-    	((= film 3)  
-    	    (set! chan-name (string-append chan-name " Agfapan 400"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.20 0.41 0.39 0.20 0.41 0.39 0.20 0.41 0.39 ))
-; Ilford Delta 100
-    	((= film 4)  
-    	    (set! chan-name (string-append chan-name " Ilford Delta 100"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.21 0.42 0.37 0.21 0.42 0.37 0.21 0.42 0.37 ))
-; Ilford Delta 400
-    	((= film 5)  
-    	    (set! chan-name (string-append chan-name " Ilford Delta 400"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.22 0.42 0.36 0.22 0.42 0.36 0.22 0.42 0.36 ))
-; Ilford Delta 400 Pro & 3200
-    	((= film 6)  
-    	    (set! chan-name (string-append chan-name " Ilford Delta 400 Pro & 3200"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.31 0.36 0.33 0.31 0.36 0.33 0.31 0.36 0.33 ))
-; Ilford FP4
-    	((= film 7)  
-    	    (set! chan-name (string-append chan-name " Ilford FP4"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.28 0.41 0.31 0.28 0.41 0.31 0.28 0.41 0.31 ))
-; Ilford HP5
-    	((= film 8)  
-    	    (set! chan-name (string-append chan-name " Ilford HP5"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.23 0.37 0.40 0.23 0.37 0.40 0.23 0.37 0.40 ))
-; Ilford Pan F
-    	((= film 9)  
-    	    (set! chan-name (string-append chan-name " Ilford Pan F"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.33 0.36 0.31 0.33 0.36 0.31 0.33 0.36 0.31 ))
-; Ilford SFX
-    	((= film 10)  
-    	    (set! chan-name (string-append chan-name " Ilford SFX"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.36 0.31 0.33 0.36 0.31 0.33 0.36 0.31 0.33 ))
-; Ilford XP2 Super
-    	((= film 11)  
-    	    (set! chan-name (string-append chan-name " Ilford XP2 Super"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.21 0.42 0.37 0.21 0.42 0.37 0.21 0.42 0.37 ))
-; Kodak Tmax 100
-    	((= film 12)  
-    	    (set! chan-name (string-append chan-name " Kodak Tmax 100"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.24 0.37 0.39 0.24 0.37 0.39 0.24 0.37 0.39 ))
-; Kodak Tmax 400
-    	((= film 13)  
-    	    (set! chan-name (string-append chan-name " Kodak Tmax 400"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.27 0.36 0.37 0.27 0.36 0.37 0.27 0.36 0.37 ))
-; Kodak Tri-X
-    	((= film 14)  
-    	    (set! chan-name (string-append chan-name " Kodak Tri-X"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.25 0.35 0.40 0.25 0.35 0.40 0.25 0.35 0.40 ))
-; Kodak HIE
-    	((= film 15)  
-    	    (set! chan-name (string-append chan-name " Kodak HIE"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 1.0 1.0 -1.0 0.0 1.0 1.0 -1.0 0.0 1.0 1.0 -1.0 0.0 ))
-; Normal Contrast
-    	((= film 16)  
-    	    (set! chan-name (string-append chan-name " Normal Contrast"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.43 0.33 0.30 0.43 0.33 0.30 0.43 0.33 0.30 ))
-; High Contrast
-    	((= film 17)  
-    	    (set! chan-name (string-append chan-name " High Contrast"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.40 0.34 0.60 0.40 0.34 0.60 0.40 0.34 0.60 ))
-; Generic BW
-    	((= film 18)  
-    	    (set! chan-name (string-append chan-name " Generic BW"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.24 0.68 0.08 0.24 0.68 0.08 0.24 0.68 0.08 ))
-; 50-50
-    	((= film 19)  
-    	    (set! chan-name (string-append chan-name " 50-50"))
-    		(plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.5 0.5 0.00 0.0 0.5 0.5 0.00 0.0 0.5 0.5 0.00 0.0 ))
-)    
+		((= filter 5)
+		 (gimp-hue-saturation bw-layer 0 -145 0 25)    	
+		 (set! chan-name (string-append chan-name " Blue Filter")))	
+		)
 
 
-    (if (equal? rename TRUE)  (gimp-drawable-set-name bw-layer chan-name) () )
-    
-    (if (equal? increase-local-contrast TRUE) (plug-in-unsharp-mask 1 img bw-layer 30.0 0.25 9) ())
+	  (cond
+		; Agfa 200X
+		((= film 0)
+		 (set! chan-name (string-append chan-name " Agfa 200X"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.18 0.41 0.41 0.18 0.41 0.41 0.18 0.41 0.41 ))
+		; Agfapan 25
+		((= film 1)  
+		 (set! chan-name (string-append chan-name " Agfapan 25"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.25 0.39 0.36 0.25 0.39 0.36 0.25 0.39 0.36 ))
+		; Agfapan 100
+		((= film 2)  
+		 (set! chan-name (string-append chan-name " Agfapan 100"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.21 0.40 0.39 0.21 0.40 0.39 0.21 0.40 0.39 ))
+		; Agfapan 400
+		((= film 3)  
+		 (set! chan-name (string-append chan-name " Agfapan 400"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.20 0.41 0.39 0.20 0.41 0.39 0.20 0.41 0.39 ))
+		; Ilford Delta 100
+		((= film 4)  
+		 (set! chan-name (string-append chan-name " Ilford Delta 100"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.21 0.42 0.37 0.21 0.42 0.37 0.21 0.42 0.37 ))
+		; Ilford Delta 400
+		((= film 5)  
+		 (set! chan-name (string-append chan-name " Ilford Delta 400"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.22 0.42 0.36 0.22 0.42 0.36 0.22 0.42 0.36 ))
+		; Ilford Delta 400 Pro & 3200
+		((= film 6)  
+		 (set! chan-name (string-append chan-name " Ilford Delta 400 Pro & 3200"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.31 0.36 0.33 0.31 0.36 0.33 0.31 0.36 0.33 ))
+		; Ilford FP4
+		((= film 7)  
+		 (set! chan-name (string-append chan-name " Ilford FP4"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.28 0.41 0.31 0.28 0.41 0.31 0.28 0.41 0.31 ))
+		; Ilford HP5
+		((= film 8)  
+		 (set! chan-name (string-append chan-name " Ilford HP5"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.23 0.37 0.40 0.23 0.37 0.40 0.23 0.37 0.40 ))
+		; Ilford Pan F
+		((= film 9)  
+		 (set! chan-name (string-append chan-name " Ilford Pan F"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.33 0.36 0.31 0.33 0.36 0.31 0.33 0.36 0.31 ))
+		; Ilford SFX
+		((= film 10)  
+		 (set! chan-name (string-append chan-name " Ilford SFX"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.36 0.31 0.33 0.36 0.31 0.33 0.36 0.31 0.33 ))
+		; Ilford XP2 Super
+		((= film 11)  
+		 (set! chan-name (string-append chan-name " Ilford XP2 Super"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.21 0.42 0.37 0.21 0.42 0.37 0.21 0.42 0.37 ))
+		; Kodak Tmax 100
+		((= film 12)  
+		 (set! chan-name (string-append chan-name " Kodak Tmax 100"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.24 0.37 0.39 0.24 0.37 0.39 0.24 0.37 0.39 ))
+		; Kodak Tmax 400
+		((= film 13)  
+		 (set! chan-name (string-append chan-name " Kodak Tmax 400"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.27 0.36 0.37 0.27 0.36 0.37 0.27 0.36 0.37 ))
+		; Kodak Tri-X
+		((= film 14)  
+		 (set! chan-name (string-append chan-name " Kodak Tri-X"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.25 0.35 0.40 0.25 0.35 0.40 0.25 0.35 0.40 ))
+		; Kodak HIE
+		((= film 15)  
+		 (set! chan-name (string-append chan-name " Kodak HIE"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 1.0 1.0 -1.0 0.0 1.0 1.0 -1.0 0.0 1.0 1.0 -1.0 0.0 ))
+		; Normal Contrast
+		((= film 16)  
+		 (set! chan-name (string-append chan-name " Normal Contrast"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.43 0.33 0.30 0.43 0.33 0.30 0.43 0.33 0.30 ))
+		; High Contrast
+		((= film 17)  
+		 (set! chan-name (string-append chan-name " High Contrast"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.40 0.34 0.60 0.40 0.34 0.60 0.40 0.34 0.60 ))
+		; Generic BW
+		((= film 18)  
+		 (set! chan-name (string-append chan-name " Generic BW"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.24 0.68 0.08 0.24 0.68 0.08 0.24 0.68 0.08 ))
+		; 50-50
+		((= film 19)  
+		 (set! chan-name (string-append chan-name " 50-50"))
+		 (plug-in-colors-channel-mixer 1 img bw-layer TRUE 0.5 0.5 0.00 0.0 0.5 0.5 0.00 0.0 0.5 0.5 0.00 0.0 ))
+		)    
 
-    ; Complete the undo group
- 
-    (gimp-image-undo-group-end img)
- )
-    ; Flush the display 
-  
-   (gimp-displays-flush)  
- 
-)
+
+	  (if (equal? rename TRUE)  (gimp-drawable-set-name bw-layer chan-name) () )
+
+	  (if (equal? increase-local-contrast TRUE) (plug-in-unsharp-mask 1 img bw-layer 30.0 0.25 9) ())
+
+	  ; Complete the undo group
+
+	  (gimp-image-undo-group-end img)
+	
+	; Flush the display 
+
+	(gimp-displays-flush)))
  
  
 (script-fu-register 
