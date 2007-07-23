@@ -1,3 +1,14 @@
+TOONEWGIMP=$(shell dpkg --compare-versions $(GIMPVER) '<' 2.3.18 || echo 1)
+
+ifeq "$(TOONEWGIMP)" "1"
+#do nothing, this plugin does not work here
+build:
+
+clean:
+
+install:
+
+else
 
 build: build-stamp
 build-stamp:
@@ -16,5 +27,7 @@ install:
 	install -m 755 src/dbp $(DESTDIR)$(PLUGINBINDIR)
 	mkdir -p $(DESTDIR)$(DOCDIR)
 	install -m 644 src/dbp.html src/dbp-main.png src/dbp-fileSelector.png $(DESTDIR)$(DOCDIR)
+
+endif
 
 .PHONY: clean
