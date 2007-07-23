@@ -3,9 +3,10 @@ gimp-plugin-registry (0.2-2) unstable; urgency=low
   * fix-ca:
       - new upstream version
   * GREYCstoration:
-      - new upstream version from cvs
+      - new upstream version, adding the full source as the cimg-dev package
+        is still to old to build the plugin.
 
- -- Bernd Zeimetz <bernd@bzed.de>  Mon, 23 Jul 2007 21:00:53 +0200
+ -- Bernd Zeimetz <bernd@bzed.de>  Mon, 23 Jul 2007 21:36:19 +0200
 
 gimp-plugin-registry (0.2-1) unstable; urgency=low
 

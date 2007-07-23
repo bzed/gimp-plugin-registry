@@ -1,5 +1,7 @@
   Grzegorz Szwoch (GIMP plugin code)
-  David Tschumperle (GREYCstoration API)
+  David Tschumperle (GREYCstoration API,
+                     The C++ Template Image Processing Library)
+
                              - http://www.greyc.ensicaen.fr/~dtschump/
 
   This software is governed by the CeCILL  license under French law and
