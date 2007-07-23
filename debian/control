@@ -19,7 +19,8 @@ Description: A repository of optional extensions for The GIMP
      David's Batch Processor is a simple batch processing plugin
      for The Gimp - it allows the user to automatically perform
      operations (such as resize) on a collection of image files.
-     Not yet included if the package was built for gimp 2.3.
+     Not yet included if the package was built for gimp 2.3.18
+     or later.
    * Dustcleaner:
      Plugin to detect and remove dust spots in digital images
    * Extended Borders:
