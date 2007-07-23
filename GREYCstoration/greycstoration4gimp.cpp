@@ -10,13 +10,13 @@
 
     "Fast Anisotropic Smoothing of Multi-Valued Images
     using Curvature-Preserving PDE's"
-    (D. Tschumperlé)
+    (D. Tschumperle)
     International Journal of Computer Vision, May 2006.
     (see also http://www.greyc.ensicaen.fr/~dtschump/greycstoration)
 
     "Vector-Valued Image Regularization with PDE's : A Common Framework
     for Different Applications"
-    (D. Tschumperlé, R. Deriche).
+    (D. Tschumperle, R. Deriche).
     IEEE Transactions on Pattern Analysis and Machine Intelligence,
     Vol 27, No 4, pp 506-517, April 2005.
 
@@ -74,15 +74,12 @@
 
 /* Include the CImg Library, with the GREYCstoration plugin included */
 #define cimg_plugin "plugins/greycstoration.h"
-#if defined(sun)         || defined(__sun)      || defined(linux)       || defined(__linux) \
- || defined(__linux__)   || defined(__CYGWIN__) || defined(BSD)         || defined(__FreeBSD__) \
- || defined(__OPENBSD__) || defined(__MACOSX__) || defined(__APPLE__)   || defined(sgi) \
- || defined(__sgi)
-#include <pthread.h>
-#endif
 #define cimg_display_type 0
 #include "CImg.h"
 using namespace cimg_library;
+#if cimg_OS!=2
+#include <pthread.h>
+#endif
 
 /* Uncomment the line below if you want to use preview with zoom (GIMP >= 2.3.4) */
 /*#define ZOOMPREVIEW*/

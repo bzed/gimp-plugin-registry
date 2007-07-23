@@ -54,6 +54,10 @@ typedef struct {
 	gboolean update_preview;
 	GimpInterpolationType	interpolation;
 	gdouble	 saturation;
+	gdouble  x_blue;
+	gdouble  x_red;
+	gdouble  y_blue;
+	gdouble  y_red;
 } FixCaParams;
 
 /* Global default */
@@ -62,6 +66,10 @@ static FixCaParams fix_ca_params_default = {
 	0.0,
 	TRUE,
 	GIMP_INTERPOLATION_LINEAR,
+	0.0,
+	0.0,
+	0.0,
+	0.0,
 	0.0
 };
 
@@ -83,8 +91,8 @@ static inline int	absolute (gint i);
 static inline int	clip (gdouble d);
 static inline int	bilinear (gint xy, gint x1y, gint xy1, gint x1y1, gdouble dx, gdouble dy);
 static inline double	cubic (gint xm1, gint j, gint xp1, gint xp2, gdouble dx);
-static inline int	scale (gint i, gint size, gdouble scale);
-static inline double	scale_d (gint i, gint size, gdouble scale);
+static inline int	scale (gint i, gint size, gdouble scale_val, gdouble shift_val);
+static inline double	scale_d (gint i, gint size, gdouble scale_val, gdouble shift_val);
 static guchar *load_data (GimpPixelRgn *srcPTR,
 			  guchar *src[SOURCE_ROWS], gint src_row[SOURCE_ROWS],
 			  gint src_iter[SOURCE_ROWS], gint band_adj,
@@ -106,13 +114,17 @@ void	query (void)
 		{ GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
 		{ GIMP_PDB_IMAGE, "image", "Input image" },
 		{ GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-		{ GIMP_PDB_FLOAT, "blue", "Blue amount" },
-		{ GIMP_PDB_FLOAT, "red", "Red amount" },
-		{ GIMP_PDB_INT8, "interpolation", "Interpolation 0=None/1=Linear/2=Cubic" }
+		{ GIMP_PDB_FLOAT, "blue", "Blue amount (lateral)" },
+		{ GIMP_PDB_FLOAT, "red", "Red amount (lateral)" },
+		{ GIMP_PDB_INT8, "interpolation", "Interpolation 0=None/1=Linear/2=Cubic" },
+		{ GIMP_PDB_FLOAT, "x_blue", "Blue amount (x axis)" },
+		{ GIMP_PDB_FLOAT, "x_red", "Red amount (x axis)" },
+		{ GIMP_PDB_FLOAT, "y_blue", "Blue amount (y axis)" },
+		{ GIMP_PDB_FLOAT, "y_red", "Red amount (y axis)" }
 	};
 
 	gimp_install_procedure (PROCEDURE_NAME,
-				"Fix-CA Version 2.1.0",
+				"Fix-CA Version 3.0.1",
 				"Fix chromatic aberration caused by imperfect "
 				"lens.  It works by shifting red and blue "
 				"components of image pixels in the specified "
@@ -151,11 +163,15 @@ void	run (const gchar *name, gint nparams,
 	fix_ca_params.red = fix_ca_params_default.red;
 	fix_ca_params.update_preview = fix_ca_params_default.update_preview;
 	fix_ca_params.interpolation = fix_ca_params_default.interpolation;
+	fix_ca_params.x_blue = fix_ca_params_default.x_blue;
+	fix_ca_params.x_red = fix_ca_params_default.x_red;
+	fix_ca_params.y_blue = fix_ca_params_default.y_blue;
+	fix_ca_params.y_red = fix_ca_params_default.y_red;
 
 	if (strcmp (name, PROCEDURE_NAME) == 0) {
 		switch (run_mode) {
 			case GIMP_RUN_NONINTERACTIVE:
-				if (nparams < 5 || nparams > 6)
+				if (nparams < 5 || nparams > 10)
 					status = GIMP_PDB_CALLING_ERROR;
 				else {
 					fix_ca_params.blue = param[3].data.d_float;
@@ -169,6 +185,23 @@ void	run (const gchar *name, gint nparams,
 					else
 						fix_ca_params.interpolation
 							= param[5].data.d_int8;
+
+					if (nparams < 7)
+						fix_ca_params.x_blue = 0;
+					else
+						fix_ca_params.x_blue = param[6].data.d_float;
+					if (nparams < 8)
+						fix_ca_params.x_red = 0;
+					else
+						fix_ca_params.x_red = param[7].data.d_float;
+					if (nparams < 9)
+						fix_ca_params.y_blue = 0;
+					else
+						fix_ca_params.y_blue = param[8].data.d_float;
+					if (nparams < 10)
+						fix_ca_params.y_red = 0;
+					else
+						fix_ca_params.y_red = param[9].data.d_float;
 				}
 				break;
 
@@ -234,6 +267,7 @@ gboolean	fix_ca_dialog (GimpDrawable *drawable, FixCaParams *params)
 	GtkWidget *combo;
 	GtkWidget *preview;
 	GtkWidget *table;
+	GtkWidget *frame;
 	GtkObject *adj;
 	gboolean   run;
 
@@ -262,12 +296,11 @@ gboolean	fix_ca_dialog (GimpDrawable *drawable, FixCaParams *params)
 			  G_CALLBACK (preview_update),
 			  params);
 
-
-	table = gtk_table_new (2, 4, FALSE);
+	table = gtk_table_new (2, 2, FALSE);
 	gtk_table_set_col_spacings (GTK_TABLE (table), 6);
 	gtk_table_set_row_spacings (GTK_TABLE (table), 6);
 	gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-	gtk_widget_show (table);
+  	gtk_widget_show (table);
 
 	adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 				    _("Preview _saturation:"), SCALE_WIDTH, ENTRY_WIDTH,
@@ -298,9 +331,20 @@ gboolean	fix_ca_dialog (GimpDrawable *drawable, FixCaParams *params)
 				  G_CALLBACK (gimp_preview_invalidate),
 				  preview);
 
-	adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+
+	frame = gimp_frame_new ("Lateral");
+	gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+	gtk_widget_show (frame);
+
+	table = gtk_table_new (2, 2, FALSE);
+	gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+	gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+	gtk_container_add (GTK_CONTAINER (frame), table);
+  	gtk_widget_show (table);
+
+	adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 				    _("_Blue:"), SCALE_WIDTH, ENTRY_WIDTH,
-				    params->blue, -5.0, 5.0, 0.1, 0.5, 1,
+				    params->blue, -10.0, 10.0, 0.1, 0.5, 1,
 				    TRUE, 0, 0,
 				    NULL, NULL);
 
@@ -311,15 +355,87 @@ gboolean	fix_ca_dialog (GimpDrawable *drawable, FixCaParams *params)
 			  G_CALLBACK (gimp_preview_invalidate),
 			  preview);
 
-	adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
+	adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				    _("_Red:"), SCALE_WIDTH, ENTRY_WIDTH,
-				    params->red, -5.0, 5.0, 0.1, 0.5, 1,
+				    params->red, -10.0, 10.0, 0.1, 0.5, 1,
 				    TRUE, 0, 0,
 				    NULL, NULL);
 
 	g_signal_connect (adj, "value_changed",
 			  G_CALLBACK (gimp_double_adjustment_update),
 			  &(params->red));
+	g_signal_connect_swapped (adj, "value_changed",
+			  G_CALLBACK (gimp_preview_invalidate),
+			  preview);
+
+	frame = gimp_frame_new ("X axis");
+	gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+	gtk_widget_show (frame);
+
+	table = gtk_table_new (2, 2, FALSE);
+	gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+	gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+	gtk_container_add (GTK_CONTAINER (frame), table);
+  	gtk_widget_show (table);
+
+	adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+				    _("Blue:"), SCALE_WIDTH, ENTRY_WIDTH,
+				    params->x_blue, -10.0, 10.0, 0.1, 0.5, 1,
+				    TRUE, 0, 0,
+				    NULL, NULL);
+
+	g_signal_connect (adj, "value_changed",
+			  G_CALLBACK (gimp_double_adjustment_update),
+			  &(params->x_blue));
+	g_signal_connect_swapped (adj, "value_changed",
+			  G_CALLBACK (gimp_preview_invalidate),
+			  preview);
+
+	adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+				    _("Red:"), SCALE_WIDTH, ENTRY_WIDTH,
+				    params->x_red, -10.0, 10.0, 0.1, 0.5, 1,
+				    TRUE, 0, 0,
+				    NULL, NULL);
+
+	g_signal_connect (adj, "value_changed",
+			  G_CALLBACK (gimp_double_adjustment_update),
+			  &(params->x_red));
+	g_signal_connect_swapped (adj, "value_changed",
+			  G_CALLBACK (gimp_preview_invalidate),
+			  preview);
+
+	frame = gimp_frame_new ("Y axis");
+	gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+	gtk_widget_show (frame);
+
+	table = gtk_table_new (2, 2, FALSE);
+	gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+	gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+	gtk_container_add (GTK_CONTAINER (frame), table);
+  	gtk_widget_show (table);
+
+	adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+				    _("Blue:"), SCALE_WIDTH, ENTRY_WIDTH,
+				    params->y_blue, -10.0, 10.0, 0.1, 0.5, 1,
+				    TRUE, 0, 0,
+				    NULL, NULL);
+
+	g_signal_connect (adj, "value_changed",
+			  G_CALLBACK (gimp_double_adjustment_update),
+			  &(params->y_blue));
+	g_signal_connect_swapped (adj, "value_changed",
+			  G_CALLBACK (gimp_preview_invalidate),
+			  preview);
+
+	adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+				    _("Red:"), SCALE_WIDTH, ENTRY_WIDTH,
+				    params->y_red, -10.0, 10.0, 0.1, 0.5, 1,
+				    TRUE, 0, 0,
+				    NULL, NULL);
+
+	g_signal_connect (adj, "value_changed",
+			  G_CALLBACK (gimp_double_adjustment_update),
+			  &(params->y_red));
 	g_signal_connect_swapped (adj, "value_changed",
 			  G_CALLBACK (gimp_preview_invalidate),
 			  preview);
@@ -378,9 +494,9 @@ int	absolute (gint i)
 		return -i;
 }
 
-int	scale (gint i, gint size, gdouble scale)
+int	scale (gint i, gint size, gdouble scale_val, gdouble shift_val)
 {
-	gdouble d = (i - size/2) * scale + size/2;
+	gdouble d = (i - size/2) * scale_val + size/2 - shift_val;
 	gint j = round_nearest (d);
 	if (j <= 0)
 		return 0;
@@ -390,9 +506,9 @@ int	scale (gint i, gint size, gdouble scale)
 		return j;
 }
 
-double	scale_d (gint i, gint size, gdouble scale)
+double	scale_d (gint i, gint size, gdouble scale_val, gdouble shift_val)
 {
-	gdouble d = (i - size/2) * scale + size/2;
+	gdouble d = (i - size/2) * scale_val + size/2 - shift_val;
 	if (d <= 0.0)
 		return 0.0;
 	else if (d >= size-1)
@@ -410,8 +526,11 @@ guchar *load_data (GimpPixelRgn *srcPTR,
 	int	iter_oldest;
 
 	for (i = 0; i < SOURCE_ROWS; ++i) {
-		if (src_row[i] == y)
+		if (src_row[i] == y) {
+			src_iter[i] = iter;	/* Make sure to keep this row
+						   during this iteration */
 			return src[i];
+		}
 	}
 
 		/* Find a row to replace */
@@ -479,6 +598,8 @@ void	fix_ca_region (GimpDrawable *drawable,
 	gint	orig_width, orig_height, max_dim;
 	gdouble	scale_blue, scale_red, scale_max;
 
+	gdouble x_shift_max, x_shift_min;
+
 	gint	band_1, band_2, band_adj;
 
 #ifdef DEBUG_TIME
@@ -514,18 +635,32 @@ void	fix_ca_region (GimpDrawable *drawable,
 		scale_max = scale_blue;
 	else
 		scale_max = scale_red;
-	if (scale_max < 1.0)
-		scale_max = 1.0;	/* Use green (unscaled) */
-	band_1 = scale (0, orig_width, scale_max);
-	band_2 = scale (orig_width-1, orig_width, scale_max);
-					/* Extra pixels for interpolation */
+
+	if (params->x_blue > params->x_red) {
+		x_shift_min = params->x_red;
+		x_shift_max = params->x_blue;
+	}
+	else {
+		x_shift_min = params->x_blue;
+		x_shift_max = params->x_red;
+	}
+
+					/* Horizontal band to load for each row */
+	band_1 = scale (x1, orig_width, scale_max, x_shift_max);
+	band_2 = scale (x2-1, orig_width, scale_max, x_shift_min);
+	if (band_1 > x1)		/* Make sure green is also covered */
+		band_1 = x1;
+	if (band_2 < x2-1)
+		band_2 = x2-1;
+
+					/* Extra pixels needed for interpolation */
 	if (params->interpolation != GIMP_INTERPOLATION_NONE) {
 		if (band_1 > 0)
 			--band_1;
 		if (band_2 < orig_width-1)
 			++band_2;
 	}
-					/* More pixels for cubic interpolation */
+					/* More pixels needed for cubic interpolation */
 	if (params->interpolation == GIMP_INTERPOLATION_CUBIC) {
 		if (band_1 > 0)
 			--band_1;
@@ -546,8 +681,8 @@ void	fix_ca_region (GimpDrawable *drawable,
 			gint	y_blue, y_red, x_blue, x_red;
 
 				/* Get blue and red row */
-			y_blue = scale (y, orig_height, scale_blue);
-			y_red = scale (y, orig_height, scale_red);
+			y_blue = scale (y, orig_height, scale_blue, params->y_blue);
+			y_red = scale (y, orig_height, scale_red, params->y_red);
 			ptr_blue = load_data (srcPTR, src, src_row, src_iter,
 					      band_adj, band_1, band_2, y_blue, y);
 			ptr_red = load_data (srcPTR, src, src_row, src_iter,
@@ -558,8 +693,8 @@ void	fix_ca_region (GimpDrawable *drawable,
 				dest[(x-x1)*bytes + 1] = ptr[x*bytes + 1];
 
 					/* Blue and red channel */
-				x_blue = scale (x, orig_width, scale_blue);
-				x_red = scale (x, orig_width, scale_red);
+				x_blue = scale (x, orig_width, scale_blue, params->x_blue);
+				x_red = scale (x, orig_width, scale_red, params->x_red);
 
 				dest[(x-x1)*bytes] = ptr_red[x_red*bytes];
 				dest[(x-x1)*bytes + 2] = ptr_blue[x_blue*bytes + 2];
@@ -583,8 +718,8 @@ void	fix_ca_region (GimpDrawable *drawable,
 			gint	x_blue_1, x_red_1, x_blue_2, x_red_2;
 
 				/* Get blue and red row */
-			y_blue_d = scale_d (y, orig_height, scale_blue);
-			y_red_d = scale_d (y, orig_height, scale_red);
+			y_blue_d = scale_d (y, orig_height, scale_blue, params->y_blue);
+			y_red_d = scale_d (y, orig_height, scale_red, params->y_red);
 
 				/* Integer and fractional row */
 			y_blue_1 = floor (y_blue_d);
@@ -613,8 +748,8 @@ void	fix_ca_region (GimpDrawable *drawable,
 				dest[(x-x1)*bytes + 1] = ptr[x*bytes + 1];
 
 					/* Blue and red channel */
-				x_blue_d = scale_d (x, orig_width, scale_blue);
-				x_red_d = scale_d (x, orig_width, scale_red);
+				x_blue_d = scale_d (x, orig_width, scale_blue, params->x_blue);
+				x_red_d = scale_d (x, orig_width, scale_red, params->x_red);
 
 					/* Integer and fractional column */
 				x_blue_1 = floor (x_blue_d);
@@ -665,8 +800,8 @@ void	fix_ca_region (GimpDrawable *drawable,
 			gint	x_blue_3, x_red_3, x_blue_4, x_red_4;
 
 				/* Get blue and red row */
-			y_blue_d = scale_d (y, orig_height, scale_blue);
-			y_red_d = scale_d (y, orig_height, scale_red);
+			y_blue_d = scale_d (y, orig_height, scale_blue, params->y_blue);
+			y_red_d = scale_d (y, orig_height, scale_red, params->y_red);
 
 			y_blue_2 = floor (y_blue_d);
 			y_red_2 = floor (y_red_d);
@@ -726,8 +861,8 @@ void	fix_ca_region (GimpDrawable *drawable,
 				dest[(x-x1)*bytes + 1] = ptr[x*bytes + 1];
 
 					/* Blue and red channel */
-				x_blue_d = scale_d (x, orig_width, scale_blue);
-				x_red_d = scale_d (x, orig_width, scale_red);
+				x_blue_d = scale_d (x, orig_width, scale_blue, params->x_blue);
+				x_red_d = scale_d (x, orig_width, scale_red, params->x_red);
 
 				x_blue_2 = floor (x_blue_d);
 				x_red_2 = floor (x_red_d);
@@ -860,8 +995,15 @@ void	fix_ca_help (const gchar *help_id, gpointer help_data)
 {
 	gimp_message ("Select the amount in pixels to shift for blue "
 		      "and red components of image.  "
-		      "The number of pixel is measured in the larger "
-		      "of image width or height.  "
-		      "And positive number means moving in outward "
-		      "direction.");
+		      "Lateral chromatic aberration means there is no "
+		      "aberration at the image center but it increases gradually "
+		      "toward the edge of image.  "
+		      "X axis and Y axis aberrations mean the amount of aberration "
+		      "is the same throughout the image.\n\n"
+		      "For lateral aberration, the number of pixel is the amount shifted "
+		      "at the extreme edge of the image (width or height whatever is the larger), "
+		      "and positive number means moving in outward "
+		      "direction.\n\n"
+		      "For X axis and Y axis, the number of pixel is the actual shift, "
+		      "and positive number means moving rightward or upward.");
 }

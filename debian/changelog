@@ -1,3 +1,12 @@
+gimp-plugin-registry (0.2-2) unstable; urgency=low
+
+  * fix-ca:
+      - new upstream version
+  * GREYCstoration:
+      - new upstream version from cvs
+
+ -- Bernd Zeimetz <bernd@bzed.de>  Mon, 23 Jul 2007 20:24:02 +0200
+
 gimp-plugin-registry (0.2-1) unstable; urgency=low
 
   * debian/control:
