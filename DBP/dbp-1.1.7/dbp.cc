@@ -1,6 +1,6 @@
 /* DBP (Dave's Batch Processor)
  * A simple batch processor for the GIMP
- * Copyright (C) 2001 - 2006 David Hodson
+ * Copyright (C) 2001 - 2007 David Hodson
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,6 +58,9 @@
  *       - removed -DGIMP_DISABLE_DEPRECATED from Makefile, to compile under 2.3.8(?)
  * 1.1.4 - added PAT format by request
  * 1.1.5 - fixed loading bug that halted DBP after processing a few images
+ * 1.1.6 - added convert to greyscale / convert to indexed
+ * 1.1.7 - fixed bug in colour controls
+ *       - use new progress api for 2.3 and above
  */
 
 #include "gui.h"
@@ -78,7 +81,7 @@ static void
 query() {
 
   static GimpParamDef args[] = {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive or non-interactive" }
   };
   static GimpParamDef* return_vals = 0;
   static int n_args = sizeof(args) / sizeof(args[0]);
@@ -88,8 +91,8 @@ query() {
       "Batch processes multiple images",
       "DBP performs simple batch processing of images.",
       "David Hodson <hodsond@acm.org>",
-      "2001 - 2006 David Hodson",
-      "02 November 2006 (Version 1.1.5)",
+      "2001 - 2007 David Hodson",
+      "24 July 2007 (Version 1.1.7)",
       "<Toolbox>/Xtns/Batch Process...",
       NULL, GIMP_EXTENSION,
       n_args, n_return_vals, args, return_vals);

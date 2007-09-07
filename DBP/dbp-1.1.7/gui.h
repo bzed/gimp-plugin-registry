@@ -105,6 +105,8 @@ protected:
 
   // toggle control for boolean value
   GtkWidget* add(ControlLayout&, const std::string& label, bool& value);
+  // toggle control for int value
+  GtkWidget* addBool(ControlLayout&, const std::string& label, int& value);
   // slide control for float or double value
   GtkObject* add(ControlLayout&, const std::string& label, float& value,
     float minVal, float maxVal, int numDigits);
@@ -119,6 +121,7 @@ protected:
 
   static GtkWidget* stdButton(const std::string& label);
   static GtkWidget* stdToggle(const std::string& label);
+  static GtkWidget* checkButtonFor(int& value);
   static GtkWidget* checkButtonFor(bool& value);
   static GtkWidget* spinnerFor(GtkObject* adj, int numDigits);
   static GtkWidget* sliderFor(GtkObject* adj, int numDigits);
@@ -132,6 +135,7 @@ private:
 
   // simple callback functions
   static void toggleValueUpdate(GtkWidget* toggle, bool* ptr);
+  static void toggleIntValueUpdate(GtkWidget* toggle, int* ptr);
   static void adjDoubleUpdate(GtkObject* adj, double* ptr);
   static void adjFloatUpdate(GtkObject* adj, float* ptr);
   static void adjIntUpdate(GtkObject* adj, int* ptr);
@@ -272,6 +276,8 @@ private:
   GtkWidget* _example;
 
   ControlLayout _controls;
+
+  static int _ditherOptionTags[];
 
   void recalcDirName();
   void recalcExample();

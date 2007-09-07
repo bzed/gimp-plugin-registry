@@ -21,6 +21,8 @@
 
 #include <stdlib.h>
 #include <sys/stat.h>
+//#include <sstream>
+//#include <iomanip>
 
 using namespace Dbp;
 
@@ -189,7 +191,7 @@ RecolourOp::execute(int& image, int& drawableId, Location&) {
     gimp_levels_stretch(drawableId);
 
   } else {
-    if ((_brightness != 0.0) && (_contrast != 0.0)) {
+    if ((_brightness != 0.0) || (_contrast != 0.0)) {
       int brightness = static_cast<int>(_brightness * 127.0);
       int contrast = static_cast<int>(_contrast * 127.0);
 
@@ -347,16 +349,34 @@ SharpenOp::addParams(GimpCall& call) {
 }
 
 RenameOp::RenameOp():
-  _flatten(false) {
+//  _numericRename(false),
+  _flatten(false),
+  _convertToGreyscale(false),
+  _convertToIndexed(false),
+  _numberOfIndexedColours(256) {
 }
 
 bool
 RenameOp::execute(int& image, int& drawable, Location& file) {
+  gboolean ok = TRUE;
   if (_flatten) {
     drawable = gimp_image_flatten(image);
   }
+  if (_convertToGreyscale) {
+    ok = gimp_image_convert_grayscale(image);
+  }
+  if (_convertToIndexed) {
+    gint32 paletteType = 0; // MAKE_PALETTE
+    gboolean ditherAlpha = FALSE; // no ?
+    gboolean removeUnusedColours = FALSE; // irrelevant with MAKE_PALETTE
+    const char* paletteName = "";
+    ok = ok && gimp_image_convert_indexed(image,
+      (GimpConvertDitherType)_ditherType, (GimpConvertPaletteType)paletteType,
+      _numberOfIndexedColours, ditherAlpha,
+      removeUnusedColours, paletteName);
+  }
   modify(file);
-  return true;
+  return (ok == TRUE);
 }
 
 void
@@ -364,7 +384,13 @@ RenameOp::modify(Location& file) const {
   if (! _dirPath.empty()) {
     file._path = _dirPath;
   }
-  file._name = _prefix + file._name + _postfix;
+//  if (_numericRename) {
+//    stringstream name;
+//    name << _prefix << setw(4) << frame << _postfix;
+//    file._name = name.str();
+//  } else {
+    file._name = _prefix + file._name + _postfix;
+//  }
 }
 
 OutputFormat::OutputFormat(int tag, std::string name, std::string extn, std::string fn):

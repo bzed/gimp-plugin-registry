@@ -1,6 +1,6 @@
 /* DBP (Dave's Batch Processor)
  * A simple batch processor for the GIMP
- * Copyright (C) 2001 - 2005 David Hodson
+ * Copyright (C) 2001 - 2007 David Hodson
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 using namespace Dbp;
 
 const int
-ControlLayout::_maxRows = 10;
+ControlLayout::_maxRows = 15;
 
 static const gchar* dataKey = "user_data";
 
@@ -110,6 +110,13 @@ Gui::add(ControlLayout& controls, const std::string& label, bool& value) {
   return toggle;
 }
 
+GtkWidget*
+Gui::addBool(ControlLayout& controls, const std::string& label, int& value) {
+  GtkWidget* toggle = checkButtonFor(value);
+  controls.add(label, toggle);
+  return toggle;
+}
+
 GtkObject*
 Gui::add(ControlLayout& controls, const std::string& label, float& value,
     float minVal, float maxVal, int numDigits) {
@@ -187,6 +194,11 @@ Gui::stdToggle(const std::string& label) {
 
 void
 Gui::toggleValueUpdate(GtkWidget* toggle, bool* ptr) {
+  *ptr = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggle)) ? true : false;
+}
+
+void
+Gui::toggleIntValueUpdate(GtkWidget* toggle, int* ptr) {
   *ptr = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggle));
 }
 
@@ -221,8 +233,17 @@ GtkWidget*
 Gui::checkButtonFor(bool& value) {
   GtkWidget* result;
   result = gtk_check_button_new();
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(result), value);
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(result), value ? TRUE : FALSE);
   g_signal_connect(GTK_OBJECT(result), "toggled", (GtkSignalFunc)&Gui::toggleValueUpdate, &value);
+  return result;
+}
+
+GtkWidget*
+Gui::checkButtonFor(int& value) {
+  GtkWidget* result;
+  result = gtk_check_button_new();
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(result), value);
+  g_signal_connect(GTK_OBJECT(result), "toggled", (GtkSignalFunc)&Gui::toggleIntValueUpdate, &value);
   return result;
 }
 
@@ -833,6 +854,14 @@ SharpenGui::setEnabled() {
   }
 }
 
+int
+RenameGui::_ditherOptionTags[] = {
+  (int)RenameOp::NO_DITHER,
+  (int)RenameOp::FLOYD_STEINBERG,
+  (int)RenameOp::REDUCED_BLEED,
+  (int)RenameOp::FIXED_DITHER
+};
+
 RenameGui::RenameGui(RenameOp& rename):
   _op(rename),
   _exampleSrc("/home/me/pics", "test", "img") {
@@ -900,6 +929,22 @@ RenameGui::build() {
 
   _controls.add("Before writing:", 0, 0);
   add(_controls, "Flatten", _op._flatten);
+  add(_controls, "Convert Grey", _op._convertToGreyscale);
+  add(_controls, "Convert Indexed", _op._convertToIndexed);
+
+  /* pop up menu */
+  GtkWidget* ditherOptions = gtk_menu_new();
+
+  addItem(ditherOptions, "No Dither", &_ditherOptionTags[0], _op._ditherType);
+  addItem(ditherOptions, "Floyd-Steinberg", &_ditherOptionTags[1], _op._ditherType);
+  addItem(ditherOptions, "Reduced Bleed", &_ditherOptionTags[2], _op._ditherType);
+  addItem(ditherOptions, "Fixed Position", &_ditherOptionTags[3], _op._ditherType);
+
+  gtk_widget_show_all(ditherOptions);
+  gtk_widget_hide(ditherOptions);
+
+  add(_controls, "Dither", _op._ditherType, ditherOptions);
+  add(_controls, "Colours", _op._numberOfIndexedColours, 2, 256);
 
   recalcExample();
   recalcDirName();
@@ -1013,7 +1058,8 @@ OutputGui::build() {
       switch (param._guiType) {
       case OpParam::Toggle:
         // warning here, need to fix type safety
-        add(layout, param._name, (bool&)param._gimpType.data.d_int32);
+      //  add(layout, param._name, (bool&)param._gimpType.data.d_int32);
+        addBool(layout, param._name, param._gimpType.data.d_int32);
         break;
       case OpParam::IntSlider:
         add(layout, param._name, param._gimpType.data.d_int32,
@@ -1292,6 +1338,11 @@ DbpGui::gimpProgressValueCallback(gdouble value, gpointer user_data)
 void
 DbpGui::run()
 {
+  // Progress API was changed in 2.3.??
+  // Assume no one's using early 2.3 releases by now...
+#if (GIMP_MAJOR_VERSION == 2) && \
+    (GIMP_MINOR_VERSION <= 2)
+
   const gchar* progressCallbacks = gimp_progress_install(
       &gimpProgressStartCallback,
       &gimpProgressEndCallback,
@@ -1299,7 +1350,29 @@ DbpGui::run()
       &gimpProgressValueCallback,
       this);
 
-  gtk_main();
+#else
 
+  GimpProgressVtable vtable = {
+      &gimpProgressStartCallback,
+      &gimpProgressEndCallback,
+      &gimpProgressTextCallback,
+      &gimpProgressValueCallback,
+      0, /* pulse */
+      0, /* get_window */
+      0, /* _gimp_reserved1 */
+      0, /* _gimp_reserved2 */
+      0, /* _gimp_reserved3 */
+      0, /* _gimp_reserved4 */
+      0, /* _gimp_reserved5 */
+      0, /* _gimp_reserved6 */
+      0, /* _gimp_reserved7 */
+      0  /* _gimp_reserved8 */
+  };
+  const gchar* progressCallbacks =
+      gimp_progress_install_vtable(&vtable, (gpointer)this);
+
+#endif
+
+  gtk_main();
   gimp_progress_uninstall(progressCallbacks);
 }

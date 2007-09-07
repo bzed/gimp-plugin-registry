@@ -1,6 +1,6 @@
 /* DBP (Dave's Batch Processor)
  * A simple batch processor for the GIMP
- * Copyright (C) 2001 - 2005 David Hodson
+ * Copyright (C) 2001 - 2007 David Hodson
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -168,9 +168,15 @@ struct RenameOp: public Dbp::Op {
   std::string _dirPath;
   std::string _prefix;
   std::string _postfix;
+//  bool _numericRename;
 
   // this doesn't really belong here, but anyway...
   bool _flatten;
+  bool _convertToGreyscale;
+  bool _convertToIndexed;
+  enum DitherOptions { NO_DITHER = 0, FLOYD_STEINBERG = 1, REDUCED_BLEED = 2, FIXED_DITHER = 3 };
+  int _ditherType;
+  int _numberOfIndexedColours;
 };
 
 struct OpParam {

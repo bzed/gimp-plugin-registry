@@ -1,7 +1,8 @@
 #
 # all our Makefiles are lovingly handcrafted by our semi-skilled technicians
 #
-GIMPARGS = $(shell gimptool-2.0 --cflags --libs)
+# GIMPARGS = $(shell gimptool-2.0 --cflags --libs)
+GIMPARGS = $(shell pkg-config --cflags --libs gimpui-2.0)
 # NODEPS = -DGIMP_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED
 # gimp progress api changed in 2.3.something - compiles OK with this though
 NODEPS = -DGTK_DISABLE_DEPRECATED
