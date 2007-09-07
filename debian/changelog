@@ -1,3 +1,10 @@
+gimp-plugin-registry (0.2.2-2) UNRELEASED; urgency=low
+
+  * DBP:
+    - New upstream version
+
+ -- Bernd Zeimetz <bernd@bzed.de>  Fri, 07 Sep 2007 23:40:45 +0200
+
 gimp-plugin-registry (0.2.1-1) unstable; urgency=low
 
   * fix-ca:
