@@ -1,4 +1,4 @@
-gimp-plugin-registry (0.2.2-1) UNRELEASED; urgency=low
+gimp-plugin-registry (0.2.2-1) unstable; urgency=low
 
   * DBP:
     - New upstream version
