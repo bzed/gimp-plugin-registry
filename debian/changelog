@@ -1,9 +1,15 @@
-gimp-plugin-registry (0.2.2-2) UNRELEASED; urgency=low
+gimp-plugin-registry (0.2.2-1) UNRELEASED; urgency=low
 
   * DBP:
     - New upstream version
+  * extended-borders:
+    - removing plugin, upstream doesn't take care of it anymore. There's a
+      nice border tool in the 'Layer Effects' which will work as replacement.
+  * debian/patches:
+    - Adding several patches to provide better plugin locations within the
+      menu structure of gimp
 
- -- Bernd Zeimetz <bernd@bzed.de>  Fri, 07 Sep 2007 23:40:45 +0200
+ -- Bernd Zeimetz <bernd@bzed.de>  Sat, 08 Sep 2007 00:36:37 +0200
 
 gimp-plugin-registry (0.2.1-1) unstable; urgency=low
 

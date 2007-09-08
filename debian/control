@@ -21,11 +21,6 @@ Description: A repository of optional extensions for The GIMP
      operations (such as resize) on a collection of image files.
    * Dustcleaner:
      Plugin to detect and remove dust spots in digital images
-   * Extended Borders:
-     This script allows you to add double borders, add copyright
-     notice and title, as well as decide fonts, font-sizes and
-     positions of the title and copyright notice. Support for
-     blurring the copyright and title is also included.
    * Fix-CA:
      Corrects chromatic aberration in photos
    * Focus-Blur:

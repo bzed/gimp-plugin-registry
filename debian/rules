@@ -1,8 +1,9 @@
 #!/usr/bin/make -f
-# -*- makefile -*-
 
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
+
+include /usr/share/dpatch/dpatch.make
 
 CFLAGS = -Wall -g
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
@@ -19,7 +20,7 @@ GIMPVER=$(shell dpkg -s libgimp2.0-dev | grep Version | awk '{print $$2}')
 
 build: build-stamp
 
-build-stamp: 
+build-stamp: patch-stamp
 	dh_testdir
 
 	for plugin in $(PLUGINS); do \
@@ -28,7 +29,8 @@ build-stamp:
 
 	touch $@
 
-clean: 
+clean: clean-patched
+clean-patched: unpatch
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp configure-stamp

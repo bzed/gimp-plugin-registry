@@ -1,0 +1,31 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## menu_dustcleaner.dpatch by Bernd Zeimetz <bernd@bzed.de>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad gimp-plugin-registry~/dustcleaner/src/dustcleaner_plugin_main.c gimp-plugin-registry/dustcleaner/src/dustcleaner_plugin_main.c
+--- gimp-plugin-registry~/dustcleaner/src/dustcleaner_plugin_main.c	2007-08-17 15:21:20.000000000 +0200
++++ gimp-plugin-registry/dustcleaner/src/dustcleaner_plugin_main.c	2007-09-08 00:26:35.000000000 +0200
+@@ -97,7 +97,7 @@
+     args, NULL);
+ 
+   gimp_plugin_menu_register ("plug-in-dustcleaner",
+-                             "<Image>/Filters/Misc");
++                             "<Image>/Filters/Enhance");
+ }
+ 
+ static void
+diff -urNad gimp-plugin-registry~/dustcleaner/src_0.1.5a/dustcleaner_plugin_main.c gimp-plugin-registry/dustcleaner/src_0.1.5a/dustcleaner_plugin_main.c
+--- gimp-plugin-registry~/dustcleaner/src_0.1.5a/dustcleaner_plugin_main.c	2007-08-17 15:21:20.000000000 +0200
++++ gimp-plugin-registry/dustcleaner/src_0.1.5a/dustcleaner_plugin_main.c	2007-09-08 00:26:35.000000000 +0200
+@@ -97,7 +97,7 @@
+     args, NULL);
+ 
+   gimp_plugin_menu_register ("plug-in-dustcleaner",
+-                             "<Image>/Filters/Misc");
++                             "<Image>/Filters/Enhance");
+ }
+ 
+ static void

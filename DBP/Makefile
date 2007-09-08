@@ -1,19 +1,9 @@
-TOONEWGIMP=$(shell dpkg --compare-versions $(GIMPVER) '<' 2.3.18 || echo 1)
 
-ifeq "$(TOONEWGIMP)" "1"
-#do nothing, this plugin does not work here
-build:
-
-clean:
-
-install:
-
-else
 
 build: build-stamp
 build-stamp:
 	if dpkg --compare-versions $(GIMPVER) '>=' 2.3; then \
-	    make -C src CPPFLAGS="$(CFLAGS)" NODEPS="-DGIMP_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED" dbp  ;\
+	    make -C src CPPFLAGS="$(CFLAGS)" NODEPS="-DGTK_DISABLE_DEPRECATED" dbp  ;\
 	else \
 	    make -C src CPPFLAGS="$(CFLAGS)" dbp ;\
 	fi
@@ -28,6 +18,5 @@ install:
 	mkdir -p $(DESTDIR)$(DOCDIR)
 	install -m 644 src/dbp.html src/dbp-main.png src/dbp-fileSelector.png $(DESTDIR)$(DOCDIR)
 
-endif
 
 .PHONY: clean

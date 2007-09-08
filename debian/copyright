@@ -615,27 +615,6 @@ http://registry.gimp.org/plugin?id=9349
 
 
 ************************************************************
-extended-borders:
-
-The plugin was downloaded from:
-http://registry.gimp.org/plugin?id=4923
-
- extended-border.scm - Gimp script to add configurable borders
- Copyright (C) 2004  Stig E Sandø
-
- Based on photo-border.scm, (C) 2004  Pavel Antokolsky
-
- THIS SOFTWARE IS IN THE PUBLIC DOMAIN.
-
- Permission to use, copy, modify, and distribute this software and its
- documentation for any purpose and without fee is hereby granted, without any
- conditions or restrictions.
-
- THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT EXPRESS OR IMPLIED WARRANTY.
-
-
-
-************************************************************
 fix-ca:
 
 The plugin was downloaded from:
@@ -689,7 +668,9 @@ The plugin was downloaded from:
 http://cimg.cvs.sourceforge.net/*checkout*/cimg/CImg/examples/greycstoration4gimp.cpp
 
   Grzegorz Szwoch (GIMP plugin code)
-  David Tschumperle (GREYCstoration API)
+  David Tschumperle (GREYCstoration API,
+                     The C++ Template Image Processing Library)
+
                              - http://www.greyc.ensicaen.fr/~dtschump/
 
   This software is governed by the CeCILL  license under French law and
