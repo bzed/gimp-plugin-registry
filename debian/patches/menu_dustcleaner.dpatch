@@ -7,7 +7,7 @@
 @DPATCH@
 diff -urNad gimp-plugin-registry~/dustcleaner/src/dustcleaner_plugin_main.c gimp-plugin-registry/dustcleaner/src/dustcleaner_plugin_main.c
 --- gimp-plugin-registry~/dustcleaner/src/dustcleaner_plugin_main.c	2007-08-17 15:21:20.000000000 +0200
-+++ gimp-plugin-registry/dustcleaner/src/dustcleaner_plugin_main.c	2007-09-08 00:26:35.000000000 +0200
++++ gimp-plugin-registry/dustcleaner/src/dustcleaner_plugin_main.c	2007-09-08 22:53:28.000000000 +0200
 @@ -97,7 +97,7 @@
      args, NULL);
  
@@ -19,7 +19,7 @@ diff -urNad gimp-plugin-registry~/dustcleaner/src/dustcleaner_plugin_main.c gimp
  static void
 diff -urNad gimp-plugin-registry~/dustcleaner/src_0.1.5a/dustcleaner_plugin_main.c gimp-plugin-registry/dustcleaner/src_0.1.5a/dustcleaner_plugin_main.c
 --- gimp-plugin-registry~/dustcleaner/src_0.1.5a/dustcleaner_plugin_main.c	2007-08-17 15:21:20.000000000 +0200
-+++ gimp-plugin-registry/dustcleaner/src_0.1.5a/dustcleaner_plugin_main.c	2007-09-08 00:26:35.000000000 +0200
++++ gimp-plugin-registry/dustcleaner/src_0.1.5a/dustcleaner_plugin_main.c	2007-09-08 22:53:28.000000000 +0200
 @@ -97,7 +97,7 @@
      args, NULL);
  
