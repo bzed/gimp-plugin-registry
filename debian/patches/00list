@@ -1,1 +1,4 @@
-menu_bw-simulation.dpatch menu_dustcleaner.dpatch menu_fix-ca.dpatch menu_layer-effects.dpatch
+menu_bw-simulation
+menu_dustcleaner
+menu_fix-ca
+menu_layer-effects
