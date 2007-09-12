@@ -1,0 +1,116 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: GIMP LiquidRescale Plug-In 0.1.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-09-12 07:30+0200\n"
+"PO-Revision-Date: 2007-09-10 21:40+0300\n"
+"Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
+"Language-Team:  <gnome-cyr@lists.gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Russian\n"
+
+#: src/interface.c:135
+msgid "GIMP LiquidRescale Plug-In"
+msgstr "Избирательное масштабирование"
+
+#: src/interface.c:183
+msgid "Select new width and height"
+msgstr "Укажите новую ширину и высоту"
+
+#: src/interface.c:198
+msgid "Width:"
+msgstr "Ширина:"
+
+#: src/interface.c:200
+msgid "Height:"
+msgstr "Высота:"
+
+#: src/interface.c:207
+msgid "Feature preservation selection"
+msgstr "Сохранение значимых объектов"
+
+#: src/interface.c:216
+msgid "Activate feature preservation"
+msgstr "Сохранять значимые объекты"
+
+#: src/interface.c:241 src/interface.c:300
+msgid "Available Layers:"
+msgstr "Доступные слои:"
+
+#: src/interface.c:252 src/interface.c:311
+msgid "Intensity:"
+msgstr "Сила эффекта:"
+
+#: src/interface.c:255
+msgid "Overall coefficient for feature preservation intensity"
+msgstr "Коэффициент силы действия при сохранении значимых объектов"
+
+#: src/interface.c:264
+msgid "Feature discard selection"
+msgstr "Удаление значимых объектов"
+
+#: src/interface.c:273
+msgid "Activate feature discard"
+msgstr "Удалять значимые объекты"
+
+#: src/interface.c:314
+msgid "Overall coefficient for feature discard intensity"
+msgstr "Коэффициент силы действия при удалении значимых объектов"
+
+#: src/interface.c:324
+msgid "Select gradient function"
+msgstr "Выберите функцию расчёта градиентов"
+
+#: src/interface.c:329
+msgid "Sum of absolute values"
+msgstr "Сумма абсолютных значений"
+
+#: src/interface.c:330
+msgid "Transversal absolute value"
+msgstr "Поперечное абсолютное значение"
+
+#: src/interface.c:331
+msgid "Norm"
+msgstr "Обычная"
+
+#: src/interface.c:340
+msgid "Options"
+msgstr "Параметры"
+
+#: src/interface.c:349
+msgid "Update energy at every step"
+msgstr "Обновлять карту энергии на каждом шаге"
+
+#: src/interface.c:358
+msgid "Resize image canvas"
+msgstr "Изменять размер холста"
+
+#: src/interface.c:377
+msgid "Select behavior for masks"
+msgstr "Укажите, как работать с масками"
+
+#: src/interface.c:382
+msgid "Apply"
+msgstr "Применять"
+
+#: src/interface.c:382
+msgid "Discard"
+msgstr "Не использовать"
+
+#: src/main.c:135
+msgid "LiquidRescaling (content-aware rescaling)"
+msgstr "Избирательное масштабирование (без изменения значимых объектов)"
+
+#: src/main.c:135
+msgid "Liquid rescale ..."
+msgstr "Плавное масштабирование..."
+
+#: src/render.c:1356
+msgid "Resizing width..."
+msgstr "Изменяется ширина..."
+
+#: src/render.c:1379
+msgid "Resizing height..."
+msgstr "Изменяется высота..."

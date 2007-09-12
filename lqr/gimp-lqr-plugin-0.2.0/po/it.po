@@ -1,0 +1,121 @@
+# Italian translation for gimp22-lqr-plugin
+# Copyright (C) 2007 Carlo Baldassi
+# This file is distributed under the same license as the gimp22-lqr-plugin package.
+# Carlo Baldassi <carlobaldassi@yahoo.it>, 2007
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp22-lqr-plugin 0.1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-09-12 07:30+0200\n"
+"PO-Revision-Date: 2007-09-04 18:23+0100\n"
+"Last-Translator: Carlo Baldassi <carlobaldassi@yahoo.it>\n"
+"Language-Team: Italian <carlobaldassi@yahoo.it>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Italian\n"
+
+#: src/interface.c:135
+msgid "GIMP LiquidRescale Plug-In"
+msgstr "GIMP LiquidRescale Plug-In"
+
+#: src/interface.c:183
+msgid "Select new width and height"
+msgstr "Selezionare le duove dimensioni"
+
+#: src/interface.c:198
+msgid "Width:"
+msgstr "Larghezza:"
+
+#: src/interface.c:200
+msgid "Height:"
+msgstr "Altezza:"
+
+#: src/interface.c:207
+msgid "Feature preservation selection"
+msgstr "Selezione del contenuto da preservare"
+
+#: src/interface.c:216
+msgid "Activate feature preservation"
+msgstr "Attiva la preservazione dei contenuti"
+
+#: src/interface.c:241 src/interface.c:300
+msgid "Available Layers:"
+msgstr "Livelli disponibili"
+
+#: src/interface.c:252 src/interface.c:311
+msgid "Intensity:"
+msgstr "Intensità"
+
+#: src/interface.c:255
+msgid "Overall coefficient for feature preservation intensity"
+msgstr "Coefficiente globale per l'intensità della preservazione dei contenuti"
+
+#: src/interface.c:264
+msgid "Feature discard selection"
+msgstr "Selezione del contenuto da eliminare"
+
+#: src/interface.c:273
+msgid "Activate feature discard"
+msgstr "Attiva l'eliminazione dei contenuti"
+
+#: src/interface.c:314
+msgid "Overall coefficient for feature discard intensity"
+msgstr "Coefficiente globale per l'intensità dell'eliminazione dei contenuti"
+
+#: src/interface.c:324
+msgid "Select gradient function"
+msgstr "Selezionare la funzione gradiente"
+
+#: src/interface.c:329
+msgid "Sum of absolute values"
+msgstr "Somma di valori assoluti"
+
+#: src/interface.c:330
+msgid "Transversal absolute value"
+msgstr "Valore assoluto trasverso"
+
+#: src/interface.c:331
+msgid "Norm"
+msgstr "Norma"
+
+#: src/interface.c:340
+msgid "Options"
+msgstr "Opzioni"
+
+#: src/interface.c:349
+msgid "Update energy at every step"
+msgstr "Ricalcola l'energia ad ogni passo"
+
+#: src/interface.c:358
+msgid "Resize image canvas"
+msgstr "Ridimensiona la tela"
+
+#: src/interface.c:377
+msgid "Select behavior for masks"
+msgstr "Selezionare come trattare le maschere"
+
+#: src/interface.c:382
+msgid "Apply"
+msgstr "Applica"
+
+#: src/interface.c:382
+msgid "Discard"
+msgstr "Elimina"
+
+#: src/main.c:135
+msgid "LiquidRescaling (content-aware rescaling)"
+msgstr "LiquidRescaling (ridimensionamento preservando i contenuti) "
+
+#: src/main.c:135
+msgid "Liquid rescale ..."
+msgstr "Liquid rescale ..."
+
+#: src/render.c:1356
+msgid "Resizing width..."
+msgstr "Sto riscalando l'altezza..."
+
+#: src/render.c:1379
+msgid "Resizing height..."
+msgstr "Sto riscalando la larghezza..."

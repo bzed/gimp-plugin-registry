@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-09-12 07:30+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/interface.c:135
+msgid "GIMP LiquidRescale Plug-In"
+msgstr ""
+
+#: src/interface.c:183
+msgid "Select new width and height"
+msgstr ""
+
+#: src/interface.c:198
+msgid "Width:"
+msgstr ""
+
+#: src/interface.c:200
+msgid "Height:"
+msgstr ""
+
+#: src/interface.c:207
+msgid "Feature preservation selection"
+msgstr ""
+
+#: src/interface.c:216
+msgid "Activate feature preservation"
+msgstr ""
+
+#: src/interface.c:241 src/interface.c:300
+msgid "Available Layers:"
+msgstr ""
+
+#: src/interface.c:252 src/interface.c:311
+msgid "Intensity:"
+msgstr ""
+
+#: src/interface.c:255
+msgid "Overall coefficient for feature preservation intensity"
+msgstr ""
+
+#: src/interface.c:264
+msgid "Feature discard selection"
+msgstr ""
+
+#: src/interface.c:273
+msgid "Activate feature discard"
+msgstr ""
+
+#: src/interface.c:314
+msgid "Overall coefficient for feature discard intensity"
+msgstr ""
+
+#: src/interface.c:324
+msgid "Select gradient function"
+msgstr ""
+
+#: src/interface.c:329
+msgid "Sum of absolute values"
+msgstr ""
+
+#: src/interface.c:330
+msgid "Transversal absolute value"
+msgstr ""
+
+#: src/interface.c:331
+msgid "Norm"
+msgstr ""
+
+#: src/interface.c:340
+msgid "Options"
+msgstr ""
+
+#: src/interface.c:349
+msgid "Update energy at every step"
+msgstr ""
+
+#: src/interface.c:358
+msgid "Resize image canvas"
+msgstr ""
+
+#: src/interface.c:377
+msgid "Select behavior for masks"
+msgstr ""
+
+#: src/interface.c:382
+msgid "Apply"
+msgstr ""
+
+#: src/interface.c:382
+msgid "Discard"
+msgstr ""
+
+#: src/main.c:135
+msgid "LiquidRescaling (content-aware rescaling)"
+msgstr ""
+
+#: src/main.c:135
+msgid "Liquid rescale ..."
+msgstr ""
+
+#: src/render.c:1356
+msgid "Resizing width..."
+msgstr ""
+
+#: src/render.c:1379
+msgid "Resizing height..."
+msgstr ""
