@@ -2,7 +2,7 @@ Source: gimp-plugin-registry
 Section: graphics
 Priority: optional
 Maintainer: Bernd Zeimetz <bernd@bzed.de>
-Build-Depends: debhelper (>= 5), libgimp2.0-dev, libcv-dev (>= 1.0.0), dpatch, autotools-dev
+Build-Depends: debhelper (>= 5), libgimp2.0-dev, libcv-dev (>= 1.0.0), autotools-dev, dpatch
 Standards-Version: 3.7.2
 
 Package: gimp-plugin-registry
@@ -32,6 +32,9 @@ Description: A repository of optional extensions for The GIMP
      add border, bevel and emboss, color overlay, drop shadow,
      gradient overlay, inner glow, inner shadow, outer glow,
      pattern overlay, satin.
+   * Liquid Rescale:
+     Content-aware rescaling. Keeps the features of the image while
+     rescaling along a single direction.
    * Planet Render:
      Creates a planet. Color, size and sun orientation
      can be set.
