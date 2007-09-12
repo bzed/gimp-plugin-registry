@@ -1,11 +1,6 @@
 gimp-plugin-registry (0.3.1-1) UNRELEASED; urgency=low
 
-  * lqr
-
- -- Bernd Zeimetz <bernd@bzed.de>  Thu, 13 Sep 2007 00:27:56 +0200
-
-gimp-plugin-registry (0.2.2-1) unstable; urgency=low
-
+  * New plugin: lqr
   * DBP:
     - New upstream version
   * extended-borders:

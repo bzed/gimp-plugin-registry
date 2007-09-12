@@ -54,9 +54,11 @@ install: build
 				    DOCDIR=/usr/share/doc/gimp-plugin-registry/$$plugin \
 	                            GIMPVER="$(GIMPVER)" \
                                     install || exit 1 ;\
-	        if [ -r $$plugin/README ]; then \
-	            dh_install $$plugin/README usr/share/doc/gimp-plugin-registry/$$plugin ;\
-	        fi ;\
+		for readme in README README.Debian; do \
+	          if [ -r $$plugin/$$readme ]; then \
+	            dh_install $$plugin/$$readme usr/share/doc/gimp-plugin-registry/$$plugin ;\
+	          fi ;\
+		done ;\
 	done
 
 
@@ -121,6 +123,7 @@ update-url-md5: watch
 
 watch:
 	for plugin in $(PLUGINS); do \
+	    [ -r $$plugin/url ] || continue ;\
 	    url=`cat $$plugin/url` ;\
 	    if ! [ `wget -q -O - $$url | md5sum | awk '{print $$1}'` = `cat $$plugin/url.md5sum` ]; then \
 	        echo "$$plugin changed! $$url" ;\
