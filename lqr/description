@@ -1,0 +1,3 @@
+   * Liquid Rescale:
+     Content-aware rescaling. Keeps the features of the image while
+     rescaling along a single direction
