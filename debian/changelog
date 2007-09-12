@@ -1,8 +1,9 @@
-gimp-plugin-registry (0.3.1-1) UNRELEASED; urgency=low
+gimp-plugin-registry (0.3.1-1) unstable; urgency=low
 
-  * New plugin: lqr
+  * lqr:
+    - New plugin. Thanks to Ari Pollak for the hint.
   * DBP:
-    - New upstream version
+    - New upstream version.
   * extended-borders:
     - removing plugin, upstream doesn't take care of it anymore. There's a
       nice border tool in the 'Layer Effects' which will work as replacement.
