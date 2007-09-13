@@ -2,7 +2,8 @@ Source: gimp-plugin-registry
 Section: graphics
 Priority: optional
 Maintainer: Bernd Zeimetz <bernd@bzed.de>
-Build-Depends: debhelper (>= 5), libgimp2.0-dev, libcv-dev (>= 1.0.0), autotools-dev, dpatch
+Build-Depends: debhelper (>= 5), libgimp2.0-dev, libcv-dev (>= 1.0.0),
+ autotools-dev, dpatch, libxml-parser-perl
 Standards-Version: 3.7.2
 
 Package: gimp-plugin-registry
