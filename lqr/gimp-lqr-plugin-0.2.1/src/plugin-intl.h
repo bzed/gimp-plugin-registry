@@ -51,7 +51,8 @@ enum _LqrGradFunc
   LQR_GF_NORM_BIAS,                    /* gradient biased norm : sqrt(x^2 + 0.1 y^2) */
   LQR_GF_SUMABS,                       /* sum of absulte values : |x| + |y|          */
   LQR_GF_XABS,                         /* x absolute value : |x|                     */
-  LQR_GF_YABS                          /* y absolute value : |y|                     */
+  LQR_GF_YABS,                         /* y absolute value : |y|                     */
+  LQR_GF_NULL			       /* 0 */
 };
 
 

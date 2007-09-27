@@ -35,8 +35,8 @@
 
 /*  Render function  */
 
-void render (gint32 image_ID,
-	     GimpDrawable * drawable,
+gboolean render (gint32 image_ID,
+     	     GimpDrawable * drawable,
 	     PlugInVals * vals,
 	     PlugInImageVals * image_vals,
 	     PlugInDrawableVals * drawable_vals);
@@ -60,8 +60,8 @@ struct _LqrRaster;		/* the multisize image raster         */
  * quantities */
 struct _LqrData
 {
-  double rgb[_LQR_DATA_MAX_BPP];	/* color map
-					 * (doubles between 0.0 and 1.0)
+  guchar rgb[_LQR_DATA_MAX_BPP];	/* color map
+					 * (chars between 0 and 255)
 					 */
 
   double e;			/* energy */
@@ -79,7 +79,7 @@ struct _LqrData
 /* LQR_DATA CLASS FUNCTIONS */
 
 /* constructor */
-LqrData *init_lqr_data (double r, double g, double b);
+LqrData *init_lqr_data (guchar r, guchar g, guchar b);
 
 /* reset */
 void lqr_data_reset (LqrData * d, int bpp);
@@ -110,7 +110,7 @@ LqrCursor *lqr_cursor_create (LqrRaster * owner, LqrData * m, int num);
 void lqr_cursor_destroy (LqrCursor * c);
 
 /* functions for reading data */
-double lqr_cursor_readc (LqrCursor * c, int col);
+guchar lqr_cursor_readc (LqrCursor * c, int col);
 double lqr_cursor_read (LqrCursor * c);
 
 /* functions for moving around */
@@ -152,6 +152,9 @@ struct _LqrRaster
   int transposed;		/* flag to set transposed state */
 
   gboolean update_e;		/* flag to determine wether energy is updated */
+  gboolean resize_aux_layers;	/* flag to determine wether the auxiliary layers are resized */
+  LqrRaster * pres_raster;
+  LqrRaster * disc_raster;
 
   LqrData *map;			/* array of points */
 
@@ -168,10 +171,10 @@ struct _LqrRaster
 /* LQR_RASTER CLASS FUNCTIONS */
 
 /* build maps */
-void lqr_raster_build_maps (LqrRaster * r, int depth);	/* build all */
+gboolean lqr_raster_build_maps (LqrRaster * r, int depth);	/* build all */
 void lqr_raster_build_emap (LqrRaster * r);	/* energy */
 void lqr_raster_build_mmap (LqrRaster * r);	/* minpath */
-void lqr_raster_build_vsmap (LqrRaster * r, int depth);	/* visibility */
+gboolean lqr_raster_build_vsmap (LqrRaster * r, int depth);	/* visibility */
 
 /* internal functions for maps computation */
 void lqr_raster_compute_e (LqrRaster * r);	/* compute energy of point at c */
@@ -180,23 +183,24 @@ void lqr_raster_update_mmap (LqrRaster * r);	/* minpath */
 void lqr_raster_build_vpath (LqrRaster * r);	/* compute seam path */
 void lqr_raster_update_vsmap (LqrRaster * r, int l);	/* update visibility map after seam removal */
 void lqr_raster_finish_vsmap (LqrRaster * r);	/* complete visibility map (last seam) */
-void lqr_raster_inflate (LqrRaster * r, int l);	/* adds enlargment info to map */
+void lqr_raster_copy_vsmap (LqrRaster *r, LqrRaster *dest); /* copy vsmap on another raster */
+gboolean lqr_raster_inflate (LqrRaster * r, int l);	/* adds enlargment info to map */
 
 /* image manipulations */
 void lqr_raster_set_width (LqrRaster * r, int w1);
-void lqr_raster_transpose (LqrRaster * r);
+gboolean lqr_raster_transpose (LqrRaster * r);
 
 /* constructor & destructor */
 LqrRaster *lqr_raster_create (GimpDrawable * drawable, gint32 pres_layer_ID, gint pres_coeff,
-		              gint32 disc_layer_ID, gint disc_coeff, LqrGradFunc gf_int, gboolean update_e);
+		              gint32 disc_layer_ID, gint disc_coeff, LqrGradFunc gf_int, gboolean update_e, gboolean resize_aux_layers);
 void lqr_raster_destroy (LqrRaster * r);
 
 /* set gradient function */
 void lqr_raster_set_gf (LqrRaster * r, LqrGradFunc gf_ind);
 
 /* image manipulations */
-void lqr_raster_resize (LqrRaster * r, int w1, int h1);	/* liquid resize */
-void lqr_raster_flatten (LqrRaster * r);	/* flatten the multisize image */
+gboolean lqr_raster_resize (LqrRaster * r, int w1, int h1);	/* liquid resize */
+gboolean lqr_raster_flatten (LqrRaster * r);	/* flatten the multisize image */
 
 /* output */
 

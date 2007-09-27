@@ -61,16 +61,17 @@ static void run (const gchar * name,
 /*  Local variables  */
 
 const PlugInVals default_vals = {
-  100,
-  100,
-  0,
-  100,
-  0,
-  100,
-  LQR_GF_SUMABS,
-  FALSE,
-  TRUE,
-  GIMP_MASK_APPLY
+  100,                          /* new width */
+  100,                          /* new height */
+  0,                            /* pres layer ID */
+  100,                          /* pres coeff */
+  0,                            /* disc layer ID */
+  100,                          /* disc coeff */
+  LQR_GF_XABS,                  /* grad func */
+  FALSE,                        /* update energy */
+  TRUE,                         /* resize canvas */
+  TRUE,                         /* resize aux layers */
+  GIMP_MASK_APPLY               /* mask behavior */
 };
 
 const PlugInImageVals default_image_vals = {
@@ -79,11 +80,11 @@ const PlugInImageVals default_image_vals = {
 
 const PlugInDrawableVals default_drawable_vals = {
   0,
-  FALSE,
-  FALSE
 };
 
 const PlugInUIVals default_ui_vals = {
+  FALSE,
+  FALSE,
   FALSE
 };
 
@@ -101,7 +102,6 @@ GimpPlugInInfo PLUG_IN_INFO = {
 };
 
 MAIN ()
-
      static void query (void)
 {
   gchar *help_path;
@@ -119,6 +119,8 @@ MAIN ()
     {GIMP_PDB_INT32, "disc_coeff", "Discard coefficient"},
     {GIMP_PDB_INT32, "grad_func", "Gradient function to use"},
     {GIMP_PDB_INT32, "update_en", "Wether to update energy map"},
+    {GIMP_PDB_INT32, "resize_aux_layers",
+     "Wether to resize auxiliary layers"},
     {GIMP_PDB_INT32, "resize_canvas", "Wether to resize canvas"},
     {GIMP_PDB_INT32, "mask_behavior", "What to do with masks"}
   };
@@ -152,6 +154,7 @@ run (const gchar * name,
 
   *nreturn_vals = 1;
   *return_vals = values;
+  gboolean render_success = FALSE;
 
   /*  Initialize i18n support  */
   bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
@@ -181,7 +184,7 @@ run (const gchar * name,
       switch (run_mode)
         {
         case GIMP_RUN_NONINTERACTIVE:
-          if (n_params != 9)
+          if (n_params != 10)
             {
               status = GIMP_PDB_CALLING_ERROR;
             }
@@ -191,8 +194,9 @@ run (const gchar * name,
               vals.new_height = param[4].data.d_int32;
               vals.grad_func = param[5].data.d_int32;
               vals.update_en = param[6].data.d_int32;
-              vals.resize_canvas = param[7].data.d_int32;
-              vals.mask_behavior = param[8].data.d_int32;
+              vals.resize_aux_layers = param[7].data.d_int32;
+              vals.resize_canvas = param[8].data.d_int32;
+              vals.mask_behavior = param[9].data.d_int32;
             }
           break;
 
@@ -225,13 +229,16 @@ run (const gchar * name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if ((vals.pres_layer_ID == -1) || (drawable_vals.pres_status == FALSE)) {
-	      vals.pres_layer_ID = 0;
-      }
-      if ((vals.disc_layer_ID == -1) || (drawable_vals.disc_status == FALSE)) {
-	      vals.disc_layer_ID = 0;
-      }
-      render (image_ID, drawable, &vals, &image_vals, &drawable_vals);
+      if ((vals.pres_layer_ID == -1) || (ui_vals.pres_status == FALSE))
+        {
+          vals.pres_layer_ID = 0;
+        }
+      if ((vals.disc_layer_ID == -1) || (ui_vals.disc_status == FALSE))
+        {
+          vals.disc_layer_ID = 0;
+        }
+      render_success =
+        render (image_ID, drawable, &vals, &image_vals, &drawable_vals);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -242,7 +249,8 @@ run (const gchar * name,
           gimp_set_data (DATA_KEY_UI_VALS, &ui_vals, sizeof (ui_vals));
         }
 
-      drawable = gimp_drawable_get (gimp_image_get_active_drawable (image_ID));
+      drawable =
+        gimp_drawable_get (gimp_image_get_active_drawable (image_ID));
       gimp_drawable_detach (drawable);
     }
 
@@ -250,4 +258,9 @@ run (const gchar * name,
   values[0].data.d_status = status;
 
   gimp_image_undo_group_end (image_ID);
+  /*
+     if (render_success == FALSE) {
+     gimp_image_undo(image_ID); // for the future !
+     }
+   */
 }

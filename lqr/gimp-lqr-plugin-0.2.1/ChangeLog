@@ -1,3 +1,14 @@
+2007-09-25 Carlo Baldassi <carlobaldassi@yahoo.it>
+	* added a proto-preview
+	* added sensitivity to interface elements
+	* hiding of advanced options
+	* added resize preserve/discard layers feature
+	* transveral value is the new default gradient function
+	* added null gradient function
+	* reduced memory requirements
+	* added insufficient memory handling
+	* added some more progress indicators
+
 2007-09-12 Carlo Baldassi <carlobaldassi@yahoo.it>
 	* added preserve + discard features
 	* moved the plugin from "Image" to "Layer" menu

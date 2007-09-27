@@ -1,3 +1,4 @@
-* export changes to channels (?)
+* add cancel signal trap
 * add option "apply to all layers" (?)
 * improve interface
+* improve the core

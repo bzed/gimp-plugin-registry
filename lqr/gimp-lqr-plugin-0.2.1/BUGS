@@ -1,0 +1,5 @@
+Known bugs:
+-----------
+* The "lock transparency" option messes up the results
+  (needs a version of gimp supporting set_lock_alpha)
+* see TODO for missing features

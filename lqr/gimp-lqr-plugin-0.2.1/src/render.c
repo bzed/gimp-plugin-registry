@@ -36,7 +36,25 @@
 #include "plugin-intl.h"
 
 
-/* #define __LQR_DEBUG__ */
+#define __LQR_DEBUG__
+
+void
+clean_and_abort ()
+{
+  exit (0);
+  return;
+}
+
+void
+lqr_test_mem (gpointer pointer)
+{
+  if (!pointer)
+    {
+      g_message (_("Not enough memory, aborting"));
+      clean_and_abort ();
+    }
+}
+
 
 /**** DATA CLASS FUNCTIONS ****/
 
@@ -44,11 +62,13 @@
 
 /* standard constructor from RGB values */
 LqrData *
-init_lqr_data (double r, double g, double b)
+init_lqr_data (guchar r, guchar g, guchar b)
 {
   LqrData *d;
 
-  d = (LqrData *) calloc (1, sizeof (LqrData));
+  //d = (LqrData *) calloc (1, sizeof (LqrData));
+  d = g_try_new (LqrData, 1);
+  lqr_test_mem (d);
   d->rgb[0] = r;
   d->rgb[1] = g;
   d->rgb[2] = b;
@@ -89,7 +109,7 @@ lqr_data_read (LqrData * d, int bpp)
     {
       sum += d->rgb[k];
     }
-  return sum / bpp;
+  return sum / (255 * bpp);
 }
 
 /**** END OF LQR_DATA CLASS FUNCTIONS ****/
@@ -106,7 +126,9 @@ lqr_cursor_create (LqrRaster * owner, LqrData * m, int num)
   LqrCursor *c;
   int i;
 
-  c = (LqrCursor *) calloc (num, sizeof (LqrCursor));
+  //c = (LqrCursor *) calloc (num, sizeof (LqrCursor));
+  c = g_try_new (LqrCursor, num);
+  lqr_test_mem (c);
   for (i = 0; i < num; i++)
     {
       c[i].o = owner;
@@ -464,6 +486,13 @@ yabs (double x, double y)
   return fabs (y);
 }
 
+inline double
+zero (double x, double y)
+{
+  return 0;
+}
+
+
 /**** END OF GRADIENT FUNCTIONS ****/
 
 
@@ -479,16 +508,22 @@ yabs (double x, double y)
 LqrRaster *
 lqr_raster_create (GimpDrawable * drawable, gint32 pres_layer_ID,
                    gint pres_coeff, gint32 disc_layer_ID, gint disc_coeff,
-                   LqrGradFunc gf_ind, gboolean update_e)
+                   LqrGradFunc gf_ind, gboolean update_e,
+                   gboolean resize_aux_layers)
 {
   LqrRaster *r;
 
-  r = (LqrRaster *) calloc (1, sizeof (LqrRaster));
+  //r = (LqrRaster *) calloc (1, sizeof (LqrRaster));
+  r = g_try_new (LqrRaster, 1);
+  lqr_test_mem (r);
 
   r->level = 1;
   r->max_level = 1;
   r->transposed = 0;
   r->update_e = update_e;
+  r->resize_aux_layers = resize_aux_layers;
+  r->pres_raster = NULL;
+  r->disc_raster = NULL;
 
   r->h = gimp_drawable_height (drawable->drawable_id);
   r->w = gimp_drawable_width (drawable->drawable_id);
@@ -503,7 +538,13 @@ lqr_raster_create (GimpDrawable * drawable, gint32 pres_layer_ID,
 
   /* allocate memory for internal structures */
   //r->vpath = (LqrCursor *) calloc (r->h + 1, sizeof (LqrCursor));
-  r->map = (LqrData *) calloc (r->w * r->h, sizeof (LqrData));
+  //r->map = (LqrData *) calloc (r->w * r->h, sizeof (LqrData));
+  r->map = g_try_new (LqrData, r->w * r->h);
+  //lqr_test_mem(r->map);
+  if (r->map == NULL)
+    {
+      return NULL;
+    }
   r->vpath = lqr_cursor_create (r, r->map, r->h + 1);
 
   /* initialize cursors */
@@ -521,6 +562,30 @@ lqr_raster_create (GimpDrawable * drawable, gint32 pres_layer_ID,
   /* set gradient function */
   lqr_raster_set_gf (r, gf_ind);
 
+  if (resize_aux_layers == TRUE)
+    {
+      if (pres_layer_ID != 0)
+        {
+          r->pres_raster =
+            lqr_raster_create (gimp_drawable_get (pres_layer_ID), 0, 0, 0, 0,
+                               gf_ind, FALSE, FALSE);
+          if (r->pres_raster == NULL)
+            {
+              return NULL;
+            }
+        }
+      if (disc_layer_ID != 0)
+        {
+          r->disc_raster =
+            lqr_raster_create (gimp_drawable_get (disc_layer_ID), 0, 0, 0, 0,
+                               gf_ind, FALSE, FALSE);
+          if (r->disc_raster == NULL)
+            {
+              return NULL;
+            }
+        }
+    }
+
   return r;
 }
 
@@ -534,6 +599,14 @@ lqr_raster_destroy (LqrRaster * r)
   lqr_cursor_destroy (r->c);
   lqr_cursor_destroy (r->c_up);
   lqr_cursor_destroy (r->c_down);
+  if (r->pres_raster != NULL)
+    {
+      lqr_raster_destroy (r->pres_raster);
+    }
+  if (r->disc_raster != NULL)
+    {
+      lqr_raster_destroy (r->disc_raster);
+    }
   free (r);
 }
 
@@ -563,6 +636,9 @@ lqr_raster_set_gf (LqrRaster * r, LqrGradFunc gf_ind)
     case LQR_GF_YABS:
       r->gf = &yabs;
       break;
+    case LQR_GF_NULL:
+      r->gf = &zero;
+      break;
     default:
       assert (0);
     }
@@ -574,7 +650,7 @@ lqr_raster_set_gf (LqrRaster * r, LqrGradFunc gf_ind)
 
 /* build multisize image up to given depth
  * it is progressive (can be called multilple times) */
-void
+gboolean
 lqr_raster_build_maps (LqrRaster * r, int depth)
 {
 #ifdef __LQR_DEBUG__
@@ -593,8 +669,12 @@ lqr_raster_build_maps (LqrRaster * r, int depth)
       lqr_raster_build_mmap (r);
 
       /* compute visibility */
-      lqr_raster_build_vsmap (r, depth);
+      if (!lqr_raster_build_vsmap (r, depth))
+        {
+          return FALSE;
+        }
     }
+  return TRUE;
 }
 
 /* compute energy map */
@@ -706,7 +786,7 @@ lqr_raster_build_mmap (LqrRaster * r)
 
 /* compute (vertical) visibility map up to given depth
  * (it also calls inflate() to add image enlargment information) */
-void
+gboolean
 lqr_raster_build_vsmap (LqrRaster * r, int depth)
 {
   int z, l;
@@ -766,8 +846,8 @@ lqr_raster_build_vsmap (LqrRaster * r, int depth)
               lqr_raster_update_emap (r);
             }
           /* recalculate the minpath map */
-          //lqr_raster_update_mmap (r);
-          lqr_raster_build_mmap (r);
+          lqr_raster_update_mmap (r);
+          //lqr_raster_build_mmap (r);
         }
       else
         {
@@ -779,20 +859,61 @@ lqr_raster_build_vsmap (LqrRaster * r, int depth)
   /* reset width to the maximum */
   lqr_raster_set_width (r, r->w0);
 
+  /* copy visibility maps on auxiliary layers */
+  if (r->resize_aux_layers)
+    {
+      if (r->pres_raster != NULL)
+        {
+          lqr_raster_copy_vsmap (r, r->pres_raster);
+        }
+      if (r->disc_raster != NULL)
+        {
+          lqr_raster_copy_vsmap (r, r->disc_raster);
+        }
+    }
+
   /* insert seams for image enlargement */
-  lqr_raster_inflate (r, depth - 1);
+  if (!lqr_raster_inflate (r, depth - 1))
+    {
+      return FALSE;
+    }
 
   /* set new max_level */
   r->max_level = depth;
 
   /* reset image size */
   lqr_raster_set_width (r, r->w_start);
+
+  /* repeat the above steps for auxiliary layers */
+  if (r->resize_aux_layers)
+    {
+      if (r->pres_raster != NULL)
+        {
+          if (!lqr_raster_inflate (r->pres_raster, depth - 1))
+            {
+              return FALSE;
+            }
+          r->pres_raster->max_level = depth;
+          lqr_raster_set_width (r->pres_raster, r->pres_raster->w_start);
+        }
+      if (r->disc_raster != NULL)
+        {
+          if (!lqr_raster_inflate (r->disc_raster, depth - 1))
+            {
+              return FALSE;
+            }
+          r->disc_raster->max_level = depth;
+          lqr_raster_set_width (r->disc_raster, r->disc_raster->w_start);
+        }
+    }
+
+  return TRUE;
 }
 
 /* enlarge the image by seam insertion
  * visibility map is updated and the resulting multisize image
  * is complete in both directions */
-void
+gboolean
 lqr_raster_inflate (LqrRaster * r, int l)
 {
   int w1, z0, vs, k;
@@ -810,7 +931,13 @@ lqr_raster_inflate (LqrRaster * r, int l)
   w1 = r->w0 + l - r->max_level + 1;
 
   /* allocate room for new map */
-  newmap = (LqrData *) calloc (w1 * r->h0, sizeof (LqrData));
+  //newmap = (LqrData *) calloc (w1 * r->h0, sizeof (LqrData));
+  newmap = g_try_new0 (LqrData, w1 * r->h0);
+  if (newmap == NULL)
+    {
+      g_message (_("Not enough memory"));
+      return FALSE;
+    }
 
   /* span the image with a cursor
    * and build the new image */
@@ -870,6 +997,8 @@ lqr_raster_inflate (LqrRaster * r, int l)
   r->c_up = lqr_cursor_create (r, r->map, 1);
   lqr_cursor_destroy (r->c_down);
   r->c_down = lqr_cursor_create (r, r->map, 1);
+
+  return TRUE;
 }
 
 
@@ -1204,6 +1333,21 @@ lqr_raster_finish_vsmap (LqrRaster * r)
     }
 }
 
+void
+lqr_raster_copy_vsmap (LqrRaster * r, LqrRaster * dest)
+{
+  int x, y;
+  assert (r->w0 == dest->w0);
+  assert (r->h0 == dest->h0);
+  for (y = 0; y < r->h0; y++)
+    {
+      for (x = 0; x < r->w0; x++)
+        {
+          dest->map[y * r->w0 + x].vs = r->map[y * r->w0 + x].vs;
+        }
+    }
+}
+
 
 /*** image manipulations ***/
 
@@ -1224,14 +1368,20 @@ lqr_raster_set_width (LqrRaster * r, int w1)
 
 /* flatten the image to its current state
  * (all maps are reset, invisible points are lost) */
-void
+gboolean
 lqr_raster_flatten (LqrRaster * r)
 {
   LqrData *newmap;
   int z0;
 
   /* allocate room for new map */
-  newmap = (LqrData *) calloc (r->w * r->h, sizeof (LqrData));
+  //newmap = (LqrData *) calloc (r->w * r->h, sizeof (LqrData));
+  newmap = g_try_new0 (LqrData, r->w * r->h);
+  if (newmap == NULL)
+    {
+      g_message (_("Not enough memory"));
+      return FALSE;
+    }
 
   /* span the image with the cursor and copy
    * it in the new array  */
@@ -1265,11 +1415,12 @@ lqr_raster_flatten (LqrRaster * r)
   r->c_up = lqr_cursor_create (r, r->map, 1);
   lqr_cursor_destroy (r->c_down);
   r->c_down = lqr_cursor_create (r, r->map, 1);
+  return TRUE;
 }
 
 /* transpose the image, in its current state
  * (all maps and invisible points are lost) */
-void
+gboolean
 lqr_raster_transpose (LqrRaster * r)
 {
   int x, y;
@@ -1279,11 +1430,20 @@ lqr_raster_transpose (LqrRaster * r)
 
   if (r->level > 1)
     {
-      lqr_raster_flatten (r);
+      if (!lqr_raster_flatten (r))
+        {
+          return FALSE;
+        }
     }
 
   /* allocate room for the new map */
-  newmap = (LqrData *) calloc (r->w0 * r->h0, sizeof (LqrData));
+  //newmap = (LqrData *) calloc (r->w0 * r->h0, sizeof (LqrData));
+  newmap = g_try_new0 (LqrData, r->w0 * r->h0);
+  if (newmap == NULL)
+    {
+      g_message (_("Not enough memory"));
+      return FALSE;
+    }
 
   /* compute trasposed map */
   for (x = 1; x <= r->w; x++)
@@ -1325,13 +1485,27 @@ lqr_raster_transpose (LqrRaster * r)
 
   /* set transposed flag */
   r->transposed = (r->transposed ? 0 : 1);
+
+  /* call transpose on auxiliary layers */
+  if (r->resize_aux_layers == TRUE)
+    {
+      if (r->pres_raster != NULL)
+        {
+          lqr_raster_transpose (r->pres_raster);
+        }
+      if (r->disc_raster != NULL)
+        {
+          lqr_raster_transpose (r->disc_raster);
+        }
+    }
+  return TRUE;
 }
 
 
 /* liquid resize : this is the main method
  * it automatically determines the depth of the map
  * according to the desired size */
-void
+gboolean
 lqr_raster_resize (LqrRaster * r, int w1, int h1)
 {
   /* resize width */
@@ -1351,11 +1525,28 @@ lqr_raster_resize (LqrRaster * r, int w1, int h1)
     {
       if (r->transposed)
         {
-          lqr_raster_transpose (r);
+          if (!lqr_raster_transpose (r))
+            {
+              return FALSE;
+            }
         }
       gimp_progress_init (_("Resizing width..."));
-      lqr_raster_build_maps (r, delta + 1);
+      if (!lqr_raster_build_maps (r, delta + 1))
+        {
+          return FALSE;
+        }
       lqr_raster_set_width (r, w1);
+      if (r->resize_aux_layers == TRUE)
+        {
+          if (r->pres_raster != NULL)
+            {
+              lqr_raster_set_width (r->pres_raster, w1);
+            }
+          if (r->disc_raster != NULL)
+            {
+              lqr_raster_set_width (r->disc_raster, w1);
+            }
+        }
     }
 
   /* resize height */
@@ -1374,12 +1565,30 @@ lqr_raster_resize (LqrRaster * r, int w1, int h1)
     {
       if (!r->transposed)
         {
-          lqr_raster_transpose (r);
+          if (!lqr_raster_transpose (r))
+            {
+              return FALSE;
+            }
         }
       gimp_progress_init (_("Resizing height..."));
-      lqr_raster_build_maps (r, delta + 1);
+      if (!lqr_raster_build_maps (r, delta + 1))
+        {
+          return FALSE;
+        }
       lqr_raster_set_width (r, h1);
+      if (r->resize_aux_layers == TRUE)
+        {
+          if (r->pres_raster != NULL)
+            {
+              lqr_raster_set_width (r->pres_raster, h1);
+            }
+          if (r->disc_raster != NULL)
+            {
+              lqr_raster_set_width (r->disc_raster, h1);
+            }
+        }
     }
+  return TRUE;
 }
 
 
@@ -1502,6 +1711,7 @@ lqr_external_readimage (LqrRaster * r, GimpDrawable * drawable)
   GimpPixelRgn rgn_in;
   guchar *inrow;
 
+  gimp_progress_init (_("Parsing layer..."));
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
@@ -1510,14 +1720,15 @@ lqr_external_readimage (LqrRaster * r, GimpDrawable * drawable)
   gimp_pixel_rgn_init (&rgn_in,
                        drawable, x1, y1, x2 - x1, y2 - y1, FALSE, FALSE);
 
-  gimp_drawable_offsets(drawable->drawable_id, &r->x_off, &r->y_off);
+  gimp_drawable_offsets (drawable->drawable_id, &r->x_off, &r->y_off);
 
 #ifdef __LQR_DEBUG__
   assert (x2 - x1 == r->w);
   assert (y2 - y1 == r->h);
 #endif // __LQR_DEBUG__
 
-  inrow = g_new (guchar, bpp * r->w);
+  inrow = g_try_new (guchar, bpp * r->w);
+  lqr_test_mem (inrow);
 
   for (y = 0; y < r->h; y++)
     {
@@ -1527,9 +1738,11 @@ lqr_external_readimage (LqrRaster * r, GimpDrawable * drawable)
         {
           for (k = 0; k < bpp; k++)
             {
-              r->map[y * r->w + x].rgb[k] = (double) inrow[bpp * x + k] / 255;
+              r->map[y * r->w + x].rgb[k] = inrow[bpp * x + k];
             }
         }
+
+      gimp_progress_update ((gdouble) y / (r->h - 1));
 
     }
 
@@ -1553,7 +1766,7 @@ lqr_external_readbias (LqrRaster * r, gint32 layer_ID, gint bias_factor)
       return;
     }
 
-  gimp_drawable_offsets(layer_ID, &x_off, &y_off);
+  gimp_drawable_offsets (layer_ID, &x_off, &y_off);
 
   gimp_drawable_mask_bounds (layer_ID, &x1, &y1, &x2, &y2);
 
@@ -1572,12 +1785,14 @@ lqr_external_readbias (LqrRaster * r, gint32 layer_ID, gint bias_factor)
   //printf(" x1, y1=%i,%i  x2, y2=%i,%i  xo, yo=%i,%i  lw, lh=%i,%i\n", x1, y1, x2, y2, x_off, y_off, lw, lh);
   //printf("rx1,ry1=%i,%i rx2,ry2=%i,%i rxo,ryo=%i,%i rlw,rlh=%i,%i\n", 0, 0, r->w, r->h, r->x_off, r->y_off, r->w, r->h); fflush(stdout);
 
-  inrow = g_new (guchar, bpp * lw);
+  inrow = g_try_new (guchar, bpp * lw);
+  lqr_test_mem (inrow);
 
 
   for (y = MAX (0, y1 + y_off); y < MIN (r->h, y2 + y_off); y++)
     {
-      gimp_pixel_rgn_get_row (&rgn_in, inrow, MAX(x1, -x_off), y - y1 - y_off, lw);
+      gimp_pixel_rgn_get_row (&rgn_in, inrow, MAX (x1, -x_off),
+                              y - y1 - y_off, lw);
 
       for (x = 0; x < lw; x++)
         {
@@ -1587,8 +1802,8 @@ lqr_external_readbias (LqrRaster * r, gint32 layer_ID, gint bias_factor)
               sum += inrow[bpp * x + k];
             }
 
-          r->map[y * r->w + (x + MAX(0, x1 + x_off))].b +=
-            (double) bias_factor * sum / (100 * 255 * bpp);
+          r->map[y * r->w + (x + MAX (0, x1 + x_off))].b +=
+            (double) bias_factor *sum / (100 * 255 * bpp);
         }
 
     }
@@ -1606,6 +1821,8 @@ lqr_external_writeimage (LqrRaster * r, GimpDrawable * drawable)
   GimpPixelRgn rgn_out;
   guchar *outrow;
 
+  gimp_progress_init (_("Applying changes..."));
+
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
   gimp_pixel_rgn_init (&rgn_out,
@@ -1615,12 +1832,13 @@ lqr_external_writeimage (LqrRaster * r, GimpDrawable * drawable)
 
   if (!r->transposed)
     {
-      outrow = g_new (guchar, r->bpp * (x2 - x1));
+      outrow = g_try_new (guchar, r->bpp * (x2 - x1));
     }
   else
     {
-      outrow = g_new (guchar, r->bpp * (y2 - y1));
+      outrow = g_try_new (guchar, r->bpp * (y2 - y1));
     }
+  lqr_test_mem (outrow);
 
   lqr_cursor_reset (r->c);
 
@@ -1631,7 +1849,7 @@ lqr_external_writeimage (LqrRaster * r, GimpDrawable * drawable)
           for (k = 0; k < r->bpp; k++)
             {
               //outrow[r->bpp * x + k] = (int) (255 * fabs(r->c->now->b) / 10);
-              outrow[r->bpp * x + k] = (int) (255 * r->c->now->rgb[k]);
+              outrow[r->bpp * x + k] = r->c->now->rgb[k];
             }
           lqr_cursor_next (r->c);
         }
@@ -1643,6 +1861,8 @@ lqr_external_writeimage (LqrRaster * r, GimpDrawable * drawable)
         {
           gimp_pixel_rgn_set_col (&rgn_out, outrow, y + x1, y1, y2 - y1);
         }
+
+      gimp_progress_update ((gdouble) y / (r->h - 1));
 
     }
 
@@ -1659,7 +1879,7 @@ lqr_external_writeimage (LqrRaster * r, GimpDrawable * drawable)
 
 
 
-void
+gboolean
 render (gint32 image_ID,
         GimpDrawable * drawable,
         PlugInVals * vals,
@@ -1668,6 +1888,8 @@ render (gint32 image_ID,
   LqrRaster *rasta;
   gint32 mask_ID;
   gint32 layer_ID;
+  gint old_width, old_height;
+  gint x_off, y_off, aux_x_off, aux_y_off;
 
   drawable = gimp_drawable_get (gimp_image_get_active_drawable (image_ID));
 
@@ -1686,15 +1908,48 @@ render (gint32 image_ID,
         }
     }
 
+  g_assert (gimp_drawable_is_layer (drawable->drawable_id));
+
+  //gimp_layer_set_lock_alpha(drawable->drawable_id, FALSE);
+
 #ifdef __LQR_DEBUG__
   printf ("[ clock sofar: %g ]\n", (double) clock () / CLOCKS_PER_SEC);
 #endif // __LQR_DEBUG__
 
+  if (vals->resize_aux_layers == TRUE)
+    {
+      gimp_drawable_offsets (drawable->drawable_id, &x_off, &y_off);
+      old_width = gimp_drawable_width (drawable->drawable_id);
+      old_height = gimp_drawable_height (drawable->drawable_id);
+      if (vals->pres_layer_ID != 0)
+        {
+          gimp_drawable_offsets (vals->pres_layer_ID, &aux_x_off, &aux_y_off);
+          gimp_layer_resize (vals->pres_layer_ID, old_width, old_height,
+                             aux_x_off - x_off, aux_y_off - y_off);
+        }
+      if (vals->disc_layer_ID != 0)
+        {
+          gimp_drawable_offsets (vals->disc_layer_ID, &aux_x_off, &aux_y_off);
+          gimp_layer_resize (vals->disc_layer_ID, old_width, old_height,
+                             aux_x_off - x_off, aux_y_off - y_off);
+        }
+    }
+
+
   rasta = lqr_raster_create (drawable, vals->pres_layer_ID, vals->pres_coeff,
                              vals->disc_layer_ID, vals->disc_coeff,
-                             vals->grad_func, vals->update_en);
+                             vals->grad_func, vals->update_en,
+                             vals->resize_aux_layers);
+  if (rasta == NULL)
+    {
+      g_message (_("Not enough memory"));
+      return FALSE;
+    }
 
-  lqr_raster_resize (rasta, vals->new_width, vals->new_height);
+  if (!lqr_raster_resize (rasta, vals->new_width, vals->new_height))
+    {
+      return FALSE;
+    }
 
   if (vals->resize_canvas == TRUE)
     {
@@ -1707,6 +1962,8 @@ render (gint32 image_ID,
     {
       gimp_layer_resize (drawable->drawable_id, vals->new_width,
                          vals->new_height, 0, 0);
+      x_off = 0;
+      y_off = 0;
     }
   drawable = gimp_drawable_get (gimp_image_get_active_drawable (image_ID));
 
@@ -1716,6 +1973,25 @@ render (gint32 image_ID,
 
 
   lqr_external_writeimage (rasta, drawable);
+
+  if (vals->resize_aux_layers == TRUE)
+    {
+      if (vals->pres_layer_ID != 0)
+        {
+          gimp_layer_resize (vals->pres_layer_ID, vals->new_width,
+                             vals->new_height, x_off, y_off);
+          lqr_external_writeimage (rasta->pres_raster,
+                                   gimp_drawable_get (vals->pres_layer_ID));
+        }
+      if (vals->disc_layer_ID != 0)
+        {
+          gimp_layer_resize (vals->disc_layer_ID, vals->new_width,
+                             vals->new_height, x_off, y_off);
+          lqr_external_writeimage (rasta->disc_raster,
+                                   gimp_drawable_get (vals->disc_layer_ID));
+        }
+    }
+
   lqr_raster_destroy (rasta);
 
 #ifdef __LQR_DEBUG__
@@ -1723,4 +1999,5 @@ render (gint32 image_ID,
 #endif // __LQR_DEBUG__
 
   //gimp_image_scale(image_ID, rasta->w_start, rasta->h_start);
+  return TRUE;
 }

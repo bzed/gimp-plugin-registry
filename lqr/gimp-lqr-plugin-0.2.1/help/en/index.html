@@ -29,27 +29,47 @@
 	i.e. avoiding distortion of the important parts of the picture.
 	It can also be used to remove portions of the picture in a consistent way.
         <p>
-        It works both ways, but enarging is better obtained in successive steps.
+        It works both ways, but enlarging is better obtained in successive steps.
 	It can be manually instructed about what features of the image should be
 	preserved and which should be discarded.
 	<p>
 	The plugin works on the active layer. See below for a full explanation of the plugin
 	behavior in presence of selections, floating selections, quickmasks and masks.
 	<p>
-	<font size="+1"><b>User interface description</b></font>
+	<font size="+2"><b>User interface description</b></font>
 	<p>
 	<center><img src="../images/dialog1.png"></center>
 	<p>
-	<b>Select new width and height</b>
+	<font size="+1"><b>Select new width and height</b></font>
 	<p>
 	In this section it is possible to choose the final
-	size. Rescaling is always performed on the width first, then on the height.
+	size. It is advised to rescale always in one direction at a time. If both 
+	the width and the height are changed, rescaling is always performed on the width first,
+	then on the height (for no particular reason).
 	The reverse order can be obtained by simply applying it twice, letting the width
 	unchanged the first time, and the height the second.
 	<p>
-	<b>Feature preservation selection</b>
+	<font size="+1"><b>Manual feature selection, a quick guide</b></font>
 	<p>
-	In this section it is possible to specify if there are regions of the image which
+	The easiest way to manually select the features of the image that you want to protect
+	or discard is the following: before invoking the plugin, select the layer you want 
+	to resize, create a new transparent layer for feature preservation, set its transparency
+	to around 50% and choose the regions of the image you're interested in by painting them
+	with some full colour, e.g. green.
+	Then do the same for feature discard, maybe using a different colour, e.g. red.
+	<p>
+	When you're done, select back the original layer and invoke the plugin. In the dialog,
+	activate the feature preservation/discard options and appropriately choose the layers
+	you just painted.
+	<p>
+	Note that discarding a feature implies that it will be removed if shrinking
+	the layer, but it will be inflated if enlarging it, since it will be treated
+	as unimportant background which can be removed or expanded as needed.
+	<p>
+	<font size="+1"><b>Manual feature selection, full description</b></font>
+	<p>
+	In the <b>Feature preservation selection</b> section
+	it is possible to specify if there are regions of the image which
 	should be preserved from modification, by checking the <b>Activate feature preservation</b>
 	box, and by choosing a layer among the ones which belong to the current image (different
 	from the active one, which is to be rescaled) by choosing it in the
@@ -58,39 +78,45 @@
 	with an alpha channel, the maximum value is achieved on white pixels, while black ones
 	are worth one quarter of the white ones and transparent pixels are ignored. In general, it is
 	advisable to work in monochrome, and modulate the intensity by just the transparency
-	in case fine tuning is needed.
+	in case fine tuning is needed, e.g. by using the quickmask.
 	The size and position of the selected layer can be arbitrary, the plugin will only use
 	those portions which overlap with the active layer.
 	The <b>Intensity</b> scale can be used as a global parameter to modulate the feature preservation.
 	<p>
-	<b>Feature discard selection</b>
+	The <b>Feature discard selection</b> section is identical to the previous one,
+	but the effect is reversed.
 	<p>
-	This section is identical to the previous one, but the effect is reversed. This can be used
-	to remove specific features from the image while shrinking it, or to let them expand
-	while enlarging it. Best results are obtained if the removal is done in little steps.
+	<font size="+1"><b>Advanced Options</b></font>
 	<p>
-	<b>Select gradient function</b>
-	<p>
-	In this section it is possible to choose which function
-	is to be used to calculate the energy map of the image. For each pixel in the image,
-	the x,y components of the gradient are computed from the pixel's four nearest neighbors.
-	The exact form of the energy map depends on the choice of the gradient function, and
-	this in turn determines which elements of the image are more important, and should
-	thus be preserved, and which are not, and can be removed (if shrinking) or inflated
-	(if enlarging).
-	<p>
-	<b>Options</b>
+	<center><img src="../images/dialog2.png"></center>
 	<p>
 	<b>Update energy at every step.</b>
 	Specifies if the algorithm will update the energy map of the image after each seam
 	removal (image alteration can affect the energy map on which the carving is based).
 	<p>
-	<b>Rescale image canvas.</b>
-	Specifies wether the image canvas should be rescaled to meet the new size of the active
+	<b>Resize image canvas.</b>
+	Specifies wether the image canvas should be resized to meet the new size of the active
 	layer. If this option is checked, the active layer will be repositioned to be
 	fully visible.
 	<p>
-	<font size="+1">
+	<b>Resize preserve/discard layers.</b>
+	Specifies wether the layers used to manually select the features of the image
+	will be resized along with the active layer. If this option is checked, those
+	layers will be first cropped to the active layer's size, then they will undergo
+	the same seam carving and inserting process as the active layer.
+	<p>
+	<b>Select gradient function.</b>
+	It is possible to choose which function
+	is to be used to calculate the energy map of the image. For each pixel in the image,
+	the x,y components of the gradient are computed from the pixel's four nearest neighbors.
+	The exact form of the energy map depends on the choice of the gradient function, and
+	this in turn determines which elements of the image are more important, and should
+	thus be preserved, and which are not, and can be removed (if shrinking) or inflated
+	(if enlarging). Using the <b>Null</b> function in conjunction with the feature preservation
+	selection can be used to override completely the automatic feature detection, thus
+	allowing the user to generate his own energy map.
+	<p>
+	<font size="+2">
 		<b>Behavior in presence of floating selections, selections, channels,
 			quickmasks and masks</b>
 	</font>

@@ -1,3 +1,10 @@
+gimp-plugin-registry (0.3.2-1) unstable; urgency=low
+
+  * lqr:
+    - New upstream version
+
+ -- Bernd Zeimetz <bernd@bzed.de>  Thu, 27 Sep 2007 10:30:00 +0200
+
 gimp-plugin-registry (0.3.1-1) unstable; urgency=low
 
   * lqr:

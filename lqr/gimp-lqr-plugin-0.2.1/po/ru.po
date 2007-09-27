@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP LiquidRescale Plug-In 0.1.5\n"
+"Project-Id-Version: GIMP LiquidRescale Plug-In 0.2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-12 07:30+0200\n"
-"PO-Revision-Date: 2007-09-10 21:40+0300\n"
+"POT-Creation-Date: 2007-09-26 04:27+0200\n"
+"PO-Revision-Date: 2007-09-26 11:21+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team:  <gnome-cyr@lists.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -11,106 +11,139 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Russian\n"
 
-#: src/interface.c:135
+#: src/interface.c:214
 msgid "GIMP LiquidRescale Plug-In"
 msgstr "Избирательное масштабирование"
 
-#: src/interface.c:183
+#: src/interface.c:226
+msgid "Selected layer"
+msgstr "Выбранный слой"
+
+#. Coordinates widget for selecting new size
+#: src/interface.c:323
 msgid "Select new width and height"
 msgstr "Укажите новую ширину и высоту"
 
-#: src/interface.c:198
+#: src/interface.c:338
 msgid "Width:"
 msgstr "Ширина:"
 
-#: src/interface.c:200
+#: src/interface.c:340
 msgid "Height:"
 msgstr "Высота:"
 
-#: src/interface.c:207
+#. Feature preservation
+#: src/interface.c:367
 msgid "Feature preservation selection"
 msgstr "Сохранение значимых объектов"
 
-#: src/interface.c:216
+#: src/interface.c:376
 msgid "Activate feature preservation"
 msgstr "Сохранять значимые объекты"
 
-#: src/interface.c:241 src/interface.c:300
+#: src/interface.c:407 src/interface.c:503
 msgid "Available Layers:"
 msgstr "Доступные слои:"
 
-#: src/interface.c:252 src/interface.c:311
+#: src/interface.c:428 src/interface.c:522
 msgid "Intensity:"
 msgstr "Сила эффекта:"
 
-#: src/interface.c:255
+#: src/interface.c:431
 msgid "Overall coefficient for feature preservation intensity"
 msgstr "Коэффициент силы действия при сохранении значимых объектов"
 
-#: src/interface.c:264
+#. Feature discard
+#: src/interface.c:460
 msgid "Feature discard selection"
 msgstr "Удаление значимых объектов"
 
-#: src/interface.c:273
+#: src/interface.c:469
 msgid "Activate feature discard"
 msgstr "Удалять значимые объекты"
 
-#: src/interface.c:314
+#: src/interface.c:525
 msgid "Overall coefficient for feature discard intensity"
 msgstr "Коэффициент силы действия при удалении значимых объектов"
 
-#: src/interface.c:324
-msgid "Select gradient function"
-msgstr "Выберите функцию расчёта градиентов"
+#. Advanced Options
+#: src/interface.c:553
+msgid "Advanced Options"
+msgstr "Дополнительные параметры"
 
-#: src/interface.c:329
-msgid "Sum of absolute values"
-msgstr "Сумма абсолютных значений"
-
-#: src/interface.c:330
-msgid "Transversal absolute value"
-msgstr "Поперечное абсолютное значение"
-
-#: src/interface.c:331
-msgid "Norm"
-msgstr "Обычная"
-
-#: src/interface.c:340
-msgid "Options"
-msgstr "Параметры"
-
-#: src/interface.c:349
+#: src/interface.c:574
 msgid "Update energy at every step"
 msgstr "Обновлять карту энергии на каждом шаге"
 
-#: src/interface.c:358
+#: src/interface.c:582
 msgid "Resize image canvas"
 msgstr "Изменять размер холста"
 
-#: src/interface.c:377
-msgid "Select behavior for masks"
+#: src/interface.c:590
+msgid "Resize preserve/discard layers"
+msgstr "Менять размер слоёв с метками сохранения/удаления"
+
+#: src/interface.c:615
+msgid "Select gradient function"
+msgstr "Выберите функцию расчёта градиентов"
+
+#: src/interface.c:620
+msgid "Transversal absolute value"
+msgstr "Поперечное абсолютное значение"
+
+#: src/interface.c:621
+msgid "Sum of absolute values"
+msgstr "Сумма абсолютных значений"
+
+#: src/interface.c:622
+msgid "Norm"
+msgstr "Обычная"
+
+#. Null can be translated as Zero
+#: src/interface.c:624
+msgid "Null"
+msgstr "Ноль"
+
+#: src/interface.c:646
+msgid "Select behavior for the mask"
 msgstr "Укажите, как работать с масками"
 
-#: src/interface.c:382
+#: src/interface.c:651
 msgid "Apply"
 msgstr "Применять"
 
-#: src/interface.c:382
+#: src/interface.c:651
 msgid "Discard"
 msgstr "Не использовать"
 
-#: src/main.c:135
+#: src/main.c:137
 msgid "LiquidRescaling (content-aware rescaling)"
 msgstr "Избирательное масштабирование (без изменения значимых объектов)"
 
-#: src/main.c:135
+#: src/main.c:137
 msgid "Liquid rescale ..."
 msgstr "Плавное масштабирование..."
 
-#: src/render.c:1356
+#: src/render.c:53
+msgid "Not enough memory, aborting"
+msgstr "Недостаточно памяти, выполнение операции прерывается"
+
+#: src/render.c:938 src/render.c:1382 src/render.c:1444 src/render.c:1945
+msgid "Not enough memory"
+msgstr "Недостаточно памяти"
+
+#: src/render.c:1533
 msgid "Resizing width..."
 msgstr "Изменяется ширина..."
 
-#: src/render.c:1379
+#: src/render.c:1573
 msgid "Resizing height..."
 msgstr "Изменяется высота..."
+
+#: src/render.c:1714
+msgid "Parsing layer..."
+msgstr "Разбирается слой..."
+
+#: src/render.c:1824
+msgid "Applying changes..."
+msgstr "Применяются изменения..."

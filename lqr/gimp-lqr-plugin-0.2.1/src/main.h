@@ -36,6 +36,7 @@ typedef struct
   gint disc_coeff;
   gint grad_func;
   gboolean update_en;
+  gboolean resize_aux_layers;
   gboolean resize_canvas;
   gint mask_behavior;
 } PlugInVals;
@@ -48,14 +49,66 @@ typedef struct
 typedef struct
 {
   gint32 layer_ID;
-  gboolean pres_status;
-  gboolean disc_status;
 } PlugInDrawableVals;
 
 typedef struct
 {
   gboolean chain_active;
+  gboolean pres_status;
+  gboolean disc_status;
+  gint32 pres_layer_ID;
+  gint32 disc_layer_ID;
 } PlugInUIVals;
+
+#define PLUGIN_UI_VALS(data) ((PlugInUIVals*)data)
+
+typedef struct
+{
+  gint32 image_ID;
+  gint32 layer_ID;
+  GimpDrawable *drawable;
+  GimpImageType type;
+  gint width;
+  gint height;
+  gint old_width;
+  gint old_height;
+  gint x_off;
+  gint y_off;
+  gfloat factor;
+  guchar* buffer;
+  guchar* pres_buffer;
+  guchar* disc_buffer;
+  guchar* preview_buffer;
+  gboolean toggle;
+  PlugInVals *vals;
+  PlugInUIVals *ui_vals;
+  GdkPixbuf *pixbuf;
+  GtkWidget *area;
+  GtkWidget *pres_combo;
+  GtkWidget *disc_combo;
+} PreviewData;
+
+#define PREVIEW_DATA(data) ((PreviewData*)data)
+
+typedef struct
+{
+  gpointer ui_vals;
+  gpointer button;
+} PresDiscStatus;
+
+#define PRESDISC_STATUS(data) ((PresDiscStatus*)data)
+
+typedef struct
+{
+  gpointer ui_toggled;
+  gpointer combo;
+  gpointer combo_label;
+  gpointer scale;
+  gpointer status;
+} ToggleData;
+
+#define TOGGLE_DATA(data) ((ToggleData*)data)
+
 
 
 /*  Default values  */
