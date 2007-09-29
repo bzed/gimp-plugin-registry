@@ -3,7 +3,7 @@
 build: build-stamp
 build-stamp:
 	if dpkg --compare-versions $(GIMPVER) '>=' 2.3; then \
-	    make -C src CPPFLAGS="$(CFLAGS)" NODEPS="-DGTK_DISABLE_DEPRECATED" dbp  ;\
+	    make -C src CPPFLAGS="$(CFLAGS)" NODEPS="" dbp  ;\
 	else \
 	    make -C src CPPFLAGS="$(CFLAGS)" dbp ;\
 	fi
