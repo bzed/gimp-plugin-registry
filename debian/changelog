@@ -3,7 +3,8 @@ gimp-plugin-registry (0.3.2-1) unstable; urgency=low
   * lqr:
     - New upstream version
   * DBP:
-    - Fixing Makefile to build with the latest Gimp versions
+    - Fixing Makefile to build with the latest Gimp/GTK versions
+      (Closes: #444533)
 
  -- Bernd Zeimetz <bernd@bzed.de>  Sat, 29 Sep 2007 12:15:58 +0200
 
