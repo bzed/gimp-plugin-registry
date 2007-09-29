@@ -1,4 +1,4 @@
-   * Streak-Camera simulation:
+   * Streak-Camera simulation {version}:
      A streak camera images an object through a slit -
      thus getting a "one dimensional image". This image is
      propagated along the second dimension of the image plane

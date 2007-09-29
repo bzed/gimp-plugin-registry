@@ -1,3 +1,15 @@
+gimp-plugin-registry (0.3.2-2) UNRELEASED; urgency=low
+
+  * debian/rules:
+    - Adding extra checks to ensure that the debian/{copyright,control} were
+      updated after modifying the description/version/copyright files in the
+      plugin directories.
+    - Modifying the update-description target to include version informations
+      which are provided in the plugin directories now. Thanks to Nelson A. de
+      Oliveira for the suggestion (Closes: #444591).
+
+ -- Bernd Zeimetz <bernd@bzed.de>  Sat, 29 Sep 2007 19:37:23 +0200
+
 gimp-plugin-registry (0.3.2-1) unstable; urgency=low
 
   * lqr:
