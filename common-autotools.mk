@@ -23,25 +23,32 @@ endif
 ifneq "$(wildcard /usr/share/misc/config.guess)" ""
 	cp -f /usr/share/misc/config.guess $(SRCDIR)/config.guess
 endif
-	cd $(SRCDIR); ./configure $(CONFFLAGS) \
-                                  CFLAGS="$(CFLAGS)" \
-                                  LDFLAGS="$(LDFLAGS)" \
-                                  CPPFLAGS="$(CPPFLAGS)"
+
+	$(PRE-CONFIGURE-HOOK)
+	cd $(SRCDIR); GIMPTOOL="/usr/bin/gimptool-2.0" \
+	              CFLAGS="$(CFLAGS)" \
+	              LDFLAGS="$(LDFLAGS)" \
+	              CPPFLAGS="$(CPPFLAGS)" ./configure $(CONFFLAGS)
+	$(POST-CONFIGURE-HOOK)
 
 build: build-stamp
 
 build-stamp: $(SRCDIR)/config.status
+	$(PRE-BUILD-HOOK)
 	cd $(SRCDIR); make
+	$(POST-BUILD-HOOK)
 	touch $@
 
 install: build-stamp
+	$(PRE-INSTALL-HOOK)
 	cd $(SRCDIR); make install DESTDIR=$(DESTDIR)
+	$(POST-INSTALL-HOOK)
 
 clean:
 	rm -f build-stamp
 	cd $(SRCDIR); [ ! -r Makefile ] || make distclean
 	rm -f $(SRCDIR)/config.sub $(SRCDIR)/config.guess
-
+	$(CLEAN-HHOK)
 
 .PHONY: install clean build
 

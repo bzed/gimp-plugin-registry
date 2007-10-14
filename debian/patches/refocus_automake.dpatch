@@ -1,0 +1,183 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## refocus_automake.dpatch by Bernd Zeimetz <bernd@bzed.de>
+##
+## DP: cleaning up automake weirdness.
+
+@DPATCH@
+diff -urNad gimp-plugin-registry~/refocus/src/Makefile.am gimp-plugin-registry/refocus/src/Makefile.am
+--- gimp-plugin-registry~/refocus/src/Makefile.am	2003-01-30 22:29:28.000000000 +0100
++++ gimp-plugin-registry/refocus/src/Makefile.am	2007-10-15 00:59:03.000000000 +0200
+@@ -7,18 +7,11 @@
+ endif
+ 
+ 
+-SUBDIRS= src lib doc $(GTK_DOC_DIR)
++SUBDIRS= src doc $(GTK_DOC_DIR)
+ 
+ install-bin:
+ 	cd src; make install-bin
+ install-admin-bin:
+ 	cd src; make install-admin-bin
+ 
+-if HAVE_ATLAS
+ dist-hook:
+-	@echo "**** Don't run make dist when system is configured with atlas."
+-	@echo "**** Rename lib-atlas, rm config.cache and re-run configure."
+-	@false
+-else
+-dist-hook:
+-endif
+diff -urNad gimp-plugin-registry~/refocus/src/Makefile.in gimp-plugin-registry/refocus/src/Makefile.in
+--- gimp-plugin-registry~/refocus/src/Makefile.in	2003-02-03 18:48:35.000000000 +0100
++++ gimp-plugin-registry/refocus/src/Makefile.in	2007-10-15 00:59:03.000000000 +0200
+@@ -68,7 +68,6 @@
+ GIMP_PLUGIN_DIR = @GIMP_PLUGIN_DIR@
+ GLIB_CFLAGS = @GLIB_CFLAGS@
+ GLIB_GENMARSHAL = @GLIB_GENMARSHAL@
+-GLIB_LIBS = @GLIB_LIBS@
+ GLIB_MKENUMS = @GLIB_MKENUMS@
+ GOBJECT_QUERY = @GOBJECT_QUERY@
+ GTKDOC = @GTKDOC@
+@@ -85,7 +84,7 @@
+ @ENABLE_GTK_DOC_TRUE@GTK_DOC_DIR = @ENABLE_GTK_DOC_TRUE@gtk-doc
+ @ENABLE_GTK_DOC_FALSE@GTK_DOC_DIR = 
+ 
+-SUBDIRS = src lib doc $(GTK_DOC_DIR)
++SUBDIRS = src doc $(GTK_DOC_DIR)
+ ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
+ mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+ CONFIG_CLEAN_FILES = 
+@@ -98,7 +97,7 @@
+ 
+ TAR = gtar
+ GZIP_ENV = --best
+-DIST_SUBDIRS =  src lib doc gtk-doc
++DIST_SUBDIRS =  src doc gtk-doc
+ all: all-redirect
+ .SUFFIXES:
+ $(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+@@ -340,10 +339,6 @@
+ install-admin-bin:
+ 	cd src; make install-admin-bin
+ 
+-@HAVE_ATLAS_TRUE@dist-hook:
+-@HAVE_ATLAS_TRUE@	@echo "**** Don't run make dist when system is configured with atlas."
+-@HAVE_ATLAS_TRUE@	@echo "**** Rename lib-atlas, rm config.cache and re-run configure."
+-@HAVE_ATLAS_TRUE@	@false
+ @HAVE_ATLAS_FALSE@dist-hook:
+ 
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
+diff -urNad gimp-plugin-registry~/refocus/src/src/Makefile.am gimp-plugin-registry/refocus/src/src/Makefile.am
+--- gimp-plugin-registry~/refocus/src/src/Makefile.am	2006-12-18 21:29:22.000000000 +0100
++++ gimp-plugin-registry/refocus/src/src/Makefile.am	2007-10-15 01:03:12.000000000 +0200
+@@ -1,22 +1,23 @@
+ ## Process this file with automake to produce Makefile.in
+ 
+-INCLUDES=@GTK_CFLAGS@ @GIMP_CFLAGS@ -I @LAPACK_INCLUDE_DIR@
++INCLUDES=
+ 
+ bin_PROGRAMS = refocus
+ noinst_PROGRAMS = test-matrix
+ 
+-ldadd_atlas=-L@LAPACK_LIB_DIR@ -llapack -lcblas -latlas
++ldadd_atlas=-llapack -lblas
+ 
+ noinst_HEADERS=bdclosure.h refocus.h matrix.h tilebuf.h conv.h fwlapack.h gimppreview.h prevman.h util.h
+ EXTRA_DIST = dummy-plugin.c
+ 
+ refocus_SOURCES = refocus.c conv.c gimppreview.c prevman.c util.c matrix.c tilebuf.c bdclosure.c fwlapack.c
+-refocus_LDADD = @GTK_LIBS@ -lgimp-2.0 ${ldadd_atlas}
+-refocus_DEPENDENCIES=@LAPACK_LIB_DIR@/liblapack.a
++
++refocus_LDADD = ${ldadd_atlas}
++refocus_DEPENDENCIES=
+ 
+ test_matrix_SOURCES = matrix.c test-matrix.c fwlapack.c
+-test_matrix_LDADD = -lm ${ldadd_atlas} @GLIB_LIBS@
+-test_matrix_DEPENDENCIES=@LAPACK_LIB_DIR@/liblapack.a
++test_matrix_LDADD = -lm ${ldadd_atlas}
++test_matrix_DEPENDENCIES=
+ 
+ install-bin: refocus
+ 	@if test "x@GIMPTOOL@" = "x" ; then \
+@@ -36,9 +37,6 @@
+ 		@GIMPTOOL@ --install-admin-bin refocus ; \
+ 	fi
+ 
+-@LAPACK_LIB_DIR@/liblapack.a:
+-	cd @LAPACK_LIB_DIR@; make
+-
+ %.s: %.c
+ 	${CC} ${CFLAGS} -S $< -o $@
+ 
+diff -urNad gimp-plugin-registry~/refocus/src/src/Makefile.in gimp-plugin-registry/refocus/src/src/Makefile.in
+--- gimp-plugin-registry~/refocus/src/src/Makefile.in	2006-12-18 21:31:48.000000000 +0100
++++ gimp-plugin-registry/refocus/src/src/Makefile.in	2007-10-15 01:02:58.000000000 +0200
+@@ -63,7 +63,6 @@
+ GIMP_CFLAGS = @GIMP_CFLAGS@
+ GIMP_CFLAGS_NOUI = @GIMP_CFLAGS_NOUI@
+ GIMP_DATA_DIR = @GIMP_DATA_DIR@
+-GIMP_LIBS = @GIMP_LIBS@
+ GIMP_LIBS_NOUI = @GIMP_LIBS_NOUI@
+ GIMP_PLUGIN_DIR = @GIMP_PLUGIN_DIR@
+ GLIB_CFLAGS = @GLIB_CFLAGS@
+@@ -72,34 +71,30 @@
+ GLIB_MKENUMS = @GLIB_MKENUMS@
+ GOBJECT_QUERY = @GOBJECT_QUERY@
+ GTKDOC = @GTKDOC@
+-GTK_CFLAGS = @GTK_CFLAGS@
+-GTK_LIBS = @GTK_LIBS@
+ HTML_DIR = @HTML_DIR@
+-LAPACK_INCLUDE_DIR = @LAPACK_INCLUDE_DIR@
+-LAPACK_LIB_DIR = @LAPACK_LIB_DIR@
+ MAKEINFO = @MAKEINFO@
+ PACKAGE = @PACKAGE@
+ PKG_CONFIG = @PKG_CONFIG@
+ RANLIB = @RANLIB@
+ VERSION = @VERSION@
+ 
+-INCLUDES = @GTK_CFLAGS@ @GIMP_CFLAGS@ -I @LAPACK_INCLUDE_DIR@
++INCLUDES = 
+ 
+ bin_PROGRAMS = refocus
+ noinst_PROGRAMS = test-matrix
+ 
+-ldadd_atlas = -L@LAPACK_LIB_DIR@ -llapack -lcblas -latlas
++ldadd_atlas = -llapack -lcblas
+ 
+ noinst_HEADERS = bdclosure.h refocus.h matrix.h tilebuf.h conv.h fwlapack.h gimppreview.h prevman.h util.h
+ EXTRA_DIST = dummy-plugin.c
+ 
+ refocus_SOURCES = refocus.c conv.c gimppreview.c prevman.c util.c matrix.c tilebuf.c bdclosure.c fwlapack.c
+-refocus_LDADD = @GTK_LIBS@ -lgimp-2.0 ${ldadd_atlas}
+-refocus_DEPENDENCIES = @LAPACK_LIB_DIR@/liblapack.a
++refocus_LDADD = ${ldadd_atlas}
++refocus_DEPENDENCIES =
+ 
+ test_matrix_SOURCES = matrix.c test-matrix.c fwlapack.c
+-test_matrix_LDADD = -lm ${ldadd_atlas} @GLIB_LIBS@
+-test_matrix_DEPENDENCIES = @LAPACK_LIB_DIR@/liblapack.a
++test_matrix_LDADD = -lm ${ldadd_atlas}
++test_matrix_DEPENDENCIES =
+ mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+ CONFIG_CLEAN_FILES = 
+ PROGRAMS =  $(bin_PROGRAMS) $(noinst_PROGRAMS)
+@@ -250,7 +245,7 @@
+ conv.o: conv.c refocus.h util.h tilebuf.h prevman.h conv.h matrix.h \
+ 	bdclosure.h
+ dummy-plugin.o: dummy-plugin.c
+-fwlapack.o: fwlapack.c fwlapack.h util.h ../lib/f2c.h ../lib/clapack.h
++fwlapack.o: fwlapack.c fwlapack.h util.h 
+ gimppreview.o: gimppreview.c gimppreview.h
+ matrix.o: matrix.c fwlapack.h matrix.h refocus.h util.h
+ prevman.o: prevman.c prevman.h util.h
+@@ -354,9 +349,6 @@
+ 		@GIMPTOOL@ --install-admin-bin refocus ; \
+ 	fi
+ 
+-@LAPACK_LIB_DIR@/liblapack.a:
+-	cd @LAPACK_LIB_DIR@; make
+-
+ %.s: %.c
+ 	${CC} ${CFLAGS} -S $< -o $@
+ 

@@ -1,0 +1,46 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## refocus_lapack.dpatch by Bernd Zeimetz <bernd@bzed.de>
+##
+## DP: no, we don't use atlas. way too heavy.
+
+@DPATCH@
+diff -urNad gimp-plugin-registry~/refocus/src/src/fwlapack.c gimp-plugin-registry/refocus/src/src/fwlapack.c
+--- gimp-plugin-registry~/refocus/src/src/fwlapack.c	2003-01-30 22:30:18.000000000 +0100
++++ gimp-plugin-registry/refocus/src/src/fwlapack.c	2007-10-15 01:04:47.000000000 +0200
+@@ -28,36 +28,19 @@
+ static char vcid[] GCC_UNUSED = "$Id: fwlapack.c,v 1.1.1.1 2003/01/30 21:30:18 ernstl Exp $";
+ #endif /* lint */
+ 
+-#ifdef HAVE_ATLAS
+-/* Fix stupid bugs in the atlas header file that use ATLAS_* instead of CBLAS_ */
+-#define ATLAS_ORDER CBLAS_ORDER
+-#define ATLAS_UPLO CBLAS_UPLO
+-#define ATLAS_DIAG CBLAS_DIAG
+-
+-#include "clapack.h"
+-
+-#else /* Not HAVE_ATLAS */
+-
+ #include "f2c.h"
+ #include "clapack.h"
+-#endif
+ 
+ int
+ dgesv (const int N, const int NRHS, double *A, const int lda,
+        double *B, const int ldb)
+ {
+   int result = 0;
+-#ifdef HAVE_ATLAS
+-  int *ipiv = g_new (int, N);
+-  result = clapack_dgesv (CblasColMajor, N, NRHS, A, lda, ipiv, B, ldb);
+-  g_free (ipiv);
+-#else
+   integer i_N = N, i_NHRS = NRHS, i_lda = lda, i_ldb = ldb, info;
+   integer *ipiv = g_new (integer, N);
+ 
+   dgesv_ (&i_N, &i_NHRS, A, &i_lda, ipiv, B, &i_ldb, &info);
+   g_free (ipiv);
+   result = info;
+-#endif
+   return (result);
+ }
