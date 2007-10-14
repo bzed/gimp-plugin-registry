@@ -546,7 +546,7 @@ The copyright information for the included plugins follows here:
 bw-simulation:
 
 The plugin was downloaded from:
-http://serge.mankovski.com/photoblog/bw-film-simulation-in-gimp/
+http://registry.gimp.org/plugin?id=8860
 
  Copyright Serge Mankovski <sevato@mankovski.com>  Toronto, Ontario, 2007
 
@@ -832,6 +832,88 @@ http://registry.gimp.org/plugin?id=8173
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+
+************************************************************
+refocus:
+
+The plugin was downloaded from:
+http://registry.gimp.org/plugin?id=2835
+
+ Upstream Author:
+  Ernst Lippe <ernstl@users.sourceforge.net>
+
+ Copyright:
+  refocus is Copyright (C) 1999-2003 Ernst Lippe
+
+
+ This program is free software; you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by the
+ Free Software Foundation; either version 2, or (at your option) any
+ later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU Library General Public
+ License along with this library; if not, write to the
+ Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ Boston, MA  02110-1301, USA
+
+ On Debian systems, the complete text of the GNU General
+ Public License can be found in `/usr/share/common-licenses/GPL-2'.
+
+
+ Other copyright information, by file:
+
+ All are published under GPL, see above.
+
+ * gimppreview.c:
+   Copyright (C) 1998-1999 Shawn T. Amundson
+   Modifications (C) 1999-2003 Ernst Lippe
+ 
+   Some of the checkerboard & image combination code is based of
+   code Copyright 1997 (C) Federico Mena Quintero and is used
+   here by permission.
+ 
+
+ * gimppreview.h:
+   Copyright (C) 1998-1999 Shawn T. Amundson
+   Modifications (C) 1999-2003 Ernst Lippe
+  
+
+ * refocus.c:
+   Copyright (C) 1999-2003 Ernst Lippe
+   Based on the Convolution Matrix plug-in by Lauri Alanko <la@iki.fi>
+
+
+
+
+************************************************************
+smart-sharpen-redux:
+
+The plugin was downloaded from:
+http://registry.gimp.org/plugin?id=6694
+
+ Martin Egger (martin.egger@gmx.net)
+ (C) 2007, Bern, Switzerland
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
 
 
 ************************************************************

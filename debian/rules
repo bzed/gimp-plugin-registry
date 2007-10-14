@@ -140,10 +140,11 @@ update-url-md5: watch
 
 watch:
 	for plugin in $(PLUGINS); do \
-	    [ -r $$plugin/url ] || continue ;\
-	    url=`cat $$plugin/url` ;\
-	    if ! [ `wget -q -O - $$url | md5sum | awk '{print $$1}'` = `cat $$plugin/url.md5sum` ]; then \
+	    if [ -r $$plugin/url.md5sum ]; then \
+	      url=`cat $$plugin/url` ;\
+	      if ! [ `wget -q -O - $$url | md5sum | awk '{print $$1}'` = `cat $$plugin/url.md5sum` ]; then \
 	        echo "$$plugin changed! $$url" ;\
+	      fi ;\
 	    fi ;\
 	done
 

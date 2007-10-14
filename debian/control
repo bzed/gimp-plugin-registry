@@ -3,12 +3,15 @@ Section: graphics
 Priority: optional
 Maintainer: Bernd Zeimetz <bernd@bzed.de>
 Build-Depends: debhelper (>= 5), libgimp2.0-dev, libcv-dev (>= 1.0.0),
- autotools-dev, dpatch, libxml-parser-perl
+ autotools-dev, dpatch, libxml-parser-perl,
+ refblas3-dev, lapack3-dev, atlas3-headers
 Standards-Version: 3.7.2
 
 Package: gimp-plugin-registry
 Architecture: any
 Depends: gimp (>= 2.2.0), ${shlibs:Depends}, ${misc:Depends}
+Conflicts: gimp-refocus (<= 0.9.0-2)
+Replaces: gimp-refocus (<= 0.9.0-2)
 Description: A repository of optional extensions for The GIMP
  The package contains the following plugins:
  .
@@ -28,7 +31,7 @@ Description: A repository of optional extensions for The GIMP
      This plugin tries to simulate an out-of-focus blur
    * GREYCstoration (2.5.2.1):
      A tool to denoise, inpaint and resize images
-   * layer-effects (2.3):
+   * Layer-Effects (2.3):
      This script implements the following effects:
      add border, bevel and emboss, color overlay, drop shadow,
      gradient overlay, inner glow, inner shadow, outer glow,
@@ -39,6 +42,16 @@ Description: A repository of optional extensions for The GIMP
    * Planet Render (1-2):
      Creates a planet. Color, size and sun orientation
      can be set.
+   * Refocus (0.9.1):
+     The GIMP plugin to refocus images using FIR Wiener filtering.
+     During image processing operations such as scanning and scaling, images
+     tend to get blurry. The blurred impression of these images is due to the
+     fact that image pixels are averaged with their neighbors. Blurred images
+     don't have sharp boundaries and look as though they have been taken with
+     an unfocussed camera.
+   * Smart Sharpen (redux) (2.2):
+     This script implements the redux version of smart sharpening. It utilizes
+     the Unsharp Mask or Refocus plugin to sharpen the image.
    * Streak-Camera simulation (0.6):
      A streak camera images an object through a slit -
      thus getting a "one dimensional image". This image is
