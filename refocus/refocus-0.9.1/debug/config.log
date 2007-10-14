@@ -1,0 +1,55 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:573: checking for a BSD compatible install
+configure:626: checking whether build environment is sane
+configure:683: checking whether make sets ${MAKE}
+configure:729: checking for working aclocal
+configure:742: checking for working autoconf
+configure:755: checking for working automake
+configure:768: checking for working autoheader
+configure:781: checking for working makeinfo
+configure:798: checking for gcc
+configure:911: checking whether the C compiler (gcc -O0 -g3 ) works
+configure:927: gcc -o conftest -O0 -g3   conftest.c  1>&5
+configure:953: checking whether the C compiler (gcc -O0 -g3 ) is a cross-compiler
+configure:958: checking whether we are using GNU C
+configure:967: gcc -E conftest.c
+configure:986: checking whether gcc accepts -g
+configure:1020: checking for gcc3
+configure:1053: checking how to run the C preprocessor
+configure:1074: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1133: checking for ANSI C header files
+configure:1146: gcc -E  conftest.c >/dev/null 2>conftest.out
+configure:1213: gcc -o conftest -O0 -g3   conftest.c  1>&5
+configure: In function 'main':
+configure:1208: warning: incompatible implicit declaration of built-in function 'exit'
+configure:1239: checking for ranlib
+configure:1271: checking for clapack_dgesv in -llapack
+configure:1290: gcc -o conftest -O0 -g3   conftest.c -llapack -lcblas -latlas -L./lib-atlas/lib 1>&5
+/usr/bin/ld: cannot find -llapack
+collect2: ld returned 1 exit status
+configure: failed program was:
+#line 1279 "configure"
+#include "confdefs.h"
+/* Override any gcc2 internal prototype to avoid an error.  */
+/* We use char because int might match the return type of a gcc2
+    builtin and then its argument prototype would still apply.  */
+char clapack_dgesv();
+
+int main() {
+clapack_dgesv()
+; return 0; }
+configure:1377: checking for gimptool
+configure:1412: checking for GIMP - version >= 1.2.0
+configure:1516: gcc -o conftest -O0 -g3 -I/usr/include/gimp-2.0 -I/usr/include/gtk-2.0 -I/usr/lib/gtk-2.0/include -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/freetype2 -I/usr/include/libpng12   conftest.c  -L/usr/lib -lgimpui-2.0 -lgimpwidgets-2.0 -lgimp-2.0 -lgimpcolor-2.0 -lgimpmath-2.0 -lgimpbase-2.0 -L/lib -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpangocairo-1.0 -lpango-1.0 -lcairo -lgobject-2.0 -lgmodule-2.0 -ldl -lglib-2.0 1>&5
+configure:1644: checking for pkg-config
+configure:1692: checking for GTK+ - version >= 2.0.0
+configure:1802: gcc -o conftest -O0 -g3 -I/usr/include/gtk-2.0 -I/usr/lib/gtk-2.0/include -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/freetype2 -I/usr/include/libpng12     conftest.c -L/lib -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpangocairo-1.0 -lpango-1.0 -lcairo -lgobject-2.0 -lgmodule-2.0 -ldl -lglib-2.0    1>&5
+configure:1905: checking for pkg-config
+configure:1955: checking for GLIB - version >= 2.0.0
+configure:2069: gcc -o conftest -O0 -g3 -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include     conftest.c -L/lib -lglib-2.0    1>&5
+configure:2177: checking for gtkdoc-mkdb
+configure:2209: checking gtk-doc version (1.7) >= 0.6
+configure:2278: checking for erf in -lm
+configure:2297: gcc -o conftest -Wall -ansi -pedantic -ggdb -fomit-frame-pointer -O3 -funroll-all-loops   conftest.c -lm   1>&5

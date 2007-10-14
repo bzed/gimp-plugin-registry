@@ -1,4 +1,4 @@
-gimp-plugin-registry (0.3.2-2) UNRELEASED; urgency=low
+gimp-plugin-registry (0.4-1) UNRELEASED; urgency=low
 
   * debian/rules:
     - Adding extra checks to ensure that the debian/{copyright,control} were
@@ -7,8 +7,11 @@ gimp-plugin-registry (0.3.2-2) UNRELEASED; urgency=low
     - Modifying the update-description target to include version informations
       which are provided in the plugin directories now. Thanks to Nelson A. de
       Oliveira for the suggestion (Closes: #444591).
+  * New plugins:
+    - refocus (transition from gimp-refocus)
+    - smart-sharpen-redux
 
- -- Bernd Zeimetz <bernd@bzed.de>  Sat, 29 Sep 2007 19:37:23 +0200
+ -- Bernd Zeimetz <bernd@bzed.de>  Mon, 15 Oct 2007 00:39:42 +0200
 
 gimp-plugin-registry (0.3.2-1) unstable; urgency=low
 
