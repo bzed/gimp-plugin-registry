@@ -1,8 +1,10 @@
 menu_bw-simulation
 menu_fix-ca
 menu_layer-effects
+menu_smart-sharpen-redux
 
 #refocus patches. keep order.
 refocus_lapack
 refocus_autoconf
 refocus_automake
+refocus_fix_warnings

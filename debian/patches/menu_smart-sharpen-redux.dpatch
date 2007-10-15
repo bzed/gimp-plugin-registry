@@ -1,0 +1,18 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## menu_smart-sharpen-redux.dpatch by Bernd Zeimetz <bernd@bzed.de>
+##
+## DP: better menu location for smart-sharpen-redux
+
+@DPATCH@
+diff -urNad gimp-plugin-registry~/smart-sharpen-redux/Eg-SmartSharpen.scm gimp-plugin-registry/smart-sharpen-redux/Eg-SmartSharpen.scm
+--- gimp-plugin-registry~/smart-sharpen-redux/Eg-SmartSharpen.scm	2007-10-15 15:08:51.000000000 +0200
++++ gimp-plugin-registry/smart-sharpen-redux/Eg-SmartSharpen.scm	2007-10-15 15:10:25.000000000 +0200
+@@ -94,7 +94,7 @@
+ ;
+ (script-fu-register 
+ 	"script-fu-Eg-SmartSharpen"
+-	"<Image>/Script-Fu/Eg/Sharpen (Smart Redux)"
++	"<Image>/Filters/Enhance/Sharpen (Smart Redux)"
+ 	"Smart Sharpening, Redux version"
+ 	"Martin Egger (martin.egger@gmx.net)"
+ 	"2007, Martin Egger, Bern, Switzerland"
