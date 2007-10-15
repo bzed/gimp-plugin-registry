@@ -3,7 +3,7 @@
 build: build-stamp
 build-stamp:
 	set -e; cd build; gcc -lblas -llapack \
-	                      $(LDFLAGS) $(CFLAGS)
+	                      $(LDFLAGS) $(CFLAGS) \
 	                      `gimptool-2.0 --libs` `gimptool-2.0 --cflags`  \
 	                      *.c -o refocus
 	touch build-stamp
