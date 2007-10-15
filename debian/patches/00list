@@ -3,7 +3,6 @@ menu_fix-ca
 menu_layer-effects
 
 #refocus patches. keep order.
-refocus_gimp2.4-clean
 refocus_lapack
 refocus_autoconf
 refocus_automake

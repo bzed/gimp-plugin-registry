@@ -1,15 +1,21 @@
 
 
 define PRE-CONFIGURE-HOOK
-	rm -f configure
-	aclocal
-	autoconf
+	set -e; cd src; rm -f configure; aclocal; autoconf
 endef
 
 define CLEAN-HOOK
-	rm -rf autom4te.cache
-	rm -f configure aclocal.m4
+	set -e; cd src; rm -rf autom4te.cache; rm -f configure aclocal.m4
 endef
+
+define POST-INSTALL-HOOK
+	install -d -m 755 $(DOCDIR)
+	install -m 644 src/doc/doc.html $(DOCDIR)
+	install -m 644 src/doc/doc.pdf $(DOCDIR)
+endef
+
+EXTRA_CFLAGS := $(shell /usr/bin/gimptool-2.0 --cflags)
+EXTRA_LDFLAGS := $(shell /usr/bin/gimptool-2.0 --libs)
 
 include ../common-autotools.mk
 

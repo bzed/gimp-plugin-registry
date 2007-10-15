@@ -2,16 +2,16 @@ Source: gimp-plugin-registry
 Section: graphics
 Priority: optional
 Maintainer: Bernd Zeimetz <bernd@bzed.de>
-Build-Depends: debhelper (>= 5), libgimp2.0-dev, libcv-dev (>= 1.0.0),
- autotools-dev, dpatch, libxml-parser-perl,
+Build-Depends: debhelper (>= 5), autoconf, automake, autotools-dev, dpatch,
+ libgimp2.0-dev, libcv-dev (>= 1.0.0), libxml-parser-perl,
  refblas3-dev, lapack3-dev, atlas3-headers
 Standards-Version: 3.7.2
 
 Package: gimp-plugin-registry
 Architecture: any
 Depends: gimp (>= 2.2.0), ${shlibs:Depends}, ${misc:Depends}
-Conflicts: gimp-refocus (<= 0.9.0-2)
-Replaces: gimp-refocus (<= 0.9.0-2)
+Conflicts: gimp-refocus (<< 0.9.0-2)
+Replaces: gimp-refocus (<< 0.9.0-2)
 Description: A repository of optional extensions for The GIMP
  The package contains the following plugins:
  .
