@@ -1,11 +1,11 @@
 
 
 define PRE-CONFIGURE-HOOK
-	set -e; cd src; rm -f configure; aclocal; autoconf
+	set -e; cd src; rm -f configure Makefile.in; aclocal; autoconf
 endef
 
 define CLEAN-HOOK
-	set -e; cd src; rm -rf autom4te.cache; rm -f configure aclocal.m4
+	set -e; cd src; rm -rf autom4te.cache configure aclocal.m4 Makefile.in
 endef
 
 define POST-INSTALL-HOOK
