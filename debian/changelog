@@ -1,3 +1,9 @@
+gimp-plugin-registry (0.4-2) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+
+ -- Bernd Zeimetz <bernd@bzed.de>  Mon, 15 Oct 2007 22:41:38 +0200
+
 gimp-plugin-registry (0.4-1) unstable; urgency=low
 
   * Adding extra checks to ensure that the debian/{copyright,control} were
