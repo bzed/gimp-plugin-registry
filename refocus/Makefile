@@ -1,21 +1,21 @@
 
 
-define PRE-CONFIGURE-HOOK
-	set -e; cd src; rm -f configure Makefile.in; aclocal; autoconf
-endef
+build: build-stamp
+build-stamp:
+	set -e; cd build; gcc -lblas -llapack \
+	                      $(LDFLAGS) $(CFLAGS)
+	                      `gimptool-2.0 --libs` `gimptool-2.0 --cflags`  \
+	                      *.c -o refocus
+	touch build-stamp
 
-define CLEAN-HOOK
-	set -e; cd src; rm -rf autom4te.cache configure aclocal.m4 Makefile.in
-endef
+clean:
+	rm -f build-stamp
+	rm -f build/*.o build/refocus
 
-define POST-INSTALL-HOOK
-	install -d -m 755 $(DESTDIR)$(DOCDIR)
+install:
+	install -m 755 build/refocus $(DESTDIR)$(PLUGINBINDIR)
+	install -m 755 -d $(DESTDIR)$(DOCDIR)
 	install -m 644 src/doc/doc.html $(DESTDIR)$(DOCDIR)
 	install -m 644 src/doc/doc.pdf $(DESTDIR)$(DOCDIR)
-endef
 
-EXTRA_CFLAGS := $(shell /usr/bin/gimptool-2.0 --cflags)
-EXTRA_LDFLAGS := $(shell /usr/bin/gimptool-2.0 --libs)
-
-include ../common-autotools.mk
-
+.PHONY: clean
