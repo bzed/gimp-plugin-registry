@@ -22,6 +22,8 @@ VERSION_FILES = $(shell find . -mindepth 2 -maxdepth 2 -name version)
 DESC_FILES = $(shell find . -mindepth 2 -maxdepth 2 -name description)
 COPYRIGHT_FILES = $(shell find . -mindepth 2 -maxdepth 2 -name copyright)
 
+DESTDIR := $(CURDIR)/debian/gimp-plugin-registry
+
 debian/control: $(VERSION_FILES) $(DESC_FILES)
 	echo 'Update $@ first (debian/rules update-description)!'
 	exit 1
@@ -60,7 +62,7 @@ install: build
 	dh_installdirs
 
 	for plugin in $(PLUGINS); do \
-		$(MAKE) -C $$plugin DESTDIR=$(CURDIR)/debian/gimp-plugin-registry \
+		$(MAKE) -C $$plugin DESTDIR=$(DESTDIR) \
                                     PLUGINBINDIR=/usr/lib/gimp/2.0/plug-ins  \
 	                            PLUGINSCRIPTDIR=/usr/share/gimp/2.0/scripts \
 				    DOCDIR=/usr/share/doc/gimp-plugin-registry/$$plugin \
@@ -68,7 +70,8 @@ install: build
                                     install || exit 1 ;\
 		for readme in README README.Debian; do \
 	          if [ -r $$plugin/$$readme ]; then \
-	            dh_install $$plugin/$$readme usr/share/doc/gimp-plugin-registry/$$plugin ;\
+                    install -m 755 -d $(DESTDIR)/usr/share/doc/gimp-plugin-registry/$$plugin ;\
+	            cp -L $$plugin/$$readme $(DESTDIR)/usr/share/doc/gimp-plugin-registry/$$plugin ;\
 	          fi ;\
 		done ;\
 	done
