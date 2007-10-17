@@ -5,9 +5,11 @@ gimp-plugin-registry (0.4.1-1) unstable; urgency=low
     Christian Ohm for the report. (Closes: #447017)
   * debian/control:
     - Adding Vcs-{Browser,Svn} fields.
+    - Removing autotools and automake Build-Dep, we're building refocus
+      without autotools.
   * New upstream version of lqr.
 
- -- Bernd Zeimetz <bernd@bzed.de>  Wed, 17 Oct 2007 23:18:11 +0200
+ -- Bernd Zeimetz <bernd@bzed.de>  Wed, 17 Oct 2007 23:26:49 +0200
 
 gimp-plugin-registry (0.4-1) unstable; urgency=low
 
