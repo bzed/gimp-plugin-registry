@@ -1,13 +1,13 @@
-gimp-plugin-registry (0.4-2) UNRELEASED; urgency=low
+gimp-plugin-registry (0.4.1-1) unstable; urgency=low
 
-  * NOT RELEASED YET
   * Don't use dh_install to copy documentation files as some of them are
     symlinks - dh_install doesn't dereference symlinks. Thanks to
     Christian Ohm for the report. (Closes: #447017)
   * debian/control:
     - Adding Vcs-{Browser,Svn} fields.
+  * New upstream version of lqr.
 
- -- Bernd Zeimetz <bernd@bzed.de>  Wed, 17 Oct 2007 15:41:24 +0200
+ -- Bernd Zeimetz <bernd@bzed.de>  Wed, 17 Oct 2007 23:18:11 +0200
 
 gimp-plugin-registry (0.4-1) unstable; urgency=low
 
