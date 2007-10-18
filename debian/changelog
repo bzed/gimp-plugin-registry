@@ -1,3 +1,11 @@
+gimp-plugin-registry (0.4.2-1) unstable; urgency=low
+
+  * New upstream release of the lqr plugin which disables debug code the
+    author accidentally left enabled in the last release. The debug code
+    introduced a bug ironically.
+
+ -- Bernd Zeimetz <bernd@bzed.de>  Thu, 18 Oct 2007 10:31:33 +0200
+
 gimp-plugin-registry (0.4.1-1) unstable; urgency=low
 
   * Don't use dh_install to copy documentation files as some of them are
