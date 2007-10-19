@@ -1,3 +1,14 @@
+gimp-plugin-registry (0.4.2-2) UNRELEASED; urgency=low
+
+  * NOT RELEASED YET
+  * debian/rules:
+    - Checking if we need to update debian/copyright or debian/control in the
+      clean target now as a check by the build target does not work when using
+      svn-buildpackage. Also monitor debian/{copyright,control}.in for
+      changes.
+
+ -- Bernd Zeimetz <bernd@bzed.de>  Fri, 19 Oct 2007 06:41:36 +0200
+
 gimp-plugin-registry (0.4.2-1) unstable; urgency=low
 
   * New upstream release of the lqr plugin which disables debug code the

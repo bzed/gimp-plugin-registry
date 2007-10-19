@@ -24,15 +24,14 @@ COPYRIGHT_FILES = $(shell find . -mindepth 2 -maxdepth 2 -name copyright)
 
 DESTDIR := $(CURDIR)/debian/gimp-plugin-registry
 
-debian/control: $(VERSION_FILES) $(DESC_FILES)
-	echo 'Update $@ first (debian/rules update-description)!'
-	exit 1
+debian/control: $(VERSION_FILES) $(DESC_FILES) debian/control.in
+	$(MAKE) -f debian/rules update-description
 
-debian/copyright: $(COPYRIGHT_FILES)
-	echo 'Update $@ first (debian/rules update-copyright)!'
-	exit 1
+debian/copyright: $(COPYRIGHT_FILES) debian/copyright.in
+	$(MAKE) -f debian/rules update-copyright
+	
 
-build: debian/control debian/copyright build-stamp
+build: build-stamp
 
 build-stamp: patch-stamp
 	dh_testdir
@@ -43,7 +42,7 @@ build-stamp: patch-stamp
 
 	touch $@
 
-clean: clean-patched
+clean: clean-patched debian/control debian/copyright
 clean-patched: unpatch
 	dh_testdir
 	dh_testroot
