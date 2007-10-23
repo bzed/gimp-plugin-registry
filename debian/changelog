@@ -6,8 +6,11 @@ gimp-plugin-registry (0.4.2-2) UNRELEASED; urgency=low
       clean target now as a check by the build target does not work when using
       svn-buildpackage. Also monitor debian/{copyright,control}.in for
       changes.
+  * debian/control.in:
+    - Adding Vcs-* fields here instead of debian/control so we don't lose them
+      again. Thanks to Thijs Kinkhorst for the hint.
 
- -- Bernd Zeimetz <bernd@bzed.de>  Fri, 19 Oct 2007 06:41:36 +0200
+ -- Bernd Zeimetz <bernd@bzed.de>  Wed, 24 Oct 2007 00:27:34 +0200
 
 gimp-plugin-registry (0.4.2-1) unstable; urgency=low
 

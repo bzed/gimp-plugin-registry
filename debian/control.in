@@ -6,6 +6,8 @@ Build-Depends: debhelper (>= 5), autotools-dev, dpatch,
  libgimp2.0-dev, libcv-dev (>= 1.0.0), libxml-parser-perl,
  refblas3-dev, lapack3-dev, libf2c2-dev
 Standards-Version: 3.7.2
+Vcs-Svn: https://ssl.recluse.de/svn/debian/trunk/packages/gimp-plugin-registry/
+Vcs-Browser: http://svn.recluse.de/listing.php?repname=debian&path=%2Ftrunk%2Fpackages%2Fgimp-plugin-registry%2F&rev=0&sc=0
 
 Package: gimp-plugin-registry
 Architecture: any
