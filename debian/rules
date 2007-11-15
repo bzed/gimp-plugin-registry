@@ -20,7 +20,7 @@ GIMPVER=$(shell dpkg -s libgimp2.0-dev | grep Version | awk '{print $$2}')
 
 VERSION_FILES = $(shell find . -mindepth 2 -maxdepth 2 -name version)
 DESC_FILES = $(shell find . -mindepth 2 -maxdepth 2 -name description)
-COPYRIGHT_FILES = $(shell find . -mindepth 2 -maxdepth 2 -name copyright)
+COPYRIGHT_FILES = $(shell find . -path ./debian -prune -o -name copyright -print)
 
 DESTDIR := $(CURDIR)/debian/gimp-plugin-registry
 
