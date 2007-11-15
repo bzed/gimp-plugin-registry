@@ -9,13 +9,14 @@ gimp-plugin-registry (0.4.3-1) UNRELEASED; urgency=low
   * debian/control.in:
     - Adding Vcs-* fields here instead of debian/control so we don't lose them
       again. Thanks to Thijs Kinkhorst for the hint.
+    - Adding fftw3-dev to Build-Depends, needed by the new focus-blur version.
   * layer-effects:
     - Updating version number to 2.4 to follow upstream - no changes in the
       plugin, though.
   * focus-blur:
     - New upstream version
 
- -- Bernd Zeimetz <bernd@bzed.de>  Thu, 15 Nov 2007 23:23:03 +0100
+ -- Bernd Zeimetz <bernd@bzed.de>  Thu, 15 Nov 2007 23:44:12 +0100
 
 gimp-plugin-registry (0.4.2-1) unstable; urgency=low
 

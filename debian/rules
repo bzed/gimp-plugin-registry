@@ -25,7 +25,7 @@ COPYRIGHT_FILES = $(shell find . -path ./debian -prune -o -name copyright -print
 DESTDIR := $(CURDIR)/debian/gimp-plugin-registry
 
 debian/control: $(VERSION_FILES) $(DESC_FILES) debian/control.in
-	$(MAKE) -f debian/rules update-description
+	$(MAKE) -f debian/rules update-control
 
 debian/copyright: $(COPYRIGHT_FILES) debian/copyright.in
 	$(MAKE) -f debian/rules update-copyright
@@ -98,15 +98,15 @@ binary-arch: build install
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure \
-        update-all update-copyright update-description update-url-md5 watch build-tgz
+        update-all update-copyright update-control update-watch watch build-tgz
 
 
 #### the following stuff is not needed to build the package,
 #### it's only for lazy maintainers.
 
 update-all:
-	debian/rules update-url-md5
-	debian/rules update-description
+	debian/rules update-watch
+	debian/rules update-control
 	debian/rules update-copyright
 
 update-copyright:
@@ -123,7 +123,7 @@ update-copyright:
 	  done ;\
 	) > debian/copyright
 
-update-description:
+update-control:
 	( cat debian/control.in ;\
 	  for plugin in $(PLUGINS); do \
 	    if [ -f $$plugin/version ]; then \
@@ -135,7 +135,7 @@ update-description:
 	  done ;\
 	) > debian/control
 
-update-url-md5: watch
+update-watch: watch
 	for plugin in $(PLUGINS); do \
 	    wget -q -O - `cat $$plugin/url` | md5sum | awk '{print $$1}' > $$plugin/url.md5sum ;\
 	done
