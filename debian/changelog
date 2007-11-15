@@ -1,6 +1,5 @@
-gimp-plugin-registry (0.4.3-1) UNRELEASED; urgency=low
+gimp-plugin-registry (0.4.3-1) unstable; urgency=low
 
-  * NOT RELEASED YET
   * debian/rules:
     - Checking if we need to update debian/copyright or debian/control in the
       clean target now as a check by the build target does not work when using
