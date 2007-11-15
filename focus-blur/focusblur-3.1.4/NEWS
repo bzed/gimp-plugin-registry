@@ -1,0 +1,18 @@
+Focus Blur plug-in version 3.1.4, Nov 2007
+
+Changes from version 2.3
+
+   Gimptool is not used, but configure script is present.
+   Blurring effect can run very fast by FFTW3.
+   Progressive preview was removed.
+   Brush model and coloring effect was removed.
+   Shine map and white area detection were removed.
+   Shining expression and parameters were brushed.
+   Depth precedence was brushed.
+   Black means near in depth map.
+
+Changes from version 3.0.x
+
+   Buffering method was decided to large array.
+   Some features were removed.
+   It is easy to build binary with the Gimp tree.

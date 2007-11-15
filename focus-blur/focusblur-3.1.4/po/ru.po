@@ -1,0 +1,151 @@
+# translation of ru.po to Russian
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: ru\n"
+"Report-Msgid-Bugs-To: sudakyo@fat.coara.or.jp\n"
+"POT-Creation-Date: 2007-11-10 19:15+0900\n"
+"PO-Revision-Date: 2007-11-10 21:56+0300\n"
+"Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
+"Language-Team: Russian <gnome-cyr@gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: src/fftblur.c:284 src/interface.c:123
+msgid "Focus Blur..."
+msgstr "Размывание вне зоны ГРИП..."
+
+#: src/focusblur.c:76
+msgid "Make a out of focus with luminosity and depth, like a sight or lenses"
+msgstr "Имитация размывания вне зоны резко изображаемого пространства"
+
+#: src/focusblur.c:85
+msgid "_Focus Blur..."
+msgstr "Размывание вне зоны ГРИП..."
+
+#: src/interface.c:292
+msgid "Focus Blur"
+msgstr "Размывание вне зоны ГРИП"
+
+#: src/interface.c:342
+msgid "_Basic"
+msgstr "О_сновные"
+
+#: src/interface.c:358
+msgid "Diffusion Model and _Radius:"
+msgstr "М_одель рассеивания и радиус:"
+
+#: src/interface.c:376
+msgid "Flat"
+msgstr "Плоская"
+
+#: src/interface.c:377
+msgid "Ring"
+msgstr "Кольцевая"
+
+#: src/interface.c:378
+msgid "Concave"
+msgstr "Вогнутая"
+
+#: src/interface.c:414
+msgid "P_eak radius for Shining:"
+msgstr "Пиковый _радиус сияния:"
+
+#: src/interface.c:425
+msgid "_Use Depth map:"
+msgstr "_Использовать карту расстояний:"
+
+#: src/interface.c:463
+msgid "_Focal depth:"
+msgstr "_Фокусное расстояние:"
+
+#: src/interface.c:478
+msgid "_Model"
+msgstr "_Модель"
+
+#: src/interface.c:484
+msgid "F_illing inside:"
+msgstr "_Заполнение изнутри:"
+
+#: src/interface.c:498
+msgid "Sof_tness:"
+msgstr "М_ягкость:"
+
+#: src/interface.c:512
+msgid "Soft_ness delay:"
+msgstr "З_адержка мягкости:"
+
+#: src/interface.c:526
+msgid "_Shine"
+msgstr "_Свет"
+
+#: src/interface.c:531
+msgid "Luminosity"
+msgstr "Освещенность"
+
+#: src/interface.c:532
+msgid "Saturation"
+msgstr "Насыщенность"
+
+#: src/interface.c:542
+msgid "Sensing t_ype:"
+msgstr "Тип _измерения:"
+
+#: src/interface.c:549
+msgid "_Threshold:"
+msgstr "П_орог:"
+
+#: src/interface.c:563
+msgid "_Level:"
+msgstr "_Уровень:"
+
+#: src/interface.c:577
+msgid "C_urve:"
+msgstr "_Кривая:"
+
+#: src/interface.c:592
+msgid "_Depth"
+msgstr "_Глубина"
+
+#: src/interface.c:597
+msgid "Depth with p_recedence"
+msgstr "_Приоритет глубины"
+
+#: src/interface.c:615
+msgid "Pre_ferences"
+msgstr "_Параметры"
+
+#: src/interface.c:619
+msgid "Best"
+msgstr "Высокое"
+
+#: src/interface.c:620 src/interface.c:633
+msgid "Normal"
+msgstr "Обычное"
+
+#: src/interface.c:621 src/interface.c:634
+msgid "Low"
+msgstr "Низкое"
+
+#: src/interface.c:628
+msgid "Rendering _quality:"
+msgstr "_Качество обработки:"
+
+#: src/interface.c:635
+msgid "Defective"
+msgstr "Ужасное"
+
+#: src/interface.c:642
+msgid "Pre_view quality:"
+msgstr "Качество _эскиза:"
+
+#: src/interface.c:655
+msgid "Dis_able support for multi-threads"
+msgstr "Отключить поддержку _многопоточности"
