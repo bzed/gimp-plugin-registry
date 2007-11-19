@@ -1,5 +1,5 @@
 ;
-; Smart Sharpening, Redux, V2.2
+; Smart Sharpening, Redux, V2.4
 ;
 ; Martin Egger (martin.egger@gmx.net)
 ; (C) 2007, Bern, Switzerland
@@ -9,7 +9,7 @@
 ;
 ; The Refocus plugin from http://hphsite.de/refocus/ must be installed seperately.
 ;
-; This plugin was tested with Gimp 2.2
+; This plugin was tested with Gimp 2.4
 ;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@
 ; Save history			
 ;
 	(gimp-image-undo-group-start InImage)
+	(if (= (car (gimp-drawable-is-rgb InLayer)) FALSE ) (gimp-image-convert-rgb InImage))
 ;
 	(let*	(
 		(MaskImage (car (gimp-image-duplicate InImage)))
@@ -56,9 +57,9 @@
 ; Find edges, Warpmode = Smear (1), Edgemode = Sobel (0)
 ;
 		(plug-in-edge TRUE MaskImage (aref MaskLayer 0) InEdge 1 0)
-		(gimp-levels-auto (aref MaskLayer 0))
-		(gimp-convert-grayscale MaskImage)
-		(plug-in-gauss TRUE MaskImage (aref MaskLayer 0) InBlur InBlur 0)
+		(gimp-levels-stretch (aref MaskLayer 0))
+		(gimp-image-convert-grayscale MaskImage)
+		(plug-in-gauss TRUE MaskImage (aref MaskLayer 0) InBlur InBlur TRUE)
 ;
 		(let*	(
 			(SharpenChannel (car (gimp-layer-create-mask SharpenLayer ADD-WHITE-MASK)))
@@ -75,13 +76,19 @@
 				((= InRefocus TRUE)(plug-in-refocus TRUE InImage SharpenLayer InMatSize InRFRadius InGauss InCorrelation InNoise))
 			)
 			(gimp-layer-set-opacity SharpenLayer 80)
+			(gimp-layer-set-edit-mask SharpenLayer FALSE)
 		)
 ;
 ; Flatten the image, if we need to
 ;
 		(cond
 			((= InFlatten TRUE) (gimp-image-merge-down InImage SharpenLayer CLIP-TO-IMAGE))
-			((= InFlatten FALSE) (gimp-drawable-set-name SharpenLayer "Sharpened"))
+			((= InFlatten FALSE)
+				(begin
+					(gimp-drawable-set-name SharpenLayer "Sharpened")
+					(gimp-image-set-active-layer InImage InLayer)
+				)
+			)
 		)
 	)
 ;
@@ -94,10 +101,10 @@
 ;
 (script-fu-register 
 	"script-fu-Eg-SmartSharpen"
-	"<Image>/Script-Fu/Eg/Sharpen (Smart Redux)"
+	_"_Sharpen (Smart Redux)"
 	"Smart Sharpening, Redux version"
 	"Martin Egger (martin.egger@gmx.net)"
-	"2007, Martin Egger, Bern, Switzerland"
+	"2006, Martin Egger, Bern, Switzerland"
 	"28.01.2007"
 	"RGB* GRAY*"
 	SF-IMAGE	"The Image"		0
@@ -115,4 +122,7 @@
 	SF-ADJUSTMENT	"Edges: Blur Pixels"	'(6.0 1.0 10.0 1.0 0 2 0)
 	SF-TOGGLE	"Flatten Image"		FALSE
 )
+;
+(script-fu-menu-register "script-fu-Eg-SmartSharpen"
+			 "<Image>/Filters/Eg")
 ;

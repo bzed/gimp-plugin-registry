@@ -54,7 +54,7 @@ Description: A repository of optional extensions for The GIMP
      fact that image pixels are averaged with their neighbors. Blurred images
      don't have sharp boundaries and look as though they have been taken with
      an unfocussed camera.
-   * Smart Sharpen (redux) (2.2):
+   * Smart Sharpen (redux) (2.4):
      This script implements the redux version of smart sharpening. It utilizes
      the Unsharp Mask or Refocus plugin to sharpen the image.
    * Streak-Camera simulation (0.6):

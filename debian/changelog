@@ -1,8 +1,9 @@
-gimp-plugin-registry (0.4.3-2) UNRELEASED; urgency=low
+gimp-plugin-registry (0.4.4-1) UNRELEASED; urgency=low
 
   * NOT RELEASED YET
+  * smart-sharpen-redux: New upstream version.
 
- -- Bernd Zeimetz <bernd@bzed.de>  Fri, 16 Nov 2007 19:03:52 +0100
+ -- Bernd Zeimetz <bernd@bzed.de>  Mon, 19 Nov 2007 23:57:51 +0100
 
 gimp-plugin-registry (0.4.3-1) unstable; urgency=low
 
