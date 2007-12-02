@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.54)
-AC_INIT([Focus Blur], [3.1.4], [sudakyo@fat.coara.or.jp], [focusblur])
+AC_INIT([Focus Blur], [3.1.5], [sudakyo@fat.coara.or.jp], [focusblur])
 AC_CONFIG_SRCDIR([src/focusblur.c])
 AC_CONFIG_HEADER([config.h])
 AM_INIT_AUTOMAKE([no-define no-dist-gzip dist-bzip2])
@@ -11,6 +11,9 @@ AM_INIT_AUTOMAKE([no-define no-dist-gzip dist-bzip2])
 AC_PROG_CC
 AC_PROG_INSTALL
 AM_MAINTAINER_MODE
+
+# Default prefix (dummy for help mesasge)
+AC_PREFIX_DEFAULT([auto-detected])
 
 # Checks for libraries.
 
@@ -53,12 +56,25 @@ fi
 
 AM_PATH_GIMP_2_0([2.4.0], :, AC_MSG_ERROR([Test for libgimp failed.]))
 if test "${with_gimp_prefix+set}" = set ; then
-   gimp_libdir="$(echo -n "$GIMP_LIBS" | \
-        sed -e "s;^.*-L\($with_gimp_prefix[[^ ]]*\).*$;\1;")"
-   if test -d "$gimp_libdir" ; then
-     GIMP_LIBS="-Wl,-rpath,$gimp_libdir $GIMP_LIBS"
-   fi
+  gimp_libdir="$(echo -n "$GIMP_LIBS" | \
+    sed -e "s;^.*-L\($with_gimp_prefix[[^ ]]*\).*$;\1;")"
+  if test -d "$gimp_libdir" ; then
+    GIMP_LIBS="-Wl,-rpath,$gimp_libdir $GIMP_LIBS"
+  fi
 fi
+
+### override variables (gimp-2.4.m4 doesn't consider prefix options)
+pkg_config_args="$pkg_name"
+if test "X${prefix}" != "XNONE" ; then
+  pkg_config_args="$pkg_config_args --define-variable=prefix=$prefix"
+fi
+if test "X${exec_prefix}" != "XNONE" ; then
+  pkg_config_args="$pkg_config_args --define-variable=exec_prefix=$exec_prefix"
+elif test "X${prefix}" != "XNONE" ; then
+  pkg_config_args="$pkg_config_args --define-variable=exec_prefix=$prefix"
+fi
+ac_default_prefix="$($PKG_CONFIG $pkg_config_args --variable=prefix)"
+GIMP_PLUGIN_DIR="$($PKG_CONFIG $pkg_config_args --variable=gimplibdir)"
 
 
 ########################
@@ -114,7 +130,7 @@ GETTEXT_PACKAGE="gimp20-focusblur"
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
 		   [The gettext translation domain.])
-ALL_LINGUAS="ja ru"
+ALL_LINGUAS="it ja ru"
 #AC_PROG_INTLTOOL
 #AM_GLIB_GNU_GETTEXT
 AM_GNU_GETTEXT

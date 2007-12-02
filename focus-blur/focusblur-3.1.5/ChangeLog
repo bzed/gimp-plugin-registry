@@ -1,3 +1,13 @@
+2007-11-25  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* configure.ac: default prefix is detected with pkg-config.
+
+	* Made 3.1.5 release.
+
+2007-11-24  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* po/it.po: added Italian message by Carlo Baldassi.
+
 2007-11-11  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
 
 	* po/ru.po: added Russian message by Alexandre Prokoudine.
