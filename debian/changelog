@@ -1,10 +1,11 @@
-gimp-plugin-registry (0.4.4-1) UNRELEASED; urgency=low
+gimp-plugin-registry (0.4.4-1) unstable; urgency=low
 
-  * NOT RELEASED YET
   * smart-sharpen-redux: New upstream version.
   * focus-blur: New upstream version.
+  * debian/control:
+    - Updating my email address.
 
- -- Bernd Zeimetz <bernd@bzed.de>  Sun, 02 Dec 2007 02:21:38 +0100
+ -- Bernd Zeimetz <bzed@debian.org>  Tue, 11 Dec 2007 23:59:51 +0100
 
 gimp-plugin-registry (0.4.3-1) unstable; urgency=low
 
