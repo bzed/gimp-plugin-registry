@@ -1,4 +1,4 @@
-gimp-plugin-registry (0.4.4-1) unstable; urgency=low
+gimp-plugin-registry (0.4.4-1) UNRELEASED; urgency=low
 
   * smart-sharpen-redux: New upstream version.
   * focus-blur: New upstream version.
