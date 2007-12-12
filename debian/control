@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Bernd Zeimetz <bzed@debian.org>
 Build-Depends: debhelper (>= 5), autotools-dev, dpatch,
  libgimp2.0-dev, libcv-dev (>= 1.0.0), libxml-parser-perl,
- refblas3-dev, lapack3-dev, libf2c2-dev, fftw3-dev
+ refblas3-dev, lapack3-dev, libf2c2-dev, fftw3-dev, libglew1.4-dev
 Standards-Version: 3.7.2
 Vcs-Svn: https://ssl.recluse.de/svn/debian/trunk/packages/gimp-plugin-registry/
 Vcs-Browser: http://svn.recluse.de/listing.php?repname=debian&path=%2Ftrunk%2Fpackages%2Fgimp-plugin-registry%2F&rev=0&sc=0
@@ -26,7 +26,7 @@ Description: A repository of optional extensions for The GIMP
      the user to automatically perform operations (such as resize)
      on a collection of image files.
    * Dustcleaner (0.1.5a):
-     Plugin to detect and remove dust spots in digital images
+     Plugin to detect and remove dust spots in digital images.
    * Exposure Blend (1.3b):
      Prompt for 3 images in a bracketed exposure series (e.g. 0,-2,+2 EV)
      and blend these into a contrast enhanced image.
@@ -44,6 +44,9 @@ Description: A repository of optional extensions for The GIMP
    * Liquid Rescale (0.3.0-2):
      Content-aware rescaling. Keeps the features of the image while
      rescaling along a single direction.
+   * Normalmap (1.2.1):
+     Allows you to convert images into RGB normal maps for use in
+     per-pixel lighting applications.
    * Planet Render (1-2):
      Creates a planet. Color, size and sun orientation
      can be set.

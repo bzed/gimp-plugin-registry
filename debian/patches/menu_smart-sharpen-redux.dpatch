@@ -5,14 +5,12 @@
 
 @DPATCH@
 diff -urNad gimp-plugin-registry~/smart-sharpen-redux/Eg-SmartSharpen.scm gimp-plugin-registry/smart-sharpen-redux/Eg-SmartSharpen.scm
---- gimp-plugin-registry~/smart-sharpen-redux/Eg-SmartSharpen.scm	2007-10-15 15:08:51.000000000 +0200
-+++ gimp-plugin-registry/smart-sharpen-redux/Eg-SmartSharpen.scm	2007-10-15 15:10:25.000000000 +0200
-@@ -94,7 +94,7 @@
+--- gimp-plugin-registry~/smart-sharpen-redux/Eg-SmartSharpen.scm	2007-11-19 23:56:39.000000000 +0100
++++ gimp-plugin-registry/smart-sharpen-redux/Eg-SmartSharpen.scm	2007-12-12 20:06:36.000000000 +0100
+@@ -124,5 +124,5 @@
+ )
  ;
- (script-fu-register 
- 	"script-fu-Eg-SmartSharpen"
--	"<Image>/Script-Fu/Eg/Sharpen (Smart Redux)"
-+	"<Image>/Filters/Enhance/Sharpen (Smart Redux)"
- 	"Smart Sharpening, Redux version"
- 	"Martin Egger (martin.egger@gmx.net)"
- 	"2007, Martin Egger, Bern, Switzerland"
+ (script-fu-menu-register "script-fu-Eg-SmartSharpen"
+-			 "<Image>/Filters/Eg")
++			 "<Image>/Filters/Enhance/Sharpen (Smart Redux)")
+ ;
