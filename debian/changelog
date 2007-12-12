@@ -4,8 +4,8 @@ gimp-plugin-registry (0.5.1-1) unstable; urgency=low
   * focus-blur: New upstream version.
   * debian/control:
     - Updating my email address.
-  * New plugin: normalmap. Thanks to Gürkan Sengün for the suggestion
-    (Closes: #455877)
+  * New plugin: normalmap.
+    Thanks to Gürkan Sengün for the suggestion (Closes: #455877).
 
  -- Bernd Zeimetz <bzed@debian.org>  Wed, 12 Dec 2007 21:04:15 +0100
 
