@@ -1,3 +1,11 @@
+gimp-plugin-registry (0.5.1-2) UNRELEASED; urgency=low
+
+  * debian/patches:
+    - Adding gcc4.3-fixes.dpatch to fix building with gcc 4.3
+      (Closes: #456054).
+
+ -- Bernd Zeimetz <bzed@debian.org>  Thu, 13 Dec 2007 09:16:18 +0100
+
 gimp-plugin-registry (0.5.1-1) unstable; urgency=low
 
   * smart-sharpen-redux: New upstream version.
