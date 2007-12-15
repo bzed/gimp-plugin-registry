@@ -1,0 +1,100 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## menu_layer-effects.dpatch by Bernd Zeimetz <bernd@bzed.de>
+##
+## All lines beginning with `## DP:' are a description of the patch.
+## DP: No description.
+
+@DPATCH@
+diff -urNad gimp-plugin-registry~/layer-effects/layer-effects_en.scm gimp-plugin-registry/layer-effects/layer-effects_en.scm
+--- gimp-plugin-registry~/layer-effects/layer-effects_en.scm	2007-06-06 08:26:44.000000000 +0200
++++ gimp-plugin-registry/layer-effects/layer-effects_en.scm	2007-09-08 01:26:01.000000000 +0200
+@@ -209,7 +209,7 @@
+ 
+ (script-fu-register
+   "script_fu_layer_effects_drop_shadow"
+-  "<Image>/Script-Fu/Layer Effects/Drop Shadow..."
++  "<Image>/Filters/Layer Effects/Drop Shadow..."
+   "Create the Drop Shadow on the layer with alpha"
+   "Iccii <iccii@hotmail.com>"
+   "Iccii"
+@@ -281,7 +281,7 @@
+ 
+ (script-fu-register
+   "script_fu_layer_effects_inner_shadow"
+-  "<Image>/Script-Fu/Layer Effects/Inner Shadow..."
++  "<Image>/Filters/Layer Effects/Inner Shadow..."
+   "Create the Inner Shadow on the layer with alpha"
+   "Iccii <iccii@hotmail.com>"
+   "Iccii"
+@@ -349,7 +349,7 @@
+ 
+ (script-fu-register
+   "script_fu_layer_effects_outer_glow"
+-  "<Image>/Script-Fu/Layer Effects/Outer Glow..."
++  "<Image>/Filters/Layer Effects/Outer Glow..."
+   "Create the Outer Glow on the layer with alpha"
+   "Iccii <iccii@hotmail.com>"
+   "Iccii"
+@@ -418,7 +418,7 @@
+ 
+ (script-fu-register
+   "script_fu_layer_effects_inner_glow"
+-  "<Image>/Script-Fu/Layer Effects/Inner Glow..."
++  "<Image>/Filters/Layer Effects/Inner Glow..."
+   "Create the Inner Glow on the layer with alpha"
+   "Iccii <iccii@hotmail.com>"
+   "Iccii"
+@@ -527,7 +527,7 @@
+ 
+ (script-fu-register
+   "script_fu_layer_effects_bevel_and_emboss"
+-  "<Image>/Script-Fu/Layer Effects/Bevel and Emboss..."
++  "<Image>/Filters/Layer Effects/Bevel and Emboss..."
+   "Create the Bevel and Emboss effects on the layer with alpha"
+   "Iccii <iccii@hotmail.com>"
+   "Iccii"
+@@ -666,7 +666,7 @@
+ 
+ (script-fu-register
+   "script_fu_layer_effects_satin"
+-  "<Image>/Script-Fu/Layer Effects/Satin..."
++  "<Image>/Filters/Layer Effects/Satin..."
+   "Create the Satin effect on the layer with alpha"
+   "Iccii <iccii@hotmail.com>"
+   "Iccii"
+@@ -747,7 +747,7 @@
+ 
+ (script-fu-register
+   "script_fu_layer_effects_color_overlay"
+-  "<Image>/Script-Fu/Layer Effects/Color Overlay..."
++  "<Image>/Filters/Layer Effects/Color Overlay..."
+   "Create the Color overlay effect on the layer with alpha"
+   "Iccii <iccii@hotmail.com>"
+   "Iccii"
+@@ -858,7 +858,7 @@
+ 
+ (script-fu-register
+   "script_fu_layer_effects_gradient_overlay"
+-  "<Image>/Script-Fu/Layer Effects/Gradient Overlay..."
++  "<Image>/Filters/Layer Effects/Gradient Overlay..."
+   "Create the Gradient overlay effect on the layer with alpha"
+   "Iccii <iccii@hotmail.com>"
+   "Iccii"
+@@ -947,7 +947,7 @@
+ 
+ (script-fu-register
+   "script_fu_layer_effects_pattern_overlay"
+-  "<Image>/Script-Fu/Layer Effects/Pattern Overlay..."
++  "<Image>/Filters/Layer Effects/Pattern Overlay..."
+   "Create the Pattern overlay effect on the layer with alpha"
+   "Iccii <iccii@hotmail.com>"
+   "Iccii"
+@@ -1119,7 +1119,7 @@
+ 
+ (script-fu-register
+   "script_fu_layer_effects_add_border"
+-  "<Image>/Script-Fu/Layer Effects/Add Border (stroke)..."
++  "<Image>/Filters/Layer Effects/Add Border (stroke)..."
+   "Create the Add Border effect on the layer with alpha"
+   "Iccii <iccii@hotmail.com>"
+   "Iccii"

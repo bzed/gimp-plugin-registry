@@ -1,3 +1,107 @@
+gimp-plugin-registry (0.5.1-2) UNRELEASED; urgency=low
+
+  * debian/patches:
+    - Adding gcc4.3-fixes.dpatch to fix building with gcc 4.3
+      (Closes: #456054).
+
+ -- Bernd Zeimetz <bzed@debian.org>  Thu, 13 Dec 2007 09:16:18 +0100
+
+gimp-plugin-registry (0.5.1-1) unstable; urgency=low
+
+  * smart-sharpen-redux: New upstream version.
+  * focus-blur: New upstream version.
+  * debian/control:
+    - Updating my email address.
+  * New plugin: normalmap.
+    Thanks to Gürkan Sengün for the suggestion (Closes: #455877).
+
+ -- Bernd Zeimetz <bzed@debian.org>  Wed, 12 Dec 2007 21:04:15 +0100
+
+gimp-plugin-registry (0.4.3-1) unstable; urgency=low
+
+  * debian/rules:
+    - Checking if we need to update debian/copyright or debian/control in the
+      clean target now as a check by the build target does not work when using
+      svn-buildpackage. Also monitor debian/{copyright,control}.in for
+      changes.
+  * debian/control.in:
+    - Adding Vcs-* fields here instead of debian/control so we don't lose them
+      again. Thanks to Thijs Kinkhorst for the hint.
+    - Adding fftw3-dev to Build-Depends, needed by the new focus-blur version.
+  * layer-effects:
+    - Updating version number to 2.4 to follow upstream - no changes in the
+      plugin, though.
+  * focus-blur:
+    - New upstream version
+
+ -- Bernd Zeimetz <bernd@bzed.de>  Thu, 15 Nov 2007 23:44:12 +0100
+
+gimp-plugin-registry (0.4.2-1) unstable; urgency=low
+
+  * New upstream release of the lqr plugin which disables debug code the
+    author accidentally left enabled in the last release. The debug code
+    introduced a bug ironically.
+
+ -- Bernd Zeimetz <bernd@bzed.de>  Thu, 18 Oct 2007 10:31:33 +0200
+
+gimp-plugin-registry (0.4.1-1) unstable; urgency=low
+
+  * Don't use dh_install to copy documentation files as some of them are
+    symlinks - dh_install doesn't dereference symlinks. Thanks to
+    Christian Ohm for the report. (Closes: #447017)
+  * debian/control:
+    - Adding Vcs-{Browser,Svn} fields.
+    - Removing autotools and automake Build-Dep, we're building refocus
+      without autotools.
+  * New upstream version of lqr.
+
+ -- Bernd Zeimetz <bernd@bzed.de>  Wed, 17 Oct 2007 23:26:49 +0200
+
+gimp-plugin-registry (0.4-1) unstable; urgency=low
+
+  * Adding extra checks to ensure that the debian/{copyright,control} were
+    updated after modifying the description/version/copyright files in the
+    plugin directories.
+  * Modifying the update-description target to include version informations
+    which are provided in the plugin directories now. Thanks to Nelson A. de
+    Oliveira for the suggestion (Closes: #444591).
+  * Enhancing common-autotools.mk to be able to build the Refocus plugin
+    which needs some extra love due to a bit buggy build system.
+  * New plugins:
+    - Refocus (transition from gimp-refocus), also including a bugfix which
+      was reported against the former package. The plugin needs some extra
+      build-dependencies which were added.
+    - Smart-Sharpen-Redux
+    - Exposure Blend, thanks to Jurij Smakov  for the suggestion
+      (Closes: #446507)
+
+ -- Bernd Zeimetz <bernd@bzed.de>  Mon, 15 Oct 2007 14:45:33 +0200
+
+gimp-plugin-registry (0.3.2-1) unstable; urgency=low
+
+  * lqr:
+    - New upstream version
+  * DBP:
+    - Fixing Makefile to build with the latest Gimp/GTK versions
+      (Closes: #444533)
+
+ -- Bernd Zeimetz <bernd@bzed.de>  Sat, 29 Sep 2007 12:15:58 +0200
+
+gimp-plugin-registry (0.3.1-1) unstable; urgency=low
+
+  * lqr:
+    - New plugin. Thanks to Ari Pollak for the hint.
+  * DBP:
+    - New upstream version.
+  * extended-borders:
+    - removing plugin, upstream doesn't take care of it anymore. There's a
+      nice border tool in the 'Layer Effects' which will work as replacement.
+  * debian/patches:
+    - Adding several patches to provide better plugin locations within the
+      menu structure of gimp
+
+ -- Bernd Zeimetz <bernd@bzed.de>  Sat, 08 Sep 2007 00:36:37 +0200
+
 gimp-plugin-registry (0.2.1-1) unstable; urgency=low
 
   * fix-ca:

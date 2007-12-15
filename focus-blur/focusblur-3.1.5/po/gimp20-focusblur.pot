@@ -1,0 +1,148 @@
+# SOME DESCRIPTIVE TITLE.
+# This file is put in the public domain.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: sudakyo@fat.coara.or.jp\n"
+"POT-Creation-Date: 2007-11-10 19:15+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/fftblur.c:284 src/interface.c:123
+msgid "Focus Blur..."
+msgstr ""
+
+#: src/focusblur.c:76
+msgid "Make a out of focus with luminosity and depth, like a sight or lenses"
+msgstr ""
+
+#: src/focusblur.c:85
+msgid "_Focus Blur..."
+msgstr ""
+
+#: src/interface.c:292
+msgid "Focus Blur"
+msgstr ""
+
+#: src/interface.c:342
+msgid "_Basic"
+msgstr ""
+
+#: src/interface.c:358
+msgid "Diffusion Model and _Radius:"
+msgstr ""
+
+#: src/interface.c:376
+msgid "Flat"
+msgstr ""
+
+#: src/interface.c:377
+msgid "Ring"
+msgstr ""
+
+#: src/interface.c:378
+msgid "Concave"
+msgstr ""
+
+#: src/interface.c:414
+msgid "P_eak radius for Shining:"
+msgstr ""
+
+#: src/interface.c:425
+msgid "_Use Depth map:"
+msgstr ""
+
+#: src/interface.c:463
+msgid "_Focal depth:"
+msgstr ""
+
+#: src/interface.c:478
+msgid "_Model"
+msgstr ""
+
+#: src/interface.c:484
+msgid "F_illing inside:"
+msgstr ""
+
+#: src/interface.c:498
+msgid "Sof_tness:"
+msgstr ""
+
+#: src/interface.c:512
+msgid "Soft_ness delay:"
+msgstr ""
+
+#: src/interface.c:526
+msgid "_Shine"
+msgstr ""
+
+#: src/interface.c:531
+msgid "Luminosity"
+msgstr ""
+
+#: src/interface.c:532
+msgid "Saturation"
+msgstr ""
+
+#: src/interface.c:542
+msgid "Sensing t_ype:"
+msgstr ""
+
+#: src/interface.c:549
+msgid "_Threshold:"
+msgstr ""
+
+#: src/interface.c:563
+msgid "_Level:"
+msgstr ""
+
+#: src/interface.c:577
+msgid "C_urve:"
+msgstr ""
+
+#: src/interface.c:592
+msgid "_Depth"
+msgstr ""
+
+#: src/interface.c:597
+msgid "Depth with p_recedence"
+msgstr ""
+
+#: src/interface.c:615
+msgid "Pre_ferences"
+msgstr ""
+
+#: src/interface.c:619
+msgid "Best"
+msgstr ""
+
+#: src/interface.c:620 src/interface.c:633
+msgid "Normal"
+msgstr ""
+
+#: src/interface.c:621 src/interface.c:634
+msgid "Low"
+msgstr ""
+
+#: src/interface.c:628
+msgid "Rendering _quality:"
+msgstr ""
+
+#: src/interface.c:635
+msgid "Defective"
+msgstr ""
+
+#: src/interface.c:642
+msgid "Pre_view quality:"
+msgstr ""
+
+#: src/interface.c:655
+msgid "Dis_able support for multi-threads"
+msgstr ""

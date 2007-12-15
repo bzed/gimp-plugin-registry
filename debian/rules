@@ -1,8 +1,9 @@
 #!/usr/bin/make -f
-# -*- makefile -*-
 
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
+
+include /usr/share/dpatch/dpatch.make
 
 CFLAGS = -Wall -g
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
@@ -17,9 +18,22 @@ PLUGINS = $(shell find . -mindepth 2 -maxdepth 2 -name Makefile | \
 
 GIMPVER=$(shell dpkg -s libgimp2.0-dev | grep Version | awk '{print $$2}')
 
+VERSION_FILES = $(shell find . -mindepth 2 -maxdepth 2 -name version)
+DESC_FILES = $(shell find . -mindepth 2 -maxdepth 2 -name description)
+COPYRIGHT_FILES = $(shell find . -path ./debian -prune -o -name copyright -print)
+
+DESTDIR := $(CURDIR)/debian/gimp-plugin-registry
+
+debian/control: $(VERSION_FILES) $(DESC_FILES) debian/control.in
+	$(MAKE) -f debian/rules update-control
+
+debian/copyright: $(COPYRIGHT_FILES) debian/copyright.in
+	$(MAKE) -f debian/rules update-copyright
+	
+
 build: build-stamp
 
-build-stamp: 
+build-stamp: patch-stamp
 	dh_testdir
 
 	for plugin in $(PLUGINS); do \
@@ -28,7 +42,8 @@ build-stamp:
 
 	touch $@
 
-clean: 
+clean: clean-patched debian/control debian/copyright
+clean-patched: unpatch
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp configure-stamp
@@ -46,15 +61,18 @@ install: build
 	dh_installdirs
 
 	for plugin in $(PLUGINS); do \
-		$(MAKE) -C $$plugin DESTDIR=$(CURDIR)/debian/gimp-plugin-registry \
+		$(MAKE) -C $$plugin DESTDIR=$(DESTDIR) \
                                     PLUGINBINDIR=/usr/lib/gimp/2.0/plug-ins  \
 	                            PLUGINSCRIPTDIR=/usr/share/gimp/2.0/scripts \
 				    DOCDIR=/usr/share/doc/gimp-plugin-registry/$$plugin \
 	                            GIMPVER="$(GIMPVER)" \
                                     install || exit 1 ;\
-	        if [ -r $$plugin/README ]; then \
-	            dh_install $$plugin/README usr/share/doc/gimp-plugin-registry/$$plugin ;\
-	        fi ;\
+		for readme in README README.Debian; do \
+	          if [ -r $$plugin/$$readme ]; then \
+                    install -m 755 -d $(DESTDIR)/usr/share/doc/gimp-plugin-registry/$$plugin ;\
+	            cp -L $$plugin/$$readme $(DESTDIR)/usr/share/doc/gimp-plugin-registry/$$plugin ;\
+	          fi ;\
+		done ;\
 	done
 
 
@@ -80,15 +98,15 @@ binary-arch: build install
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure \
-        update-all update-copyright update-description update-url-md5 watch build-tgz
+        update-all update-copyright update-control update-watch watch build-tgz
 
 
 #### the following stuff is not needed to build the package,
 #### it's only for lazy maintainers.
 
 update-all:
-	debian/rules update-url-md5
-	debian/rules update-description
+	debian/rules update-watch
+	debian/rules update-control
 	debian/rules update-copyright
 
 update-copyright:
@@ -105,23 +123,30 @@ update-copyright:
 	  done ;\
 	) > debian/copyright
 
-update-description:
+update-control:
 	( cat debian/control.in ;\
 	  for plugin in $(PLUGINS); do \
-	    cat $$plugin/description ;\
+	    if [ -f $$plugin/version ]; then \
+	      p_version=`cat $$plugin/version` ;\
+	      sed "s,{version},($$p_version),g" $$plugin/description ;\
+	    else \
+	      cat $$plugin/description ;\
+	    fi ;\
 	  done ;\
 	) > debian/control
 
-update-url-md5: watch
+update-watch: watch
 	for plugin in $(PLUGINS); do \
 	    wget -q -O - `cat $$plugin/url` | md5sum | awk '{print $$1}' > $$plugin/url.md5sum ;\
 	done
 
 watch:
 	for plugin in $(PLUGINS); do \
-	    url=`cat $$plugin/url` ;\
-	    if ! [ `wget -q -O - $$url | md5sum | awk '{print $$1}'` = `cat $$plugin/url.md5sum` ]; then \
+	    if [ -r $$plugin/url.md5sum ]; then \
+	      url=`cat $$plugin/url` ;\
+	      if ! [ `wget -q -O - $$url | md5sum | awk '{print $$1}'` = `cat $$plugin/url.md5sum` ]; then \
 	        echo "$$plugin changed! $$url" ;\
+	      fi ;\
 	    fi ;\
 	done
 

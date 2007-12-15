@@ -1,0 +1,307 @@
+2007-11-25  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* configure.ac: default prefix is detected with pkg-config.
+
+	* Made 3.1.5 release.
+
+2007-11-24  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* po/it.po: added Italian message by Carlo Baldassi.
+
+2007-11-11  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* po/ru.po: added Russian message by Alexandre Prokoudine.
+
+2007-11-10  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* Made 3.1.4 release.
+
+2007-11-07  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/focusblur.c: use gimp_plugin_domain_register() for menu entry.
+	Reported by Alexandre Prokoudine.
+
+2007-11-06  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/focusblurrc.[ch]: store preferences in user's directory.
+
+2007-11-04  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/focusblurparam.c (focusblur_param_destroy): free thread_pool.
+
+2007-11-04  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/focusblurparam.[ch]
+	* src/focusblurparam.c: added parameters thread_pool, max_threads and
+	disable_mp. the number of threads is taken from gimp preferences.
+
+	* configure.ac (ENABLE_MP)
+	* src/focusblurparam.c (focusblur_param_new)
+	* src/interface.c (focusblur_execute)
+	(focusblur_execute_thread)
+	(focusblur_dialog)
+	* src/interface.h (focusblur_execute_thread) : turn back support for
+	multi-threaded rendering, it works only with convolution.
+
+	* Made 3.1.3 release.
+
+2007-11-01  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* po/Makefile.in.in
+	* po/Makevars: gettext domain is `gimp20-focusblur'.
+	Reported by Alexandre Prokoudine.
+
+2007-10-26  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/focusblurparam.c (fblur_init_param)
+	* src/focusblurparam.h (FblurStoreParam)
+	* src/interface.c (focusblur_dialog): parameter enable_preview
+	was removed.
+
+	* Made 3.1.2 release.
+
+2007-07-10  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/fftblurproc.c (focusblur_fft_complex_mul): fixed line of
+	ifdef HAVE_COMPLEX_H
+
+2007-07-07  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/*shine.[ch], src/diffusion.[ch]: shine descending density is
+	decided by radius (px).
+
+	* src/focusblur.c (query)
+	* src/focusblurparam.c (focusblur_param_set): parameters for
+	non-interactive were changed.
+
+	* Made 3.1.1 release.
+
+2007-07-06  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* configure.ac, src/Makefile.am: cleanup. a configure option
+	`--enable-fft' was replaced by `--without-fftw3'.
+
+	* libgimp/stdplugins-intl.h: dummy file for compatible.
+	* src/gettext.c: moved to libgimp/.
+
+	* focusblur.c: development infomation has been removed.
+
+2007-05-05  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* Incremented minor version to 3.1.x.
+
+	* Removed [012]{source,depthmap,shine}.c:
+	* Added source.h, source.c, depthmap.c, shine.c:
+	* configure.ac: buffering method was fixed at large array.
+
+	* Removed distortion.h, [02]distortion.c:
+	* focusblurparam.[ch], interface.c, render.c, diffusion.[ch]:
+	distortion was removed.
+
+	* render.c: removed a test code for a colored fringe.
+
+	* configure.ac, interface.[ch], focusblurparam.[ch],
+	fftblurbuffer.[ch]: support for multi-processors was removed.
+
+	* configure.ac, diffusion.c, focusblurparam.[ch], fftblur.c,
+	fftblurbuffer.[ch], fftblurproc.[ch]: all of simd and asm codes
+	were removed.
+
+	* diffusion.c, focusblurparam.c, focusblurenums.h: model type
+	Inverse was removed.
+
+	* Merged depth fakes, depth fill behind and depth fuzzy are always
+	enabled. it works with depth precedence. depth fuzzy is ignored
+	with fftblur.
+
+	* Made 3.1.0 release.
+
+2007-04-25  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* diffusion.c, fftblur.c, fftblurbuffer.c, fftblurproc.c: optimize
+
+	* Made 3.0.14 development release.
+
+2007-04-22  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/pixelfilter.c (focusblur_pixel_filter_get_pixel): added
+	mutex for focusblur_pixel_filter_tile_get().
+
+	* src/0source.c (focusblur_source_get)
+	* src/0shine.c (focusblur_shine_get)
+	* src/0depthmap.c (focusblur_depth_map_get): added mutex for
+	gimp_pixel_fetcher_get_pixel().
+
+	* src/fftblurproc.c (focusblur_fft_convert_work_simd): testing.
+
+	* Made 3.0.13 development release.
+
+2007-04-21  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* configure.ac: added configure options `--disable-mp' and
+	`--enable-fft-mp'. configure can't guess to be able to use
+	libfftw3f_threads, because it's not under the pkg-tool.
+
+	* src/fftblurbuffer.c (focusblur_fft_buffer_update_work):
+	support multi-threaded fft by fftw3.
+
+	* src/focusblurparam.h (FblurParam)
+	* src/focusblurparam.c (focusblur_param_new)
+	(focusblur_param_prepare)
+	(focusblur_param_destroy): added GThreadPool.
+
+	* src/interface.c (focusblur_execute)
+	(focusblur_execute_thread)
+	(focusblur_execute_region): support parallel rendering with
+	GThreadPool, but performance is not checked. (I don't have smp)
+
+	* Made 3.0.12 development release.
+
+2007-04-20  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/fftblur.c (focusblur_fft_render_depth_precedence): fixed
+	around transparent.
+
+	* src/shine.c (focusblur_shine_get_descent)
+	* src/diffusion.c (focusblur_diffusion_get_shine): support shine
+	descent. it limits total value of light.
+
+	* src/diffusion.c (focusblur_diffusion_blur): model softness and
+	model softness delay are supported.
+
+	* src/focusblur.c (query): removed temporary name suffix. now it
+	is not able to install both of versions new and old.
+
+	* Made 3.0.11 development release.
+
+2007-04-18  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/fftblur.c (focusblur_fft_render_depth_precedence): depth
+	precedence and fill behind are supported in also rendering with
+	fft. fuzzy is ignored.
+
+	* src/render.c (focusblur_render_pixel): reduce pixel value by
+	alpha value in depth precedence.
+
+	* Made 3.0.10 development release.
+
+2007-04-16  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/fftblurproc.c (focusblur_fft_work_add_buffer)
+	(focusblur_fft_work_free_buffers): manage to free with list.
+
+	* src/fftblurproc.c (focusblur_fft_complex_mul): an operation of
+	complex number for a compiler doesn't have them.
+
+	* src/fftblur.c (focusblur_fft_render)
+	(focusblur_fft_render_depth_map): get out all nested
+	functions from focusblur_fft_execute(), and branch by case.
+
+2007-04-15  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/fftblurbuffer.c (focusblur_fft_make_kernel): normalize has
+	been hidden in side of kernel.
+
+	* src/diffusion.c (focusblur_diffusion_get_shine): density has
+	been hidden in src/diffusion.c.
+
+	* src/interface.c: removed faked progress preview updating.
+
+2007-04-13  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/fftblur.c: code clean-up. the file was split to
+	src/fftblurbuffer.[ch], src/fftblurproc.c.[ch].
+
+	* Made 3.0.9 development release.
+
+2007-04-08  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/fftblur.c (focusblur_fft_execute): it works with depth, but
+	it doesn't work with depth fakes. (precedence/fill behind/fuzzy)
+
+	* src/interface.c (focusblur_execute): changed parameter order.
+
+	* src/depthmap.c (focusblur_depth_map_update): added parameter for
+	depth division. it reduces precision of depth for to make FFT quick.
+
+	* src/fftblur.c (focusblur_fft_execute): supported preview.
+
+	* Made 3.0.8 development release.
+
+2007-04-02  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* Added src/fftblur.[ch]: blur with fftw3. it can't work with depth.
+
+	* src/[012]shine.c: fixed decreasing by alpha.
+
+	* Made 3.0.7 development release.
+
+2007-03-21  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* Added src/distortion.h src/[02]distortion.c: Josefina effect.
+
+	* Made 3.0.6 development release.
+
+2007-03-09  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/render.c (focusblur_render_pixel): brushed up depth
+	precedence.
+
+	* Made 3.0.5 development release.
+
+2007-03-06  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* Added src/source.h src/[02]source.c: switch buffer for source
+	image by GimpPixelFetcher or large array.
+
+	* src/2depthmap.c (focusblur_depth_map_update): fixed to reset
+	focal distance.
+
+	* src/render.c (focusblur_render_pixel): added depth precedence
+	and depth fill behind.
+
+	* src/interface.c (focusblur_preview_button_press): added pickup
+	of focal distance with preview.
+
+	* Made 3.0.4 development release.
+
+2007-03-04  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* Added configure option of buffering method and their codes.
+
+	* Made 3.0.3 development release.
+
+2007-03-02  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/interface.c
+	(focusblur_execute)
+	(focusblur_dialog)
+	(focusblur_preview_toggle_button_update): added faked progress
+	preview updating.
+
+2007-03-01  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* Made 3.0.2 development release.
+
+2007-02-27  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* Added src/diffusion.[ch]: diffusion table.
+
+	* Added diffusion model Inverse. it makes previous fuzzy.
+
+2007-02-21  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* Made 3.0.1 development release.
+
+	* Added src/gettext.h: I had forgotten to contain it.
+
+2007-02-19  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* Added FblurPixelFilter: filtering with micro tile array.
+
+	* Added src/depthmap.[ch] src/shine.[ch]: cut out from render.c
+	it was written with FblurPixelFilter.
+
+2007-01-31  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* Made 3.0.0 development release.

@@ -5,10 +5,10 @@ GIMPTOOL = /usr/bin/gimptool-2.0
 
 build: $(PLUGIN)
 
-install: $(PLUGIN)
+install: build
 	install -m 755 $(PLUGIN) $(DESTDIR)$(PLUGINBINDIR)
 
 clean:
 	rm -f $(PLUGIN)
 
-.PHONY: install clean
+.PHONY: install clean build
