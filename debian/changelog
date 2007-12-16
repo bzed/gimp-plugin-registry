@@ -3,8 +3,11 @@ gimp-plugin-registry (0.5.1-2) UNRELEASED; urgency=low
   * debian/patches:
     - Adding gcc4.3-fixes.dpatch to fix building with gcc 4.3
       (Closes: #456054).
+  * debian/control:
+    - We need The Gimp 2.4 for several plugins to work, reflecting this by
+      adding a version requirement for libgimp2.0-dev.
 
- -- Bernd Zeimetz <bzed@debian.org>  Thu, 13 Dec 2007 09:16:18 +0100
+ -- Bernd Zeimetz <bzed@debian.org>  Sun, 16 Dec 2007 14:31:11 +0100
 
 gimp-plugin-registry (0.5.1-1) unstable; urgency=low
 
