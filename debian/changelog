@@ -3,8 +3,10 @@ gimp-plugin-registry (0.5.1-3) unstable; urgency=low
   * debian/control:
     - Using libglew-dev as build dependency instead of libglew1.4-dev
       (Closes: #465631).
+    - Using gfortran based build dependencies for blas and lapack
+      (Closes: #463950). 
 
- -- Bernd Zeimetz <bzed@debian.org>  Wed, 13 Feb 2008 21:25:22 +0100
+ -- Bernd Zeimetz <bzed@debian.org>  Wed, 13 Feb 2008 21:50:21 +0100
 
 gimp-plugin-registry (0.5.1-2) unstable; urgency=low
 
