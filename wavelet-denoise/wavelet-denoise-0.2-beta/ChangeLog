@@ -1,0 +1,24 @@
+ChangeLog
+=========
+
+v0.2 - change in noise weighting
+--------------------------------
+- Interface reorganized.
+- Added 'Detail' slider which affects the thresholds dependency on frequency.
+- Added tool-tips in the user interface.
+- Colour previev of single channels added.
+- Button 'Reset temporarily' added for preview.
+- Reset buttons added.
+- The size of the dialog is saved now.
+- Changed default thresholds.
+- Minor fixes.
+
+v0.1.1 - bug fix
+----------------
+- minor memory bug fixed
+- some debug g_print() functions removed
+- files AUTHORS, ChangeLog, THANKS added
+
+v0.1 - first release
+--------------------
+- no comment

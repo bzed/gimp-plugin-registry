@@ -1,0 +1,5 @@
+   * Wavelet Denoise {version}:
+     The wavelet denoise plugin is a tool to selectively reduce noise in
+     individual channels of an image with optional RGB<->YCbCr conversion.
+     It has a user inteface to adjust the amount of denoising applied. The
+     wavelet nature of the algorithm makes the processing quite fast.
