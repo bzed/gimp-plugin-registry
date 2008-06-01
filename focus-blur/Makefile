@@ -1,5 +1,4 @@
+CLEAN-HOOK = rm -f src/po/*.gmo src/pixmaps/pixbufs.h
+
 include ../common-autotools.mk
 
-clean::
-	rm -f src/po/*.gmo
-	rm -f src/pixmaps/pixbufs.h
