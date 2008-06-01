@@ -1,0 +1,465 @@
+# Separate+ for The GIMP
+# Copyright (C) 2002-2004 Alastair Robinson
+# Yoshinori Yamakawa <yam@yellowmagic.info>, 2006-2008.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Separate+ 0.5.0¥n"
+"Report-Msgid-Bugs-To: ¥n"
+"POT-Creation-Date: 2008-02-12 05:04+0900¥n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE¥n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>¥n"
+"Language-Team: LANGUAGE <LL@li.org>¥n"
+"MIME-Version: 1.0¥n"
+"Content-Type: text/plain; charset=UTF-8¥n"
+"Content-Transfer-Encoding: 8bit¥n"
+
+#: icc_colorspace.c:98 icc_colorspace.c:99
+msgid "Assign new colorspace"
+msgstr ""
+
+#: icc_colorspace.c:103
+msgid "Assign colorspace..."
+msgstr ""
+
+#: icc_colorspace.c:110 icc_colorspace.c:111
+msgid "Convert to other colorspace"
+msgstr ""
+
+#: icc_colorspace.c:115
+msgid "Convert colorspace..."
+msgstr ""
+
+#: icc_colorspace.c:195 separate.c:598 separate.c:746
+msgid "Rendering intent is invalid."
+msgstr ""
+
+#: icc_colorspace.c:573
+msgid "Conveting..."
+msgstr ""
+
+#: icc_colorspace.c:691
+msgid "Can't get colormap!"
+msgstr ""
+
+#: icc_colorspace.c:720
+msgid "Unsupported BPP!"
+msgstr ""
+
+#: icc_colorspace.c:770
+msgid "Assign colorspace"
+msgstr ""
+
+#: icc_colorspace.c:781
+msgid "Current colorspace:"
+msgstr ""
+
+#: icc_colorspace.c:785 icc_colorspace.c:885
+msgid "None ( use RGB workspace temporarily )"
+msgstr ""
+
+#: icc_colorspace.c:796
+msgid "New colorspace:"
+msgstr ""
+
+#: icc_colorspace.c:803
+msgid "_Unassign colorspace"
+msgstr ""
+
+#: icc_colorspace.c:808 icc_colorspace.c:927
+#, possible-c-format
+msgid "_Workspace: %s"
+msgstr ""
+
+#: icc_colorspace.c:818 icc_colorspace.c:937
+msgid "_Profile:"
+msgstr ""
+
+#: icc_colorspace.c:823 icc_colorspace.c:942
+msgid "Choose RGB profile"
+msgstr ""
+
+#: icc_colorspace.c:870
+msgid "Convert colorspace"
+msgstr ""
+
+#: icc_colorspace.c:881
+msgid "Source colorspace:"
+msgstr ""
+
+#: icc_colorspace.c:895 separate.c:1296
+msgid "Rendering intent:"
+msgstr ""
+
+#: icc_colorspace.c:903 separate.c:1302
+msgid "Perceptual"
+msgstr ""
+
+#: icc_colorspace.c:904 separate.c:1303
+msgid "Relative colorimetric"
+msgstr ""
+
+#: icc_colorspace.c:905 separate.c:1304
+msgid "Saturation"
+msgstr ""
+
+#: icc_colorspace.c:906 separate.c:1305
+msgid "Absolute colorimetric"
+msgstr ""
+
+#: icc_colorspace.c:907 separate.c:1306
+msgid "Absolute colorimetric(2)"
+msgstr ""
+
+#: icc_colorspace.c:911 separate.c:1312
+msgid "Use BPC algorithm"
+msgstr ""
+
+#: icc_colorspace.c:919
+msgid "Destination colorspace:"
+msgstr ""
+
+#: icc_colorspace.c:948
+msgid "Flatten image ( to preserve appearance )"
+msgstr ""
+
+#: iccbutton.c:56
+msgid "Input"
+msgstr ""
+
+#: iccbutton.c:57
+msgid "Display"
+msgstr ""
+
+#: iccbutton.c:58
+msgid "Output"
+msgstr ""
+
+#: iccbutton.c:59
+msgid "Devicelink"
+msgstr ""
+
+#: iccbutton.c:60
+msgid "Abstract"
+msgstr ""
+
+#: iccbutton.c:61
+msgid "Colorspace conversion"
+msgstr ""
+
+#: iccbutton.c:62
+msgid "Named color"
+msgstr ""
+
+#: iccbutton.c:250
+#, possible-c-format
+msgid "%s(broken text)..."
+msgstr ""
+
+#: iccbutton.c:255
+msgid "(no name)"
+msgstr ""
+
+#: iccbutton.c:458
+msgid "(not selected)"
+msgstr ""
+
+#: iccbutton.c:658
+msgid "More..."
+msgstr ""
+
+#: iccbutton.c:792
+msgid "Choose an ICC Profile"
+msgstr ""
+
+#: iccbutton.c:818
+msgid "Name"
+msgstr ""
+
+#: iccbutton.c:824
+msgid "Class"
+msgstr ""
+
+#: iccbutton.c:830
+msgid "Colorspace"
+msgstr ""
+
+#: iccbutton.c:836
+msgid "PCS"
+msgstr ""
+
+#: iccbutton.c:842
+msgid "Path"
+msgstr ""
+
+#: iccbutton.c:853
+msgid "Path:"
+msgstr ""
+
+#: iccbutton.c:888
+msgid "Invalid profile"
+msgstr ""
+
+#: iccbutton.c:890
+msgid "Please check the filename, device class, and colorspace."
+msgstr ""
+
+#: import.c:82 import.c:83
+msgid "Import the CMYK TIFF image"
+msgstr ""
+
+#: import.c:87
+msgid "<Toolbox>/File/Acquire/Separated TIFF"
+msgstr ""
+
+#: import.c:158
+#, possible-c-format
+msgid "Cannot open : ¥"%s¥""
+msgstr ""
+
+#: import.c:168
+#, possible-c-format
+msgid "¥"%s¥" is unsupported."
+msgstr ""
+
+#: import.c:206 util.c:19 util.c:189 util.c:249 util.c:325
+msgid "Background"
+msgstr ""
+
+#: import.c:210
+#, possible-c-format
+msgid "Reading ¥"%s¥"..."
+msgstr ""
+
+#: import.c:294
+msgid "Import separated TIFF..."
+msgstr ""
+
+#: separate.c:158
+msgid "Generate CMYK separations"
+msgstr ""
+
+#: separate.c:159
+msgid ""
+"Separate performs CMYK colour separation of an image, into the four layers."
+msgstr ""
+
+#: separate.c:164
+msgid "<Image>/Image/Separate/Separate"
+msgstr ""
+
+#: separate.c:173
+msgid ""
+"Separate performs CMYK colour separation of an RGB image, into the alpha-"
+"channels of four coloured layers."
+msgstr ""
+
+#: separate.c:193
+msgid ""
+"Separate performs CMYK colour separation of an RGB image, into four "
+"greyscale layers."
+msgstr ""
+
+#: separate.c:212
+msgid "Softproofing CMYK colour"
+msgstr ""
+
+#: separate.c:213
+msgid ""
+"Separate proofs a CMYK colour separation, by transforming back into RGB, "
+"with media-white simulation."
+msgstr ""
+
+#: separate.c:218
+msgid "<Image>/Image/Separate/Proof"
+msgstr ""
+
+#: separate.c:225
+msgid "Separate_duotone"
+msgstr ""
+
+#: separate.c:232
+msgid "<Image>/Image/Separate/Duotone"
+msgstr ""
+
+#: separate.c:239
+msgid "Save separated image"
+msgstr ""
+
+#: separate.c:240
+msgid "Save separated image in TIFF format."
+msgstr ""
+
+#: separate.c:244
+msgid "<Image>/Image/Separate/Save..."
+msgstr ""
+
+#: separate.c:399 separate.c:448 separate.c:456
+msgid "Separate: Internal calling error!"
+msgstr ""
+
+#: separate.c:411
+msgid "This is not a CMYK separated image!"
+msgstr ""
+
+#: separate.c:652 separate.c:786 separate.c:931 separate.c:960
+msgid ""
+"Internal error.¥n"
+"There might be an error in the specification of the profile."
+msgstr ""
+
+#: separate.c:693 separate.c:826 separate.c:1126
+msgid "Separating..."
+msgstr ""
+
+#: separate.c:883
+msgid "Proofing mode is invalid."
+msgstr ""
+
+#: separate.c:888
+msgid "Image is not separated..."
+msgstr ""
+
+#: separate.c:899
+msgid "C"
+msgstr ""
+
+#: separate.c:899
+msgid "M"
+msgstr ""
+
+#: separate.c:899
+msgid "Y"
+msgstr ""
+
+#: separate.c:899
+msgid "K"
+msgstr ""
+
+#: separate.c:908
+#, possible-c-format
+msgid "Couldn't get channel(s) : %s"
+msgstr ""
+
+#: separate.c:997
+msgid "Proofing..."
+msgstr ""
+
+#: separate.c:1223
+msgid "Source color space:"
+msgstr ""
+
+#: separate.c:1229
+msgid "Choose source profile (RGB)..."
+msgstr ""
+
+#: separate.c:1236
+msgid "Give priority to embedded profile"
+msgstr ""
+
+#: separate.c:1263
+msgid "( no profiles embedded )"
+msgstr ""
+
+#: separate.c:1282
+msgid "Destination color space:"
+msgstr ""
+
+#: separate.c:1288
+msgid "Choose output profile (CMYK)..."
+msgstr ""
+
+#: separate.c:1318
+msgid "Options:"
+msgstr ""
+
+#: separate.c:1323
+msgid "Preserve pure black"
+msgstr ""
+
+#: separate.c:1328
+msgid "Overprint pure black"
+msgstr ""
+
+#: separate.c:1339
+msgid "Make CMYK pseudo-composite"
+msgstr ""
+
+#: separate.c:1422
+msgid "Monitor / working color space:"
+msgstr ""
+
+#: separate.c:1428
+msgid "Choose RGB profile..."
+msgstr ""
+
+#: separate.c:1437
+msgid "Separated image's color space:"
+msgstr ""
+
+#: separate.c:1443
+msgid "Choose CMYK profile..."
+msgstr ""
+
+#: separate.c:1452
+msgid "Give priority to attached profile"
+msgstr ""
+
+#: separate.c:1480
+msgid "( no profiles attached )"
+msgstr ""
+
+#: separate.c:1502
+msgid "Mode:"
+msgstr ""
+
+#: separate.c:1508
+msgid "Normal"
+msgstr ""
+
+#: separate.c:1509
+msgid "Simulate black ink"
+msgstr ""
+
+#: separate.c:1510
+msgid "Simulate media white"
+msgstr ""
+
+#: separate.c:1565
+msgid "Save separated TIFF..."
+msgstr ""
+
+#: separate.c:1585
+msgid "Embed color profile:"
+msgstr ""
+
+#: separate.c:1588
+msgid "None"
+msgstr ""
+
+#: separate.c:1589
+msgid "CMYK default profile"
+msgstr ""
+
+#: separate.c:1590
+msgid "Print simulation profile"
+msgstr ""
+
+#: separate.c:1596
+#, possible-c-format
+msgid "Own profile : %s"
+msgstr ""
+
+#: tiff.c:53
+msgid "Saving..."
+msgstr ""
+
+#: util.c:272 util.c:344
+msgid "Creating CMYK layers..."
+msgstr ""
+
+#: util.c:417
+#, possible-c-format
+msgid "Untitled-%s.tif"
+msgstr ""

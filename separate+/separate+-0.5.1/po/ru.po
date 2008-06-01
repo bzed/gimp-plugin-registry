@@ -1,0 +1,444 @@
+# translation of ru.po to Russian
+# Separate plug-in for The GIMP
+# Copyright (C) 2002-2004 Alastair Robinson
+#
+# Yoshinori Yamakawa <yam@yellowmagic.info>, 2006.
+# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: ru\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-07-27 15:35+0900\n"
+"PO-Revision-Date: 2007-01-24 01:27+0300\n"
+"Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
+"Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: separate.c:164
+msgid ""
+"Separate performs CMYK colour separation of an image, into the four layers."
+msgstr "Separate производит CMYK-цветоделение изображения в четыре слоя."
+
+#: separate.c:178
+msgid ""
+"Separate performs CMYK colour separation of an RGB image, into the alpha-"
+"channels of four coloured layers."
+msgstr ""
+"Separate производит CMYK-цветоделение RGB-изображения в альфа-каналы четырёх "
+"цветных слоёв."
+
+#: separate.c:198
+msgid ""
+"Separate performs CMYK colour separation of an RGB image, into four "
+"greyscale layers."
+msgstr ""
+"Separate производит CMYK-цветоделение RGB-изображения в четыре слоя в "
+"градациях серого."
+
+#: separate.c:218
+msgid ""
+"Separate proofs a CMYK colour separation, by transforming back into RGB, "
+"with media-white simulation."
+msgstr ""
+"Separate выполняет цветопробу для цветоделения CMYK путём обратного "
+"преобразования в RGB с имитацией белого листа бумаги."
+
+#: separate.c:245
+msgid "Save separated image in TIFF format."
+msgstr "Сохранить цветоделённое изображение в формат TIFF."
+
+#: separate.c:406 separate.c:455 separate.c:463
+msgid "Separate: Internal calling error!"
+msgstr "Separate: ошибка внутреннего вызова!"
+
+#: separate.c:418
+msgid "This is not a CMYK separated image!"
+msgstr "Это не изображение с цветоделением в CMYK!"
+
+#: separate.c:605 separate.c:753 icc_colorspace.c:199
+msgid "Rendering intent is invalid."
+msgstr "Цель цветопередачи некорректна."
+
+#: separate.c:659 separate.c:793 separate.c:938 separate.c:967
+msgid ""
+"Internal error.\n"
+"There might be an error in the specification of the profile."
+msgstr ""
+"Внутренняя ошибка.\n"
+"Возможно, в спецификации профиля присутствует ошибка."
+
+#: separate.c:700 separate.c:833 separate.c:1133
+msgid "Separating..."
+msgstr "Производится цветоделение..."
+
+#: separate.c:890
+msgid "Proofing mode is invalid."
+msgstr "Режим цветопробы некоррректен"
+
+#: separate.c:895
+msgid "Image is not separated..."
+msgstr "Изображение без цветоделения..."
+
+#: separate.c:906
+msgid "C"
+msgstr "C"
+
+#: separate.c:906
+msgid "M"
+msgstr "M"
+
+#: separate.c:906
+msgid "Y"
+msgstr "Y"
+
+#: separate.c:906
+msgid "K"
+msgstr "K"
+
+#: separate.c:915
+#, c-format
+msgid "Couldn't get channel(s) : %s"
+msgstr "Не удалось получить канал(ы): %s"
+
+#: separate.c:1004
+msgid "Proofing..."
+msgstr "Цветопроба..."
+
+#: separate.c:1230
+msgid "Source color space:"
+msgstr "Исходное цветовое пространство:"
+
+#: separate.c:1236
+#, fuzzy
+msgid "Choose source profile (RGB)..."
+msgstr "ICC-профиль RGB (RGB)..."
+
+#: separate.c:1243
+msgid "Give priority to embedded profile"
+msgstr ""
+
+#: separate.c:1270
+msgid "( no profiles embedded )"
+msgstr ""
+
+#: separate.c:1289
+msgid "Destination color space:"
+msgstr "Конечное цветовое пространство:"
+
+#: separate.c:1295
+#, fuzzy
+msgid "Choose output profile (CMYK)..."
+msgstr "ICC-профиль CMYK (CMYK)..."
+
+#: separate.c:1303 icc_colorspace.c:898
+msgid "Rendering intent:"
+msgstr "Цель цветопередачи:"
+
+#: separate.c:1309 icc_colorspace.c:906
+msgid "Perceptual"
+msgstr "Воспринимаемая"
+
+#: separate.c:1310 icc_colorspace.c:907
+msgid "Relative colorimetric"
+msgstr "Относительная колориметрическая"
+
+#: separate.c:1311 icc_colorspace.c:908
+msgid "Saturation"
+msgstr "Насыщенная"
+
+#: separate.c:1312 icc_colorspace.c:909
+msgid "Absolute colorimetric"
+msgstr "Абсолютная колориметрическая"
+
+#: separate.c:1313 icc_colorspace.c:910
+#, fuzzy
+msgid "Absolute colorimetric(2)"
+msgstr "Абсолютная колориметрическая"
+
+#: separate.c:1319 icc_colorspace.c:914
+msgid "Use BPC algorithm"
+msgstr "Использовать алгоритм сохранения чёрной точки"
+
+#: separate.c:1325
+msgid "Options:"
+msgstr "Параметры:"
+
+#: separate.c:1330
+msgid "Preserve pure black"
+msgstr "Сохранить чистый чёрный цвет"
+
+#: separate.c:1335
+msgid "Overprint pure black"
+msgstr "Надпечатка чистого чёрного цвета"
+
+#: separate.c:1346
+msgid "Make CMYK pseudo-composite"
+msgstr "Сделать псевдокомпозитный CMYK"
+
+#: separate.c:1429
+msgid "Monitor / working color space:"
+msgstr "Цветовое пространство монитора/рабочее пространство"
+
+#: separate.c:1435
+#, fuzzy
+msgid "Choose RGB profile..."
+msgstr "ICC-профиль RGB (RGB)..."
+
+#: separate.c:1444
+msgid "Separated image's color space:"
+msgstr "Пространство цветоделённого изображения:"
+
+#: separate.c:1450
+#, fuzzy
+msgid "Choose CMYK profile..."
+msgstr "ICC-профиль CMYK (CMYK)..."
+
+#: separate.c:1459
+msgid "Give priority to attached profile"
+msgstr ""
+
+#: separate.c:1487
+msgid "( no profiles attached )"
+msgstr ""
+
+#: separate.c:1509
+msgid "Mode:"
+msgstr "Режим:"
+
+#: separate.c:1515
+msgid "Normal"
+msgstr "Обычный"
+
+#: separate.c:1516
+msgid "Simulate black ink"
+msgstr "Имитация чёрной краски"
+
+#: separate.c:1517
+msgid "Simulate media white"
+msgstr "Имитация белого листа бумаги"
+
+#: separate.c:1572
+msgid "Save separated TIFF..."
+msgstr "Сохранение цветоделённого TIFF..."
+
+#: separate.c:1592
+msgid "Embed color profile:"
+msgstr "Встроить профиль:"
+
+#: separate.c:1595
+msgid "None"
+msgstr "Ничего"
+
+#: separate.c:1596
+msgid "CMYK default profile"
+msgstr "Обычный профиль CMYK"
+
+#: separate.c:1597
+msgid "Print simulation profile"
+msgstr "Профиль для цветопробы"
+
+#: separate.c:1603
+#, c-format
+msgid "Own profile : %s"
+msgstr "Другой профиль: %s"
+
+#: iccbutton.c:53
+msgid "Input"
+msgstr ""
+
+#: iccbutton.c:54
+msgid "Display"
+msgstr ""
+
+#: iccbutton.c:55
+msgid "Output"
+msgstr ""
+
+#: iccbutton.c:56
+msgid "Devicelink"
+msgstr ""
+
+#: iccbutton.c:57
+msgid "Abstract"
+msgstr ""
+
+#: iccbutton.c:58
+msgid "Colorspace conversion"
+msgstr ""
+
+#: iccbutton.c:59
+msgid "Named color"
+msgstr ""
+
+#: iccbutton.c:247
+#, c-format
+msgid "%s(broken text)..."
+msgstr ""
+
+#: iccbutton.c:252
+msgid "(no name)"
+msgstr ""
+
+#: iccbutton.c:438
+msgid "(not selected)"
+msgstr ""
+
+#: iccbutton.c:603
+msgid "Choose an ICC Profile"
+msgstr ""
+
+#: iccbutton.c:629
+msgid "Name"
+msgstr ""
+
+#: iccbutton.c:635
+msgid "Class"
+msgstr ""
+
+#: iccbutton.c:641
+#, fuzzy
+msgid "Colorspace"
+msgstr "Исходное цветовое пространство:"
+
+#: iccbutton.c:647
+msgid "PCS"
+msgstr ""
+
+#: iccbutton.c:653
+msgid "Path"
+msgstr ""
+
+#: iccbutton.c:664
+msgid "Path:"
+msgstr ""
+
+#: iccbutton.c:699
+msgid "Invalid profile"
+msgstr ""
+
+#: iccbutton.c:701
+msgid "Please check the filename, device class, and colorspace."
+msgstr ""
+
+#: icc_colorspace.c:105
+#, fuzzy
+msgid "Assign colorspace..."
+msgstr "Конечное цветовое пространство:"
+
+#: icc_colorspace.c:117
+#, fuzzy
+msgid "Convert colorspace..."
+msgstr "Исходное цветовое пространство:"
+
+#: icc_colorspace.c:576
+#, fuzzy
+msgid "Conveting..."
+msgstr "Производится цветоделение..."
+
+#: icc_colorspace.c:694
+msgid "Can't get colormap!"
+msgstr ""
+
+#: icc_colorspace.c:723
+msgid "Unsupported BPP!"
+msgstr ""
+
+#: icc_colorspace.c:773
+#, fuzzy
+msgid "Assign colorspace"
+msgstr "Конечное цветовое пространство:"
+
+#: icc_colorspace.c:784
+#, fuzzy
+msgid "Current colorspace:"
+msgstr "Исходное цветовое пространство:"
+
+#: icc_colorspace.c:788 icc_colorspace.c:888
+msgid "None ( use RGB workspace temporarily )"
+msgstr ""
+
+#: icc_colorspace.c:799
+#, fuzzy
+msgid "New colorspace:"
+msgstr "Исходное цветовое пространство:"
+
+#: icc_colorspace.c:806
+#, fuzzy
+msgid "_Unassign colorspace"
+msgstr "Конечное цветовое пространство:"
+
+#: icc_colorspace.c:811 icc_colorspace.c:930
+#, c-format
+msgid "_Workspace: %s"
+msgstr ""
+
+#: icc_colorspace.c:821 icc_colorspace.c:940
+msgid "_Profile:"
+msgstr ""
+
+#: icc_colorspace.c:826 icc_colorspace.c:945
+#, fuzzy
+msgid "Choose RGB profile"
+msgstr "ICC-профиль RGB (RGB)..."
+
+#: icc_colorspace.c:873
+#, fuzzy
+msgid "Convert colorspace"
+msgstr "Исходное цветовое пространство:"
+
+#: icc_colorspace.c:884
+#, fuzzy
+msgid "Source colorspace:"
+msgstr "Исходное цветовое пространство:"
+
+#: icc_colorspace.c:922
+#, fuzzy
+msgid "Destination colorspace:"
+msgstr "Конечное цветовое пространство:"
+
+#: icc_colorspace.c:951
+msgid "Flatten image ( to preserve appearance )"
+msgstr ""
+
+#: util.c:19 util.c:189 util.c:249 util.c:325 import.c:212
+msgid "Background"
+msgstr "Фон"
+
+#: util.c:272 util.c:344
+msgid "Creating CMYK layers..."
+msgstr "Создаются слои CMYK..."
+
+#: util.c:417
+#, c-format
+msgid "Untitled-%s.tif"
+msgstr "Untitled-%s.tif"
+
+#: import.c:164
+#, c-format
+msgid "Cannot open : \"%s\""
+msgstr "Невозможно открыть: \"%s\""
+
+#: import.c:174
+#, c-format
+msgid "\"%s\" is unsupported."
+msgstr "\"%s\" не поддерживается."
+
+#: import.c:216
+#, c-format
+msgid "Reading \"%s\"..."
+msgstr "Читается \"%s\"..."
+
+#: import.c:300
+msgid "Import separated TIFF..."
+msgstr "Импорт цветоделённого TIFF..."
+
+#~ msgid "Use embedded profile if possible"
+#~ msgstr "При возможности использовать встроенный профиль"
+
+#~ msgid "Use attached profile if possible"
+#~ msgstr "При возможности использовать встроенный профиль"
