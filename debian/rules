@@ -158,6 +158,8 @@ watch:
 	                echo "$$plugin changed! $$url" ;\
 	            fi ;\
 	        fi ;\
+	    else \
+	        echo "$$plugin: no url.content file!!!!" ;\
 	    fi ;\
 	done
 
