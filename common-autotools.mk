@@ -50,7 +50,7 @@ clean:
 	rm -f build-stamp
 	cd $(SRCDIR); [ ! -r Makefile ] || make distclean
 	rm -f $(SRCDIR)/config.sub $(SRCDIR)/config.guess
-	$(CLEAN-HHOK)
+	$(CLEAN-HOOK)
 
 .PHONY: install clean build
 
