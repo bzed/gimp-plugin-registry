@@ -5,7 +5,7 @@ Maintainer: Bernd Zeimetz <bzed@debian.org>
 Build-Depends: debhelper (>= 5), autotools-dev, dpatch,
  libgimp2.0-dev (>= 2.4), libcv-dev (>= 1.0.0), libxml-parser-perl,
  liblapack-dev, libblas-dev, libf2c2-dev, libfftw3-dev, libglew-dev,
- libgtkglext1-dev
+ libgtkglext1-dev, liblcms1-dev
 Standards-Version: 3.7.3
 Vcs-Svn: https://ssl.recluse.de/svn/debian/trunk/packages/gimp-plugin-registry/
 Vcs-Browser: http://svn.recluse.de/listing.php?repname=debian&path=%2Ftrunk%2Fpackages%2Fgimp-plugin-registry%2F&rev=0&sc=0
