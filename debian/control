@@ -1,0 +1,69 @@
+Source: gimp-plugin-registry
+Section: graphics
+Priority: optional
+Maintainer: Bernd Zeimetz <bzed@debian.org>
+Build-Depends: debhelper (>= 5), autotools-dev, dpatch,
+ libgimp2.0-dev (>= 2.4), libcv-dev (>= 1.0.0), libxml-parser-perl,
+ liblapack-dev, libblas-dev, libf2c2-dev, libfftw3-dev, libglew-dev,
+ libgtkglext1-dev
+Standards-Version: 3.7.3
+Vcs-Svn: https://ssl.recluse.de/svn/debian/trunk/packages/gimp-plugin-registry/
+Vcs-Browser: http://svn.recluse.de/listing.php?repname=debian&path=%2Ftrunk%2Fpackages%2Fgimp-plugin-registry%2F&rev=0&sc=0
+
+Package: gimp-plugin-registry
+Architecture: any
+Depends: gimp (>= 2.2.0), ${shlibs:Depends}, ${misc:Depends}
+Conflicts: gimp-refocus (<< 0.9.0-2)
+Replaces: gimp-refocus (<< 0.9.0-2)
+Description: A repository of optional extensions for The GIMP
+ The package contains the following plugins:
+ .
+   * Black and White Film Simulation (1.1):
+     Converts the selected layer into Black and White using
+     the channel mixer. Tries to produce results resembling
+     tonal qualities of film.
+   * David's Batch Processor (1.1.7):
+     A simple batch processing plugin for The Gimp - it allows
+     the user to automatically perform operations (such as resize)
+     on a collection of image files.
+   * Dustcleaner (0.1.5a):
+     Plugin to detect and remove dust spots in digital images.
+   * Exposure Blend (1.3b):
+     Prompt for 3 images in a bracketed exposure series (e.g. 0,-2,+2 EV)
+     and blend these into a contrast enhanced image.
+   * Fix-CA (3.0.2):
+     Corrects chromatic aberration in photos
+   * Focus-Blur (3.1.5):
+     This plugin tries to simulate an out-of-focus blur
+   * GREYCstoration (2.8):
+     A tool to denoise, inpaint and resize images
+   * Layer-Effects (2.4):
+     This script implements the following effects:
+     add border, bevel and emboss, color overlay, drop shadow,
+     gradient overlay, inner glow, inner shadow, outer glow,
+     pattern overlay, satin.
+   * Liquid Rescale (0.3.0-2):
+     Content-aware rescaling. Keeps the features of the image while
+     rescaling along a single direction.
+   * Normalmap (1.2.1):
+     Allows you to convert images into RGB normal maps for use in
+     per-pixel lighting applications.
+   * Planet Render (1-2):
+     Creates a planet. Color, size and sun orientation
+     can be set.
+   * Refocus (0.9.1):
+     The GIMP plugin to refocus images using FIR Wiener filtering.
+     During image processing operations such as scanning and scaling, images
+     tend to get blurry. The blurred impression of these images is due to the
+     fact that image pixels are averaged with their neighbors. Blurred images
+     don't have sharp boundaries and look as though they have been taken with
+     an unfocussed camera.
+   * Smart Sharpen (redux) (2.4):
+     This script implements the redux version of smart sharpening. It utilizes
+     the Unsharp Mask or Refocus plugin to sharpen the image.
+   * Streak-Camera simulation (0.6):
+     A streak camera images an object through a slit -
+     thus getting a "one dimensional image". This image is
+     propagated along the second dimension of the image plane
+     at a constant speed. The result is a picture of the time
+     dependency of the object.

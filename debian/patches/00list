@@ -1,0 +1,10 @@
+menu_bw-simulation
+menu_layer-effects
+menu_smart-sharpen-redux
+
+#refocus patches. keep order.
+refocus_lapack
+refocus_fix_warnings
+
+#gcc 4.3 fixes
+gcc4.3-fixes
