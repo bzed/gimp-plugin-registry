@@ -4,9 +4,9 @@
 ## DP: Fixing build for gcc 4.3
 
 @DPATCH@
-diff -urNad gimp-plugin-registry~/DBP/dbp-1.1.7/op.cc gimp-plugin-registry/DBP/dbp-1.1.7/op.cc
---- gimp-plugin-registry~/DBP/dbp-1.1.7/op.cc	2007-06-01 16:58:44.000000000 +0200
-+++ gimp-plugin-registry/DBP/dbp-1.1.7/op.cc	2007-12-13 09:07:04.000000000 +0100
+diff -urNad gimp-plugin-registry~/DBP/dbp-1.1.8/op.cc gimp-plugin-registry/DBP/dbp-1.1.8/op.cc
+--- gimp-plugin-registry~/DBP/dbp-1.1.8/op.cc	2007-06-01 16:58:44.000000000 +0200
++++ gimp-plugin-registry/DBP/dbp-1.1.8/op.cc	2008-06-01 04:14:48.000000000 +0200
 @@ -23,6 +23,7 @@
  #include <sys/stat.h>
  //#include <sstream>
