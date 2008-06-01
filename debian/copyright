@@ -642,7 +642,7 @@ http://turtle.as.arizona.edu/jdsmith/exposure_blend.php
 fix-ca:
 
 The plugin was downloaded from:
-http://registry.gimp.org/plugin?id=8668
+http://kcd.sourceforge.net/fix-ca.php
 
  Copyright (c) 2006, 2007 Kriang Lerdsuwanakij
                           <lerdsuwa@users.sourceforge.net>
@@ -666,7 +666,7 @@ http://registry.gimp.org/plugin?id=8668
 focus-blur:
 
 The plugin was downloaded from:
-http://registry.gimp.org/plugin?id=4123
+http://sudakyo.hp.infoseek.co.jp/gimp/fblur/focusblur_e.html
 
  Focus Blur -- blur with focus plug-in.
  Copyright (C) 2002-2007 Kyoichiro Suda
@@ -693,7 +693,7 @@ http://registry.gimp.org/plugin?id=4123
 GREYCstoration:
 
 The plugin was downloaded from:
-http://cimg.cvs.sourceforge.net/*checkout*/cimg/CImg/examples/greycstoration4gimp.cpp
+http://cimg.sourceforge.net/greycstoration/download.shtml
 
   Grzegorz Szwoch (GIMP plugin code)
   David Tschumperle (GREYCstoration API,
@@ -733,7 +733,7 @@ http://cimg.cvs.sourceforge.net/*checkout*/cimg/CImg/examples/greycstoration4gim
 layer-effects:
 
 The plugin was downloaded from:
-http://registry.gimp.org/plugin?id=6988
+http://registry.gimp.org/node/96
 
  The GIMP -- an image manipulation program©
  Copyright (C) 1995 Spencer Kimball and Peter Mattis
@@ -774,7 +774,7 @@ http://registry.gimp.org/plugin?id=6988
 lqr:
 
 The plugin was downloaded from:
-http://registry.gimp.org/plugin?id=10292
+http://liquidrescale.wikidot.com/en:download-page
 
  Upstream author: Carlo Baldassi <carlobaldassi@yahoo.it>
 
@@ -843,7 +843,7 @@ http://registry.gimp.org/plugin?id=10292
 normalmap:
 
 The plugin was downloaded from:
-http://nifelheim.dyndns.org/~cocidius/normalmap/
+http://registry.gimp.org/node/69
 
  Copyright (C) 2002 Shawn Kirst <skirst@fuse.net>
 
@@ -867,7 +867,7 @@ http://nifelheim.dyndns.org/~cocidius/normalmap/
 planet-render:
 
 The plugin was downloaded from:
-http://registry.gimp.org/plugin?id=8173
+http://registry.gimp.org/node/21
 
  (C) 2005-2007 Aurore D. "Rore", aurore.d@gmail.com
 
@@ -890,7 +890,6 @@ http://registry.gimp.org/plugin?id=8173
 refocus:
 
 The plugin was downloaded from:
-http://registry.gimp.org/plugin?id=2835
 
  Upstream Author:
   Ernst Lippe <ernstl@users.sourceforge.net>
@@ -945,14 +944,14 @@ http://registry.gimp.org/plugin?id=2835
 smart-sharpen-redux:
 
 The plugin was downloaded from:
-http://registry.gimp.org/plugin?id=6694
+http://registry.gimp.org/node/108
 
  Martin Egger (martin.egger@gmx.net)
  (C) 2007, Bern, Switzerland
 
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
+ the Free Software Foundation; either version 3 of the License, or
  (at your option) any later version.
 
  This program is distributed in the hope that it will be useful,
@@ -970,7 +969,7 @@ http://registry.gimp.org/plugin?id=6694
 streak:
 
 The plugin was downloaded from:
-http://registry.gimp.org/plugin?id=494
+http://registry.gimp.org/node/29
 
    Copyright (C) Reinhard Geisler
 
@@ -978,9 +977,10 @@ http://registry.gimp.org/plugin?id=494
    it under the terms of the GNU General Public License (version 2) as
    published by the Free Software Foundation.
 
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License (version 2) as
-   published by the Free Software Foundation.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software

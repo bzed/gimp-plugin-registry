@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Bernd Zeimetz <bzed@debian.org>
 Build-Depends: debhelper (>= 5), autotools-dev, dpatch,
  libgimp2.0-dev (>= 2.4), libcv-dev (>= 1.0.0), libxml-parser-perl,
- liblapack-dev, libblas-dev, libf2c2-dev, libfftw3-dev, libglew-dev,
+ refblas3-dev, lapack3-dev, libf2c2-dev, fftw3-dev, libglew1.4-dev,
  libgtkglext1-dev
 Standards-Version: 3.7.3
 Vcs-Svn: https://ssl.recluse.de/svn/debian/trunk/packages/gimp-plugin-registry/
@@ -31,11 +31,11 @@ Description: A repository of optional extensions for The GIMP
    * Exposure Blend (1.3b):
      Prompt for 3 images in a bracketed exposure series (e.g. 0,-2,+2 EV)
      and blend these into a contrast enhanced image.
-   * Fix-CA (3.0.1):
+   * Fix-CA (3.0.2):
      Corrects chromatic aberration in photos
    * Focus-Blur (3.1.5):
      This plugin tries to simulate an out-of-focus blur
-   * GREYCstoration (2.5.2.1):
+   * GREYCstoration (2.8):
      A tool to denoise, inpaint and resize images
    * Layer-Effects (2.4):
      This script implements the following effects:
