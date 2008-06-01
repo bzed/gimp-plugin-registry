@@ -2,6 +2,7 @@ gimp-plugin-registry (0.5.2-1) UNRELEASED; urgency=low
 
   * Updating the plugins' url files to follow the new registry.gimp.org
     structure.
+  * Switching from dpatch to quilt as patch-system.
   * debian/rules:
     - Updating watch/update-watch targets to retrieve the 'submitted' date
       from registry.gimp.org pages.

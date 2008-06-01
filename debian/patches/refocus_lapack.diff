@@ -1,9 +1,3 @@
-#! /bin/sh /usr/share/dpatch/dpatch-run
-## refocus_lapack.dpatch by Bernd Zeimetz <bernd@bzed.de>
-##
-## DP: no, we don't use atlas. way too heavy.
-
-@DPATCH@
 diff -urNad gimp-plugin-registry~/refocus/src/src/fwlapack.c gimp-plugin-registry/refocus/src/src/fwlapack.c
 --- gimp-plugin-registry~/refocus/src/src/fwlapack.c	2003-01-30 22:30:18.000000000 +0100
 +++ gimp-plugin-registry/refocus/src/src/fwlapack.c	2007-10-15 16:06:45.000000000 +0200

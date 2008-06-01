@@ -3,7 +3,7 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-include /usr/share/dpatch/dpatch.make
+include /usr/share/quilt/quilt.make
 
 CFLAGS = -Wall -g
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
@@ -33,7 +33,7 @@ debian/copyright: $(COPYRIGHT_FILES) debian/copyright.in
 
 build: build-stamp
 
-build-stamp: patch-stamp
+build-stamp: $(QUILT_STAMPFN)
 	dh_testdir
 
 	for plugin in $(PLUGINS); do \

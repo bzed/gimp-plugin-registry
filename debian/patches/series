@@ -1,0 +1,6 @@
+menu_bw-simulation.diff
+menu_layer-effects.diff
+menu_smart-sharpen-redux.diff
+refocus_lapack.diff
+refocus_fix_warnings.diff
+gcc4.3-fixes.diff

@@ -1,9 +1,3 @@
-#! /bin/sh /usr/share/dpatch/dpatch-run
-## gcc4.3-fixes.dpatch by Bernd Zeimetz <bzed@debian.org>
-##
-## DP: Fixing build for gcc 4.3
-
-@DPATCH@
 diff -urNad gimp-plugin-registry~/DBP/dbp-1.1.8/op.cc gimp-plugin-registry/DBP/dbp-1.1.8/op.cc
 --- gimp-plugin-registry~/DBP/dbp-1.1.8/op.cc	2007-06-01 16:58:44.000000000 +0200
 +++ gimp-plugin-registry/DBP/dbp-1.1.8/op.cc	2008-06-01 04:14:48.000000000 +0200
