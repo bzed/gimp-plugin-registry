@@ -5,9 +5,9 @@
 ## DP: No description.
 
 @DPATCH@
-diff -urNad gimp-plugin-registry~/layer-effects/layer-effects_en.scm gimp-plugin-registry/layer-effects/layer-effects_en.scm
---- gimp-plugin-registry~/layer-effects/layer-effects_en.scm	2007-06-06 08:26:44.000000000 +0200
-+++ gimp-plugin-registry/layer-effects/layer-effects_en.scm	2007-09-08 01:26:01.000000000 +0200
+diff -urNad gimp-plugin-registry~/layer-effects/layer-effects_24.scm gimp-plugin-registry/layer-effects/layer-effects_24.scm
+--- gimp-plugin-registry~/layer-effects/layer-effects_24.scm	2007-06-06 08:26:44.000000000 +0200
++++ gimp-plugin-registry/layer-effects/layer-effects_24.scm	2007-09-08 01:26:01.000000000 +0200
 @@ -209,7 +209,7 @@
  
  (script-fu-register
