@@ -1,0 +1,49 @@
+--- a/separate+/src/Makefile
++++ b/separate+/src/Makefile
+@@ -27,9 +27,9 @@ MAKE = make PREFIX="$(PREFIX)"
+ #                                            remove "-DSEPARATE_SEPARATE".
+ CM = -DENABLE_COLOR_MANAGEMENT
+ NLS = -DENABLE_NLS -DGETTEXT_PACKAGE="\"$(GETTEXT_PACKAGE)\""
+-CFLAGS = $(GIMP_INCLUDE) $(GTK_INCLUDE) $(LCMS_INCLUDE) -O3 -Wall $(CM) $(NLS) \
++SP_CFLAGS = $(GIMP_INCLUDE) $(GTK_INCLUDE) $(LCMS_INCLUDE) $(CFLAGS) $(CM) $(NLS) \
+          -DSEPARATE_SEPARATE -DUSE_ICC_BUTTON
+-LDFLAGS = $(GIMP_LIB) $(GTK_LIB) $(LCMS_LIB) $(TIFF_LIB)
++SP_LDFLAGS = $(GIMP_LIB) $(GTK_LIB) $(LCMS_LIB) $(TIFF_LIB)
+ 
+ SOURCES = $(SEPARATE_SOURCES) $(IMPORT_SOURCES) \
+           $(ICC_COLORSPACE_SOURCES) $(EXTRA_SOURCES)
+@@ -57,7 +57,7 @@ TARGETS = separate separate_import icc_c
+ all: plugins catalogs
+ 
+ depend:
+-	$(DEPEND) -- $(CFLAGS) -- $(SOURCES)
++	$(DEPEND) -- $(SP_CFLAGS) -- $(SOURCES)
+ 
+ clean-plugins:
+ 	$(RM) $(OBJECTS) $(TARGETS) core *~
+@@ -73,13 +73,13 @@ catalogs:
+ plugins: $(TARGETS)
+ 
+ separate: $(SEPARATE_OBJECTS)
+-	$(CC) $(SEPARATE_OBJECTS) -o $@ $(LDFLAGS)
++	$(CC) $(SEPARATE_OBJECTS) -o $@ $(SP_LDFLAGS)
+ 
+ separate_import: $(IMPORT_OBJECTS)
+-	$(CC) $(IMPORT_OBJECTS) -o $@ $(LDFLAGS)
++	$(CC) $(IMPORT_OBJECTS) -o $@ $(SP_LDFLAGS)
+ 
+ icc_colorspace: $(ICC_COLORSPACE_OBJECTS)
+-	$(CC) $(ICC_COLORSPACE_OBJECTS) -o $@ $(LDFLAGS)
++	$(CC) $(ICC_COLORSPACE_OBJECTS) -o $@ $(SP_LDFLAGS)
+ 
+ install-catalogs:
+ 	cd po && $(MAKE) install
+@@ -103,7 +103,7 @@ uninstall: uninstall-plugins uninstall-c
+ 
+ # Inference rules
+ .c.o:
+-	$(CC) $(CFLAGS) -c $<
++	$(CC) $(SP_CFLAGS) -c $<
+ 
+ 
+ #
