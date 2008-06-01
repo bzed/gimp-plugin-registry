@@ -1,4 +1,4 @@
-gimp-plugin-registry (0.5.2-1) UNRELEASED; urgency=low
+gimp-plugin-registry (0.6.1-1) UNRELEASED; urgency=low
 
   * Updating the plugins' url files to follow the new registry.gimp.org
     structure.
@@ -13,6 +13,9 @@ gimp-plugin-registry (0.5.2-1) UNRELEASED; urgency=low
     - GREYCstoration
     - David's Batch Processor
     - Focus-blur
+
+  * New plugins:
+    - Separate+
   
  -- Bernd Zeimetz <bzed@debian.org>  Sun, 01 Jun 2008 04:11:22 +0200
 
