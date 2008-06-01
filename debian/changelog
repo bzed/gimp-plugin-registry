@@ -15,7 +15,7 @@ gimp-plugin-registry (0.6.1-1) UNRELEASED; urgency=low
     - Focus-blur
 
   * New plugins:
-    - Separate+
+    - Separate+ (Closes: #466235)
   
  -- Bernd Zeimetz <bzed@debian.org>  Sun, 01 Jun 2008 04:11:22 +0200
 
