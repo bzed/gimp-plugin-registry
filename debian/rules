@@ -137,16 +137,27 @@ update-control:
 
 update-watch: watch
 	for plugin in $(PLUGINS); do \
-	    wget -q -O - `cat $$plugin/url` | md5sum | awk '{print $$1}' > $$plugin/url.md5sum ;\
+	    [ -f $$plugin/url ] || continue ;\
+	    if grep -q registry.gimp.org $$plugin/url; then \
+	        wget -q -O - `cat $$plugin/url` | grep '<span class="submitted">' | sed 's,^[^>]*>,,;s,<.*,,' > $$plugin/url.content ;\
+	    else \
+	        wget -q -O - `cat $$plugin/url` | md5sum | awk '{print $$1}' > $$plugin/url.content ;\
+	    fi ;\
 	done
 
 watch:
 	for plugin in $(PLUGINS); do \
-	    if [ -r $$plugin/url.md5sum ]; then \
-	      url=`cat $$plugin/url` ;\
-	      if ! [ `wget -q -O - $$url | md5sum | awk '{print $$1}'` = `cat $$plugin/url.md5sum` ]; then \
-	        echo "$$plugin changed! $$url" ;\
-	      fi ;\
+	    if [ -r $$plugin/url.content ]; then \
+	        url=`cat $$plugin/url` ;\
+	        if grep -q registry.gimp.org $$plugin/url; then \
+	            if ! [ "`wget -q -O - $$url | grep '<span class="submitted">' | sed 's,^[^>]*>,,;s,<.*,,'`" = "`cat $$plugin/url.content`" ]; then \
+	                echo "$$plugin changed! $$url" ;\
+	            fi ;\
+	        else \
+	            if ! [ "`wget -q -O - $$url | md5sum | awk '{print $$1}' `" = "`cat $$plugin/url.content`" ]; then \
+	                echo "$$plugin changed! $$url" ;\
+	            fi ;\
+	        fi ;\
 	    fi ;\
 	done
 

@@ -1,3 +1,3 @@
-SCRIPT = layer-effects_en.scm
+SCRIPT = layer-effects_24.scm
 
 include ../common-script.mk

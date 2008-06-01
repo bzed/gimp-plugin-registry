@@ -1,3 +1,18 @@
+gimp-plugin-registry (0.5.1-5) UNRELEASED; urgency=low
+
+  * Updating the plugins' url files to follow the new registry.gimp.org
+    structure.
+  * debian/rules:
+    - Updating watch/update-watch targets to retrieve the 'submitted' date
+      from registry.gimp.org pages.
+  
+  * New upstream versions of the following plugins:
+    - GREYCstoration
+    - David's Batch Processor
+    - Focus-blur
+
+ -- Bernd Zeimetz <bzed@debian.org>  Sun, 01 Jun 2008 03:21:21 +0200
+
 gimp-plugin-registry (0.5.1-4) unstable; urgency=low
 
   * debian/control:

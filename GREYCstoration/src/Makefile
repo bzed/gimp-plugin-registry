@@ -17,7 +17,7 @@ CFLAGS   = -Wall -W -ansi -pedantic -ffast-math -I./plugins
 LDFLAGS  = -lm -lpthread
 
 # Set CImg version number
-CIMG_VERSION = 1.20
+CIMG_VERSION = 1.28
 
 # Uncomment to perform strict CImg compilation
 # (Do not try to preserve compatibility with older CImg versions)
@@ -92,7 +92,7 @@ gimp: greycstoration4gimp.cpp
 	@echo
 	@echo "** Compiling 'greycstoration4gimp ($(CIMG_VERSION))' with '`$(CC) -v 2>&1 | grep version`'"
 	@echo
-	$(CC) -o greycstoration4gimp greycstoration4gimp.cpp `gimptool-2.0 --cflags` `gimptool-2.0 --libs` -lpthread -O3
+	$(CC) -o greycstoration4gimp greycstoration4gimp.cpp `gimptool-2.0 --cflags` `gimptool-2.0 --libs` -lpthread -O3 $(CFLAGS)
 	strip greycstoration4gimp
 # Linux/Mac OSX targets
 linux:

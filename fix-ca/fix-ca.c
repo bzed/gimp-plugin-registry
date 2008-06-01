@@ -124,7 +124,7 @@ void	query (void)
 	};
 
 	gimp_install_procedure (PROCEDURE_NAME,
-				"Fix-CA Version 3.0.1",
+				"Fix-CA Version 3.0.2",
 				"Fix chromatic aberration caused by imperfect "
 				"lens.  It works by shifting red and blue "
 				"components of image pixels in the specified "
@@ -138,7 +138,13 @@ void	query (void)
 				G_N_ELEMENTS (args), 0,
 				args, 0);
 
-	gimp_plugin_menu_register (PROCEDURE_NAME, "<Image>/Filters/Colors");
+#if 0
+				/* Need to decide about menu location */
+	if (GIMP_CHECK_VERSION(2, 4, 0))
+		gimp_plugin_menu_register (PROCEDURE_NAME, "<Image>/Colors");
+	else
+#endif
+		gimp_plugin_menu_register (PROCEDURE_NAME, "<Image>/Filters/Colors");
 }
 
 void	run (const gchar *name, gint nparams,
@@ -158,6 +164,9 @@ void	run (const gchar *name, gint nparams,
 	run_mode = param[0].data.d_int32;
 	image_ID = param[1].data.d_int32;
 	drawable = gimp_drawable_get (param[2].data.d_drawable);
+	gimp_tile_cache_ntiles (2 * MAX (drawable->width  / gimp_tile_width () + 1 ,
+					 drawable->height / gimp_tile_height () + 1));
+                                     
 
 	fix_ca_params.blue = fix_ca_params_default.blue;
 	fix_ca_params.red = fix_ca_params_default.red;
@@ -179,8 +188,7 @@ void	run (const gchar *name, gint nparams,
 					if (nparams < 6)
 						fix_ca_params.interpolation
 							= GIMP_INTERPOLATION_NONE;
-					else if (param[5].data.d_int8 < 0 ||
-						 param[5].data.d_int8 > 2)
+					else if (param[5].data.d_int8 > 2)
 						status = GIMP_PDB_CALLING_ERROR;
 					else
 						fix_ca_params.interpolation

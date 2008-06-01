@@ -1,5 +1,0 @@
-# List of source files which contain translatable strings.
-
-src/fftblur.c
-src/focusblur.c
-src/interface.c
