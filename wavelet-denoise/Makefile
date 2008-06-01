@@ -1,3 +1,3 @@
-PLUGIN = src/wavelet-denoise
+PLUGIN = wavelet-denoise
 
 include ../common.mk
