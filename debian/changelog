@@ -6,8 +6,6 @@ gimp-plugin-registry (0.6.1-1) UNRELEASED; urgency=low
   * debian/rules:
     - Updating watch/update-watch targets to retrieve the 'submitted' date
       from registry.gimp.org pages.
-  * debian/patches:
-    - menu_fix-ca.dpatch: Not needed anymore, dropping patch.  
 
   * New upstream versions of the following plugins:
     - GREYCstoration
