@@ -12,15 +12,7 @@ else
 	CFLAGS += -O2
 endif
 
-PLUGINS = $(shell find . -mindepth 2 -maxdepth 2 -name Makefile | \
-                  sed 's,^\./,,g;s,/.*,,g;' | \
-                  sort)
-
-GIMPVER=$(shell dpkg -s libgimp2.0-dev | grep Version | awk '{print $$2}')
-
-VERSION_FILES = $(shell find . -mindepth 2 -maxdepth 2 -name version)
-DESC_FILES = $(shell find . -mindepth 2 -maxdepth 2 -name description)
-COPYRIGHT_FILES = $(shell find . -path ./debian -prune -o -name copyright -print)
+include tools.mk
 
 DESTDIR := $(CURDIR)/debian/gimp-plugin-registry
 
@@ -98,16 +90,13 @@ binary-arch: build install
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure \
-        update-all update-copyright update-control update-watch watch build-tgz
+        update-all update-copyright update-control 
 
 
 #### the following stuff is not needed to build the package,
 #### it's only for lazy maintainers.
 
-update-all:
-	debian/rules update-watch
-	debian/rules update-control
-	debian/rules update-copyright
+update-all: update-watch update-control update-copyright
 
 update-copyright:
 	( cat debian/copyright.in ;\
@@ -135,41 +124,4 @@ update-control:
 	  done ;\
 	) > debian/control
 
-update-watch: watch
-	for plugin in $(PLUGINS); do \
-	    [ -f $$plugin/url ] || continue ;\
-	    if grep -q registry.gimp.org $$plugin/url; then \
-	        wget -q -O - `cat $$plugin/url` | grep '<span class="submitted">' | sed 's,^[^>]*>,,;s,<.*,,' > $$plugin/url.content ;\
-	    else \
-	        wget -q -O - `cat $$plugin/url` | md5sum | awk '{print $$1}' > $$plugin/url.content ;\
-	    fi ;\
-	done
 
-watch:
-	for plugin in $(PLUGINS); do \
-	    if [ -r $$plugin/url.content ]; then \
-	        url=`cat $$plugin/url` ;\
-	        if grep -q registry.gimp.org $$plugin/url; then \
-	            if ! [ "`wget -q -O - $$url | grep '<span class="submitted">' | sed 's,^[^>]*>,,;s,<.*,,'`" = "`cat $$plugin/url.content`" ]; then \
-	                echo "$$plugin changed! $$url" ;\
-	            fi ;\
-	        else \
-	            if ! [ "`wget -q -O - $$url | md5sum | awk '{print $$1}' `" = "`cat $$plugin/url.content`" ]; then \
-	                echo "$$plugin changed! $$url" ;\
-	            fi ;\
-	        fi ;\
-	    else \
-	        echo "$$plugin: no url.content file!!!!" ;\
-	    fi ;\
-	done
-
-build-tgz:
-	set -e ;\
-	version=$$(dpkg-parsechangelog  | grep '^Version' | sed 's,.* ,,g;s,-.*,,g') ;\
-	exp_dir="gimp-plugin-registry_$$version.orig" ;\
-	svn export . ../build-area/$$exp_dir ;\
-	cd ../build-area ;\
-	rm -rf $$exp_dir/debian ;\
-	tar cf - $$exp_dir | gzip -9 > $$exp_dir.tar.gz ;\
-	mv $$exp_dir.tar.gz ../tarballs ;\
-	rm -rf $$exp_dir
