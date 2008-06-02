@@ -13,7 +13,6 @@ gimp-plugin-registry (0.6.1-1) UNRELEASED; urgency=low
     - Focus-blur
 
   * New plugins:
-    - Separate+ (Closes: #466235)
     - Wavelet Denoise (Closes: #481413)
 
   * Removing the 'dustcleaner' plugin for now.
