@@ -17,6 +17,9 @@ gimp-plugin-registry (0.6.1-1) UNRELEASED; urgency=low
   * New plugins:
     - Separate+ (Closes: #466235)
     - Wavelet Denoise (Closes: #481413)
+
+  * Removing the 'dustcleaner' plugin for now.
+    It is imho not mature enough to be part of a stable release.
   
  -- Bernd Zeimetz <bzed@debian.org>  Sun, 01 Jun 2008 04:11:22 +0200
 
