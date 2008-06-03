@@ -24,6 +24,8 @@ Description: A repository of optional extensions for The GIMP
      Converts the selected layer into Black and White using
      the channel mixer. Tries to produce results resembling
      tonal qualities of film.
+   * Contact Sheet:
+     Generates a contact sheet(s) for a directory of images.
    * David's Batch Processor (1.1.7):
      A simple batch processing plugin for The Gimp - it allows
      the user to automatically perform operations (such as resize)
@@ -60,6 +62,9 @@ Description: A repository of optional extensions for The GIMP
      fact that image pixels are averaged with their neighbors. Blurred images
      don't have sharp boundaries and look as though they have been taken with
      an unfocussed camera.
+   * Save for Web (0.28.5):
+     Allows to experiment with various popular web format options. It shows
+     an automatically updated preview and file size statistics.
    * Smart Sharpen (redux) (2.4):
      This script implements the redux version of smart sharpening. It utilizes
      the Unsharp Mask or Refocus plugin to sharpen the image.
