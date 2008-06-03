@@ -66,6 +66,7 @@ install: build
 	          fi ;\
 		done ;\
 	done
+	chmod 755 $(DESTDIR)$(PLUGINSCRIPTDIR)/*.py
 
 
 # Build architecture-independent files here.
