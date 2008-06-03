@@ -1,4 +1,4 @@
 SCRIPT = contactsheet.py
 
-include ../common-script.mk
+include ../common-py.mk
 
