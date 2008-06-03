@@ -19,7 +19,7 @@ Description: A repository of optional extensions for The GIMP
  The package contains the following plugins:
  .
    * Add Film Grain (2.4):
-     Helps adding realistic film grain to BW images
+     Helps adding realistic film grain to BW images.
    * Black and White Film Simulation (1.1):
      Converts the selected layer into Black and White using
      the channel mixer. Tries to produce results resembling
