@@ -535,7 +535,11 @@ The following other licenses license(s) are used within plugins:
 *************************************************************************
 *************************************************************************
 
-
+On Debian systems, the complete text of the GNU General
+Public License, version 2, can be found in
+`/usr/share/common-licenses/GPL-2'. The omplete text of the GNU General
+Public License, version 3, can be found in
+`/usr/share/common-licenses/GPL-3'.
 
 
 The copyright information for the included plugins follows here:

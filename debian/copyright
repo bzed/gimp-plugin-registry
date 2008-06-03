@@ -535,7 +535,11 @@ The following other licenses license(s) are used within plugins:
 *************************************************************************
 *************************************************************************
 
-
+On Debian systems, the complete text of the GNU General
+Public License, version 2, can be found in
+`/usr/share/common-licenses/GPL-2'. The omplete text of the GNU General
+Public License, version 3, can be found in
+`/usr/share/common-licenses/GPL-3'.
 
 
 The copyright information for the included plugins follows here:
@@ -544,9 +548,6 @@ The copyright information for the included plugins follows here:
 
 ************************************************************
 bw-simulation:
-
-The plugin was downloaded from:
-http://registry.gimp.org/plugin?id=8860
 
  Copyright Serge Mankovski <sevato@mankovski.com>  Toronto, Ontario, 2007
 
@@ -588,30 +589,6 @@ http://members.ozemail.com.au/~hodsond/dbp.html
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-
-
-************************************************************
-dustcleaner:
-
-The plugin was downloaded from:
-http://registry.gimp.org/plugin?id=9349
-
- Copyright (C) 2006-2007  Frank Tao <solotim.cn@gmail.com>
-
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or
- (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- 02110-1301, USA
 
 
 ************************************************************
@@ -774,7 +751,7 @@ http://registry.gimp.org/node/96
 lqr:
 
 The plugin was downloaded from:
-http://liquidrescale.wikidot.com/en:download-page
+http://registry.gimp.org/node/144
 
  Upstream author: Carlo Baldassi <carlobaldassi@yahoo.it>
 
@@ -889,8 +866,6 @@ http://registry.gimp.org/node/21
 ************************************************************
 refocus:
 
-The plugin was downloaded from:
-
  Upstream Author:
   Ernst Lippe <ernstl@users.sourceforge.net>
 
@@ -986,3 +961,20 @@ http://registry.gimp.org/node/29
    along with this program; if not, write to the Free Software
    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
    02110-1301, USA
+
+
+************************************************************
+wavelet-denoise:
+
+The plugin was downloaded from:
+http://registry.gimp.org/node/4235
+
+    wavelet-denoise.c
+    Copyright 2008 by Marco Rossini
+
+    Implements the wavelet denoise code of UFRaw by Udi Fuchs
+    which itself bases on the code by Dave Coffin
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2
+    as published by the Free Software Foundation.

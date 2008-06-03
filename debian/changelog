@@ -1,14 +1,18 @@
-gimp-plugin-registry (0.6.1-1) UNRELEASED; urgency=low
+gimp-plugin-registry (0.9-1) UNRELEASED; urgency=low
 
   * Updating the plugins' url files to follow the new registry.gimp.org
     structure.
-  * Switching from dpatch to quilt as patch-system.
   * debian/rules:
     - Updating watch/update-watch targets to retrieve the 'submitted' date
       from registry.gimp.org pages.
     - Splitting out tools.mk as we need watch/update-watch it in the
       'plugins' branch in git.
     - Removing the build-tgz target - this is done by git-buildpackage now.
+    - Switching from dpatch to quilt as patch-system. This also includes minor
+      changes in debian/patches.
+  * debian/control:
+    - Updating Vcs-* to point to the new Git repository.
+    - Replacing the dpatch build-dep by quilt.
 
   * New upstream versions of the following plugins:
     - GREYCstoration
@@ -17,11 +21,12 @@ gimp-plugin-registry (0.6.1-1) UNRELEASED; urgency=low
 
   * New plugins:
     - Wavelet Denoise (Closes: #481413)
+    - Diana2-Holga
 
   * Removing the 'dustcleaner' plugin for now.
     It is imho not mature enough to be part of a stable release.
   
- -- Bernd Zeimetz <bzed@debian.org>  Sun, 01 Jun 2008 04:11:22 +0200
+ -- Bernd Zeimetz <bzed@debian.org>  Tue, 03 Jun 2008 19:38:39 +0200
 
 gimp-plugin-registry (0.5.1-4) unstable; urgency=low
 

@@ -105,9 +105,11 @@ update-copyright:
 	      echo '************************************************************' ;\
 	      echo "$$plugin:" ;\
 	      echo ;\
-	      echo "The plugin was downloaded from:" ;\
-	      cat $$plugin/url ;\
-	      echo ;\
+	      if [ -f $$plugin/url ]; then \
+	        echo "The plugin was downloaded from:" ;\
+	        cat $$plugin/url ;\
+	        echo ;\
+	      fi ;\
 	      cat $$plugin/copyright ;\
 	  done ;\
 	) > debian/copyright
