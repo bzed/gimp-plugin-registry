@@ -1,7 +1,6 @@
-diff -urNad gimp-plugin-registry~/smart-sharpen-redux/Eg-SmartSharpen.scm gimp-plugin-registry/smart-sharpen-redux/Eg-SmartSharpen.scm
---- gimp-plugin-registry~/smart-sharpen-redux/Eg-SmartSharpen.scm	2007-11-19 23:56:39.000000000 +0100
-+++ gimp-plugin-registry/smart-sharpen-redux/Eg-SmartSharpen.scm	2007-12-12 20:06:36.000000000 +0100
-@@ -124,5 +124,5 @@
+--- a/smart-sharpen-redux/Eg-SmartSharpen.scm
++++ b/smart-sharpen-redux/Eg-SmartSharpen.scm
+@@ -123,5 +123,5 @@
  )
  ;
  (script-fu-menu-register "script-fu-Eg-SmartSharpen"
