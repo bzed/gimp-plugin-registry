@@ -22,11 +22,12 @@ gimp-plugin-registry (0.9-1) UNRELEASED; urgency=low
   * New plugins:
     - Wavelet Denoise (Closes: #481413)
     - Diana2-Holga
+    - Add Filmgrain
 
   * Removing the 'dustcleaner' plugin for now.
     It is imho not mature enough to be part of a stable release.
   
- -- Bernd Zeimetz <bzed@debian.org>  Tue, 03 Jun 2008 19:38:39 +0200
+ -- Bernd Zeimetz <bzed@debian.org>  Wed, 04 Jun 2008 00:10:30 +0200
 
 gimp-plugin-registry (0.5.1-4) unstable; urgency=low
 

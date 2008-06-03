@@ -18,6 +18,8 @@ Replaces: gimp-refocus (<< 0.9.0-2)
 Description: A repository of optional extensions for The GIMP
  The package contains the following plugins:
  .
+   * Add Film Grain (2.4):
+     Helps adding realistic film grain to BW images
    * Black and White Film Simulation (1.1):
      Converts the selected layer into Black and White using
      the channel mixer. Tries to produce results resembling
@@ -26,6 +28,8 @@ Description: A repository of optional extensions for The GIMP
      A simple batch processing plugin for The Gimp - it allows
      the user to automatically perform operations (such as resize)
      on a collection of image files.
+   * Diana-Holga2 (3 juin 2008):
+     Diana/Holga Toys Cameras effect simulator.
    * Exposure Blend (1.3b):
      Prompt for 3 images in a bracketed exposure series (e.g. 0,-2,+2 EV)
      and blend these into a contrast enhanced image.

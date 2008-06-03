@@ -547,6 +547,29 @@ The copyright information for the included plugins follows here:
 
 
 ************************************************************
+add-filmgrain:
+
+The plugin was downloaded from:
+http://registry.gimp.org/node/101
+
+ Martin Egger (martin.egger@gmx.net)
+ (C) 2006, Bern, Switzerland
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, see <http://www.gnu.org/licenses>.
+
+
+************************************************************
 bw-simulation:
 
  Copyright Serge Mankovski <sevato@mankovski.com>  Toronto, Ontario, 2007
@@ -589,6 +612,18 @@ http://members.ozemail.com.au/~hodsond/dbp.html
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+
+************************************************************
+diana-holga2:
+
+The plugin was downloaded from:
+http://registry.gimp.org/node/252
+
+ 21, 22, 23, 24, 25, 28, 29, 9 d'ecembre 2005, 12, 13, 15 mai 2006,
+ 15, 18 mars 2007, 29 janvier, 3 juin 2008
+ (c) Jean-Pierre Sutto <jpsmail(at)free.fr>
+ Published under GPL version 2
 
 
 ************************************************************
@@ -946,21 +981,21 @@ streak:
 The plugin was downloaded from:
 http://registry.gimp.org/node/29
 
-   Copyright (C) Reinhard Geisler
+ Copyright (C) Reinhard Geisler
 
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License (version 2) as
-   published by the Free Software Foundation.
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License (version 2) as
+ published by the Free Software Foundation.
 
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-   02110-1301, USA
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ 02110-1301, USA
 
 
 ************************************************************
@@ -969,12 +1004,12 @@ wavelet-denoise:
 The plugin was downloaded from:
 http://registry.gimp.org/node/4235
 
-    wavelet-denoise.c
-    Copyright 2008 by Marco Rossini
+ wavelet-denoise.c
+ Copyright 2008 by Marco Rossini
 
-    Implements the wavelet denoise code of UFRaw by Udi Fuchs
-    which itself bases on the code by Dave Coffin
+ Implements the wavelet denoise code of UFRaw by Udi Fuchs
+ which itself bases on the code by Dave Coffin
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License version 2
-    as published by the Free Software Foundation.
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 2
+ as published by the Free Software Foundation.
