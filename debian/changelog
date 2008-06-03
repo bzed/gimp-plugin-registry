@@ -10,6 +10,9 @@ gimp-plugin-registry (0.9-1) UNRELEASED; urgency=low
     - Removing the build-tgz target - this is done by git-buildpackage now.
     - Switching from dpatch to quilt as patch-system. This also includes minor
       changes in debian/patches.
+  * debian/patches:
+    - Adding and refreshing several patches to integrate the plugins better
+      into the menu structure of GIMP.
   * debian/control:
     - Updating Vcs-* to point to the new Git repository.
     - Replacing the dpatch build-dep by quilt.
