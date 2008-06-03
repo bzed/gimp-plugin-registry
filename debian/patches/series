@@ -8,4 +8,3 @@ menu_smart-sharpen-redux.diff
 refocus_lapack.diff
 refocus_fix_warnings.diff
 gcc4.3-fixes.diff
-separate+buildfix.diff
