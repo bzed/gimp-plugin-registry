@@ -1,0 +1,25 @@
+--- a/contact-sheet/contactsheet.py
++++ b/contact-sheet/contactsheet.py
+@@ -119,6 +119,13 @@ def Contact_Sheet(file_type, location, i
+         width,height = (152,203)
+     elif (contact_size == "8x10"): 
+         width,height = (203,254)
++    elif (contact_size == "Letter"):
++        width,height = (216,279)
++    elif (contact_size == "Legal"):
++        width,height = (216,356)
++    elif (contact_size == "Tabloid"):
++        width,height = (279,432)
++
+     #Log(str(width))
+     #Log(str(height))
+     width = int((width/25.4)*int(dpi))
+@@ -242,7 +249,7 @@ register(
+         (PF_STRING, "contact_name",  "Contact sheet base name:", "contact_sheet"),
+         (PF_RADIO, "contact_type", "Contact sheet image type:", ".jpg", (("jpg", ".jpg"), ("png", ".png"))),
+         (PF_DIRNAME, "contact_location", "Where the contact sheet should be saved", ""),
+-        (PF_RADIO, "contact_size", "Contact page sheet size:", "A4", (("A4 (20.9x29.7 cm)", "A4"), ("Jumbo (10.2x15.2 cm)", "Jumbo"), ("6x8 (15.2x20.3 cm)", "6x8"),("8x10 (20.3x25.4 cm)", "8x10"))),
++        (PF_RADIO, "contact_size", "Contact page sheet size:", "A4", (("A4 (20.9x29.7 cm)", "A4"), ("Jumbo (10.2x15.2 cm)", "Jumbo"), ("6x8 (15.2x20.3 cm)", "6x8"),("8x10 (20.3x25.4 cm)", "8x10"),("Letter (8.5x11 in)", "Letter"), ("Legal (8.5x14 in)", "Legal"), ("Tabloid (11x17 in)", "Tabloid") )),
+         (PF_RADIO, "dpi", "Contact sheet resolution", "72", (("72 dpi", "72"), ("300 dpi","300"))),
+         (PF_RADIO, "orient", "Orientation:", "land", (("portrate", "port"), ("landscape","land"))),
+         (PF_SPINNER, "num_col", "Number of images per row", 4, (1,32,1)),
