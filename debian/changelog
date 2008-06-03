@@ -13,6 +13,8 @@ gimp-plugin-registry (0.9-1) UNRELEASED; urgency=low
   * debian/control:
     - Updating Vcs-* to point to the new Git repository.
     - Replacing the dpatch build-dep by quilt.
+    - Adding gimp-python as dependency.
+    - Updating requiered gimp version to 2.4.0
 
   * New upstream versions of the following plugins:
     - GREYCstoration
