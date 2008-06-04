@@ -1,0 +1,11 @@
+--- a/diana-holga2/diana-holga2b.scm
++++ b/diana-holga2/diana-holga2b.scm
+@@ -6,7 +6,7 @@
+ 
+ 
+ (script-fu-register "diana-holga2b"
+-	"<Image>/~jps/diana-holga2b"
++	"<Image>/Filters/Artistic/diana-holga2b"
+ 
+ "This script-fu for The Gimp is a attempt to simulate the Diana/Holga Toys Cameras effect.
+ Last version can be found at:
