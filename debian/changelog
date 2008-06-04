@@ -13,6 +13,9 @@ gimp-plugin-registry (0.9-1) UNRELEASED; urgency=low
   * debian/patches:
     - Adding and refreshing several patches to integrate the plugins better
       into the menu structure of GIMP.
+    - Adding bw-simulation-color-mixer-fix.diff to fix a bug in the
+      bw-simulation plugin: plug-in-colors-channel-mixer takes 13 args only,
+      not 16. Thanks to Klaus Ethgen for the report (Closes: #453883).
   * debian/control:
     - Updating Vcs-* to point to the new Git repository.
     - Replacing the dpatch build-dep by quilt.
