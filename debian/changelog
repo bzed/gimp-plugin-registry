@@ -1,4 +1,4 @@
-gimp-plugin-registry (0.9-1) UNRELEASED; urgency=low
+gimp-plugin-registry (0.9-1) unstable; urgency=low
 
   * Updating the plugins' url files to follow the new registry.gimp.org
     structure.
@@ -37,7 +37,7 @@ gimp-plugin-registry (0.9-1) UNRELEASED; urgency=low
   * Removing the 'dustcleaner' plugin for now.
     It is imho not mature enough to be part of a stable release.
   
- -- Bernd Zeimetz <bzed@debian.org>  Wed, 04 Jun 2008 00:44:42 +0200
+ -- Bernd Zeimetz <bzed@debian.org>  Wed, 04 Jun 2008 17:05:42 +0200
 
 gimp-plugin-registry (0.5.1-4) unstable; urgency=low
 
