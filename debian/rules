@@ -9,11 +9,7 @@ CFLAGS = -Wall -g
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
 	CFLAGS += -O0
 else
-ifneq (amd64,$(shell dpkg-architecture -qDEB_BUILD_ARCH))
-	CFLAGS += -O2
-else
 	CFLAGS += -O1
-endif
 endif
 
 include tools.mk

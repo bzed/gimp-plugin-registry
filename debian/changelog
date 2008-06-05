@@ -1,3 +1,10 @@
+gimp-plugin-registry (0.9-2) unstable; urgency=low
+
+  * debian/rules:
+    - #484569 affects most architectures, using -O1 as default now.
+
+ -- Bernd Zeimetz <bzed@debian.org>  Thu, 05 Jun 2008 11:32:29 +0200
+
 gimp-plugin-registry (0.9-1) unstable; urgency=low
 
   * Updating the plugins' url files to follow the new registry.gimp.org
