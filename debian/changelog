@@ -1,3 +1,12 @@
+gimp-plugin-registry (0.9.1-1) unstable; urgency=low
+
+  * New plugins:
+    - Separate+ (Closes: #466235)
+  * debian/rules:
+    - Using -O2 -fno-tree-pre instead of -O1 now, as suggested in #484569.
+
+ -- Bernd Zeimetz <bzed@debian.org>  Wed, 11 Jun 2008 14:47:15 +0200
+
 gimp-plugin-registry (0.9-2) unstable; urgency=low
 
   * debian/rules:

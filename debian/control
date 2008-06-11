@@ -12,7 +12,7 @@ Vcs-Browser: http://git.recluse.de/?p=debian/pkg-gimp-plugin-registry.git;a=summ
 
 Package: gimp-plugin-registry
 Architecture: any
-Depends: gimp (>= 2.4.0), ${shlibs:Depends}, ${misc:Depends}, gimp-python, python
+Depends: gimp (>= 2.4.0), ${shlibs:Depends}, ${misc:Depends}, gimp-python
 Conflicts: gimp-refocus (<< 0.9.0-2)
 Replaces: gimp-refocus (<< 0.9.0-2)
 Description: A repository of optional extensions for The GIMP
@@ -65,6 +65,9 @@ Description: A repository of optional extensions for The GIMP
    * Save for Web (0.28.5):
      Allows to experiment with various popular web format options. It shows
      an automatically updated preview and file size statistics.
+   * Seperate+ (0.5.1):
+     Separate+ is a plug-in that generates color separations from an RGB
+     image, proofs CMYK colors on the monitor and exports the CMYK TIFF file.
    * Smart Sharpen (redux) (2.4):
      This script implements the redux version of smart sharpening. It utilizes
      the Unsharp Mask or Refocus plugin to sharpen the image.
