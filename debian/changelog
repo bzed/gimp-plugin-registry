@@ -9,6 +9,10 @@ gimp-plugin-registry (0.9.1-1) unstable; urgency=low
       separate+ Makefile.
   * debian/control:
     - Adding liblcms1-dev and libtiff4-dev as build-dep.
+  * debian/watch:
+    - Adding file as recommended by lintian, contains comments only, telling
+      to use 'tools.mk watch' instead of uscan, as there is no upstream for
+      this package.
 
  -- Bernd Zeimetz <bzed@debian.org>  Wed, 11 Jun 2008 14:47:15 +0200
 

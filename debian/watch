@@ -1,0 +1,3 @@
+#This package is a collections of plugins,
+#use `tools.mk watch` if you're looking for
+#a not perferct, but working uscan replacement.
