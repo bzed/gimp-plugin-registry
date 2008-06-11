@@ -4,6 +4,9 @@ gimp-plugin-registry (0.9.1-1) unstable; urgency=low
     - Separate+ (Closes: #466235)
   * debian/rules:
     - Using -O2 -fno-tree-pre instead of -O1 now, as suggested in #484569.
+  * debian/patches:
+    - Adding separate+_makefile_flags.diff to replace LDFLAGS/CFLAGS in the
+      seperate+ Makefile.
 
  -- Bernd Zeimetz <bzed@debian.org>  Wed, 11 Jun 2008 14:47:15 +0200
 
