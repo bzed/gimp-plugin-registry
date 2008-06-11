@@ -1,0 +1,3 @@
+   * Seperate+ {version}:
+     Separate+ is a plug-in that generates color separations from an RGB
+     image, proofs CMYK colors on the monitor and exports the CMYK TIFF file.

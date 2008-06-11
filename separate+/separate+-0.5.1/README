@@ -1,0 +1,178 @@
+Separate
+CMYK Separation plugin for The GIMP
+(c) 2003-2005 - Alastair M. Robinson <blackfive@fakenhamweb.co.uk>
+
+Separate+
+An improvement version of the Separate plug-in for The GIMP 2.2/2.4
+Modified by Yoshinori Yamakawa <yam@yellowmagic.info>
+
+Released under the terms of the GNU General Public Licence V2.
+See the file "COPYING" for full details.
+
+Version 0.5.1
+
+Please note:
+You use this software entirely at your own risk, I cannot be held responsible
+for any damages caused by the use or misuse of this software.
+
+
+Introduction:
+~~~~~~~~~~~~~
+One thing preventing The GIMP from being useful in a pre-press environment
+is the lack of support for the CMYK colour-space.  This plug-in goes some
+small way towards rectifying the situation, using a trick with layers to fake
+CMYK support.
+
+
+What can it do?
+~~~~~~~~~~~~~~~
+* Convert an RGB image to individual CMYK layers, using specified source and
+  destination Colour Profiles.
+
+* Save such a collection of layers as a CMYK TIFF.
+
+* Proof the CMYK image on the monitor.
+
+* Perform a "duotone" separation on an RGB image, reducing it to just those
+  colours achievable with red and black ink.  (This feature does *not* use
+  colour-profiles!)
+
+* Load CMYK TIFFs into individual layers. 
+  If you want to do that, please install "separate_import" plug-in.
+  Then you can find the "Separated TIFF" item in the tool box's "File ->
+  Acquire" menu.
+
+
+What can't it do?
+~~~~~~~~~~~~~~~~~
+* Perform the "duotone" trick based on any colour other than red.
+
+
+Requirements:
+~~~~~~~~~~~~~
+* The RGB -> CMYK conversion is performed with the truly excellent LittleCMS
+  library (version 1.15 or later), so you'll need that installed.
+
+* LibTIFF is also used, but since The GIMP itself uses it, its unlikely to be
+  missing!
+
+* ICC profiles.
+  I recommend that you download Adobe's free colour profiles.
+
+
+Installation (Linux):
+~~~~~~~~~~~~~~~~~~~~~
+If the GIMP 2.4.x is installed under /usr directory, type as follows:
+
+$ unzip separate+-0.5.x.zip
+$ cd separate+-0.5.x
+$ make
+$ sudo make install
+
+Or, if the GIMP is installed under other directory(e.g. /opt), 
+type as follows:
+
+...
+$ export PKG_CONFIG_PATH=/opt/lib/pkgconfig:$PKG_CONFIG_PATH
+$ make PREFIX=/opt
+$ sudo make PREFIX=/opt install
+
+You can also install the plugin for a single user:
+
+...
+$ make INSTALLDIR=~/.gimp-2.4/plug-ins install-plugins
+
+Separate+ serches the following directoreis for the colour profiles. If 
+you want to use other directories, edit platform.h and recompile the 
+plug-ins.
+
+  /usr/share/color/icc/
+  /usr/color/icc/
+  ~/.color/icc/
+
+To install the Adobe ICC profiles, you can get ZIPed profiles at the Adobe
+web site:
+  http://www.adobe.com/support/downloads/iccprofiles/iccprofiles_win.html
+
+Finally, install the provided sRGB profile:
+
+$ cp sRGB/sRGB\ Color\ Space\ Profile.icm /usr/share/color/icc/
+  
+The default profiles are:
+  RGB: sRGB Color Space Profile.icm
+  CMYK: USWebCoatedSWOP.icc
+
+
+Installation (Windows):
+~~~~~~~~~~~~~~~~~~~~~~~
+Copy the plugins "separate.exe" and "separate_import.exe" to:
+  %PROGRAMFILES%\gimp-2.0\lib\gimp\2.0\plug-ins\
+or
+  %USERPROFILE%\.gimp-2.x\plug-ins\
+
+Also copy the "liblcms-1.dll" support library to:
+  %PROGRAMFILES%\gimp-2.0\bin\
+  
+If you want to install the localized massage catalog, copy the .gmo file
+into the correct folder and rename to "gimp20-separate.mo".
+
+e.g.
+> cd separate+-0.5.x\po
+> copy ja.gmo "%PROGRAMFILES%\gimp-2.0\share\locale\ja\LC_MESSAGES\gimp20-separate.mo"
+
+By default the plugin searches for colour profiles at:
+  %SYSTEMROOT%\system32\spool\drivers\color\
+  %PROGRAMFILES%\common files\adobe\color\profiles\
+
+The default profiles are:
+  RGB: sRGB Color Space Profile.icm
+  CMYK: USWebCoatedSWOP.icc
+
+
+Separating an image:
+~~~~~~~~~~~~~~~~~~~~
+To convert an RGB image to CMYK format, bring up the right-button menu, and go
+to "Image->"  If the plugin in installed correctly, there will be a new menu,
+"Separate".  From this new menu, select "Separate (normal)"; you will be
+prompted to select an RGB source profile, and a CMYK destination profile.
+If you have installed the Adobe and sRGB profiles as per the above
+instructions, you can just accept the defaults for testing, otherwise you'll
+have to locate the profiles manually.
+
+A new image will be created with four greyscale layers, named "C", "M", "Y",
+and "K".
+
+If you have loads of memory to spare, you can use the "Separate (colour)"
+option; this will perform the same operation, but the new image will contain
+five layers: The first, "Background" will be white, and the other four will
+be solid Cyan, Magenta, Yellow and Black, with the separated image data in
+layer masks.  In addition, the layer modes for the four colours will be set
+to "Darken Only". 
+This gives a rough reconstruction of the colours, and is the next best thing
+to a true CMYK painting mode, since you can paint on the layer masks, and see
+the results in realtime.
+
+This version of the plugin uses more realistic CMYK primary colour for the
+CMYK simulation, which should greatly lessen the over-saturated look that
+used to result.
+
+
+Saving:
+~~~~~~~
+To save a CMYK TIFF for use in a DTP program, bring up the right-mouse-button
+menu, and select "Image->Separate->Save...".  Please note that saving an image
+this way won't clear the image's modified flag, so when closing, you'll be
+warned that the image hasn't been saved.  This won't be fixed until the plugin
+is capable of loading CMYK images. Until then, if you need to edit the CMYK
+image in the future, you need to save it off in XCF format, to preserve the
+layers.
+
+
+Duotone:
+~~~~~~~~
+This is a little bonus, included simply because I needed it at work.
+It reduces the colours in the image to those available just using red and
+black ink, then creates a pseudo-CMYK image, with just Backgroud, K and M
+layers.
+The resulting image can be saved in the same way as a real CMYK image, but
+the "red" data will occupy the "magenta" channel of the resulting TIFF.
