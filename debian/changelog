@@ -1,3 +1,11 @@
+gimp-plugin-registry (1.0-1) unstable; urgency=low
+
+  * New upstream version of the lqr plugin.
+  * debian/control:
+    - Adding liblqr-1-0-dev to Build-Depends.
+
+ -- Bernd Zeimetz <bzed@debian.org>  Sat, 14 Jun 2008 15:26:46 +0200
+
 gimp-plugin-registry (0.9.1-1) unstable; urgency=low
 
   * New plugins:

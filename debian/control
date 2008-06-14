@@ -5,7 +5,8 @@ Maintainer: Bernd Zeimetz <bzed@debian.org>
 Build-Depends: debhelper (>= 5), autotools-dev, quilt,
  libgimp2.0-dev (>= 2.4), libxml-parser-perl,
  liblapack-dev, libblas-dev, libf2c2-dev, libfftw3-dev, libglew-dev,
- libgtkglext1-dev, liblcms1-dev, libtiff4-dev
+ libgtkglext1-dev, liblcms1-dev, libtiff4-dev,
+ liblqr-1-0-dev
 Standards-Version: 3.7.3
 Vcs-Git: git://git.recluse.de/debian/pkg-gimp-plugin-registry.git
 Vcs-Browser: http://git.recluse.de/?p=debian/pkg-gimp-plugin-registry.git;a=summary
@@ -46,7 +47,7 @@ Description: A repository of optional extensions for The GIMP
      add border, bevel and emboss, color overlay, drop shadow,
      gradient overlay, inner glow, inner shadow, outer glow,
      pattern overlay, satin.
-   * Liquid Rescale (0.3.0-2):
+   * Liquid Rescale (0.4.0-4):
      Content-aware rescaling. Keeps the features of the image while
      rescaling along a single direction.
    * Normalmap (1.2.1):
