@@ -1,2 +1,2 @@
-SCRIPT = diana-holga2b.scm
+SCRIPT = diana-holga2c.scm
 include ../common-script.mk
