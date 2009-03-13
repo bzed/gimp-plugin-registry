@@ -1,5 +1,5 @@
    * Layer-Effects {version}:
-     This script implements the following effects:
-     add border, bevel and emboss, color overlay, drop shadow,
-     gradient overlay, inner glow, inner shadow, outer glow,
-     pattern overlay, satin.
+     This is a series of scripts that implement various layer effects:
+     Drop Shadow, Inner Shadow, Outer Glow, Inner Glow, Bevel and Emboss,
+     Satin, Color Overlay, Gradient Overlay, Pattern Overlay, Stroke
+
