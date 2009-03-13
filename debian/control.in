@@ -14,6 +14,7 @@ Vcs-Browser: http://git.recluse.de/?p=debian/pkg-gimp-plugin-registry.git;a=summ
 Package: gimp-plugin-registry
 Architecture: any
 Depends: gimp (>= 2.6), ${shlibs:Depends}, ${misc:Depends}
+Suggests: icc-profiles
 Conflicts: gimp-refocus (<< 0.9.0-2)
 Replaces: gimp-refocus (<< 0.9.0-2)
 Description: A repository of optional extensions for The GIMP
