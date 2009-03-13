@@ -1,0 +1,21 @@
+INSTALL
+=======
+
+For Linux and Unix users
+------------------------
+For a system wide installation simply state
+
+	make
+	make install
+
+To make a user installation state
+
+	make
+	make userinstall
+
+A restart of The GIMP is recommended.
+
+Other platforms
+---------------
+I'm sorry I have no knowledge on how to install plugins on other platforms. I
+hope others will find a way.

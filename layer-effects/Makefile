@@ -1,3 +1,3 @@
-SCRIPT = layer-effects_24.scm
+SCRIPT = layerfx.py
 
-include ../common-script.mk
+include ../common-py.mk

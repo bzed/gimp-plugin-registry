@@ -1,0 +1,41 @@
+Requirements
+=======================================
+
+The only required packages that must be installed to build the plugin
+(besides Gtk+ and the GIMP) are:
+  
+  1) gimp version 2.4 or later
+  2) pkg-config version 0.14 or later
+  3) gtkglext version 0.7.1 or later
+  4) GLEW version 1.3.3 or later
+    
+You will need to install the development packages for your distribution for
+Gtk+, Glib, gtkglext, GLEW and GIMP.
+
+Building a plugin for Windows
+=======================================
+
+To build a plugin for the Windows version of GIMP, you'll need to use a
+MinGW environment (http://www.mingw.org) and install the development
+and runtime packages for the following libraries:
+
+   1) GIMP 2.4.x
+   2) glib2
+   3) gtk+2
+   4) pango
+   5) atk
+   6) pkg-config
+   7) gtkglext
+   8) GLEW
+   
+To build, type "make WIN32=1".
+  
+Installation
+=======================================
+
+1. Type 'make' to build the plugin
+2. Type 'make install' to install the plugin. By default the plugin will be
+installed in your GIMP user plugin directory ($HOME/.gimp-2.2/plug-ins).  If
+you want to install the plugin system-wide, as root you must manually copy the
+plugin to the system GIMP plugin directory.
+

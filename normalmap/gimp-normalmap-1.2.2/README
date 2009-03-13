@@ -1,0 +1,32 @@
+GIMP normalmap plugin
+(C) 2002-2008 Shawn Kirst <skirst@insightbb.com>
+==========================================
+
+This is a plugin for GIMP version 2.4.x. It allows you to convert images into
+RGB normal maps for use in per-pixel lighting applications. The goal is to
+completely clone NVIDIA's photoshop plugin, with a few new useful features.
+
+Features
+==========================================
+* Filters. These include the filters found in the NVIDIA plugin (4
+sample, 3x3, 5x5, 7x7 and 9x9) with the addition of a 3x3 sobel and a 3x3
+prewitt filter (yields the best results IMO).
+* Post-filtering normal scaling
+* Wrap mode. This allows the filters to wrap around the image.
+Useful for creating normalmaps from a tiling bumpmap.
+* Height source. Use an average of the RGB components or the alpha
+channel as the height source in the generation of the normals.
+* Alpha result. For RGBA images, the alpha channel can either remain
+unchanged, have the height used to generate the normal written to it, be
+replaced by either 0 or 1, or the value of a grayscale image.
+* Dynamic 2D preview in the interactive dialog.
+* Dynamic 3D preview window with the normalmap applied to a lit primitive
+* Parallax bump mapping for 3D preview
+    
+Planned features
+==========================================    
+* Support gray and gray-alpha images.
+
+Installation
+==========================================
+See the file INSTALL for installation instructions

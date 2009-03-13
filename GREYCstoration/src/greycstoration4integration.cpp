@@ -73,7 +73,7 @@ using namespace cimg_library;
 int main(int argc,char **argv) {
 
   // Read algorithm parameters from the command line
-  const char *file_i          = cimg_option("-i","img/milla.ppm","Input file");
+  const char *file_i          = cimg_option("-i","img/milla.bmp","Input file");
   const float amplitude       = cimg_option("-dt",40.0f,"Regularization strength for one iteration (>=0)");
   const unsigned int nb_iter  = cimg_option("-iter",3,"Number of regularization iterations (>0)");
   const float sharpness       = cimg_option("-p",0.8f,"Contour preservation for regularization (>=0)");

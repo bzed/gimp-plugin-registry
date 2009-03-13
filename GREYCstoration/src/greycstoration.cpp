@@ -100,7 +100,7 @@ template<typename T> void greycstoration(int argc, char **argv, T pixel_type) {
   pixel_type = (T)0;
   cimg_usage(" Open Source Algorithms for Image Denoising and Interpolation.");
   cimg_help("-------------------------------------------------------------------------\n"
-            " GREYCstoration v2.8, by David Tschumperle.                              \n"
+            " GREYCstoration v2.9, by David Tschumperle.                              \n"
             " ------------------------------------------------------------------------\n"
             " This program allows to denoise, inpaint and resize 2D color images.     \n"
             " It is the result of the research work done in the IMAGE group of the    \n"
@@ -125,7 +125,7 @@ template<typename T> void greycstoration(int argc, char **argv, T pixel_type) {
   const char        *resize_mode     = cimg_option("-resize",(char*)0,"Resize image specified after '-resize'");
   const char        *clean_mode      = cimg_option("-clean",(char*)0,"Clean image specified after '-clean'");
   const char        *reference_image = cimg_option("-ref",(char*)0,"Reference image to compare with");
-                                       cimg_option("-bits",8,"Define input value type (8='uchar', 16='ushort', 32='float')");
+  const char         nb_bits         = cimg_option("-bits",8,"Define input value type (8='uchar', 16='ushort', 32='float')");
   const unsigned int value_factor    = cimg_option("-fact",0,"Define input value factor (0=auto)");
   const float        noise_g         = cimg_option("-ng",0.0f,"Add Gaussian noise before denoising");
   const float        noise_u         = cimg_option("-nu",0.0f,"Add Uniform noise before denoising");
@@ -375,7 +375,14 @@ template<typename T> void greycstoration(int argc, char **argv, T pixel_type) {
   //-------------------------
   CImg<T> dest(img);
   unsigned int crange_beg = 0, crange_end = dest.dimv()-1U;
-  if (color_base) dest.RGBtoYCbCr();
+  if (color_base) {
+    switch (nb_bits) {
+    case 8: dest.RGBtoYCbCr(); break;
+    case 16: (dest/=256).RGBtoYCbCr(); break;
+    default: std::fprintf(stderr,"\n%s : YCbCr color base is not authorized for 32bits float-valued images.\n\n",
+                          cimg::basename(argv[0])); std::exit(0);
+    }
+  }
   if (channel_range) std::sscanf(channel_range,"%u%*c%u",&crange_beg,&crange_end);
   gprintf(stderr,"- Color base : %s, Channels range : %u-%u\n",color_base?"YCbCr":"RGB",crange_beg,crange_end);
   if (!visu && !append_result) img.assign();
@@ -385,7 +392,10 @@ template<typename T> void greycstoration(int argc, char **argv, T pixel_type) {
     if (nwidth>sx) { nheight = nheight*sx/nwidth; nwidth = sx; }
     if (nheight>sy) { nwidth = nwidth*sy/nheight; nheight = sy; }
     disp.assign(nwidth,nheight,"GREYCstoration");
-    if (color_base) dest.get_YCbCrtoRGB().display(disp);
+    if (color_base) {
+      if (nb_bits==16) (dest.get_YCbCrtoRGB()*=256).display(disp);
+      else dest.get_YCbCrtoRGB().display(disp);
+    }
     else dest.display(disp);
   }
   const float gfact = (value_factor>0)?value_factor:((sizeof(T)==2)?1.0f/256:1.0f);
@@ -428,7 +438,8 @@ template<typename T> void greycstoration(int argc, char **argv, T pixel_type) {
 
     // Prepare for next iteration
     //---------------------------
-    CImg<T> tmp_rgb = color_base?dest.get_YCbCrtoRGB():CImg<T>(), &dest_rgb = color_base?tmp_rgb:dest;
+    CImg<T> tmp_rgb = color_base?(nb_bits==16?dest.get_YCbCrtoRGB()*=256:dest.get_YCbCrtoRGB()):CImg<T>(),
+      &dest_rgb = color_base?tmp_rgb:dest;
     if (disp && visu) dest_rgb.display(disp);
     if (file_o && saving_step && !(iter%saving_step)) dest_rgb.save(file_o,iter);
 
@@ -516,7 +527,8 @@ template<typename T> void greycstoration(int argc, char **argv, T pixel_type) {
   // Save result and exit
   //----------------------
   if (file_o) {
-    CImg<T> tmp_rgb = color_base?dest.get_YCbCrtoRGB():CImg<T>(), &dest_rgb = color_base?tmp_rgb:dest;
+    CImg<T> tmp_rgb = color_base?(nb_bits==16?dest.get_YCbCrtoRGB()*=256:dest.get_YCbCrtoRGB()):CImg<T>(),
+      &dest_rgb = color_base?tmp_rgb:dest;
     if (jpg_quality) {
       gprintf(stderr,"\n- Saving output image '%s' (JPEG quality = %u%%)\n",file_o,jpg_quality);
       if (!append_result) dest_rgb.save_jpeg(file_o,jpg_quality);
@@ -535,19 +547,14 @@ template<typename T> void greycstoration(int argc, char **argv, T pixel_type) {
   Main procedure
   ----------------*/
 int main(int argc,char **argv) {
+  const unsigned int color_base = cimg_option("-cbase",0,0);
   switch (cimg_option("-bits",8,0)) {
-  case 32: {
-    float pixel_type = 0;
-    greycstoration(argc,argv,pixel_type);
-  } break;
+  case 32: { float pixel_type = 0; greycstoration(argc,argv,pixel_type); } break;
   case 16: {
-    unsigned short pixel_type = 0;
-    greycstoration(argc,argv,pixel_type);
+    if (!color_base) { float pixel_type = 0; greycstoration(argc,argv,pixel_type); }
+    else { unsigned short pixel_type = 0; greycstoration(argc,argv,pixel_type); }
   } break;
-  default: {
-    unsigned char pixel_type = 0;
-    greycstoration(argc,argv,pixel_type);
-  } break;
+  default: { unsigned char pixel_type = 0; greycstoration(argc,argv,pixel_type); } break;
   }
   return 0;
 }

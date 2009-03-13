@@ -4,7 +4,7 @@
  #                ( C++ source file )
  #
  #  Description : GREYCstoration - A tool to denoise, inpaint and resize images.
- #                ( GIMP>=2.2 plug-in version )
+ #                ( GIMP>=2.3.4 plug-in version )
  #                This file is a part of the CImg Library project.
  #                ( http://cimg.sourceforge.net )
  #
@@ -25,10 +25,17 @@
  #
  #    Copyright  : Grzegorz Szwoch (GIMP plugin code)
  #                 David Tschumperle (GREYCstoration API)
+ #                 Nikita Melnichenko (Bugs corrections)
  #                 ( http://www.greyc.ensicaen.fr/~dtschump/ )
  #
  #    Plug-in version: 1.1
  #    Version history:
+ #    2.9 (2008.06.09)
+ #        - New version number, following the release number of CImg.
+ #        - Non-interactive mode allowed (patch by Nikita Melnichenko).
+ #        - Pdb description parameters re-ordered (patch by Nikita Melnichenko).
+ #        - Bug correction when dealing with 16 bits image processed in the
+ #          YUV color space.
  #    1.1 (2007.03.31)
  #        - Added support for GimpZoomPreview (optional)
  #        - Make plug-in work for 1 bpp images
@@ -210,15 +217,23 @@ MAIN ()
     {GIMP_PDB_FLOAT,    "da", "Angular integration step for regulatization"},
     {GIMP_PDB_FLOAT,    "gauss_prec", "Precision of the gaussian function for regularization"},
     {GIMP_PDB_INT8,     "interp", "Interpolation type"},
+    {GIMP_PDB_INT32,    "patch_based", "Use patch-based intead of non-patch method"},
+    {GIMP_PDB_INT32,    "patch_size", "Size of the patches (for patch-based method)"},
+    {GIMP_PDB_FLOAT,    "sigma_p", "Sigma_p (for patch-based method)"},
+    {GIMP_PDB_FLOAT,    "sigma_s", "Sigma_s (for patch-based method)"},
+    {GIMP_PDB_INT32,    "lookup_size", "Lookup size (for patch-based method)"},
     {GIMP_PDB_INT32,    "fast_approx", "Use fast approximation for regularization"},
     {GIMP_PDB_INT32,    "iterations", "Iterations accuracy"}
   };
   gimp_install_procedure ("plug_in_greycstoration",
-                          "plug-in-greycstore",
-                          "GREYCstoration",
                           "GREYCstoration Denoising Plugin",
+                          "GREYCstoration is an image regularization algorithm which is able to process"
+                          " a color image by locally removing small variations of pixel intensities"
+                          " while preserving significant global image features, such as edges and corners."
+                          " This plugin uses image regularization for image denoising.",
                           "Grzegorz Szwoch & David Tschumperle",
-                          "Copyright Grzegorz Szwoch & David Tschumperle",
+                          "Grzegorz Szwoch & David Tschumperle",
+                          "2008-06-02",
                           "_GREYCstoration...",
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,G_N_ELEMENTS(args),0,args, NULL);
@@ -267,8 +282,13 @@ static void run(const gchar *name, gint nparams, const GimpParam *param, gint *n
       params.da = param[9].data.d_float;
       params.gauss_prec = param[10].data.d_float;
       params.interp = param[11].data.d_int32;
-      params.fast_approx = param[12].data.d_int32;
-      params.iterations = param[13].data.d_int32;
+      params.patch_based = param[12].data.d_int32;
+      params.patch_size = param[13].data.d_int32;
+      params.sigma_p = param[14].data.d_float;
+      params.sigma_s = param[15].data.d_float;
+      params.lookup_size = param[16].data.d_int32;
+      params.fast_approx = param[17].data.d_int32;
+      params.iterations = param[18].data.d_int32;
       if((params.amplitude<0.0) || (params.sharpness<0.0)) status = GIMP_PDB_CALLING_ERROR;
     }
     break;

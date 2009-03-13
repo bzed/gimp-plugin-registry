@@ -1,0 +1,196 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Wavelet Denoise 0.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-14 11:30+0100\n"
+"PO-Revision-Date: 2008-11-19 02:13+0300\n"
+"Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
+"Language-Team: GNOME Cyrillic <gnome-cyr@lists.gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+
+#: ../src/messages.h:21
+msgid "Wavelet denoise"
+msgstr "Вейвлетное подавление шума"
+
+#: ../src/messages.h:23
+msgid ""
+"This plugin allows the separate denoising of image channels in multiple "
+"color spaces using wavelets."
+msgstr ""
+"Это расширение предназначено для понижения шума при помощи вейвлетных "
+"алгоритмов в отдельных каналах изображений в разных цветовых моделях."
+
+#: ../src/messages.h:26
+msgid ""
+"Adjusts the threshold for denoising of the selected channel in a range from "
+"0.0 (none) to 10.0. The threshold is the value below which everything is "
+"considered noise."
+msgstr ""
+"Меняет порог подавления шума в избранном канале в диапазоне от 0.0 (нулевой "
+"порог) до 10.0. Любое значение ниже указанного порога считается шумом."
+
+#: ../src/messages.h:27
+msgid ""
+"Adjusts the threshold for denoising in a range from 0.0 (none) to 10.0. The "
+"threshold is the value below which everything is considered noise."
+msgstr ""
+"Меняет порог подавления шума в диапазоне от 0.0 (нулевой порог) до 10.0. "
+"Любое значение ниже указанного порога считается шумом."
+
+#: ../src/messages.h:28
+msgid "Select an image channel to edit its denoising settings."
+msgstr "Выберите канал, подавление шума в котором будет выполняться"
+
+#: ../src/messages.h:29
+msgid "Display all channels of the image (final image)."
+msgstr "Показать все каналы в изображении (результируемое изображение)"
+
+#: ../src/messages.h:30
+msgid "Display only the selected channel in grayscale mode."
+msgstr "Показать только избранный канал в оттенках серого"
+
+#: ../src/messages.h:31
+msgid "Display only the selected channel in color mode."
+msgstr "Показать только избранный канал в цвете"
+
+#: ../src/messages.h:32
+msgid ""
+"The YCbCr color model has one luminance channel (Y) which contains most of "
+"the detail information of an image (such as brightness and contrast) and two "
+"chroma channels (Cb = blueness, Cr = reddness) that hold the color "
+"information. Note that this choice drastically affects the result."
+msgstr ""
+"В цветовой модели YCbCr один канал светимости (Y), содержащий информацию о "
+"яркости и контрасте, и два хроматических канала (Cb = синева, Cr = "
+"краснота), содержащие информацию о цвете. Обратите внимание на то, что выбор "
+"цветовой модели существенно влияет на результат обработки."
+
+#: ../src/messages.h:33
+msgid ""
+"The RGB color model separates an image into channels of red, green, and "
+"blue. This is the default color model in GIMP. Note that this choice "
+"drastically affects the result."
+msgstr ""
+"Цветовая модель RGB делит изображения на красный, зеленый и синий каналы. "
+"Эта цветовая модель используется в GIMP по умолчанию. Обратите внимание на "
+"то, что выбор цветовой модели существенно влияет на результат обработки."
+
+#: ../src/messages.h:34
+msgid ""
+"CIELAB (L*a*b*) is a color model in which chrominance is separated from "
+"lightness and color distances are perceptually uniform. Note that this "
+"choice drastically affects the result."
+msgstr ""
+"CIELAB (L*a*b*) — цветовая модель, где хроматические компоненты отделены от "
+"светлоты. Обратите внимание на то, что выбор цветовой модели существенно "
+"влияет на результат обработки."
+
+#: ../src/messages.h:35
+msgid ""
+"This adjusts the softness of the thresholding (soft as opposed to hard "
+"thresholding). The higher the softness the more noise remains in the image. "
+"Default is 0.0."
+msgstr ""
+"Изменить мягкость устанавливаемого порога. Чем выше значение, тем больше "
+"шума остается в изображении. По умолчанию значение равно нулю."
+
+#: ../src/messages.h:37
+msgid ""
+"Resets the settings for the selected channel while the button is pressed."
+msgstr "Сбросить параметры для избранного канала на время нажатия кнопки"
+
+#: ../src/messages.h:38
+msgid "Resets to the default values."
+msgstr "Сбросить изменения всех каналов до исходных значений"
+
+#: ../src/messages.h:39
+msgid "Resets the current channel to the default values."
+msgstr "Сбросить значения для текущего канала до исходных"
+
+#: ../src/messages.h:40
+msgid "Resets all channels to the default values."
+msgstr "Сбросить изменения для всех каналов до исходных значений"
+
+#: ../src/denoise.c:66
+msgid "Wavelet denoising..."
+msgstr "Вейвлетное подавление шума..."
+
+#: ../src/interface.c:55
+msgid "Color model"
+msgstr "Цветовая модель"
+
+#: ../src/interface.c:116
+msgid "Preview channel"
+msgstr "Просматриваемый канал"
+
+#: ../src/interface.c:124
+msgid "All"
+msgstr "Все"
+
+#: ../src/interface.c:143
+msgid "Selected (gray)"
+msgstr "Выбранный (серый)"
+
+#: ../src/interface.c:144
+msgid "Selected"
+msgstr "Выбранный"
+
+#: ../src/interface.c:164
+msgid "Selected (color)"
+msgstr "Выбранный (цветной)"
+
+#: ../src/interface.c:188
+msgid "Channel select"
+msgstr "Выбор канала"
+
+#: ../src/interface.c:220
+msgid "Channel settings"
+msgstr "Свойства канала"
+
+#: ../src/interface.c:222
+msgid "Settings"
+msgstr "Параметры"
+
+#: ../src/interface.c:230
+msgid "Threshold"
+msgstr "Порог:"
+
+#: ../src/interface.c:269
+msgid "Softness"
+msgstr "Мягкость:"
+
+#: ../src/interface.c:329
+msgid "Reset channel"
+msgstr "Восстановить канал"
+
+#: ../src/interface.c:329
+msgid "Reset"
+msgstr "Сбросить"
+
+#: ../src/interface.c:345
+msgid "Reset all"
+msgstr "Восстановить все"
+
+#: ../src/plugin.c:33 ../src/plugin.c:34 ../src/plugin.c:35 ../src/plugin.c:36
+msgid "Alpha"
+msgstr "Альфа"
+
+#: ../src/plugin.c:51
+msgid "Removes noise in the image using wavelets."
+msgstr "Удалить шум из изображения при помощи вейвлетных алгоритмов"
+
+#: ../src/plugin.c:53
+msgid "Marco Rossini"
+msgstr "Marco Rossini"
+
+#: ../src/plugin.c:54
+msgid "Copyright 2008 Marco Rossini"
+msgstr "Авторские права 2008 Marco Rossini"
+
+#: ../src/plugin.c:58
+msgid "_Wavelet denoise ..."
+msgstr "_Вейвлетное подавление шума..."

@@ -1,0 +1,3 @@
+   * btn4ws:
+     Generates a series of buttons in three states (passive, active, pressed)
+     with various selectable effects on them.
