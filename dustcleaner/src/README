@@ -1,0 +1,16 @@
+DustCleaner plugin for GIMP
+=====================
+
+Copyright (C) 2005-2009 Frank Tao <solotim.cn@gmail.com>
+
+This package is organized according to Mitch's gimp-plugin-template.
+
+To build and install it, you need libcv-dev as well as libgimp2.0-dev.
+
+	./configure LIBS=-lcv
+	make
+    cp {dustcleaner}/src/dustcleaner ~/.gimp-2.4/plug-ins/
+
+
+Happy GIMPing,
+--Frank
