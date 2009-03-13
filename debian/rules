@@ -96,7 +96,7 @@ binary: binary-indep binary-arch
 #### the following stuff is not needed to build the package,
 #### it's only for lazy maintainers.
 
-update-all: update-watch update-control update-copyright
+update-all: update-control update-copyright
 
 update-copyright:
 	( cat debian/copyright.in ;\
