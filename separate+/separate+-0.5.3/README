@@ -9,7 +9,7 @@ Modified by Yoshinori Yamakawa <yam@yellowmagic.info>
 Released under the terms of the GNU General Public Licence V2.
 See the file "COPYING" for full details.
 
-Version 0.5.1
+Version 0.5.3
 
 Please note:
 You use this software entirely at your own risk, I cannot be held responsible
@@ -83,8 +83,8 @@ You can also install the plugin for a single user:
 $ make INSTALLDIR=~/.gimp-2.4/plug-ins install-plugins
 
 Separate+ serches the following directoreis for the colour profiles. If 
-you want to use other directories, edit platform.h and recompile the 
-plug-ins.
+you want to use other directories, edit the line 483-497 of iccbutton.c
+and recompile the plug-ins.
 
   /usr/share/color/icc/
   /usr/color/icc/

@@ -14,7 +14,7 @@ TIFF_LIB = -ltiff
 
 GETTEXT_PACKAGE = gimp20-separate
 
-VERSION = 0.5.1
+VERSION = 0.5.2
 CC = gcc -g
 DEPEND = gccmakedep
 RM = rm -f
@@ -107,8 +107,8 @@ uninstall: uninstall-plugins uninstall-catalogs
 
 
 #
-iccbutton.o: iccbutton.h
-separate.o: separate.h iccbutton.h
+iccbutton.o: iccbutton.h iccclassicons.h
+separate.o: separate.h iccbutton.h icon.h
 import.o: separate.h
 icc_colorspace.o: icc_colorspace.h iccbutton.h
 tiff.o: tiff.h

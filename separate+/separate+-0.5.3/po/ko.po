@@ -1,0 +1,486 @@
+# Separate+ for The GIMP
+# Copyright (C) 2002-2004 Alastair Robinson
+# Yoshinori Yamakawa <yam@yellowmagic.info>, 2006-2008.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Separate+ 0.5.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-07-31 14:46+0900\n"
+"PO-Revision-Date: 2008-03-20 15:08+0900\n"
+"Last-Translator: Mr.Dust <like.a.dust@gmail.com>\n"
+"Language-Team: Korean <like.a.dust@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: icc_colorspace.c:97 icc_colorspace.c:98
+msgid "Assign new colorspace"
+msgstr "새 색상공간 할당"
+
+#: icc_colorspace.c:102
+msgid "Assign colorspace..."
+msgstr "색상공간 할당..."
+
+#: icc_colorspace.c:109 icc_colorspace.c:110
+msgid "Convert to other colorspace"
+msgstr "다른 색상공간으로 변환"
+
+#: icc_colorspace.c:114
+msgid "Convert colorspace..."
+msgstr "색상공간 변환..."
+
+#: icc_colorspace.c:194 separate.c:597 separate.c:745
+msgid "Rendering intent is invalid."
+msgstr "렌더링 인텐트의 값이 잘못되어 있습니다."
+
+#: icc_colorspace.c:572
+msgid "Conveting..."
+msgstr "변환중..."
+
+#: icc_colorspace.c:690
+msgid "Can't get colormap!"
+msgstr "색상표를 가져올 수 없습니다!"
+
+#: icc_colorspace.c:719
+msgid "Unsupported BPP!"
+msgstr "지원하지 않은 BPP 입니다."
+
+#: icc_colorspace.c:769
+msgid "Assign colorspace"
+msgstr "색상공간 할당"
+
+#: icc_colorspace.c:781
+msgid "Current colorspace:"
+msgstr "현재 색상공간:"
+
+#: icc_colorspace.c:789 icc_colorspace.c:902
+msgid "Unknown (image has no profiles)"
+msgstr ""
+
+#: icc_colorspace.c:795 icc_colorspace.c:908
+msgid ""
+"<span size=\"smaller\" style=\"italic\">plug-in uses RGB workspace "
+"temporarily</span>"
+msgstr ""
+
+#: icc_colorspace.c:806
+msgid "New colorspace:"
+msgstr "새 색상공간:"
+
+#: icc_colorspace.c:813
+msgid "_Unassign colorspace"
+msgstr "할당되지 않은 색상공간(_U)"
+
+#: icc_colorspace.c:818 icc_colorspace.c:950
+#, c-format
+msgid "_Workspace: %s"
+msgstr "작업공간(_W): %s"
+
+#: icc_colorspace.c:828 icc_colorspace.c:960
+msgid "_Profile:"
+msgstr "프로필(_P):"
+
+#: icc_colorspace.c:834 icc_colorspace.c:966
+msgid "Choose RGB profile"
+msgstr "RGB 프로필 선택"
+
+#: icc_colorspace.c:883
+msgid "Convert colorspace"
+msgstr "색상공간 변환"
+
+#: icc_colorspace.c:894
+msgid "Source colorspace:"
+msgstr "원본 색상공간:"
+
+#: icc_colorspace.c:918 separate.c:1297
+msgid "Rendering intent:"
+msgstr "렌더링 인텐트:"
+
+#: icc_colorspace.c:926 separate.c:1303
+msgid "Perceptual"
+msgstr "지각적"
+
+# http://chemistry.sogang.ac.kr/ChemInfo/kcsterm/kcsterm.txt
+# http://www.google.co.kr/search?complete=1&hl=ko&newwindow=1&q=%EB%B9%84%EC%83%89+%EC%A7%80%EC%8B%9C%EA%B3%84+colorimetric&btnG=%EA%B2%80%EC%83%89&lr=
+#: icc_colorspace.c:927 separate.c:1304
+msgid "Relative colorimetric"
+msgstr "상대 비색지시계"
+
+#: icc_colorspace.c:928 separate.c:1305
+msgid "Saturation"
+msgstr "채도"
+
+# http://chemistry.sogang.ac.kr/ChemInfo/kcsterm/kcsterm.txt
+# http://www.google.co.kr/search?complete=1&hl=ko&newwindow=1&q=%EB%B9%84%EC%83%89+%EC%A7%80%EC%8B%9C%EA%B3%84+colorimetric&btnG=%EA%B2%80%EC%83%89&lr=
+#: icc_colorspace.c:929 separate.c:1306
+msgid "Absolute colorimetric"
+msgstr "절대 비색지시계"
+
+#: icc_colorspace.c:930 separate.c:1307
+msgid "Absolute colorimetric(2)"
+msgstr "절대 비색지시계(2)"
+
+#: icc_colorspace.c:934 separate.c:1313
+msgid "Use BPC algorithm"
+msgstr "BPC 알고리즘 사용"
+
+#: icc_colorspace.c:942
+msgid "Destination colorspace:"
+msgstr "대상 색상공간:"
+
+#: icc_colorspace.c:972
+msgid "Flatten image ( to preserve appearance )"
+msgstr "이미지 합치기(외형은 보존)"
+
+#: iccbutton.c:58
+msgid "Input"
+msgstr "입력"
+
+#: iccbutton.c:59
+msgid "Display"
+msgstr "표시"
+
+#: iccbutton.c:60
+msgid "Output"
+msgstr "출력"
+
+#: iccbutton.c:61
+msgid "Devicelink"
+msgstr "장치연결"
+
+#: iccbutton.c:62
+msgid "Abstract"
+msgstr "추상적"
+
+#: iccbutton.c:63
+msgid "Colorspace conversion"
+msgstr "색상공간 변환"
+
+#: iccbutton.c:64
+msgid "Named color"
+msgstr "명명된 색상"
+
+#: iccbutton.c:265
+#, c-format
+msgid "%s(broken text)..."
+msgstr "%s（불완전한 텍스트）..."
+
+#: iccbutton.c:271
+msgid "(no name)"
+msgstr "(이름없음)"
+
+#: iccbutton.c:604
+msgid "(not selected)"
+msgstr "(선택없음)"
+
+#: iccbutton.c:890
+msgid "More..."
+msgstr "추가..."
+
+#: iccbutton.c:1030
+msgid "Choose an ICC Profile"
+msgstr "ICC 프로필 선택"
+
+#: iccbutton.c:1056
+msgid "Name"
+msgstr "이름"
+
+#: iccbutton.c:1062
+msgid "Class"
+msgstr "클래스"
+
+#: iccbutton.c:1068
+msgid "Colorspace"
+msgstr "색상공간"
+
+#: iccbutton.c:1074
+msgid "PCS"
+msgstr "PCS"
+
+#: iccbutton.c:1080
+msgid "Path"
+msgstr "경로"
+
+#: iccbutton.c:1091
+msgid "Path:"
+msgstr "경로:"
+
+#: iccbutton.c:1126
+msgid "Invalid profile"
+msgstr "잘못된 프로필"
+
+#: iccbutton.c:1128
+msgid "Please check the filename, device class, and colorspace."
+msgstr "파일명, 장치 클래스, 색상공간을 확인하십시오."
+
+#: import.c:82 import.c:83
+msgid "Import the CMYK TIFF image"
+msgstr "CMYK TIFF 이미지 가져오기"
+
+#: import.c:87
+msgid "<Toolbox>/File/Acquire/Separated TIFF"
+msgstr "<Toolbox>/File/Acquire/분리된 TIFF"
+
+#: import.c:160
+#, c-format
+msgid "Cannot open : \"%s\""
+msgstr "\"%s\" 을 열 수 없습니다."
+
+#: import.c:170
+#, c-format
+msgid "\"%s\" is unsupported."
+msgstr "\"%s\" 는 지원되지 않습니다."
+
+#: import.c:208 util.c:19 util.c:189 util.c:249 util.c:325
+msgid "Background"
+msgstr "배경"
+
+#: import.c:212
+#, c-format
+msgid "Reading \"%s\"..."
+msgstr "\"%s\"읽는 중..."
+
+#: import.c:296
+msgid "Import separated TIFF..."
+msgstr "분리된 TIFF 가져오기..."
+
+#: separate.c:157
+msgid "Generate CMYK separations"
+msgstr "CMYK 분리 생성"
+
+#: separate.c:158
+msgid ""
+"Separate performs CMYK colour separation of an image, into the four layers."
+msgstr "이미지를 CMYK 색상으로 분리하여, 네 개의 레이어에 표시합니다."
+
+#: separate.c:163
+msgid "<Image>/Image/Separate/Separate"
+msgstr "<Image>/Image/Separate/Separate"
+
+#: separate.c:172
+msgid ""
+"Separate performs CMYK colour separation of an RGB image, into the alpha-"
+"channels of four coloured layers."
+msgstr ""
+"Separate 는 RGB 이미지의 CMYK 색상을 네 가지 색상 레이어의 알파 채널로 분리합"
+"니다."
+
+#: separate.c:192
+msgid ""
+"Separate performs CMYK colour separation of an RGB image, into four "
+"greyscale layers."
+msgstr ""
+"Separate 는 RGB 이미지의 CMYK 색상을 네 가지 그레이스케일 레이어로 분리합니"
+"다."
+
+#: separate.c:211
+msgid "Softproofing CMYK colour"
+msgstr "CMYK 색상을 간단히 교정"
+
+#: separate.c:212
+msgid ""
+"Separate proofs a CMYK colour separation, by transforming back into RGB, "
+"with media-white simulation."
+msgstr ""
+"Separate 는 미디어화이트 시뮬레이션을 통해 RGB로 환원함으로써 CMYK로 분리된 "
+"색상을 교정합니다."
+
+#: separate.c:217
+msgid "<Image>/Image/Separate/Proof"
+msgstr "<Image>/Image/Separate/색상교정"
+
+#: separate.c:224
+msgid "Generate duotone separations"
+msgstr "듀오톤 분리 생성"
+
+#: separate.c:231
+msgid "<Image>/Image/Separate/Duotone"
+msgstr "<Image>/Image/Separate/듀오톤"
+
+#: separate.c:238
+msgid "Save separated image"
+msgstr "분리된 이미지 저장"
+
+#: separate.c:239
+msgid "Save separated image in TIFF format."
+msgstr "분리된 이미지를 TIFF 포맷으로 저장하기"
+
+#: separate.c:243
+msgid "<Image>/Image/Separate/Save..."
+msgstr "<Image>/Image/Separate/저장..."
+
+#: separate.c:398 separate.c:447 separate.c:455
+msgid "Separate: Internal calling error!"
+msgstr "Separate: 내부 에러가 발생했습니다!"
+
+#: separate.c:410
+msgid "This is not a CMYK separated image!"
+msgstr "CMYK 로 분리된 이미지가 아닙니다!"
+
+#: separate.c:651 separate.c:785 separate.c:930 separate.c:959
+msgid ""
+"Internal error.\n"
+"There might be an error in the specification of the profile."
+msgstr ""
+"내부 에러입니다.\n"
+"프로파일 스펙에 문제가 있을 수 있습니다."
+
+#: separate.c:692 separate.c:825 separate.c:1125
+msgid "Separating..."
+msgstr "분리중..."
+
+#: separate.c:882
+msgid "Proofing mode is invalid."
+msgstr "검증 모드가 잘못되었습니다."
+
+#: separate.c:887
+msgid "Image is not separated..."
+msgstr "이미지가 분리되지 않았습니다..."
+
+#: separate.c:898
+msgid "C"
+msgstr "C"
+
+#: separate.c:898
+msgid "M"
+msgstr "M"
+
+#: separate.c:898
+msgid "Y"
+msgstr "Y"
+
+#: separate.c:898
+msgid "K"
+msgstr "K"
+
+#: separate.c:907
+#, c-format
+msgid "Couldn't get channel(s) : %s"
+msgstr "%s 채널을 가져올 수 없습니다."
+
+#: separate.c:996
+msgid "Proofing..."
+msgstr "검증중..."
+
+#: separate.c:1222
+msgid "Source color space:"
+msgstr "원본 색상 영역 :"
+
+#: separate.c:1229
+msgid "Choose source profile (RGB)..."
+msgstr "원본 프로필(RGB) 선택..."
+
+#: separate.c:1236
+msgid "Give priority to embedded profile"
+msgstr "내장 프로필을 우선 사용"
+
+#: separate.c:1263
+msgid "( no profiles embedded )"
+msgstr "( 내장된 프로필 없음 )"
+
+#: separate.c:1282
+msgid "Destination color space:"
+msgstr "대상 색상 공간:"
+
+#: separate.c:1289
+msgid "Choose output profile (CMYK)..."
+msgstr "출력 프로필(CMYK) 선택..."
+
+#: separate.c:1319
+msgid "Options:"
+msgstr "옵션:"
+
+#: separate.c:1324
+msgid "Preserve pure black"
+msgstr "순수한 검정색 보존"
+
+#: separate.c:1329
+msgid "Overprint pure black"
+msgstr "순수한 검정색으로 덧칠"
+
+#: separate.c:1340
+msgid "Make CMYK pseudo-composite"
+msgstr "CMYK 모조생성본 만들기"
+
+#: separate.c:1426
+msgid "Monitor / working color space:"
+msgstr "모니터 / 작업용 색상 공간:"
+
+#: separate.c:1433
+msgid "Choose RGB profile..."
+msgstr "RGB 프로필 선택..."
+
+#: separate.c:1442
+msgid "Separated image's color space:"
+msgstr "분리된 이미지의 색상 공간:"
+
+#: separate.c:1449
+msgid "Choose CMYK profile..."
+msgstr "CMYK 프로필 선택..."
+
+#: separate.c:1458
+msgid "Give priority to attached profile"
+msgstr "첨부된 프로필을 우선 사용"
+
+#: separate.c:1486
+msgid "( no profiles attached )"
+msgstr "( 첨부된 프로필 없음 )"
+
+#: separate.c:1508
+msgid "Mode:"
+msgstr "모드:"
+
+#: separate.c:1514
+msgid "Normal"
+msgstr "일반"
+
+#: separate.c:1515
+msgid "Simulate black ink"
+msgstr "검정색 잉크 시뮬레이트"
+
+#: separate.c:1516
+msgid "Simulate media white"
+msgstr "미디어화이트 시뮬레이트"
+
+#: separate.c:1574
+msgid "Save separated TIFF..."
+msgstr "분리된 TIFF 로 저장..."
+
+#: separate.c:1594
+msgid "Embed color profile:"
+msgstr "내장 색상 프로필:"
+
+#: separate.c:1597
+msgid "None"
+msgstr "없음"
+
+#: separate.c:1598
+msgid "CMYK default profile"
+msgstr "CMYK 기본 프로필"
+
+#: separate.c:1599
+msgid "Print simulation profile"
+msgstr "시뮬레이션 프로필 인쇄"
+
+#: separate.c:1605
+#, c-format
+msgid "Own profile : %s"
+msgstr "사용자 프로필 : %s"
+
+#: tiff.c:53
+msgid "Saving..."
+msgstr "저장중..."
+
+#: util.c:272 util.c:344
+msgid "Creating CMYK layers..."
+msgstr "CMYK 레이어 생성중..."
+
+#: util.c:417
+#, c-format
+msgid "Untitled-%s.tif"
+msgstr "제목없음-%s.tif"
+
+#~ msgid "None ( use RGB workspace temporarily )"
+#~ msgstr "없음 (임시로 RGB 작업 공간을 사용합니다.)"

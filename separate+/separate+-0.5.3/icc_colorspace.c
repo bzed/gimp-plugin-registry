@@ -777,15 +777,26 @@ static gboolean assign_dialog( IccColorspaceContext *context )
   gtk_container_set_border_width( GTK_CONTAINER( vbox1 ), 12 );
   gtk_box_pack_start( GTK_BOX( GTK_DIALOG( dialog )->vbox ), vbox1, TRUE, TRUE, 0 );
 
+
   frame = gtk_frame_new( _( "Current colorspace:" ) );
   gtk_box_pack_start( GTK_BOX( vbox1 ), frame, TRUE, TRUE, 0 );
 
+  vbox2 = gtk_vbox_new (FALSE, 8);
+  gtk_container_set_border_width( GTK_CONTAINER( vbox2 ), 8 );
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+
   profileDesc = _icc_button_get_profile_desc( context->hProfile );
-  label = gtk_label_new( profileDesc ? profileDesc : _( "None ( use RGB workspace temporarily )" ) );
+  label = gtk_label_new( profileDesc ? profileDesc : _( "Unknown (image has no profiles)" ) );
   gtk_misc_set_alignment( GTK_MISC( label ), 0, 0.5 );
-  gtk_misc_set_padding( GTK_MISC( label ), 8, 8 );
+  gtk_box_pack_start (GTK_BOX (vbox2), label, TRUE, TRUE, 0 );
+  if (!profileDesc)
+    {
+      label = gtk_label_new ("");
+      gtk_label_set_markup (GTK_LABEL (label), _("<span size=\"smaller\" style=\"italic\">plug-in uses RGB workspace temporarily</span>"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+      gtk_box_pack_start (GTK_BOX (vbox2), label, TRUE, TRUE, 0 );
+    }
   g_free( profileDesc );
-  gtk_container_add( GTK_CONTAINER( frame ), label );
 
 
   arrow = gtk_arrow_new( GTK_ARROW_DOWN, GTK_SHADOW_IN );
@@ -883,12 +894,22 @@ static gboolean convert_dialog( IccColorspaceContext *context )
   frame = gtk_frame_new( _( "Source colorspace:" ) );
   gtk_box_pack_start( GTK_BOX( vbox1 ), frame, TRUE, TRUE, 0 );
 
+  vbox2 = gtk_vbox_new (FALSE, 8);
+  gtk_container_set_border_width( GTK_CONTAINER( vbox2 ), 8 );
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+
   profileDesc = _icc_button_get_profile_desc( context->hProfile );
-  label = gtk_label_new( profileDesc ? profileDesc : _( "None ( use RGB workspace temporarily )" ) );
+  label = gtk_label_new( profileDesc ? profileDesc : _( "Unknown (image has no profiles)" ) );
   gtk_misc_set_alignment( GTK_MISC( label ), 0, 0.5 );
-  gtk_misc_set_padding( GTK_MISC( label ), 8, 8 );
+  gtk_box_pack_start (GTK_BOX (vbox2), label, TRUE, TRUE, 0 );
+  if (!profileDesc)
+    {
+      label = gtk_label_new ("");
+      gtk_label_set_markup (GTK_LABEL (label), _("<span size=\"smaller\" style=\"italic\">plug-in uses RGB workspace temporarily</span>"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+      gtk_box_pack_start (GTK_BOX (vbox2), label, TRUE, TRUE, 0 );
+    }
   g_free( profileDesc );
-  gtk_container_add( GTK_CONTAINER( frame ), label );
 
 
   arrow = gtk_arrow_new( GTK_ARROW_DOWN, GTK_SHADOW_IN );

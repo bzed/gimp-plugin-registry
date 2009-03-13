@@ -10,9 +10,10 @@ Photoshopでいうところの、「プロファイルの指定」と「プロファイル変換」に
 ・ICCプロファイル
   sRGBのプロファイルは同梱。Adobe RGBやJapan Color 2001 Coatedといった
   定番プロファイルは、Adobeのサイトよりダウンロードできます。
-  (Mac) http://www.adobe.com/support/downloads/detail.jsp?ftpID=3144
-  (Win) http://www.adobe.com/support/downloads/detail.jsp?ftpID=3145
-  (Linux) http://www.adobe.com/support/downloads/detail.jsp?ftpID=3146
+  (Mac)
+   http://www.adobe.com/support/downloads/iccprofiles/iccprofiles_mac.html
+  (Win/Linux)
+   http://www.adobe.com/support/downloads/iccprofiles/iccprofiles_win.html
 
 ・ICCベースのカラーマネジメントに関する基本的な知識
 
@@ -62,7 +63,7 @@ Photoshopでいうところの、「プロファイルの指定」と「プロファイル変換」に
 ----- 動作要件
 このプラグインを動作させるには、LittleCMSの1.15以降が必要です。
 添付のWindowsバイナリはPentium!!!または互換CPU向けにビルドされています。
-動作確認は、Windows版 GIMPのバージョン2.4.4で行いました。
+動作確認は、Windows版 GIMPのバージョン2.4.6で行いました。
 
 
 ----- ビルド・インストールについて

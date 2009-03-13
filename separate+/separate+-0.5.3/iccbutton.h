@@ -9,6 +9,18 @@
 #include <gtk/gtkbutton.h>
 #include <lcms.h>
 
+
+/* Stock IDs */
+#define ICC_BUTTON_STOCK_INPUT_CLASS       "icc-button-input-class"
+#define ICC_BUTTON_STOCK_DISPLAY_CLASS     "icc-button-display-class"
+#define ICC_BUTTON_STOCK_RGB_OUTPUT_CLASS  "icc-button-rgb-output-class"
+#define ICC_BUTTON_STOCK_CMYK_OUTPUT_CLASS "icc-button-cmyk-output-class"
+#define ICC_BUTTON_STOCK_LINK_CLASS        "icc-button-link-class"
+#define ICC_BUTTON_STOCK_ABSTRACT_CLASS    "icc-button-abstract-class"
+#define ICC_BUTTON_STOCK_COLORSPACE_CLASS  "icc-button-colorspace-class"
+#define ICC_BUTTON_STOCK_NAMEDCOLOR_CLASS  "icc-button-namedcolor-class"
+
+
 G_BEGIN_DECLS
 
 #define ICC_BUTTON_TYPE              ( icc_button_get_type() )
