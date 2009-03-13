@@ -56,10 +56,12 @@ static void
 focusblur_fft_buffer_update_depth_division
                                         (FblurFftBuffer         *fft,
                                          FblurQualityType        quality,
-                                         gint                    radius);
+                                         gint                    radius,
+                                         gint                    focal_depth);
 static void
 focusblur_fft_buffer_update_depth_table            (FblurFftBuffer  *fft,
-                                                    gint             division);
+                                                    gint             division,
+                                                    gint             slide);
 static void
 focusblur_fft_buffer_update_depth_count            (FblurFftBuffer  *fft,
                                                     FblurDepthMap   *map);
@@ -74,14 +76,12 @@ static void     focusblur_fft_buffer_clear_depth   (FblurFftBuffer  *fft);
 gboolean
 focusblur_fft_buffer_update (FblurFftBuffer **fft,
                              FblurParam      *param,
+                             FblurQualityType quality,
                              GimpPreview     *preview)
 {
-  FblurQualityType       quality;
   gint                   width, height;
   gint                   radius, range;
   gint                   x1, x2, y1, y2;
-
-  quality = preview ? param->pref.quality_preview : param->pref.quality;
 
 
   /* check condition */
@@ -162,7 +162,7 @@ focusblur_fft_buffer_update (FblurFftBuffer **fft,
   if (param->store.enable_depth_map)
     {
       if (! focusblur_depth_map_update (&(param->depth_map), *fft,
-                                        &(param->store)))
+                                        &(param->store), quality))
         {
           gimp_message (_("Failed to update depth info."));
 
@@ -171,7 +171,8 @@ focusblur_fft_buffer_update (FblurFftBuffer **fft,
         }
       else
         {
-          focusblur_fft_buffer_update_depth_division (*fft, quality, range);
+          gint d = focusblur_depth_map_focal_depth (param->depth_map);
+          focusblur_fft_buffer_update_depth_division (*fft, quality, range, d);
 
           focusblur_fft_buffer_update_depth_count (*fft, param->depth_map);
         }
@@ -220,7 +221,6 @@ focusblur_fft_buffer_draw (FblurFftBuffer *fft)
   gboolean             dirty;
   guint8              *data;
   GimpPixelRgn         pr;
-  gint                 x, y;
 
   if (! fft->source.preview)
     {
@@ -330,8 +330,9 @@ focusblur_fft_buffer_make_depth_slice (FblurFftBuffer   *fft,
                                        FblurDepthMap    *depth_map,
                                        gint              look)
 {
-  gfloat        *dlp, *dp;
-  gint           orig, x, y;
+  FblurFftDepthTable    *table;
+  gfloat                *dlp, *dp;
+  gint                   depth, x, y;
 
   focusblur_fft_work_fill_zero (fft);
 
@@ -342,28 +343,25 @@ focusblur_fft_buffer_make_depth_slice (FblurFftBuffer   *fft,
       for (x = fft->source.x1, dp = dlp; x < fft->source.x2;
            x ++, dp += fft->work.col_padded)
         {
-          orig = focusblur_depth_map_get_depth (depth_map, x, y);
+          depth = focusblur_depth_map_get_depth (depth_map, x, y);
+          table = &(fft->depth.table[depth]);
 
-          if (fft->depth.fval[orig] == look)
-            {
-              *dp = 1.0f - fft->depth.dval[orig];
-              continue;
-            }
+          if (table->floor == look)
+            *dp = 1.0f - table->diff;
 
-          if (fft->depth.cval[orig] == look)
-            {
-              *dp = fft->depth.dval[orig];
-            }
+          else if (table->ceil == look)
+            *dp = table->diff;
         }
 
-  else
+  else /* quality < normal */
     for (y = fft->source.y1; y < fft->source.y2; y ++, dlp ++)
       for (x = fft->source.x1, dp = dlp; x < fft->source.x2;
            x ++, dp += fft->work.col_padded)
         {
-          orig = focusblur_depth_map_get_depth (depth_map, x, y);
+          depth = focusblur_depth_map_get_depth (depth_map, x, y);
+          table = &(fft->depth.table[depth]);
 
-          if (fft->depth.rval[orig] == look)
+          if (table->round == look)
             *dp = 1.0f;
         }
 }
@@ -373,9 +371,14 @@ void
 focusblur_fft_buffer_make_depth_behind (FblurFftBuffer  *fft,
                                        FblurDepthMap    *depth_map)
 {
-  gfloat        *dlp, *dp;
-  gint           orig, x, y;
-  gint           look;
+  FblurFftDepthTable    *table;
+  gfloat                *dlp, *dp;
+  gint                   depth, look;
+  gint                   x, y;
+
+  /* this is imperfect to fill behind,
+     because fftblur works in a whole picture,
+     it can't work adaptive at each pixels. */
 
   look = focusblur_depth_map_focal_depth (depth_map);
 
@@ -387,12 +390,11 @@ focusblur_fft_buffer_make_depth_behind (FblurFftBuffer  *fft,
     for (x = fft->source.x1, dp = dlp; x < fft->source.x2;
          x ++, dp += fft->work.col_padded)
       {
-        orig = focusblur_depth_map_get_depth (depth_map, x, y);
+        depth = focusblur_depth_map_get_depth (depth_map, x, y);
+        table = &(fft->depth.table[depth]);
 
-        /* this is imperfect to fill behind,
-           because fftblur works in a whole picture,
-           it can't work adaptive at each pixels. */
-        if (fft->depth.rval[orig] >= look)
+        /* problem: floods focused field */
+        if (table->round >= look)
           *dp = 1.0f;
       }
 }
@@ -609,62 +611,96 @@ focusblur_fft_buffer_update_work (FblurFftBuffer *fft,
 static void
 focusblur_fft_buffer_update_depth_division (FblurFftBuffer   *fft,
                                             FblurQualityType  quality,
-                                            gint              radius)
+                                            gint              radius,
+                                            gint              focal_depth)
 {
   gint division;
+  gint slide;
 
   fft->depth.quality = quality;
 
   division = radius;
-  if (quality == FBLUR_QUALITY_LOW)
-    division = MIN (division, 15);
-  else if (quality == FBLUR_QUALITY_DEFECTIVE)
-    division = MIN (division, 7);
+  switch (quality)
+    {
+    case FBLUR_QUALITY_NORMAL:
+      division = MIN (radius, FBLUR_DEPTH_MAX);
+      slide = focal_depth;
+      break;
 
-  focusblur_fft_buffer_update_depth_table (fft, division);
+    case FBLUR_QUALITY_LOW:
+      division = MIN (radius, 15);
+      slide = 0;
+      break;
+
+    case FBLUR_QUALITY_DEFECTIVE:
+      division = MIN (radius, 7);
+      slide = 0;
+      break;
+
+    default:
+      g_assert_not_reached ();
+    }
+
+  focusblur_fft_buffer_update_depth_table (fft, division, slide);
 }
 
 
 static void
 focusblur_fft_buffer_update_depth_table (FblurFftBuffer *fft,
-                                         gint            division)
+                                         gint            division,
+                                         gint            slide)
 {
-  gfloat dfac, fval;
-  gfloat r, f, c, d;
-  gint i;
+  FblurFftDepthTable    *table;
+  gfloat                 dfac, fval;
+  gfloat                 r, f, c;
+  gint                   ri, fi, ci;
+  gint                   i;
 
   g_assert (division > 0);
 
-  if (division == fft->depth.division)
+  if (division == fft->depth.division &&
+      slide    == fft->depth.slide)
     return;
 
   dfac = (gfloat) FBLUR_DEPTH_MAX / division;
 
   for (i = 0; i <= FBLUR_DEPTH_MAX; i ++)
     {
-      fval = (gfloat) i / dfac;
+      table = &(fft->depth.table[i]);
+      fval = (gfloat) (i - slide) / dfac;
 
       r = rintf (fval);
+
+      ri = rintf (r * dfac) + slide;
+      ri = CLAMP (ri, 0, FBLUR_DEPTH_MAX);
+
+      table->round = ri;
+
       if (fabsf (r - fval) < 0.001f)
         {
-          fft->depth.rval[i] = fft->depth.fval[i] = fft->depth.cval[i]
-            = rintf (r * dfac);
-          fft->depth.dval[i] = 0.0f;
+          table->floor = table->ceil = ri;
+          table->diff = 0.0f;
         }
       else
         {
           f = floorf (fval);
           c = ceilf (fval);
-          d = (c - f);
 
-          fft->depth.rval[i] = rintf (r * dfac);
-          fft->depth.fval[i] = rintf (f * dfac);
-          fft->depth.cval[i] = rintf (c * dfac);
-          fft->depth.dval[i] = (d > 0.0f) ? ((fval - f) / d) : (0.0f);
+          fi = rintf (f * dfac) + slide;
+          ci = rintf (c * dfac) + slide;
+
+          fi = CLAMP (fi, 0, FBLUR_DEPTH_MAX);
+          ci = CLAMP (ci, 0, FBLUR_DEPTH_MAX);
+
+          table->floor = fi;
+          table->ceil  = ci;
+
+          table->diff  = (ci > fi) ? (gfloat) (i - fi) / (ci - fi) : 0.0f;
         }
     }
 
   fft->depth.division = division;
+  fft->depth.slide = slide;
   fft->depth.count = 0;
 }
 
@@ -673,8 +709,9 @@ static void
 focusblur_fft_buffer_update_depth_count (FblurFftBuffer *fft,
                                          FblurDepthMap  *depth_map)
 {
-  gint   orig, depth;
-  gint   x, y;
+  FblurFftDepthTable    *table;
+  gint                   orig, depth;
+  gint                   x, y;
 
   if (fft->depth.count)
     return;
@@ -688,8 +725,9 @@ focusblur_fft_buffer_update_depth_count (FblurFftBuffer *fft,
         for (x = fft->source.x1; x < fft->source.x2; x ++)
           {
             orig = focusblur_depth_map_get_depth (depth_map, x, y);
+            table = &(fft->depth.table[orig]);
 
-            depth = fft->depth.fval[orig];
+            depth = table->floor;
 
             if (! fft->depth.check[depth])
               {
@@ -697,7 +735,7 @@ focusblur_fft_buffer_update_depth_count (FblurFftBuffer *fft,
                 fft->depth.count ++;
               }
 
-            depth = fft->depth.cval[orig];
+            depth = table->ceil;
 
             if (! fft->depth.check[depth])
               {
@@ -712,8 +750,9 @@ focusblur_fft_buffer_update_depth_count (FblurFftBuffer *fft,
         for (x = fft->source.x1; x < fft->source.x2; x ++)
           {
             orig = focusblur_depth_map_get_depth (depth_map, x, y);
+            table = &(fft->depth.table[orig]);
 
-            depth = fft->depth.rval[orig];
+            depth = table->round;
 
             if (! fft->depth.check[depth])
               {

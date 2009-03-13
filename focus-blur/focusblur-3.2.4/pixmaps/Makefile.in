@@ -74,6 +74,7 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 FFTW3_CFLAGS = @FFTW3_CFLAGS@
 FFTW3_LIBS = @FFTW3_LIBS@
+GDK_PIXBUF_CSOURCE = @GDK_PIXBUF_CSOURCE@
 GENCAT = @GENCAT@
 GETTEXT_PACKAGE = @GETTEXT_PACKAGE@
 GIMP_CFLAGS = @GIMP_CFLAGS@
@@ -182,7 +183,6 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 BUILT_SOURCES = pixbufs.h
-png_to_csource = gdk-pixbuf-csource --struct --rle --build-list
 icons = \
 	focusblur-model-flat.png \
 	focusblur-model-spherical.png \
@@ -348,7 +348,7 @@ uninstall-am: uninstall-info-am
 
 pixbufs.h: $(icons)
 	{ echo -e '#include <gdk-pixbuf/gdk-pixdata.h>\n' ; \
-	$(png_to_csource) \
+	$(GDK_PIXBUF_CSOURCE) --struct --rle --build-list \
 	$$(for i in $(icons) ; do \
 		name=$${i%%.*} ; \
 		name=$${name//-/_} ; \

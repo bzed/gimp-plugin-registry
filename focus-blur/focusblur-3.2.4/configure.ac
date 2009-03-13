@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.54)
-AC_INIT([Focus Blur], [3.2.3], [sudakyo@fat.coara.or.jp], [focusblur])
+AC_INIT([Focus Blur], [3.2.4], [sudakyo@fat.coara.or.jp], [focusblur])
 AC_CONFIG_SRCDIR([src/gimpplugin.c])
 AC_CONFIG_HEADER([config.h])
 AM_INIT_AUTOMAKE([no-define no-dist-gzip dist-bzip2])
@@ -12,9 +12,8 @@ AC_PROG_CC
 AC_PROG_INSTALL
 AM_MAINTAINER_MODE
 
-# Default prefix (dummy for help mesasge)
-AC_PREFIX_DEFAULT([auto-detected])
-
+# Default prefix is decided with pkg-config
+AC_PREFIX_DEFAULT([NONE])
 
 #################
 # Check for Win32
@@ -48,6 +47,10 @@ AC_C_CONST
 
 # Checks for library functions.
 
+AC_PATH_PROG(GDK_PIXBUF_CSOURCE, gdk-pixbuf-csource, no)
+if test "x$GDK_PIXBUF_CSOURCE" = xno; then
+  AC_MSG_ERROR(Could not find gdk-pixbuf-csource in your PATH)
+fi
 
 ###############################
 # Checks for the gimp libraries
@@ -55,55 +58,53 @@ AC_C_CONST
 
 AC_ARG_WITH(gimp-prefix,
             AS_HELP_STRING([--with-gimp-prefix=DIR],
-                           [search for installed gimp-2.0.pc default=no]),
+                           [search for installed gimp-2.0.pc]),
             [
 case "$withval" in
   yes) AC_MSG_ERROR([give any value for --with-gimp-prefix.]) ;;
-  no) ;;
+  no) with_gimp_prefix=NONE ;;
   *)
-    if test "x${withval:0:2}" = "x~/" -a ${HOME+set} = set ; then
+    if test "x${withval:0:2}" = "x~/" -a "X$HOME" != "X" ; then
       with_gimp_prefix="${HOME}${withval:1}"
     else
       with_gimp_prefix="$withval"
     fi
     if ! with_gimp_prefix=$(cd "$with_gimp_prefix" && pwd) ; then
       AC_MSG_ERROR([couldn't change directory in ${withval}.])
-    elif ! test -f "$with_gimp_prefix/lib/pkgconfig/gimp-2.0.pc" ; then
+    elif ! test -f "${with_gimp_prefix}/lib/pkgconfig/gimp-2.0.pc" ; then
       AC_MSG_ERROR([gimp-2.0.pc is not installed in ${withval}/lib/pkgconfig])
     fi ;;
 esac
-if test "${with_gimp_prefix+set}" = set ; then
+            ], with_gimp_prefix=NONE)
+if test "X$with_gimp_prefix" != "XNONE" ; then
   export PKG_CONFIG_PATH="${with_gimp_prefix}/lib/pkgconfig${PKG_CONFIG_PATH+:$PKG_CONFIG_PATH}" LD_LIBRARY_PATH="${with_gimp_prefix}/lib${LD_LIBRARY_PATH+:$LD_LIBRARY_PATH}"
 fi
-            ], with_gimp_prefix=no)
 
 AM_PATH_GIMP_2_0([2.4.0], :, AC_MSG_ERROR([Test for libgimp failed.]))
-if test "${with_gimp_prefix+set}" = set ; then
+if test "x$with_gimp_prefix" != "XNONE" ; then
   gimp_libdir="$(echo -n "$GIMP_LIBS" | \
-    sed -e "s;^.*-L\($with_gimp_prefix[[^ ]]*\).*$;\1;")"
+    sed -e "s;^.*-L\(${with_gimp_prefix}[[^ ]]*\).*$;\1;")"
   if test -d "$gimp_libdir" ; then
     GIMP_LIBS="-Wl,-rpath,$gimp_libdir $GIMP_LIBS"
   fi
 fi
 
-### override variables (gimp-2.4.m4 doesn't consider prefix options)
+### override variables (prefix options)
 pkg_config_args="$pkg_name"
-if test "X${prefix}" != "XNONE" ; then
+if test "X$prefix" != "XNONE" ; then
   pkg_config_args="$pkg_config_args --define-variable=prefix=$prefix"
+elif test "X$with_gimp_prefix" != "XNONE"; then
+  pkg_config_args="$pkg_config_args --define-variable=prefix=$with_gimp_prefix"
+  ac_default_prefix="$with_gimp_prefix"
+else
+  ac_default_prefix="$($PKG_CONFIG $pkg_config_args --variable=prefix)"
 fi
-if test "X${exec_prefix}" != "XNONE" ; then
+if test "X$exec_prefix" != "XNONE"; then
   pkg_config_args="$pkg_config_args --define-variable=exec_prefix=$exec_prefix"
-elif test "X${prefix}" != "XNONE" ; then
-  pkg_config_args="$pkg_config_args --define-variable=exec_prefix=$prefix"
 fi
-ac_default_prefix="$($PKG_CONFIG $pkg_config_args --variable=prefix)"
 GIMP_PLUGIN_DIR="$($PKG_CONFIG $pkg_config_args --variable=gimplibdir)"
 
-
-########################
-# user plug-in directory
-########################
-
+### user plug-in directory
 GIMP_USER_PLUGIN_DIR="${HOME}/.gimp-${gimp_pkg_major_version}.${gimp_pkg_minor_version}/plug-ins"
 AC_SUBST(GIMP_USER_PLUGIN_DIR)
 

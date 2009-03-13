@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: sudakyo@fat.coara.or.jp\n"
-"POT-Creation-Date: 2008-02-09 23:47+0900\n"
+"POT-Creation-Date: 2008-10-19 00:24+0900\n"
 "PO-Revision-Date: 2008-05-21 17:22+0300\n"
 "Last-Translator: Yury Aliaev <mutabor@altlinux.org>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
@@ -15,19 +15,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: src/brush.c:120
+#: src/brush.c:122
 msgid "gimp_brush_get_pixels() is failed."
 msgstr "Ошибка выполнения функции gimp_brush_get_pixels()."
 
-#: src/depthmap.c:94
-#: src/interface.c:591
+#: src/depthmap.c:155 src/interface.c:599
 msgid "Specified depth map is invalid."
 msgstr "Некорректная карта глубин."
 
-#: src/fftblur.c:282
-#: src/render.c:140
+#: src/fftblur.c:288 src/render.c:162
 msgid "Focus Blur..."
 msgstr "Размывание вне зоны ГРИП..."
 
@@ -35,56 +34,47 @@ msgstr "Размывание вне зоны ГРИП..."
 msgid "Failed to update diffusion table."
 msgstr "Ошибка заполнения таблицы рассеяния."
 
-#: src/fftblurbuffer.c:124
+#: src/fftblurbuffer.c:145
 msgid "Failed to allocate memory."
 msgstr "Ошибка выделения памяти."
 
-#: src/fftblurbuffer.c:135
-#: src/focusblurparam.c:174
+#: src/fftblurbuffer.c:156 src/focusblurparam.c:176
 msgid "Failed to update source buffer."
 msgstr "Ошибка обновления буфера исходных данных."
 
-#: src/fftblurbuffer.c:146
-#: src/focusblurparam.c:186
+#: src/fftblurbuffer.c:167 src/focusblurparam.c:188
 msgid "Failed to update depth info."
 msgstr "Ошибка обновления информации о глубине."
 
-#: src/fftblurbuffer.c:161
+#: src/fftblurbuffer.c:183
 msgid "Failed to update working buffer."
 msgstr "Ошибка обновления рабочего буфера."
 
-#: src/fftblurbuffer.c:170
-#: src/focusblurparam.c:194
+#: src/fftblurbuffer.c:192 src/focusblurparam.c:196
 msgid "Failed to update shine data."
 msgstr "Ошибка обновления данных светимости."
 
-#: src/focusblurenums.c:51
-#: src/focusblurstock.c:49
+#: src/focusblurenums.c:51 src/focusblurstock.c:49
 msgid "Flat"
 msgstr "Плоская"
 
-#: src/focusblurenums.c:52
-#: src/focusblurstock.c:50
+#: src/focusblurenums.c:52 src/focusblurstock.c:50
 msgid "Spherical"
 msgstr "Сферический"
 
-#: src/focusblurenums.c:53
-#: src/focusblurstock.c:51
+#: src/focusblurenums.c:53 src/focusblurstock.c:51
 msgid "Gaussian"
 msgstr "Гауссово"
 
-#: src/focusblurenums.c:54
-#: src/focusblurstock.c:52
+#: src/focusblurenums.c:54 src/focusblurstock.c:52
 msgid "Ring"
 msgstr "Кольцевая"
 
-#: src/focusblurenums.c:55
-#: src/focusblurstock.c:53
+#: src/focusblurenums.c:55 src/focusblurstock.c:53
 msgid "Concave"
 msgstr "Вогнутая"
 
-#: src/focusblurenums.c:56
-#: src/focusblurstock.c:54
+#: src/focusblurenums.c:56 src/focusblurstock.c:54
 msgid "Brush"
 msgstr "Кисть"
 
@@ -112,7 +102,7 @@ msgstr "Низкое"
 msgid "Defective"
 msgstr "Ужасное"
 
-#: src/focusblurrc.c:372
+#: src/focusblurrc.c:375
 msgid "Resource file is invalid."
 msgstr "Некорректный файл ресурса."
 
@@ -124,97 +114,100 @@ msgstr "Имитация размывания вне зоны резко изо�
 msgid "_Focus Blur..."
 msgstr "Размывание вне зоны ГРИП..."
 
-#: src/interface.c:134
+#: src/interface.c:133
 msgid "Focus Blur"
 msgstr "Размывание вне зоны ГРИП"
 
-#: src/interface.c:185
+#: src/interface.c:184
 msgid "_Basic"
 msgstr "О_сновные"
 
-#: src/interface.c:201
+#: src/interface.c:196
 msgid "Diffusion Model and _Radius:"
 msgstr "М_одель рассеивания и радиус:"
 
-#: src/interface.c:223
-#: src/interface.c:742
+#: src/interface.c:219 src/interface.c:750
 #, c-format
 msgid "Brush:%s"
 msgstr "Кисть:%s"
 
-#: src/interface.c:262
+#: src/interface.c:254
 msgid "P_eak radius for Shining:"
 msgstr "Пиковый _радиус сияния:"
 
-#: src/interface.c:273
+#: src/interface.c:266
 msgid "_Use Depth map:"
 msgstr "_Использовать карту расстояний:"
 
-#: src/interface.c:310
+#: src/interface.c:303
 msgid "_Focal depth:"
 msgstr "_Фокусное расстояние:"
 
-#: src/interface.c:326
+#: src/interface.c:319
 msgid "_Model"
 msgstr "_Модель"
 
-#: src/interface.c:348
+#: src/interface.c:341
 msgid "Make a _balance of brush"
 msgstr "C_балансировать кисть."
 
-#: src/interface.c:364
+#: src/interface.c:357
 msgid "_Rotation:"
 msgstr "_Вращение:"
 
-#: src/interface.c:378
+#: src/interface.c:371
 msgid "F_illing inside:"
 msgstr "_Заполнение изнутри:"
 
-#: src/interface.c:392
+#: src/interface.c:385
 msgid "Sof_tness:"
 msgstr "М_ягкость:"
 
-#: src/interface.c:407
+#: src/interface.c:400
 msgid "_Shine"
 msgstr "_Свет"
 
-#: src/interface.c:421
+#: src/interface.c:414
 msgid "Sensing t_ype:"
 msgstr "Тип _измерения:"
 
-#: src/interface.c:428
+#: src/interface.c:421
 msgid "_Threshold:"
 msgstr "П_орог:"
 
-#: src/interface.c:442
+#: src/interface.c:435
 msgid "_Level:"
 msgstr "_Уровень:"
 
-#: src/interface.c:456
+#: src/interface.c:449
 msgid "C_urve:"
 msgstr "_Кривая:"
 
-#: src/interface.c:472
+#: src/interface.c:465
 msgid "_Depth"
 msgstr "_Глубина"
 
-#: src/interface.c:477
+#: src/interface.c:470
 msgid "Depth with p_recedence"
 msgstr "_Приоритет глубины"
 
-#: src/interface.c:496
+#: src/interface.c:485
+msgid "Evade _anti-alias"
+msgstr ""
+
+#: src/interface.c:504
 msgid "Pre_ferences"
 msgstr "_Параметры"
 
-#: src/interface.c:513
+#: src/interface.c:521
 msgid "Rendering _quality:"
 msgstr "_Качество обработки:"
 
-#: src/interface.c:529
+#: src/interface.c:537
 msgid "Pre_view quality:"
 msgstr "Качество _эскиза:"
 
-#: src/interface.c:542
+#: src/interface.c:550
 msgid "Dis_able support for multi-threads"
 msgstr "Отключить поддержку _многопоточности"
 
@@ -228,5 +221,3 @@ msgstr "Отключить поддержку _многопоточности"
 #, fuzzy
 #~ msgid "Depth with fu_zzy"
 #~ msgstr "_Приоритет глубины"
-
-

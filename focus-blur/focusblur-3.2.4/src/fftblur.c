@@ -1,5 +1,5 @@
 /* Focus Blur -- blur with focus plug-in.
- * Copyright (C) 2002-2007 Kyoichiro Suda
+ * Copyright (C) 2002-2008 Kyoichiro Suda
  *
  * The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
@@ -270,6 +270,7 @@ setf_sum (guchar        *sourcep,
 
 gboolean
 focusblur_fft_execute (FblurParam       *param,
+                       FblurQualityType quality,
                        GimpPreview      *preview)
 {
   gboolean       progress_bar;
@@ -277,7 +278,7 @@ focusblur_fft_execute (FblurParam       *param,
 
   g_return_val_if_fail (param->store.model_radius > 0.0f, FALSE);
 
-  if (! focusblur_fft_buffer_update (&(param->fft), param, preview))
+  if (! focusblur_fft_buffer_update (&(param->fft), param, quality, preview))
     return FALSE;
 
   progress_bar = preview ? FALSE : TRUE;
@@ -291,7 +292,7 @@ focusblur_fft_execute (FblurParam       *param,
   /* with depth map */
   if (! param->store.enable_depth_map)
     success = focusblur_fft_render (param, progress_bar);
-  else if (param->fft->depth.quality != FBLUR_QUALITY_DEFECTIVE &&
+  else if (quality != FBLUR_QUALITY_DEFECTIVE &&
            param->store.enable_depth_precedence)
     success = focusblur_fft_render_depth_precedence (param, progress_bar);
   else

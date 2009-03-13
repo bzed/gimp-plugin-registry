@@ -1,7 +1,5 @@
 BUILT_SOURCES = pixbufs.h
 
-png_to_csource = gdk-pixbuf-csource --struct --rle --build-list
-
 icons = \
 	focusblur-model-flat.png \
 	focusblur-model-spherical.png \
@@ -13,7 +11,7 @@ EXTRA_DIST = $(icons)
 
 pixbufs.h: $(icons)
 	{ echo -e '#include <gdk-pixbuf/gdk-pixdata.h>\n' ; \
-	$(png_to_csource) \
+	$(GDK_PIXBUF_CSOURCE) --struct --rle --build-list \
 	$$(for i in $(icons) ; do \
 		name=$${i%%.*} ; \
 		name=$${name//-/_} ; \

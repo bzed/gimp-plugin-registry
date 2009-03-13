@@ -45,6 +45,7 @@ const FblurStoreParam fblur_init_param = {
   FBLUR_SHINE_SATURATION, /* shine type */
   FALSE,                /* use depth map */
   FALSE,                /* use depth precedence */
+  FALSE,                /* use depth anti-anti-alias */
   FALSE,                /* use brush balance */
   -1,                   /* depth map id */
   0.0,                  /* focal depth */
@@ -132,7 +133,8 @@ focusblur_param_set (FblurParam         *param,
 
 
 gboolean
-focusblur_param_prepare (FblurParam     *param)
+focusblur_param_prepare (FblurParam       *param,
+                         FblurQualityType  quality)
 {
   gint   max_threads;
 
@@ -181,7 +183,7 @@ focusblur_param_prepare (FblurParam     *param)
     return FALSE;
 
   if (! focusblur_depth_map_update (&(param->depth_map),
-                                    NULL, &(param->store)))
+                                    NULL, &(param->store), quality))
     {
       gimp_message (_("Failed to update depth info."));
 

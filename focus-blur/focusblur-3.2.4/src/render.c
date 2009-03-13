@@ -100,22 +100,25 @@ gboolean
 focusblur_execute (FblurParam   *param,
                    GimpPreview  *preview)
 {
-  GimpPixelRgn   dest_rgn;
-  gpointer       reg_rgn;
-  gdouble        progress, full_progress;
-  gint           x1, x2, y1, y2;
-  gint           width, height;
+  FblurQualityType quality;
+  GimpPixelRgn     dest_rgn;
+  gpointer         reg_rgn;
+  gdouble          progress, full_progress;
+  gint             x1, x2, y1, y2;
+  gint             width, height;
 
   /* Nothing to do */
   if (param->store.model_radius <= 0.0f)
     return TRUE;
 
+  quality = preview ? param->pref.quality_preview : param->pref.quality;
+
 #ifdef HAVE_FFTW3
-  if (focusblur_fft_execute (param, preview))
+  if (focusblur_fft_execute (param, quality, preview))
     return TRUE;
 #endif
 
-  if (! focusblur_param_prepare (param))
+  if (! focusblur_param_prepare (param, quality))
     return FALSE;
 
   if (! preview)
@@ -282,10 +285,13 @@ focusblur_render_pixel (gint             pos_x,
   gfloat         tsum_alpha[depth_ntables], tsum_pixel[depth_ntables];
   gfloat         transit[depth_ntables], tsum_color[depth_ntables][3];
   gfloat         through;
+  gfloat         separate_ratio;
   gboolean       enable_depth_precedence;
+  gboolean       enable_depth_aaa, depth_aaa_do;
   gboolean       enable_shine;
   gint           shine;
   gint           depth, level;
+  gint           depth_aaa_next_depth;
   gint           x1, x2, y1, y2;
   gint           x1c, x2c, y1c, y2c;
   gint           x, y, c, d;
@@ -296,6 +302,12 @@ focusblur_render_pixel (gint             pos_x,
 
   enable_depth_precedence = param->store.enable_depth_map &&
     param->store.enable_depth_precedence;
+  enable_depth_aaa = param->store.enable_depth_map &&
+    focusblur_depth_map_has_aaa (param->depth_map);
+
+  depth_aaa_do = FALSE;
+  separate_ratio = 0.0f;
+  depth_aaa_next_depth = 0;
 
   if (enable_depth_precedence)
     {
@@ -330,6 +342,7 @@ focusblur_render_pixel (gint             pos_x,
         if (param->store.enable_depth_map)
           {
             depth = focusblur_depth_map_get_depth (param->depth_map, x, y);
+          depth_aaa_next:
             level = focusblur_depth_map_get_level (param->depth_map, depth);
           }
 
@@ -360,21 +373,60 @@ focusblur_render_pixel (gint             pos_x,
             distribution *= aval; // for precedence
           }
 
-        if (! enable_depth_precedence)
+        if (enable_depth_aaa && ! depth_aaa_do)
+          separate_ratio = focusblur_depth_map_get_aaa
+            (param->depth_map, x, y, &depth_aaa_next_depth);
+
+        if (! separate_ratio)
           {
-            for (c = 0; c < param->source->channels; c ++)
-              sum_color[c] += val_alpha * src_pixel[c];
-            sum_alpha += val_alpha;
-            sum_pixel += val_shone;
+            if (! enable_depth_precedence)
+              {
+                for (c = 0; c < param->source->channels; c ++)
+                  sum_color[c] += val_alpha * src_pixel[c];
+                sum_alpha += val_alpha;
+                sum_pixel += val_shone;
+              }
+            else
+              {
+                for (c = 0; c < param->source->channels; c ++)
+                  tsum_color[depth][c] += val_alpha * src_pixel[c];
+                tsum_alpha[depth] += val_alpha;
+                tsum_pixel[depth] += val_shone;
+                transit[depth] += distribution;
+              }
           }
+        /* separates anti-aliased pixel to tow values */
         else
           {
-            for (c = 0; c < param->source->channels; c ++)
-              tsum_color[depth][c] += val_alpha * src_pixel[c];
-            tsum_alpha[depth] += val_alpha;
-            tsum_pixel[depth] += val_shone;
-            transit[depth] += distribution;
+            separate_ratio = 1.0f - separate_ratio;
+            g_assert (separate_ratio < 1.0f);
+            g_assert (separate_ratio > 0.0f);
+
+            if (! enable_depth_precedence)
+              {
+                for (c = 0; c < param->source->channels; c ++)
+                  sum_color[c] += separate_ratio * val_alpha * src_pixel[c];
+                sum_alpha += separate_ratio * val_alpha;
+                sum_pixel += separate_ratio * val_shone;
+              }
+            else
+              {
+                for (c = 0; c < param->source->channels; c ++)
+                  tsum_color[depth][c] += separate_ratio * val_alpha * src_pixel[c];
+                tsum_alpha[depth] += separate_ratio * val_alpha;
+                tsum_pixel[depth] += separate_ratio * val_shone;
+                transit[depth] += separate_ratio * distribution;
+              }
+
+            if (! depth_aaa_do)
+              {
+                depth = depth_aaa_next_depth;
+                depth_aaa_do = TRUE;
+                goto depth_aaa_next;
+              }
+            depth_aaa_do = FALSE;
           }
+
       }
 
   if (enable_depth_precedence)

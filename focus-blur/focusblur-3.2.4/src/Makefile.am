@@ -5,6 +5,8 @@ libexecdir = $(GIMP_PLUGIN_DIR)/plug-ins
 libexec_PROGRAMS = focusblur
 
 focusblur_SOURCES = \
+	aaa.c			\
+	aaa.h			\
 	brush.c			\
 	brush.h			\
 	depthmap.c		\

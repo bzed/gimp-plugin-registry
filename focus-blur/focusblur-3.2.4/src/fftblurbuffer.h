@@ -1,5 +1,5 @@
 /* Focus Blur -- blur with focus plug-in.
- * Copyright (C) 2002-2007 Kyoichiro Suda
+ * Copyright (C) 2002-2008 Kyoichiro Suda
  *
  * The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
@@ -44,9 +44,10 @@ G_BEGIN_DECLS
 
 /*---- Types ----*/
 
-typedef struct _FblurFftSource  FblurFftSource;
-typedef struct _FblurFftWork    FblurFftWork;
-typedef struct _FblurFftDepth   FblurFftDepth;
+typedef struct _FblurFftSource          FblurFftSource;
+typedef struct _FblurFftWork            FblurFftWork;
+typedef struct _FblurFftDepth           FblurFftDepth;
+typedef struct _FblurFftDepthTable      FblurFftDepthTable;
 
 
 /*---- Structure ----*/
@@ -98,13 +99,18 @@ struct _FblurFftBuffer
     FblurQualityType     quality;
 
     gint                 division;
-    gint                 rval[FBLUR_DEPTH_MAX + 1];
-    gint                 fval[FBLUR_DEPTH_MAX + 1];
-    gint                 cval[FBLUR_DEPTH_MAX + 1];
-    gfloat               dval[FBLUR_DEPTH_MAX + 1];
+    gint                 slide;
+
+    struct _FblurFftDepthTable
+    {
+      gint               round;
+      gint               floor;
+      gint               ceil;
+      gfloat             diff;
+    } table[FBLUR_DEPTH_MAX + 1];
 
     gint                 count;
-    gchar                check[FBLUR_DEPTH_MAX + 1];
+    gboolean             check[FBLUR_DEPTH_MAX + 1];
   } depth;
 };
 
@@ -113,6 +119,7 @@ struct _FblurFftBuffer
 
 gboolean focusblur_fft_buffer_update            (FblurFftBuffer **fft,
                                                  FblurParam      *param,
+                                                 FblurQualityType quality,
                                                  GimpPreview     *preview);
 void    focusblur_fft_buffer_destroy            (FblurFftBuffer **fft);
 void    focusblur_fft_buffer_draw               (FblurFftBuffer  *fft);

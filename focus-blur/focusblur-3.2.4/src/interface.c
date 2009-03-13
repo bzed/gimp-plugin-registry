@@ -1,5 +1,5 @@
 /* Focus Blur -- blur with focus plug-in.
- * Copyright (C) 2002-2007 Kyoichiro Suda
+ * Copyright (C) 2002-2008 Kyoichiro Suda
  *
  * The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
@@ -473,6 +473,21 @@ focusblur_dialog (FblurParam *param)
   g_signal_connect (G_OBJECT (toggle), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &(param->store.enable_depth_precedence));
+  g_signal_connect_swapped (G_OBJECT (toggle), "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 3, row, row + 1);
+  row ++;
+  gtk_widget_show (toggle);
+
+  /* Anti-anti-alias */
+
+  toggle = gtk_check_button_new_with_mnemonic (_("Evade _anti-alias"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                param->store.enable_depth_aaa);
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &(param->store.enable_depth_aaa));
   g_signal_connect_swapped (G_OBJECT (toggle), "toggled",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);

@@ -57,22 +57,22 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(libexecdir)"
 libexecPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(libexec_PROGRAMS)
-am__focusblur_SOURCES_DIST = brush.c brush.h depthmap.c depthmap.h \
-	diffusion.c diffusion.h focusblur.h focusblurenums.c \
-	focusblurenums.h focusblurparam.c focusblurparam.h \
-	focusblurrc.c focusblurrc.h focusblurstock.c focusblurstock.h \
-	focusblurtypes.h gimpplugin.c gimpplugin.h interface.c \
-	interface.h render.c render.h shine.c shine.h source.c \
-	source.h fftblur.c fftblur.h fftblurbuffer.c fftblurbuffer.h \
-	fftblurproc.c fftblurproc.h
+am__focusblur_SOURCES_DIST = aaa.c aaa.h brush.c brush.h depthmap.c \
+	depthmap.h diffusion.c diffusion.h focusblur.h \
+	focusblurenums.c focusblurenums.h focusblurparam.c \
+	focusblurparam.h focusblurrc.c focusblurrc.h focusblurstock.c \
+	focusblurstock.h focusblurtypes.h gimpplugin.c gimpplugin.h \
+	interface.c interface.h render.c render.h shine.c shine.h \
+	source.c source.h fftblur.c fftblur.h fftblurbuffer.c \
+	fftblurbuffer.h fftblurproc.c fftblurproc.h
 @HAVE_FFTW3_TRUE@am__objects_1 = fftblur.$(OBJEXT) \
 @HAVE_FFTW3_TRUE@	fftblurbuffer.$(OBJEXT) fftblurproc.$(OBJEXT)
-am_focusblur_OBJECTS = brush.$(OBJEXT) depthmap.$(OBJEXT) \
-	diffusion.$(OBJEXT) focusblurenums.$(OBJEXT) \
-	focusblurparam.$(OBJEXT) focusblurrc.$(OBJEXT) \
-	focusblurstock.$(OBJEXT) gimpplugin.$(OBJEXT) \
-	interface.$(OBJEXT) render.$(OBJEXT) shine.$(OBJEXT) \
-	source.$(OBJEXT) $(am__objects_1)
+am_focusblur_OBJECTS = aaa.$(OBJEXT) brush.$(OBJEXT) \
+	depthmap.$(OBJEXT) diffusion.$(OBJEXT) \
+	focusblurenums.$(OBJEXT) focusblurparam.$(OBJEXT) \
+	focusblurrc.$(OBJEXT) focusblurstock.$(OBJEXT) \
+	gimpplugin.$(OBJEXT) interface.$(OBJEXT) render.$(OBJEXT) \
+	shine.$(OBJEXT) source.$(OBJEXT) $(am__objects_1)
 focusblur_OBJECTS = $(am_focusblur_OBJECTS)
 focusblur_LDADD = $(LDADD)
 am__DEPENDENCIES_1 =
@@ -117,6 +117,7 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 FFTW3_CFLAGS = @FFTW3_CFLAGS@
 FFTW3_LIBS = @FFTW3_LIBS@
+GDK_PIXBUF_CSOURCE = @GDK_PIXBUF_CSOURCE@
 GENCAT = @GENCAT@
 GETTEXT_PACKAGE = @GETTEXT_PACKAGE@
 GIMP_CFLAGS = @GIMP_CFLAGS@
@@ -224,12 +225,13 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-focusblur_SOURCES = brush.c brush.h depthmap.c depthmap.h diffusion.c \
-	diffusion.h focusblur.h focusblurenums.c focusblurenums.h \
-	focusblurparam.c focusblurparam.h focusblurrc.c focusblurrc.h \
-	focusblurstock.c focusblurstock.h focusblurtypes.h \
-	gimpplugin.c gimpplugin.h interface.c interface.h render.c \
-	render.h shine.c shine.h source.c source.h $(am__append_1)
+focusblur_SOURCES = aaa.c aaa.h brush.c brush.h depthmap.c depthmap.h \
+	diffusion.c diffusion.h focusblur.h focusblurenums.c \
+	focusblurenums.h focusblurparam.c focusblurparam.h \
+	focusblurrc.c focusblurrc.h focusblurstock.c focusblurstock.h \
+	focusblurtypes.h gimpplugin.c gimpplugin.h interface.c \
+	interface.h render.c render.h shine.c shine.h source.c \
+	source.h $(am__append_1)
 @OS_WIN32_TRUE@mwindows = -mwindows
 AM_LDFLAGS = $(mwindows)
 INCLUDES = \
@@ -309,6 +311,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/aaa.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/brush.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/depthmap.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/diffusion.Po@am__quote@

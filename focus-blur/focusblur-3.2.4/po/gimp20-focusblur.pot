@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: sudakyo@fat.coara.or.jp\n"
-"POT-Creation-Date: 2008-02-09 23:47+0900\n"
+"POT-Creation-Date: 2008-10-19 00:24+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,15 +15,15 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/brush.c:120
+#: src/brush.c:122
 msgid "gimp_brush_get_pixels() is failed."
 msgstr ""
 
-#: src/depthmap.c:94 src/interface.c:591
+#: src/depthmap.c:155 src/interface.c:599
 msgid "Specified depth map is invalid."
 msgstr ""
 
-#: src/fftblur.c:282 src/render.c:140
+#: src/fftblur.c:288 src/render.c:162
 msgid "Focus Blur..."
 msgstr ""
 
@@ -31,23 +31,23 @@ msgstr ""
 msgid "Failed to update diffusion table."
 msgstr ""
 
-#: src/fftblurbuffer.c:124
+#: src/fftblurbuffer.c:145
 msgid "Failed to allocate memory."
 msgstr ""
 
-#: src/fftblurbuffer.c:135 src/focusblurparam.c:174
+#: src/fftblurbuffer.c:156 src/focusblurparam.c:176
 msgid "Failed to update source buffer."
 msgstr ""
 
-#: src/fftblurbuffer.c:146 src/focusblurparam.c:186
+#: src/fftblurbuffer.c:167 src/focusblurparam.c:188
 msgid "Failed to update depth info."
 msgstr ""
 
-#: src/fftblurbuffer.c:161
+#: src/fftblurbuffer.c:183
 msgid "Failed to update working buffer."
 msgstr ""
 
-#: src/fftblurbuffer.c:170 src/focusblurparam.c:194
+#: src/fftblurbuffer.c:192 src/focusblurparam.c:196
 msgid "Failed to update shine data."
 msgstr ""
 
@@ -99,7 +99,7 @@ msgstr ""
 msgid "Defective"
 msgstr ""
 
-#: src/focusblurrc.c:372
+#: src/focusblurrc.c:375
 msgid "Resource file is invalid."
 msgstr ""
 
@@ -111,95 +111,99 @@ msgstr ""
 msgid "_Focus Blur..."
 msgstr ""
 
-#: src/interface.c:134
+#: src/interface.c:133
 msgid "Focus Blur"
 msgstr ""
 
-#: src/interface.c:185
+#: src/interface.c:184
 msgid "_Basic"
 msgstr ""
 
-#: src/interface.c:201
+#: src/interface.c:196
 msgid "Diffusion Model and _Radius:"
 msgstr ""
 
-#: src/interface.c:223 src/interface.c:742
+#: src/interface.c:219 src/interface.c:750
 #, c-format
 msgid "Brush:%s"
 msgstr ""
 
-#: src/interface.c:262
+#: src/interface.c:254
 msgid "P_eak radius for Shining:"
 msgstr ""
 
-#: src/interface.c:273
+#: src/interface.c:266
 msgid "_Use Depth map:"
 msgstr ""
 
-#: src/interface.c:310
+#: src/interface.c:303
 msgid "_Focal depth:"
 msgstr ""
 
-#: src/interface.c:326
+#: src/interface.c:319
 msgid "_Model"
 msgstr ""
 
-#: src/interface.c:348
+#: src/interface.c:341
 msgid "Make a _balance of brush"
 msgstr ""
 
-#: src/interface.c:364
+#: src/interface.c:357
 msgid "_Rotation:"
 msgstr ""
 
-#: src/interface.c:378
+#: src/interface.c:371
 msgid "F_illing inside:"
 msgstr ""
 
-#: src/interface.c:392
+#: src/interface.c:385
 msgid "Sof_tness:"
 msgstr ""
 
-#: src/interface.c:407
+#: src/interface.c:400
 msgid "_Shine"
 msgstr ""
 
-#: src/interface.c:421
+#: src/interface.c:414
 msgid "Sensing t_ype:"
 msgstr ""
 
-#: src/interface.c:428
+#: src/interface.c:421
 msgid "_Threshold:"
 msgstr ""
 
-#: src/interface.c:442
+#: src/interface.c:435
 msgid "_Level:"
 msgstr ""
 
-#: src/interface.c:456
+#: src/interface.c:449
 msgid "C_urve:"
 msgstr ""
 
-#: src/interface.c:472
+#: src/interface.c:465
 msgid "_Depth"
 msgstr ""
 
-#: src/interface.c:477
+#: src/interface.c:470
 msgid "Depth with p_recedence"
 msgstr ""
 
-#: src/interface.c:496
+#: src/interface.c:485
+msgid "Evade _anti-alias"
+msgstr ""
+
+#: src/interface.c:504
 msgid "Pre_ferences"
 msgstr ""
 
-#: src/interface.c:513
+#: src/interface.c:521
 msgid "Rendering _quality:"
 msgstr ""
 
-#: src/interface.c:529
+#: src/interface.c:537
 msgid "Pre_view quality:"
 msgstr ""
 
-#: src/interface.c:542
+#: src/interface.c:550
 msgid "Dis_able support for multi-threads"
 msgstr ""

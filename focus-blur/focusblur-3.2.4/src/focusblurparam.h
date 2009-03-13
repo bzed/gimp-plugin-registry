@@ -43,6 +43,7 @@ struct _FblurStoreParam
   FblurShineType         shine_type;
   gboolean               enable_depth_map;
   gboolean               enable_depth_precedence;
+  gboolean               enable_depth_aaa;
   gboolean               enable_brush_balance;
   gint32                 depth_map_ID;
   gfloat                 focal_depth;
@@ -90,7 +91,8 @@ FblurParam*     focusblur_param_new     (gint32           drawable_ID);
 gboolean        focusblur_param_set     (FblurParam      *param,
                                          gint             gimp_nparams,
                                          const GimpParam *gimp_param);
-gboolean        focusblur_param_prepare (FblurParam      *param);
+gboolean        focusblur_param_prepare (FblurParam      *param,
+                                         FblurQualityType quality);
 void            focusblur_param_store   (FblurParam      *param);
 gboolean        focusblur_param_restore (FblurParam      *param);
 void            focusblur_param_destroy (FblurParam     **param);

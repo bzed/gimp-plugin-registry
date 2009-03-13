@@ -1,3 +1,46 @@
+2008-10-20  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* Made 3.2.4 release.
+
+2008-10-19  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* src/focusblurparam.h (FblurStoreParam)
+	* src/focusblurparam.c (fblur_init_param): added new parameter
+	enable_depth_aaa.
+
+	* src/interface.c (focusblur_dialog):
+	added new switch `Evade anti-alias'.
+
+	* src/render.c (focusblur_render_pixel): added implement for
+	rendering with depth map aaa.
+
+	* src/depthmap.[ch]
+	(focusblur_depth_map_has_aaa)
+	(focusblur_depth_map_get_aaa)
+	(focusblur_depth_map_make_aaa): added functions and buffer to
+	support aaa.
+
+	* src/Makefile.am, src/aaa.[ch]: new files detecting anti-aliased
+	pixels.
+
+	* src/2depthmap.[ch] (focusblur_depth_map_update)
+	* src/focusblurparam.c (focusblur_param_prepare)
+	* src/fftblurbuffer.c (focusblur_fft_buffer_update)
+	* src/render.c (focusblur_execute): pass rendering quality used as
+	level of aaa.
+
+2008-10-09  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* fftblurbuffer.[hc]
+	(focusblur_fft_buffer_update_depth_division)
+	(focusblur_fft_buffer_update_depth_table):
+	make clear at just focused depth.
+	
+2008-09-06  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
+
+	* configure.ac, pixmaps/Makefile.am: use AC_PATH_PROG, searching
+	for gdk-pixbuf-csource.
+
 2008-05-25  Kyoichiro Suda <sudakyo@fat.coara.or.jp>
 
 	* po/ru.po: Russian translation is updated by Yury Aliaev.

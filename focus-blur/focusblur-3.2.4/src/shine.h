@@ -19,10 +19,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __FOCUSBLUR_DEPTHMAP_H__
-#define __FOCUSBLUR_DEPTHMAP_H__
+#ifndef __FOCUSBLUR_SHINE_H__
+#define __FOCUSBLUR_SHINE_H__
 
 #include <glib/gtypes.h>
+#include <libgimp/gimptypes.h>
 
 #include "focusblurtypes.h"
 #include "focusblurenums.h"
@@ -31,19 +32,28 @@
 G_BEGIN_DECLS
 
 
-gboolean        focusblur_depth_map_update      (FblurDepthMap  **depth_map,
-                                                 FblurFftBuffer  *fft,
+gboolean        focusblur_shine_update          (FblurShineData **shine,
+                                                 GimpDrawable    *drawable,
                                                  FblurStoreParam *store);
-void            focusblur_depth_map_destroy     (FblurDepthMap  **depth_map);
-gint            focusblur_depth_map_get_depth   (FblurDepthMap   *depth_map,
+void            focusblur_shine_destroy         (FblurShineData **shine);
+gint            focusblur_shine_get             (FblurShineData  *shine,
                                                  gint             x,
                                                  gint             y);
-gint            focusblur_depth_map_get_level   (FblurDepthMap   *depth_map,
-                                                 gint             depth);
-gint            focusblur_depth_map_focal_depth (FblurDepthMap   *depth_map);
+
+static inline gboolean
+focusblur_shine_check_enabled (FblurStoreParam *store)
+{
+  gboolean enable_shine;
+
+  enable_shine = (store->shine_radius &&
+                  (store->shine_level >= 0.5f * 100.0f / 255)
+                  ) ? TRUE : FALSE;
+
+  return enable_shine;
+}
 
 
 G_END_DECLS
 
 
-#endif /* __FOCUSBLUR_DEPTHMAP_H__ */
+#endif /* __FOCUSBLUR_SHINE_H__ */

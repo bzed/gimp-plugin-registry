@@ -1,8 +1,5 @@
 /* Focus Blur -- blur with focus plug-in.
- * Copyright (C) 2002-2007 Kyoichiro Suda
- *
- * The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ * Copyright (C) 2002-2008 Kyoichiro Suda
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,25 +16,36 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __FOCUSBLUR_FFTBLUR_H__
-#define __FOCUSBLUR_FFTBLUR_H__
-
+#ifndef __AAA_H__
+#define __AAA_H__
 
 #include <glib/gmacros.h>
 #include <glib/gtypes.h>
-#include <libgimpwidgets/gimpwidgetstypes.h>
-
-#include "focusblurparam.h"
 
 
 G_BEGIN_DECLS
 
 
-gboolean        focusblur_fft_execute   (FblurParam     *param,
-                                         GimpPreview    *preview);
+/*---- Types ----*/
 
+typedef void (*FblurAAAFunc)    (guint8         *data,
+                                 guint8         *round_ret,
+                                 guint8         *dummy0,
+                                 gfloat         *dummy1);
+
+/*---- Functions ----*/
+
+void    focusblur_aaa_neighbor  (guint8         *data,
+                                 guint8         *round_ret,
+                                 guint8         *dummy0,
+                                 gfloat         *dummy1);
+void    focusblur_aaa_separate  (guint8         *data,
+                                 guint8         *min_ret,
+                                 guint8         *max_ret,
+                                 gfloat         *ratio_ret);
 
 
 G_END_DECLS
 
-#endif /* __FOCUSBLUR_FFTBLUR_H__ */
+
+#endif /* __AAA_H__ */
