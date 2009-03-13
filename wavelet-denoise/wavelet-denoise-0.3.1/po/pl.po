@@ -1,0 +1,159 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Wavelet Denoise 0.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-12-14 11:30+0100\n"
+"PO-Revision-Date: 2008-12-18 13:51+0100\n"
+"Last-Translator: Michał Prędotka <mpredotka@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: \n"
+
+#: ../src/messages.h:21
+msgid "Wavelet denoise"
+msgstr "Odszumianie wavelet"
+
+#: ../src/messages.h:23
+msgid "This plugin allows the separate denoising of image channels in multiple color spaces using wavelets."
+msgstr "Wtyczka ta pozwala na odszumianie poszczególnych kanałów obrazu w wielu przestrzeniach barw przy użyciu metody wavelet."
+
+#: ../src/messages.h:26
+msgid "Adjusts the threshold for denoising of the selected channel in a range from 0.0 (none) to 10.0. The threshold is the value below which everything is considered noise."
+msgstr "Ustawia próg odszumiania dla wybranego kanału w zakresie 0,0 (brak) do 10,0. Próg określa wartość, poniżej której wszystko jest uznawane za szum."
+
+#: ../src/messages.h:27
+msgid "Adjusts the threshold for denoising in a range from 0.0 (none) to 10.0. The threshold is the value below which everything is considered noise."
+msgstr "Ustawia próg odszumiania w zakresie 0,0 (brak) do 10,0. Próg określa wartość, poniżej której wszystko jest uznawane za szum."
+
+#: ../src/messages.h:28
+msgid "Select an image channel to edit its denoising settings."
+msgstr "Kanał dla którego mają być edytowane ustawienia odszumiania."
+
+#: ../src/messages.h:29
+msgid "Display all channels of the image (final image)."
+msgstr "Wyświetla wszystkie kanały obrazu."
+
+#: ../src/messages.h:30
+msgid "Display only the selected channel in grayscale mode."
+msgstr "Wyświetla tylko wybrany kanał w odcieniach szarości."
+
+#: ../src/messages.h:31
+msgid "Display only the selected channel in color mode."
+msgstr "Wyświetla tylko wybrany kanał w kolorach."
+
+#: ../src/messages.h:32
+msgid "The YCbCr color model has one luminance channel (Y) which contains most of the detail information of an image (such as brightness and contrast) and two chroma channels (Cb = blueness, Cr = reddness) that hold the color information. Note that this choice drastically affects the result."
+msgstr "Model barw YCbCr posiada jeden kanał luminancji (Y), który zawiera większość informacji o obrazie (jak jasność i kontrast) i dwa kanały chrominancji (Cb = błękity, Cr  = czerwienie), które zawierają informacje o kolorze. Proszę zwrócić uwagę, że ten wybór znacząco wpływa na wynik odszumiania."
+
+#: ../src/messages.h:33
+msgid "The RGB color model separates an image into channels of red, green, and blue. This is the default color model in GIMP. Note that this choice drastically affects the result."
+msgstr "Model barw RGB dzieli obraz na kanał czerwony, zielony i niebieski. Jest to domyślny model barw w GIMP-ie.  Proszę zwrócić uwagę, że ten wybór znacząco wpływa na wynik odszumiania."
+
+#: ../src/messages.h:34
+msgid "CIELAB (L*a*b*) is a color model in which chrominance is separated from lightness and color distances are perceptually uniform. Note that this choice drastically affects the result."
+msgstr "CIELAB (L*a*b*) to model barw w którym chrominancja jest oddzielona od jasności. Proszę zwrócić uwagę, że ten wybór znacząco wpływa na wynik odszumiania."
+
+#: ../src/messages.h:35
+msgid "This adjusts the softness of the thresholding (soft as opposed to hard thresholding). The higher the softness the more noise remains in the image. Default is 0.0."
+msgstr "Ustawia miękkość progowania. Im większa miękkość tym więcej szumu pozostaje na obrazie. Domyślna wartość to 0,0."
+
+#: ../src/messages.h:37
+msgid "Resets the settings for the selected channel while the button is pressed."
+msgstr "Resetuje ustawienia wybranego kanału, kiedy przycisk jest wciśnięty. "
+
+#: ../src/messages.h:38
+msgid "Resets to the default values."
+msgstr "Przywraca wartości domyślne."
+
+#: ../src/messages.h:39
+msgid "Resets the current channel to the default values."
+msgstr "Przywraca wartości domyślne dla wybranego kanału."
+
+#: ../src/messages.h:40
+msgid "Resets all channels to the default values."
+msgstr "Przywraca wartości domyślne dla wszystkich kanałów."
+
+#: ../src/denoise.c:66
+msgid "Wavelet denoising..."
+msgstr "Odszumianie wavelet..."
+
+#: ../src/interface.c:55
+msgid "Color model"
+msgstr "Model barw"
+
+#: ../src/interface.c:116
+msgid "Preview channel"
+msgstr "Podgląd kanału"
+
+#: ../src/interface.c:124
+msgid "All"
+msgstr "Wszystkie"
+
+#: ../src/interface.c:143
+msgid "Selected (gray)"
+msgstr "Wybrany (szary)"
+
+#: ../src/interface.c:144
+msgid "Selected"
+msgstr "Wybrany"
+
+#: ../src/interface.c:164
+msgid "Selected (color)"
+msgstr "Wybrany (kolor)"
+
+#: ../src/interface.c:188
+msgid "Channel select"
+msgstr "Wybór kanału"
+
+#: ../src/interface.c:220
+msgid "Channel settings"
+msgstr "Ustawienia kanału"
+
+#: ../src/interface.c:222
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: ../src/interface.c:230
+msgid "Threshold"
+msgstr "Próg"
+
+#: ../src/interface.c:269
+msgid "Softness"
+msgstr "Miękkość"
+
+#: ../src/interface.c:329
+msgid "Reset channel"
+msgstr "Resetuj kanał"
+
+#: ../src/interface.c:329
+msgid "Reset"
+msgstr "Reset"
+
+#: ../src/interface.c:345
+msgid "Reset all"
+msgstr "Resetuj wszystko"
+
+#: ../src/plugin.c:33
+#: ../src/plugin.c:34
+#: ../src/plugin.c:35
+#: ../src/plugin.c:36
+msgid "Alpha"
+msgstr "Alfa"
+
+#: ../src/plugin.c:51
+msgid "Removes noise in the image using wavelets."
+msgstr "Usuwa szum z obrazu metodą wavelet."
+
+#: ../src/plugin.c:53
+msgid "Marco Rossini"
+msgstr "Marco Rossini"
+
+#: ../src/plugin.c:54
+msgid "Copyright 2008 Marco Rossini"
+msgstr "Copyright 2008 Marco Rossini"
+
+#: ../src/plugin.c:58
+msgid "_Wavelet denoise ..."
+msgstr "_Odszumianie wavelet..."
+

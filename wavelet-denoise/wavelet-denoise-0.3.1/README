@@ -5,9 +5,9 @@ The wavelet denoise plugin for The GIMP is an algorithm copied and slightly
 altered from the UFRaw program (which inherited the algorithm from dcraw).
 Instead of denoising all RGB channels at once the plugin implementation allows
 to denoise the RGB channels individually and - even more useful - to denoise
-the YCbCr channels individually. The YCbCr conversion is nearly lossless as
-the internal calculations are done in floating point numbers and
-rounding errors are avoided.
+the YCbCr or CIELAB channels individually. The colour model conversions are
+nearly lossless as the internal calculations are done in floating point numbers
+and rounding errors are avoided.
 
 LICENCE
 -------
@@ -18,7 +18,7 @@ License. See the file COPYING which contains the license.
 INSTALLATION
 ------------
 
-See the file INSTALL for instructions how to install the plugin.
+See the file INSTALL for instructions how to install the plugins.
 
 USAGE
 -----
@@ -29,22 +29,25 @@ and RGB (full colour) images, including alpha channels. The plugin dialog
 allows to adjust several parameters.
 
 1. First, the choice has to be made over what colour model is to be used. There
-   are two possibilities (maybe there will be more in the future):
+   are three possibilities (maybe there will be more in the future):
 
-     a) RGB     (red-green-blue)
-     b) YCbCr   (luminance-blueness-redness)
+   a) RGB     (red-green-blue)
 
-   The YCbCr allows separate reduction of luminance and chroma (colour) noise.
+   b) YCbCr   (luminance-blueness-redness)
+
+   c) CIELAB  (lightness-chroma)
+
+   YCbCr and CIELAB allow separate reduction of luminance and chroma (colour)
+   noise.
 
 2. The preview mode can be selected. Either all channels can be selected or
-   the current active channel which is then displayed in grayscale.
+   the current active channel which is then displayed in grayscale or colour.
 
 3. Select the channel you want to denoise.
 
-4. The sliders adjust the amount of denoising and the 'detail' for the selected
-   channel. 'Detail' means the amount of low frequency noise that is removed
-   along with the image details. A high amount of 'detail' increases image
-   details and sharpness.
+4. The sliders adjust the the threshold for denoising. The softness controls
+   the softness of the thresholding. The greater the softness, the more noise
+   remains in the image.
 
 For camera pictures I advise to use YCbCr mode (which is nearly lossless) and
 to at least denoise the Cb and Cr channels to reduce the chroma (colour) noise.

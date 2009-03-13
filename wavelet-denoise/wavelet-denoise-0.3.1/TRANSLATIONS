@@ -1,0 +1,16 @@
+TRANSLATIONS
+============
+
+If you want to contribute by translating the program to any language, go to
+the 'po' directory and open the file 'Makefile'. Add your language to
+
+	LANGUAGES = de ru it et pl <your language>
+
+with a valid locale name. Then state
+
+	make update-po
+
+which will create the file '<your language>.po'
+
+Translate this file and send '<your language>.po' to the program maintainer.
+This would be <marco.rossini@gmx.net>. Thank you!

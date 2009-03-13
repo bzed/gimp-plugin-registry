@@ -1,0 +1,60 @@
+ChangeLog
+=========
+
+wavelet-denoise v0.3.1 - translations
+-------------------------------------------------------------------------------
+- Added translations:
+  - Estonian (thanks to Jyri Liira)
+  - Polish (thanks to Michal Predotka)
+
+wavelet-denoise v0.3
+-------------------------------------------------------------------------------
+- The dialog window is now in landscape design with the preview on the left.
+  The preview window has now a minimal size which increases preview quality.
+  Reason for the change was small screens where the dialog would not fit.
+- Added icons to the reset buttons.
+- Bug fixed for temporarily reset button.
+- Threshold slider now with 2 digits.
+- A (computationally cheap = fast) method of noise profiling was implemented.
+  This made the 'Detail' slider vanishing. Although the profiling is fast it
+  slows the processing down compared to before.
+- New slider 'Softness' which controls the softness of the thresholding. Soft
+  as opposed to hard thresholding.
+- Introduced CIELAB colour space.
+- Increased reading and writing speed.
+- Reorganization of source code and use of Makefiles.
+- Translations of the program now possible using gettext.
+- Translation to German made.
+- Russian translation added (thanks to Alexandre Prokoudine).
+- Added Itailian translation (thanks to Carlo Baldassi).
+
+wavelet-denoise v0.2.1 - minor fixes
+-------------------------------------------------------------------------------
+- Threshold now between 0.0 and 10.0 instead of 0 and 10000.
+- Pixel values internally changed (has only computational effect).
+- Some minor bugs removed.
+
+wavelet-denoise v0.2 - change in noise weighting
+-------------------------------------------------------------------------------
+- Operates on linear data now (not gamma corrected).
+- Increased processing speed.
+- Interface reorganized.
+- Added 'Detail' slider which affects the thresholds dependency on frequency.
+- Added tool-tips in the user interface.
+- Colour previev of single channels added.
+- Button 'Reset temporarily' added for preview.
+- Reset buttons added.
+- The size of the dialog is saved now.
+- Changed default thresholds.
+- Progress bar bugfix done.
+- Minor fixes.
+
+wavelet-denoise v0.1.1 - bug fix
+-------------------------------------------------------------------------------
+- minor memory bug fixed
+- some debug g_print() functions removed
+- files AUTHORS, ChangeLog, THANKS added
+
+wavelet-denoise v0.1 - first release
+-------------------------------------------------------------------------------
+- no comment
