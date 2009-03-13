@@ -63,6 +63,8 @@
  *       - use new progress api for 2.3 and above
  * 1.1.8 - started to add gettext stuff
  *       - removed another gtk_file_selector, fixed breakage on gtk-2.6
+ *       - added invert to recolour functions
+ * 1.1.9 - fix longstanding deprecated Gtk problems
  */
 
 #include "gui.h"
@@ -89,8 +91,11 @@ MAIN()
 static void
 query() {
 
+  // ORLY?
+  static gchar* mode = g_strdup("run_mode");
+  static gchar* desc = g_strdup("Interactive or non-interactive");
   static GimpParamDef args[] = {
-    { GIMP_PDB_INT32, "run_mode", "Interactive or non-interactive" }
+    { GIMP_PDB_INT32, mode, desc }
   };
   static GimpParamDef* return_vals = 0;
   static int n_args = sizeof(args) / sizeof(args[0]);
@@ -101,7 +106,7 @@ query() {
       "DBP performs simple batch processing of images.",
       "David Hodson <hodsond@acm.org>",
       "2001 - 2008 David Hodson",
-      "23 Jan 2008 (Version 1.1.8)",
+      "16 Dec 2008 (Version 1.1.9)",
       "<Toolbox>/Xtns/Batch Process...",
       NULL, GIMP_EXTENSION,
       n_args, n_return_vals, args, return_vals);

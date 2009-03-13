@@ -73,7 +73,7 @@ ControlLayout::widget() const {
 
 
 GtkCBBase::GtkCBBase(GtkObject* object, std::string name) {
-  GtkSignalFunc fn = (GtkSignalFunc)&GtkCBBase::callback;
+  GCallback fn = (GCallback)&GtkCBBase::callback;
   g_signal_connect(object, name.c_str(), fn, this);
 }
 
@@ -130,7 +130,7 @@ Gui::add(ControlLayout& controls, const std::string& label, float& value,
   GtkObject* adj =
     gtk_adjustment_new(value, minVal, maxVal, step, step*10.0, 0.0);
   g_signal_connect(adj, "value_changed",
-    (GtkSignalFunc)&Gui::adjFloatUpdate, &value);
+    (GCallback)&Gui::adjFloatUpdate, &value);
   controls.add(label, spinnerFor(adj, numDigits), sliderFor(adj, numDigits));
   return adj;
 }
@@ -143,7 +143,7 @@ Gui::add(ControlLayout& controls, const std::string& label, gdouble& value,
   GtkObject* adj =
     gtk_adjustment_new(value, minVal, maxVal, step, step*10.0, 0.0);
   g_signal_connect(adj, "value_changed",
-    (GtkSignalFunc)&Gui::adjDoubleUpdate, &value);
+    (GCallback)&Gui::adjDoubleUpdate, &value);
   controls.add(label, spinnerFor(adj, numDigits), sliderFor(adj, numDigits));
   return adj;
 }
@@ -154,7 +154,7 @@ Gui::add(ControlLayout& controls, const std::string& label, int& value,
   GtkObject* adj =
     gtk_adjustment_new(value, minVal, maxVal, 1, 10.0, 0.0);
   g_signal_connect(adj, "value_changed",
-    (GtkSignalFunc)&Gui::adjIntUpdate, &value);
+    (GCallback)&Gui::adjIntUpdate, &value);
   controls.add(label, spinnerFor(adj, 0), sliderFor(adj, 0));
 }
 
@@ -172,7 +172,7 @@ Gui::addItem(GtkWidget* options, std::string label, int* tag, int& value) {
   g_object_set_data(G_OBJECT(item), dataKey, tag);
   gtk_menu_shell_append(GTK_MENU_SHELL(options), item);
   g_signal_connect(GTK_OBJECT(item), "activate",
-    (GtkSignalFunc)&Gui::switchValueUpdate, &value);
+    (GCallback)&Gui::switchValueUpdate, &value);
 }
 
 GtkWidget*
@@ -239,7 +239,7 @@ Gui::checkButtonFor(bool& value) {
   GtkWidget* result;
   result = gtk_check_button_new();
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(result), value ? TRUE : FALSE);
-  g_signal_connect(GTK_OBJECT(result), "toggled", (GtkSignalFunc)&Gui::toggleValueUpdate, &value);
+  g_signal_connect(GTK_OBJECT(result), "toggled", (GCallback)&Gui::toggleValueUpdate, &value);
   return result;
 }
 
@@ -248,7 +248,7 @@ Gui::checkButtonFor(int& value) {
   GtkWidget* result;
   result = gtk_check_button_new();
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(result), value);
-  g_signal_connect(GTK_OBJECT(result), "toggled", (GtkSignalFunc)&Gui::toggleIntValueUpdate, &value);
+  g_signal_connect(GTK_OBJECT(result), "toggled", (GCallback)&Gui::toggleIntValueUpdate, &value);
   return result;
 }
 
@@ -565,6 +565,10 @@ RecolourGui::build() {
 #if NYI
   add(_("Gamma"), _op._gamma, 0.1, 10.0, 2);
 #endif
+
+  _invert = checkButtonFor(_op._invert);
+  gtk_button_set_label(GTK_BUTTON(_invert), _("Invert"));
+  gtk_box_pack_start(GTK_BOX(_controls), _invert, FALSE, FALSE, 0);
 
   _mono = checkButtonFor(_op._mono);
   gtk_button_set_label(GTK_BUTTON(_mono), _("Convert to Grey"));
@@ -1150,11 +1154,12 @@ DbpGui::build() {
     GTK_STOCK_QUIT, 0,
     (char*)0); // to fix gcc compiler warning - may be an error on 64 bit processors
   g_signal_connect_swapped(
-    GTK_OBJECT (dialog), "response",
+    GTK_OBJECT(dialog), "response",
     G_CALLBACK(gtk_widget_destroy), GTK_OBJECT(dialog));
 
-  g_signal_connect(GTK_OBJECT(dialog), "destroy",
-    GTK_SIGNAL_FUNC(gtk_main_quit), NULL);
+  g_signal_connect(
+    GTK_OBJECT(dialog), "destroy",
+    G_CALLBACK(gtk_main_quit), NULL);
 
   _notebook = gtk_notebook_new();
   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), _notebook, TRUE, TRUE, 0);

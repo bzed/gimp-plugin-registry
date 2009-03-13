@@ -202,6 +202,7 @@ private:
   GtkWidget* _auto;
   GtkWidget* _manualFrame;
   ControlLayout _manualControls;
+  GtkWidget* _invert;
   GtkWidget* _mono;
   void setEnabled();
   void setAuto();

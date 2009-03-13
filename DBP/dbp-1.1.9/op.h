@@ -116,6 +116,7 @@ struct RecolourOp: public Dbp::Op {
   float _saturation; /* 0.0 - 2.0, 1.0, 0.001 */
   float _gamma;      /* range 0.1 to 10.0, default 1.0, minStep 0.01 */
 
+  bool _invert;
   bool _mono;
 };
 

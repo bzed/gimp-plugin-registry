@@ -20,9 +20,8 @@
 #include "op.h"
 
 #include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
-//#include <sstream>
-//#include <iomanip>
 
 using namespace Dbp;
 
@@ -177,7 +176,8 @@ BlurOp::addParams(GimpCall& call) {
 }
 
 RecolourOp::RecolourOp():
-  _auto(false), _brightness(0.0), _contrast(0.0), _saturation(1.0), _gamma(1.0), _mono(false) {
+  _auto(false), _brightness(0.0), _contrast(0.0),
+  _saturation(1.0), _gamma(1.0), _invert(false), _mono(false) {
 }
 
 bool
@@ -207,6 +207,9 @@ RecolourOp::execute(int& image, int& drawableId, Location&) {
     gimp_hue_saturation(drawableId, hueRange, hueOffset, lightness, saturation);
   }
 
+  if (_invert) {
+    gimp_invert(drawableId);
+  }
   if (_mono) {
     gimp_image_convert_grayscale(image);
   }
