@@ -1,7 +1,7 @@
 /*
 	normalmap GIMP plugin
 
-	Copyright (C) 2002 Shawn Kirst <skirst@fuse.net>
+	Copyright (C) 2002-2008 Shawn Kirst <skirst@insightbb.com>
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public

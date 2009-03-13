@@ -1,7 +1,7 @@
 /*
 	normalmap GIMP plugin
 
-	Copyright (C) 2002 Shawn Kirst <skirst@fuse.net>
+	Copyright (C) 2002-2008 Shawn Kirst <skirst@insightbb.com>
 
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public
@@ -592,7 +592,7 @@ static void init(GtkWidget *widget, gpointer data)
    err = glewInit();
    if(err != GLEW_OK)
    {
-      g_message(glewGetErrorString(err));
+      g_message((char*)glewGetErrorString(err));
       _gl_error = 1;
    }
 
@@ -1236,10 +1236,9 @@ static void window_destroy(GtkWidget *widget, gpointer data)
    _active = 0;
 }
 
-static void get_nearest_pot(unsigned int w, unsigned int h,
-                            unsigned int *w_pot, unsigned int *h_pot)
+static void get_nearest_pot(int w, int h, int *w_pot, int *h_pot)
 {
-   unsigned int n, next_pot, prev_pot, d1, d2;
+   int n, next_pot, prev_pot, d1, d2;
    
    if(!IS_POT(w))
    {
@@ -1475,13 +1474,13 @@ static void glossmap_callback(gint32 id, gpointer data)
 
 static void object_selected(GtkWidget *widget, gpointer data)
 {
-   object_type = (int)data;
+   object_type = (int)(long)data;
    gtk_widget_queue_draw(glarea);
 }
 
 static void bumpmapping_clicked(GtkWidget *widget, gpointer data)
 {
-   bumpmapping = (int)data;
+   bumpmapping = (int)(long)data;
    gtk_widget_queue_draw(glarea);
 }
 
@@ -1528,12 +1527,12 @@ static void color_changed(GtkWidget *widget, gpointer data)
 static void rotate_type_toggled(GtkWidget *widget, gpointer data)
 {
    if(gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(widget)))
-      rotate_type = (int)data;
+      rotate_type = (int)(long)data;
 }
 
 static void uvscale_changed(GtkWidget *widget, gpointer data)
 {
-   int n = (int)data;
+   int n = (int)(long)data;
    float v = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widget));
    GtkWidget *btn = g_object_get_data(G_OBJECT(widget), "chain");
 
@@ -1751,7 +1750,7 @@ void show_3D_preview(GimpDrawable *drawable)
       menuitem = gtk_menu_item_new_with_label(object_strings[i]);
       gtk_signal_connect(GTK_OBJECT(menuitem), "activate", 
                          GTK_SIGNAL_FUNC(object_selected),
-                         (gpointer)i);
+                         (gpointer)(long)i);
       gtk_widget_show(menuitem);
       gtk_menu_append(GTK_MENU(menu), menuitem);
    }
@@ -1815,7 +1814,7 @@ void show_3D_preview(GimpDrawable *drawable)
       menuitem = gtk_menu_item_new_with_label(bumpmap_strings[i]);
       gtk_signal_connect(GTK_OBJECT(menuitem), "activate", 
                          GTK_SIGNAL_FUNC(bumpmapping_clicked),
-                         (gpointer)i);
+                         (gpointer)(long)i);
       gtk_widget_show(menuitem);
       gtk_menu_append(GTK_MENU(menu), menuitem);
    }
@@ -1930,7 +1929,7 @@ void destroy_3D_preview(void)
 void update_3D_preview(unsigned int w, unsigned int h, int bpp,
                        unsigned char *image)
 {
-   unsigned int w_pot, h_pot, mipw, miph, n;
+   int w_pot, h_pot, mipw, miph, n;
    unsigned char *pixels = image;
    unsigned char *mip;
    
