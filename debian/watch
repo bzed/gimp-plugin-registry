@@ -1,3 +1,2 @@
-#This package is a collections of plugins,
-#use `tools.mk watch` if you're looking for
-#a not perferct, but working uscan replacement.
+# This package is a collections of plugins,
+# so there's no upstream and no upstream tarball.
