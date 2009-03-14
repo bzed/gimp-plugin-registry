@@ -2,11 +2,11 @@
 build: build-stamp
 
 build-stamp:
-	make -C src 
+	make -C src CFLAGS="$(CFLAGS) $(shell gimptool-2.0 --cflags)"
 	touch build-stamp
 
 install: build
-	make -C src/po install LOCALEDIR=$(DESTDIR)/usr/share/locale CFLAGS=$(CFLAGS)
+	make -C src/po install LOCALEDIR=$(DESTDIR)/usr/share/locale 
 	install -m 755 src/src/wavelet-denoise $(DESTDIR)$(PLUGINBINDIR)
 
 clean:
