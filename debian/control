@@ -3,10 +3,10 @@ Section: graphics
 Priority: optional
 Maintainer: Bernd Zeimetz <bzed@debian.org>
 Build-Depends: debhelper (>= 5), autotools-dev, quilt,
- libgimp2.0-dev (>= 2.4), libxml-parser-perl,
+ libgimp2.0-dev (>= 2.6), libxml-parser-perl,
  liblapack-dev, libblas-dev, libf2c2-dev, libfftw3-dev, libglew-dev,
  libgtkglext1-dev, liblcms1-dev, libtiff4-dev,
- liblqr-1-0-dev
+ liblqr-1-0-dev, libcv-dev
 Standards-Version: 3.7.3
 Vcs-Git: git://git.recluse.de/debian/pkg-gimp-plugin-registry.git
 Vcs-Browser: http://git.recluse.de/?p=debian/pkg-gimp-plugin-registry.git;a=summary
@@ -22,7 +22,7 @@ Description: A repository of optional extensions for The GIMP
  .
    * Add Film Grain (2.4):
      Helps adding realistic film grain to BW images.
-   * btn4ws:
+   * btn4ws (0.8.0):
      Generates a series of buttons in three states (passive, active, pressed)
      with various selectable effects on them, as well as XHTML, CSS and
      JavaScript code for using the buttons.
@@ -50,7 +50,6 @@ Description: A repository of optional extensions for The GIMP
      This is a series of scripts that implement various layer effects:
      Drop Shadow, Inner Shadow, Outer Glow, Inner Glow, Bevel and Emboss,
      Satin, Color Overlay, Gradient Overlay, Pattern Overlay, Stroke
-
    * Liquid Rescale (0.6.1):
      Content-aware rescaling. Keeps the features of the image while
      rescaling along a single direction.
@@ -76,6 +75,9 @@ Description: A repository of optional extensions for The GIMP
    * Smart Sharpen (redux) (2.4):
      This script implements the redux version of smart sharpening. It utilizes
      the Unsharp Mask or Refocus plugin to sharpen the image.
+   * Sprocket Hole Script (0.2):
+     This script simulates complete exposed 35mm film strips with frame
+     numbers, lettering, overexposed sprocketholes and DX film edge barcodes.
    * Streak-Camera simulation (0.6):
      A streak camera images an object through a slit -
      thus getting a "one dimensional image". This image is
