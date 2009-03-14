@@ -5,5 +5,5 @@
  ;
  (script-fu-menu-register "script-fu-Eg-SmartSharpen"
 -			 "<Image>/Filters/Eg")
-+			 "<Image>/Filters/Enhance/Sharpen (Smart Redux)")
++			 "<Image>/Filters/Enhance")
  ;
