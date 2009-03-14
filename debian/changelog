@@ -1,3 +1,51 @@
+gimp-plugin-registry (1.0-2) UNRELEASED; urgency=low
+
+  [ Bernd Zeimetz ]
+  * [3084d6c6] lqr: Updating to new upstream version (0.6.1)
+  * [e182997b] tools.mk: Removing watch functions.
+  * [d409c406] debian/control: Dropping gimp-python dependency.
+  * [43f1ac1b] lqr: Updating to new upstream version (0.6.1)
+  * [c0f3154e] tools.mk: Removing watch functions.
+  * [432d5b68] DBP: New upstream version.
+  * [51da6981] diana-holga2: New upstream version.
+  * [778c07f7] dustcleaner: Adding plugin again.
+  * [0e0c1be0] dustcleaner: Updating to last svn version.
+  * [472f638d] dustcleaner: updating version, adding url.
+  * [e646e9f3] dustcleaner: Adding README.source, pointing to svn.
+  * [bbd383fe] exposure-blend: Dropping plugin.
+  * [6f6b6bbc] focusblur: New upstream version.
+  * [73637118] GREYCstoration: New upstream version.
+  * [aa1163ef] LayerEffects: Migrating to Python based version.
+  * [85d8fa20] normalmap: New upstream version.
+  * [2c188f35] debian/control: Rising dep. on gimp to >=2.6
+  * [dc46e7bf] planet-render: dropping script for old GIMP vers.
+  * [497044f3] debian/control.in: merge edits from debian/control
+  * [55cc5538] save-for-web: New upstream version.
+  * [5e30b79f] seperate+: New upstream version.
+  * [c7f666bb] debian/control.in: Adding icc-profiles to Suggests
+  * [23a4c6ff] wavelet-denoise: New upstream release.
+  * [d25b7e21] btn4ws: Better description.
+  * [5dfa1a3e] Updating debian/control and debian/copyright.
+  * [3d486a8e] btn4ws: Better description.
+  * [6ee773fb] layer-effects: Dropping empty line from descr.
+  * [e11112ce] debian/control.in: Add libcv-dev build-dep, rise libgimp
+    build-dep to >=2.6
+  * [36681f6b] debian/watch: better explanation.
+  * [8aee1cad] btn4ws: Adding version info to description.
+  * [847b9681] sprcoket-hole: Adding new plugin.
+  * [1770db12] debian/gbp.conf: Adding GBP config.
+  * [9ebd37c1] debian/patches: add menu_sprocket-hole.diff
+  * [c4ec41da] debian/patches/gcc4.3-fixes.diff: Update DBP path.
+  * [86541668] debian/patches/menu_layer-effects.diff: Dropping patch.
+  * [0f76f639] debian/patches: Updating patches.
+  * [69d767be] debian/control, debian/copyright: Updating files.
+  * [70fa8197] Deleting files which are created on build.
+
+  [ Jan Dittberner ]
+  * [c1f49bb8] add btn4ws plugin
+
+ -- Bernd Zeimetz <bzed@debian.org>  Sat, 14 Mar 2009 23:04:42 +0100
+
 gimp-plugin-registry (1.0-1) unstable; urgency=low
 
   * New upstream version of the lqr plugin.
