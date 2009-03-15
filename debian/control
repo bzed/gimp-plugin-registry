@@ -13,7 +13,7 @@ Vcs-Browser: http://git.recluse.de/?p=debian/pkg-gimp-plugin-registry.git;a=summ
 
 Package: gimp-plugin-registry
 Architecture: any
-Depends: gimp (>= 2.6), ${shlibs:Depends}, ${misc:Depends}
+Depends: gimp (>= 2.6), ${shlibs:Depends}, ${misc:Depends}, python
 Suggests: icc-profiles
 Conflicts: gimp-refocus (<< 0.9.0-2)
 Replaces: gimp-refocus (<< 0.9.0-2)
@@ -22,7 +22,7 @@ Description: A repository of optional extensions for The GIMP
  .
    * Add Film Grain (2.4):
      Helps adding realistic film grain to BW images.
-   * btn4ws (0.8.0):
+   * btn4ws (0.8.0.1):
      Generates a series of buttons in three states (passive, active, pressed)
      with various selectable effects on them, as well as XHTML, CSS and
      JavaScript code for using the buttons.
