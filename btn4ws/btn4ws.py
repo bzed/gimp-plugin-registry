@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # This is the main file of btn4ws.
 #
-# Copyright (c) 1999-2008 Jan Dittberner <jan@dittberner.info>
+# Copyright (c) 1999-2009 Jan Dittberner <jan@dittberner.info>
 #
 # This file is part of btn4ws.
 #
@@ -20,14 +20,14 @@
 # along with btn4ws; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #
-# version: $Id: btn4ws.py 19 2009-03-13 19:26:23Z jan $
+# version: $Id: btn4ws.py 21 2009-03-15 07:56:39Z jan $
 #
 
 """
 Gimp script to generate button images for websites. This script is a
 port of the older gimp-perl version to python.
 
-(c) 2007, 2008 Jan Dittberner <jan@dittberner.info>
+(c) 2007, 2008, 2009 Jan Dittberner <jan@dittberner.info>
 """
 import os, urllib, logging, sys, pickle
 import gimp, gimpplugin, gimpui, gimpcolor
@@ -38,7 +38,7 @@ from gimpenums import *
 from gimpshelf import shelf
 pdb = gimp.pdb
 
-btn4ws_version = "0.8.0"
+btn4ws_version = "0.8.0.1"
 
 logging.basicConfig(level=logging.WARN,
                     format='%(asctime)s %(levelname)s %(message)s',
@@ -1122,7 +1122,7 @@ class btn4wsplugin(gimpplugin.plugin):
             "Jan Dittberner",
             "Jan Dittberner <jan@dittberner.info>",
             "%s, %s" % (btn4ws_version,
-                        "$Date: 2009-03-13 20:26:23 +0100 (Fr, 13. Mär 2009) $"),
+                        "$Date: 2009-03-15 08:56:39 +0100 (Sun, 15 Mar 2009) $"),
             "<Toolbox>/Xtns/Render/Buttons for website ...",
             "", PLUGIN,
             [(PDB_INT32, "run_mode", "Run mode"),
