@@ -1,8 +1,8 @@
-gimp-plugin-registry (1.0-2) UNRELEASED; urgency=low
+gimp-plugin-registry (2.0-1) unstable; urgency=low
 
   [ Bernd Zeimetz ]
   * [3084d6c6] lqr: Updating to new upstream version (0.6.1)
-  * [e182997b] tools.mk: Removing watch functions.
+  * [e182997b] debian/rules: Removing watch functions.
   * [d409c406] debian/control: Dropping gimp-python dependency.
   * [43f1ac1b] lqr: Updating to new upstream version (0.6.1)
   * [c0f3154e] tools.mk: Removing watch functions.
@@ -25,7 +25,6 @@ gimp-plugin-registry (1.0-2) UNRELEASED; urgency=low
   * [c7f666bb] debian/control.in: Adding icc-profiles to Suggests
   * [23a4c6ff] wavelet-denoise: New upstream release.
   * [d25b7e21] btn4ws: Better description.
-  * [5dfa1a3e] Updating debian/control and debian/copyright.
   * [3d486a8e] btn4ws: Better description.
   * [6ee773fb] layer-effects: Dropping empty line from descr.
   * [e11112ce] debian/control.in: Add libcv-dev build-dep, rise libgimp
@@ -38,13 +37,24 @@ gimp-plugin-registry (1.0-2) UNRELEASED; urgency=low
   * [c4ec41da] debian/patches/gcc4.3-fixes.diff: Update DBP path.
   * [86541668] debian/patches/menu_layer-effects.diff: Dropping patch.
   * [0f76f639] debian/patches: Updating patches.
-  * [69d767be] debian/control, debian/copyright: Updating files.
   * [70fa8197] Deleting files which are created on build.
+  * [48b4d59b] dustcleaner: Switching to common-autotools.mk.
+  * [20b72bda] debian/patches: add dustcleaner-ld-cv.diff, adding
+    missing libcv ldflags.
+  * [bc371a6a] wavelet-denoise: Set CFLAGS properly.
+  * [9b977010] debian/README.source: Adding file.
+  * [3f768143] debian/control{,.in}: Bumping Standards-Version to 3.8.1.
+  * [ebd701f9] sprocket-hole/copyright: Updating FSF address.
+  * [0de30b04] smart-sharpen, sprocket-holes: Better menu entries.
+  * [c0da3847] debian/control{,.in}: Adding python as Dep. again, updating
+    file.
+  * [732020eb] debian/copyright: Updating file.
 
   [ Jan Dittberner ]
-  * [c1f49bb8] add btn4ws plugin
+  * [c1f49bb8] btn4ws: Add plugin
+  * [e89b1e96] btn4ws: Fix copyright years and wrongly encoded Umlaut
 
- -- Bernd Zeimetz <bzed@debian.org>  Sat, 14 Mar 2009 23:04:42 +0100
+ -- Bernd Zeimetz <bzed@debian.org>  Sun, 15 Mar 2009 19:27:17 +0100
 
 gimp-plugin-registry (1.0-1) unstable; urgency=low
 
