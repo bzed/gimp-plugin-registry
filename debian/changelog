@@ -49,6 +49,7 @@ gimp-plugin-registry (2.0-1) unstable; urgency=low
   * [c0da3847] debian/control{,.in}: Adding python as Dep. again, updating
     file.
   * [732020eb] debian/copyright: Updating file.
+  * [15cae83c] debian/control{,.in}: Adding intltool as Build-Dep.
 
   [ Jan Dittberner ]
   * [c1f49bb8] btn4ws: Add plugin
