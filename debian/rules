@@ -110,7 +110,7 @@ update-copyright:
 	        cat $$plugin/url ;\
 	        echo ;\
 	      fi ;\
-	      cat $$plugin/copyright ;\
+	      sed 's,^,  ,;s,^ *$$,,g' $$plugin/copyright ;\
 	  done ;\
 	) > debian/copyright
 
@@ -122,7 +122,7 @@ update-control:
 	      sed "s,{version},($$p_version),g" $$plugin/description ;\
 	    else \
 	      cat $$plugin/description ;\
-	    fi ;\
+	    fi | grep '[a-zA-Z]' | sed 's,^,   ,';\
 	  done ;\
 	) > debian/control
 
