@@ -1,0 +1,17 @@
+--- a/cmyk-tiff-2-pdf/cmyk-tiff-2-cmyk-pdf.py
++++ b/cmyk-tiff-2-pdf/cmyk-tiff-2-cmyk-pdf.py
+@@ -85,12 +85,8 @@ def python_fu_cmyk_tiff_2_pdf(active_ima
+ 				command = "acrord32.exe \"%s.pdf\" &" % all_files
+ 				os.system(command)	
+ 		else:
+-			try:
+-				command = "acroread \"%s.pdf\" &" % all_files
+-				os.system(command)
+-			except OSError:
+-				command = "evince \"%s.pdf\" &" % all_files
+-				os.system(command)
++			command = "/usr/bin/xdg-open \"%s.pdf\" &" % all_files
++			os.system(command)
+ 	
+ 	# Multi Tiff Clean
+ 	if do_multi > 1:
