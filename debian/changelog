@@ -1,3 +1,25 @@
+gimp-plugin-registry (2.1-1) unstable; urgency=low
+
+  * [f8281125] debian/control: The lqr plugin needs at least liblqr-dev
+    0.3.0, updating Build-Depends accordingly. Thanks to Andreas Ferber
+    and Daniel Baumann for the report (Closes: #520492, #520593).
+  * [fc044d5e] Removide identation from plugin copyright files.
+  * [2cb6ed64] Removing identation from descriptions.
+  * [c9590018] cmyk-tiff-2-pdf: Adding new plugin.
+  * [582c1366] debian/control{,.in}: Updating files, also adding
+    libtiff-tools dependency for cmyk-tiff-2-pdf.
+  * [10f054b7] debian/rules: Indent copyrights and descriptions
+    automatically.
+  * [83cbfe17] debian/copyright: Updating and restructuring file.
+  * [0f7c1c74] debian/patches: Adding cmyk-tiff-2-pdf_pdfviewer.diff to
+    use xdg-open to open pdf files in cmyk-tiff-2-pdf.
+  * [4e211965] debian/patches: renaming menu_diana-holga2 -> menu_diana-
+    holga2.diff
+  * [2d91ad58] debian/control{,.in}: Adding dependency on xdg-utils as
+    xdg-open is needed by cmyk-tiff-2-pdf now.
+
+ -- Bernd Zeimetz <bzed@debian.org>  Sun, 22 Mar 2009 15:56:40 +0100
+
 gimp-plugin-registry (2.0-1) unstable; urgency=low
 
   [ Bernd Zeimetz ]
