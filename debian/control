@@ -17,8 +17,8 @@ Depends: gimp (>= 2.6),
  ${shlibs:Depends}, ${misc:Depends},
  python, libtiff-tools, xdg-utils
 Suggests: icc-profiles
-Conflicts: gimp-refocus (<< 0.9.0-2)
-Replaces: gimp-refocus (<< 0.9.0-2)
+Conflicts: gimp-refocus (<< 0.9.0-2), gimp-save-for-web
+Replaces: gimp-refocus (<< 0.9.0-2), gimp-save-for-web
 Description: A repository of optional extensions for The GIMP
  The package contains the following plugins:
  .
