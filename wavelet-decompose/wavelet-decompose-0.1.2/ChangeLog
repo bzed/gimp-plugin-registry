@@ -1,0 +1,18 @@
+ChangeLog
+=========
+
+wavelet-decompose v0.1.2 - minors
+-------------------------------------------------------------------------------
+- Polish translations added.
+- Returning correct errors if they occur.
+- Added missing arguments for scripts.
+- Now saving and restoring values only when in interactive mode.
+
+wavelet-decompose v0.1.1 - bugfix
+-------------------------------------------------------------------------------
+- Fixed severe bug when having 'Create new image' checked.
+- Updated italian translation.
+
+wavelet-decompose v0.1
+-------------------------------------------------------------------------------
+- First release.

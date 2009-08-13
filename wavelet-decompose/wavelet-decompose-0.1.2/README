@@ -1,0 +1,35 @@
+README
+======
+
+The wavelet decompose plugin decomposes a layer of an image into layers of
+wavelet scales. This means that you can edit the image on different detail
+scales (frequencies). The trivial recomposition of the image can be done by
+GIMP's layer modes so you can see the results of your modifications instantly.
+Among the applications are retouching, noise reduction, and enhancing global
+contrast.
+
+Wavelet scales:
+
+An image can be transformed into a set of wavelet scales. There are detail
+scales and one residual. The detail scales contain the image details of a their
+scale size. This means that scale 1 contains only image details of the smallest
+scale. Scale 2 details are larger and scale 3 details even larger (and so on).
+
+This plugin computes these scales and creates a new layer for each one. The
+recomposition is the addition off all scales which is done by GIMP using the
+grain merge layer mode. You can then paint the scales with your favourite tool,
+using (128,128,128) as neutral colour (for the details, not the residual).
+Values below neutral darken, values above lighten. The most straightforward
+thing to do is to use the paintbrush tool with the  neutral colour and use
+different brushes and opacities. That way you erase details.
+
+LICENCE
+-------
+
+Copyright (C) 2008 by Marco Rossini. Distributed under the General Public
+License GPLv2 and later. See the file COPYING which contains the license.
+
+INSTALLATION
+------------
+
+See the file INSTALL for instructions how to install the plugins.

@@ -1,0 +1,21 @@
+INSTALL
+=======
+
+For Linux and Unix users
+------------------------
+To install this GIMP plugin simply state
+
+	make
+	make install
+
+for a system wide installation (with root privileges) or
+
+	make
+	make userinstall
+
+for a user installation. A restart of The GIMP is recommended.
+
+Other platforms
+---------------
+I'm sorry I have no knowledge on how to install plugins on other platforms. I
+hope others will find a way.
