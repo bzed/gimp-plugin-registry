@@ -17,8 +17,8 @@ Depends: gimp (>= 2.6),
  ${shlibs:Depends}, ${misc:Depends},
  python, libtiff-tools, xdg-utils
 Suggests: icc-profiles
-Conflicts: gimp-refocus (<< 0.9.0-2), gimp-save-for-web
-Replaces: gimp-refocus (<< 0.9.0-2), gimp-save-for-web
+Conflicts: gimp-refocus (<< 0.9.0-2)
+Replaces: gimp-refocus (<< 0.9.0-2)
 Description: A repository of optional extensions for The GIMP
  The package contains the following plugins:
  .
@@ -90,7 +90,14 @@ Description: A repository of optional extensions for The GIMP
      propagated along the second dimension of the image plane
      at a constant speed. The result is a picture of the time
      dependency of the object.
-   * Wavelet Denoise (0.2-beta):
+   * Wavelet Decompose (0.1.2):
+     The wavelet decompose plugin decomposes a layer of an image into layers
+     of wavelet scales. This means that you can edit the image on different
+     detail scales (frequencies). The trivial recomposition of the image can
+     be done by GIMP's layer modes so you can see the results of your
+     modifications instantly. Among the applications are retouching, noise
+     reduction, and enhancing global contrast.
+   * Wavelet Denoise (0.3.1):
      The wavelet denoise plugin is a tool to selectively reduce noise in
      individual channels of an image with optional RGB<->YCbCr conversion.
      It has a user inteface to adjust the amount of denoising applied. The

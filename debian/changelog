@@ -1,3 +1,14 @@
+gimp-plugin-registry (2.2-1) unstable; urgency=low
+
+  * [95b8f4bb] Add Replaces/Conflicts to gimp-save-for-web.
+  * [3c5bffb7] cmyk-tiff-2-pdf: Use acroread as default.
+  * [893f5647] wavelet-decompose: Adding plugin. (LP: #383859) - thanks
+    to Vladimir Buell
+  * [31e539ad] wavelet-denoise: Updating version number. (LP: #383859) -
+    thanks to Vladimir Buell
+
+ -- Bernd Zeimetz <bzed@debian.org>  Thu, 13 Aug 2009 09:44:51 +0200
+
 gimp-plugin-registry (2.1-1) unstable; urgency=low
 
   * [f8281125] debian/control: The lqr plugin needs at least liblqr-dev
