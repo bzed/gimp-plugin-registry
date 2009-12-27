@@ -1,3 +1,15 @@
+gimp-plugin-registry (2.3-1) unstable; urgency=low
+
+  * [bece4198] Drop dustcleaner plugin. As it seems upstream is dead and
+    there is no easy way to migrate to the new OpenCV version. (Closes:
+    #560512)
+  * [e1a32b15] Drop libcv-dev build-dependency.
+  * [65af3aa8] Update copyright and control file.
+  * [b601af2d] Configure git dch in gbp.conf to follow merges.
+  * [b8ccf3bc] Drop dustcleaner related patches.
+
+ -- Bernd Zeimetz <bzed@debian.org>  Sun, 27 Dec 2009 16:08:07 +0100
+
 gimp-plugin-registry (2.2-1) unstable; urgency=low
 
   * [95b8f4bb] Add Replaces/Conflicts to gimp-save-for-web.
