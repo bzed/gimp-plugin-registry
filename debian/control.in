@@ -6,7 +6,7 @@ Build-Depends: debhelper (>= 5), autotools-dev, quilt,
  libgimp2.0-dev (>= 2.6), libxml-parser-perl,
  liblapack-dev, libblas-dev, libf2c2-dev, libfftw3-dev, libglew-dev,
  libgtkglext1-dev, liblcms1-dev, libtiff4-dev,
- liblqr-1-0-dev (>= 0.3.0), libcv-dev, intltool
+ liblqr-1-0-dev (>= 0.3.0), intltool
 Standards-Version: 3.8.1
 Vcs-Git: git://git.recluse.de/debian/pkg-gimp-plugin-registry.git
 Vcs-Browser: http://git.recluse.de/?p=debian/pkg-gimp-plugin-registry.git;a=summary
