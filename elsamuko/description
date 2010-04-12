@@ -21,6 +21,9 @@
     in function to the built-in Line-Nova Script, but much more
     flexible. So you can chose the center, the thickness, the angle,
     the length, the offset and the randomness.
+  * Film Grain Script:
+    This is yet another script which simulates the typical film grain
+    of high ISO pictures.
   * First Photo Border Script:
     This script simulates the cut-off of the first picture of a film
     roll of cheap cameras like Lomo.
