@@ -1,0 +1,118 @@
+===================================================
+===== X11 Mouse Cursor (XMC) plug-in for GIMP =====
+===================================================
+
+X11 Mouse Cursor plug-in for GIMP (or gimp-xmc-plugin) enable
+GIMP to import, export X11 Mouse Cursor.
+The latest version of this plug-in works on GIMP 2.6 or later.
+For GIMP 2.4, use version 1.x instead.
+
+1. Installation
+
+Please read INSTALL.
+
+
+2. How to open a cursor
+
+Because XMC has no specific file extension, it is a little complex to
+load a cursor.
+Open "Open" dialog, then you will find a combo box which shows
+"All images" at right bottom side of the dialog.
+You need to change it "All files", then you can find cursors you want
+to open.
+
+
+3. How to save a cursor
+
+Files which is appended file extension "xmc" are saved as XMC.
+You can also save without extension by choosing "X11 Mouse Cursor"
+without xmc one in the list of "Select File Type (By Extension)".
+Image dimensions must be no more than 128px, and you should reduce it 
+less than or equal to 64px because such a large cursor will clutter
+your screen in some environments.
+For more detail, read the source code of libXcursor. 
+If you want rename all [foo].xmc files in directory [mydir] to [foo],
+open terminal and type similarly as follows.($ is not included.)
+$ for file in [mydir]/*.xmc ; do mv $file ${file%.xmc} ; done
+
+
+4. Save dialog
+
+When you want to save XMC, you will asked some options by save dialog.
+All save options are explained by tool tips or self-explaining, but
+I complement more detail here.
+
+* Hotspot X:, Y:
+  Hotspot coordinate from left top side of the image.
+  If the exporting image is imported from XMC or xbm file format,
+  Hotspot coordinates are automatically set by this plug-in.
+  Hotspot must be on all layer of image, or you will fail to save
+  the cursor.
+
+* Auto-crop all frames
+  With this option, all frames' transparent borders are removed
+  before saving. This is useful for cursors which is converted by 
+  "CursorXP/FX to X11 Mouse Theme Converter" and so large that X 
+  cannot render properly.
+  This option is depends on the feature of XMC which can have
+  different hotspot coordinates for different frame, so the origin
+  of each frame's coordinate may become different.
+  Thus you had better to save without auto-crop if you want to edit
+  a saved cursor by other program. (for example, xcur2png ->
+  ImageMagick -> xcursorgen)
+   # You can restore transparent borders to set hotspots on same #
+   # coordinates by a script.                                    #
+   # See http://d.hatena.ne.jp/tksmashiw/20081003                #
+
+* Size:
+  Default (nominal) size.
+  Size has no relation with width and height of frames.
+  It is only used to determine which frame depends on which
+  animation sequence and which sequence is really used based on
+  the value of "gtk-cursor-theme-size".
+  This is the reason of name "nominal".
+  Gnome-appearance-properties only supports {12,16,24,32,36,40,48,64}
+  px, and if the size of left_ptr of your cursor theme is not one of
+  that, your cursor theme will disappear.
+  If you don't have plans to make multi-sized cursor, or you have no
+  idea, leave it "32px".
+  Size is stored in the layer name as "(XXps)", so you can edit it by
+  hand.
+
+* Delay:
+  Delay is time span in which each frame is rendered. The unit is 
+  millisecond. Delay is also stored in the layer name as "(XXms)".
+
+* Copyright, License, Other
+  Optional comments which is stored in XMC's comment chunks.
+  At the moment, only this plug-in can write comments as long as I
+  know, so if you edit the saved cursor with other program, these
+  comments will be lost.
+  These comments are attached to image as parasites which names are
+  "xmc-copyright", "xmc-license", "gimp-comment" respectively.
+
+
+5. I need your help!
+
+This plug-in is still developed to work more stable and functional,
+so if you find any bug, misspell, or mistake in grammar etc...,
+please report me.
+tks(Takeshi Matsuyama) [tksmashiw@gmail.com]
+
+My intent to write this plug-in is to provide easy way to make mouse
+cursor themes for gifted people.
+If you make new cursor theme, that is exactly my repayment.
+
+For more information to make cursor theme, source of ComixCursors is
+good resource. (written by Jens. great work!)
+http://www.opendesktop.org/content/show.php/ComixCursors?content=32627
+
+Additional cursor hashes for gecko CSS3 cursor property is here (sorry
+written in Japanese but you can understand in the gross.)
+http://d.hatena.ne.jp/tksmashiw/20080714
+
+If you want to save all frames of a cursor as separate PNG images,
+xcur2png may help you.
+http://cli-apps.org/content/show.php/xcur2png?content=86010
+
+Enjoy!
