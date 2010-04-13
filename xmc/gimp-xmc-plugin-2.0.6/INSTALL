@@ -1,0 +1,20 @@
+1. INSTALL
+First, you must install development package of libgimp, libXcursor,
+GTK2, libc, libglib.
+The packages' names are "gimp-devel", "libXcursor-devel",
+"gtk2-devel", "glibc-devel", "glib2-devel" for Fedora,
+and "libgimp2.0-dev", "libxcursor-dev",
+"libgtk2.0", "libc6", "libglib2.0" for Ubuntu, respectively.
+
+After installing these packages, open terminal and type
+$ ./configure --prefix=/usr & make & sudo make install
+then plug-in will be installed in "/usr/lib/gimp/2.0/plug-ins/".
+
+If you want to install in your home directory, type
+$ gimptool-2.0 --install-bin file-xmc
+instead of "sudo make install"
+
+
+2. Configure options
+--enable-debug
+Make plug-in binary to output debug messages.

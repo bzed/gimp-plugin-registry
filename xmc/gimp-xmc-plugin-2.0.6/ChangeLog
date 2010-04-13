@@ -1,0 +1,198 @@
+2009/05/13
+
+	* file-xmc.c: Fixed compilation error "#elif with no expression" with gcc-4.4.
+
+Changes for version 2.0.6
+2009/04/23
+
+	*  NEWS configure.ac gimp-xmc-plugin.spec debian/changelog
+	debian/copyright: Updated for version 2.0.6.
+
+2009/03/29
+
+	* file-xmc.c: Some minor changes of the messages. Marked up more
+	strings of the save dialog for i18n.
+
+2009/03/28
+
+	* file-xmc.c: Comment "This will not work on GIMP 2.6, but not
+	harmful." added. Some English grammatical fixes.
+
+2009/02/24
+
+	* file-xmc.c: The indices of the frame name are zero indented.
+
+2009/02/16
+
+	* file-xmc.c: Revived "type" and "num_layers" of thumb_return_args.
+
+Changes for version 2.0.5
+2009/02/14
+
+	* NEWS configure.ac Makefile.am gimp-xmc-plugin.spec debian/changelog
+	debian/copyright: Updated for version 2.0.5.
+
+2009/02/13
+
+	* README: Added my e-mail address.(Thanks Luis!)
+	* file-xmc.c: Removed an unused variable. Fixed a logical bug in
+	set_size_and_delay().
+
+2009/01/26
+
+	* file-xmc.c: Removed duplicative gimp_register_save_handler, added
+	one more gimp_register_file_handler_mime instead. (according to
+	file-tiff plug-in.)
+
+2009/01/25
+
+	* file-xmc.c: Some messages corrected.
+
+2009/01/21
+
+	* file-xmc.c: Removed "type" and "num_layers" of thumb_return_args
+	which are not used in GIMP-2.6.
+
+2009/01/18
+
+	* file-xmc.c COPYING gimp-xmc-plugin.spec debian/copywrite: GPL version
+	bump to 3.
+
+2009/01/08
+
+	* file-xmc.c: Replace [[:digit:]] with \\d in GRegex.
+
+2008/12/25
+
+	* file-xmc.c: Fix some mistakes in Englisth grammar. Move g_return_*
+	to the head of functions again.(ignore warning with -pedantic.) Move
+	the comments of functions from after open braces to the heads.
+
+Changes for version 2.0.4
+2008/12/07
+
+	* file-xmc.c: Add comments for gregex and use g_return_if_fail(re).
+	Revive SAVE_PROC2. Add more comments.
+	* NEWS configure.ac Makefile.am gimp-xmc-plugin.spec debian/changelog
+	debian/copyright: Change for version 2.0.4.
+
+2008/12/04
+
+	* autogen.sh: Change /bin/sh to /bin/bash for Debian.
+
+2008/12/02
+
+	* file-xmc.c: Use gregex to get size and delay from frame name. Warn
+	about size only after the cursor is sucessfully saved. Renamed
+	sizeIsWarned to size_warn, dimensionMustWarned to dimension_warn.
+
+2008/11/25
+
+	* Makefile.am debian/Makefile.am: Add debian directory to dist
+	tarball.
+
+2008/11/17
+
+	* file-xmc.c: Fix misspell.
+
+2008/11/15
+
+	* file-xmc.c: Rename find_hotspots_and_dim ensions(). Add more
+	comments. Use gint32 for the offset of GimpParamRegion instead of
+	gint. Remove hotspot check in load_image().
+
+2008/11/12
+
+	* file-xmc.c: Remove SAVE_PROC2, and some clean up.
+
+2008/11/10
+
+	* file-xmc.c: The image discription of thumbbox now includes
+	width, height, type, num-layers (no effect for GIMP 2.6).
+
+2008/11/05
+
+	* file-xmc.c: Use preferred size instead of maximum size when
+	loading thumbnail. Add more comment to make_framename(). Fix
+	"ISO C90 forbids mixed declarations and code".  Correct misspell.
+
+Changes for version 2.0.3
+2008/11/05
+
+	* file-xmc.c: Fix error handling of read32().
+	Use preferred size instead of maximum size when loading
+	thumbnail.
+
+2008/11/01
+
+	* file-xmc.c: Fix a bug of get_intersection_of_frames().
+	Add gimp_tile_cache_ntiles().
+	Add more explanations and fix typos.
+
+	* NEWS configure.ac gimp-xmc-plugin-spec: change for version
+	2.0.3.
+
+2008/10/27
+
+	* file-xmc.c: allow to save up to 256px. more code clean up.
+
+====
+Changes for version 2.0.1
+2008/10/26
+
+	* NEWS README configure.ac gimp-xmc-plugin-spec: change for
+	version 2.0.1.
+
+2008/10/25
+
+	* file-xmc.c: gather global vars to xmcparas structure and
+	some code clean up.
+
+	* file-xmc.c: remove XmcSaveGui structure and
+	save_dialog_response callback.
+
+	* file-xmc.c: the hotspot coordinates set in save dialog is
+	now reflected in original image.
+
+	* file-xmc.c: save comment parasites only after save_image is
+	successfully done.
+
+2008/10/24
+
+	* Makefile.am: add autogen.sh to EXTRA_DIST.
+	* gimp-xmc-plugin.spec: Requires gimp >=2.6 etc...
+
+====
+Changes for version 2.0.0
+2008/10/23
+
+	* NEWS README configure.ac gimp-xmc-plugin-spec: change for
+	version 2.0.0.
+	* file-xmc.c: change frame name's format: "([x]px)_[n] ([t]ms)"
+	where [n] is an index separately counted by size [x]".
+	* file-xmc.c: size and delay which is set in save dialog is now
+	reflected in layer names of original image.
+	* file-xmc.c: add "thumb-size" to debug message of LOAD_THUMB_PROC.
+	* file-xmc.c: fold lines over 100 characters.
+
+2008/10/21
+
+	* file-xmc.c: replace XmcRegion by GimpParamRegion.
+
+	* file-xmc.c: fix a bug where load_thumbnail() is not used to
+	load thumbnails.
+
+2008/10/20
+
+	* file-xmc.c: rewrite load_thumbnail() to read more smartly.
+
+	* file-xmc.c: support for non litte endian byte order.
+
+2008/10/18
+
+	* file-xmc.c: replace g_message with  g_set_error for error report.
+	change message when loading too long comment parasites.
+
+	* Makefile.am: use $(libdir) instead of /usr/lib.
+
+	* configure.ac: version check gimp-2.0 gimpui >= 2.6.
