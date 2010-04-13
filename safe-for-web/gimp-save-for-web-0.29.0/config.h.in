@@ -72,6 +72,9 @@
 /* Define to the one symbol short name of this package. */
 #undef PACKAGE_TARNAME
 
+/* Define to the home page for this package. */
+#undef PACKAGE_URL
+
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
 
@@ -87,7 +90,7 @@
 /* Save for Web */
 #undef PLUGIN_NAME
 
-/* 0.28.6 */
+/* 0.29.0 */
 #undef PLUGIN_VERSION
 
 /* Define to 1 if you have the ANSI C header files. */
