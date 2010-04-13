@@ -693,6 +693,51 @@ http://registry.gimp.org/node/252
 
 
 ************************************************************
+elsamuko:
+
+The plugin was downloaded from:
+http://sites.google.com/site/elsamuko/gimp/
+
+  El Samuko's GIMP scripts
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+  http://www.gnu.org/licenses/gpl-3.0.html
+
+  elsamuko-antique-border.scm: Copyright (C) 2008 elsamuko <elsamuko@web.de>
+  elsamuko-che-guevara.scm: Copyright (C) 2009 elsamuko <elsamuko@web.de>
+  elsamuko-cyanotype.scm: Copyright (C) 2010 elsamuko <elsamuko@web.de>
+  elsamuko-difference-layers.scm: Copyright (C) 2009 elsamuko <elsamuko@web.de>
+  elsamuko-escape-lines.scm: Copyright (C) 2008 elsamuko <elsamuko@web.de>
+  elsamuko-grain.scm: Copyright (C) 2008 elsamuko <elsamuko@web.de>
+  elsamuko-lomo.scm: Copyright (C) 2005 Francois Le Lay <mfworx@gmail.com>
+  elsamuko-movie-300.scm: Copyright (C) 2010 elsamuko <elsamuko@web.de>
+  elsamuko-national-geographic-batch.scm: Copyright (C) 2008 elsamuko <elsamuko@web.de>
+  elsamuko-national-geographic.scm: Copyright (C) 2008 elsamuko <elsamuko@web.de>
+  elsamuko-obama-hope.scm: Copyright (C) 2008 elsamuko <elsamuko@web.de>
+  elsamuko-photo-border.scm: Copyright (C) 2008 elsamuko <elsamuko@web.de>
+  elsamuko-photochrom.scm: Copyright (C) 2010 elsamuko <elsamuko@web.de>
+  elsamuko-rainy-landscape.scm: Copyright (C) 2010 elsamuko <elsamuko@web.de>
+  elsamuko-slide-with-sprockets.scm: Copyright (C) 2008 elsamuko <elsamuko@web.de>
+  elsamuko-sunny-landscape.scm: Copyright (C) 2010 elsamuko <elsamuko@web.de>
+  elsamuko-technicolor-2-color.scm: Copyright (C) 2008 elsamuko <elsamuko@web.de>
+  elsamuko-technicolor-3-color.scm: Copyright (C) 2008 elsamuko <elsamuko@web.de>
+  mm1-vintage-look.scm: Copyright (C) 2008 Michael Maier info[at]mmip.net
+
+
+
+************************************************************
 fix-ca:
 
 The plugin was downloaded from:
@@ -741,46 +786,6 @@ http://sudakyo.hp.infoseek.co.jp/gimp/fblur/focusblur_e.html
   You should have received a copy of the GNU General Public License
   along with this package; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-
-
-************************************************************
-GREYCstoration:
-
-The plugin was downloaded from:
-http://cimg.sourceforge.net/greycstoration/download.shtml
-
-  Grzegorz Szwoch (GIMP plugin code)
-  David Tschumperle (GREYCstoration API,
-                     The C++ Template Image Processing Library)
-
-                             - http://www.greyc.ensicaen.fr/~dtschump/
-
-  This software is governed by the CeCILL  license under French law and
-  abiding by the rules of distribution of free software.  You can  use,
-  modify and/ or redistribute the software under the terms of the CeCILL
-  license as circulated by CEA, CNRS and INRIA at the following URL
-  "http://www.cecill.info".
-
-  As a counterpart to the access to the source code and  rights to copy,
-  modify and redistribute granted by the license, users are provided only
-  with a limited warranty  and the software's author,  the holder of the
-  economic rights,  and the successive licensors  have only  limited
-  liability.
-
-  In this respect, the user's attention is drawn to the risks associated
-  with loading,  using,  modifying and/or developing or reproducing the
-  software by the user in light of its specific status of free software,
-  that may mean  that it is complicated to manipulate,  and  that  also
-  therefore means  that it is reserved for developers  and  experienced
-  professionals having in-depth computer knowledge. Users are therefore
-  encouraged to load and test the software's suitability as regards their
-  requirements in conditions enabling the security of their systems and/or
-  data to be ensured and,  more generally, to use and operate it in the
-  same conditions as regards security.
-
-  The fact that you are presently reading this means that you have had
-  knowledge of the CeCILL license and that you accept its terms.
-
 
 
 ************************************************************
@@ -880,7 +885,7 @@ http://liquidrescale.wikidot.com/
 normalmap:
 
 The plugin was downloaded from:
-http://registry.gimp.org/node/69
+http://nifelheim.dyndns.org/~cocidius/normalmap/
 
   Copyright (C) 2002 Shawn Kirst <skirst@fuse.net>
 
@@ -1072,7 +1077,7 @@ http://registry.gimp.org/node/33
 separate+:
 
 The plugin was downloaded from:
-http://registry.gimp.org/node/471
+http://cue.yellowmagic.info/softwares/separate-plus/index.html
 
   separate+ 0.5 - image processing plug-in for the Gimp
 
@@ -1144,31 +1149,6 @@ http://registry.gimp.org/node/108
 
 
 ************************************************************
-sprocket-hole:
-
-The plugin was downloaded from:
-http://registry.gimp.org/node/8718
-
-  Copyright (C) 2008 Samuel Albrecht <samuel_albrecht@web.de>
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 3 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the
-  Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
-  MA 02110-1301, USA.
-
-
-
-************************************************************
 streak:
 
 The plugin was downloaded from:
@@ -1223,3 +1203,31 @@ http://registry.gimp.org/node/4235
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License version 2
   as published by the Free Software Foundation.
+
+
+************************************************************
+xmc:
+
+The plugin was downloaded from:
+http://www.sutv.zaq.ne.jp/linuz/tks/index.html
+
+  X11 Mouse Cursor (XMC) plug-in for GIMP
+
+  Copyright 2008-2009 Takeshi Matsuyama <tksmashiw@gmail.com>
+
+  Special thanks: Alexia Death, Sven Neumann, Martin Nordholts
+                  and all community members.
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
