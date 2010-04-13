@@ -19,6 +19,7 @@ Depends: gimp (>= 2.6),
 Suggests: icc-profiles
 Conflicts: gimp-refocus (<< 0.9.0-2)
 Replaces: gimp-refocus (<< 0.9.0-2)
+Recommends: gimp-gmic
 Description: A repository of optional extensions for The GIMP
  The package contains the following plugins:
  .
