@@ -17,53 +17,131 @@
 """
 
 # Based on Batch resize code by Carol Spears
+# Modified by Robin Gilham for contact sheet plugin
+# Contactsheet plugin modified by Elmar Sullock Enzlin at moroquendo@gmail.com
 
 # pdb.python_fu_contact_sheet("jpg","",True,"con",".jpg","","A4",300)
 
 import os
 import os.path
+import gimp
 from gimpfu import *
-from math import ceil
+from math import ceil, floor
 
-#these constants are the borders given in mm
-
-mmLEFT_PAGE_BORDER = 5
-mmRIGHT_PAGE_BORDER = 5
-mmTOP_PAGE_BORDER = 5
-mmBOTTOM_PAGE_BORDER = 5
-mmTHUMB_MARGIN = 2
-mmFONT_SIZE = 4
+#==============================================================================
+#================= localization with "contactsheet.mo" ========================
+#==============================================================================
+gettext.install("contactsheet", gimp.locale_directory, unicode=True) 
 
 
+#==============================================================================
+#================= function only used for testpurposes ========================
+#==============================================================================
 def Log(text):
-    #f=file("/tmp/gimp.log","a+")
-    #f.write(text+"\n")
-    #f.close()
+    filename = ("c:/tmp/gimp.log")
+    f=file(filename, "a+")
+    f.write(text+"\n")
+    f.close()
     return
 
-def get_images(original_type, original_location):
+
+#==============================================================================
+#=============== Makes an overview of the images and directorys ===============
+#==============================================================================
+# input: text:              text to save
+#        contact_location:  directory to save
+#        contact_name:      filename of the textfile is the same in the registersection
+# output: txt file with imagename and dirname were the image is located
+#==============================================================================
+def LogFileName(text, contact_location, contact_name):
+    filename = (contact_location + '/' + contact_name + '.txt')
+    f=file(filename, "a+")
+    f.write(text+"\n")
+    f.close()
+    return
+
+
+#==============================================================================
+#================= get images from eventually all dirs ========================
+#==============================================================================
+# input: FileType:          array contains one or more extensions
+#        original_location: directory to start
+#        all_subdirs:       bool to include subdirectory's too
+#        DirFileList:       bool to give a txt list of images with their dir
+# output: images:           array with images
+#==============================================================================
+def get_images(FileType, original_location, all_subdirs, DirFileList):
     images = []
-    
-    for filename in os.listdir(original_location):
 
-        basename, ext = os.path.splitext(filename)
-        if ((len(ext)>0) and (ext in original_type)):
-            imagefile = os.path.join(original_location, filename)
-            original_image = {'base_name':basename,'image_file':imagefile}
-            if os.path.isfile(imagefile):
-                images.append(original_image)
-                Log(str(original_image))
-    return sorted(images)
+    if (FileType == 5):
+        FileType = '.jpg .jpeg .JPG .png .PNG .tiff .tif .TIF .TIFF .pcx .PCX .xcf .XCF'
+    elif (FileType == 4):
+        FileType = '.xcf .XCF'
+    elif (FileType == 3):
+        FileType = '.pcx .PCX'
+    elif (FileType == 2):
+        FileType = '.tiff .tif .TIF .TIFF'
+    elif (FileType == 1):
+        FileType = '.png .PNG'
+    elif(FileType == 0):
+        FileType = '.jpg .jpeg .JPG'
+    else:
+        FileType = ''
+        Log("error in file type")
 
 
+    if (all_subdirs == True):                       #include all subdirectory's
+       for dirpath, dirnames, filenames in os.walk(original_location, topdown=True):
+           for filename in filenames:
+              basename, ext = os.path.splitext(filename)
+              if ((len(ext)>0) and (ext in FileType)):
+                 imagefile = os.path.join(dirpath, filename)
+                 original_image = {'extension':ext,'base_name':basename,'image_file':imagefile}
+                 if os.path.isfile(imagefile):
+                    images.append(original_image)
+    else:                                           #only the choosen directory
+        for filename in os.listdir(original_location):
+            basename, ext = os.path.splitext(filename)
+            if ((len(ext)>0) and (ext in FileType)):
+                imagefile = os.path.join(original_location, filename)
+                original_image = {'extension':ext,'base_name':basename,'image_file':imagefile}
+                if os.path.isfile(imagefile):
+                    images.append(original_image)
 
+    return images
+#    return sorted(images)                  #Perhaps as option ????
+
+                    
+#==============================================================================
+#================= create a text list with file and dirnames ==================
+#==============================================================================
+# input: images:            array contains the images etc.
+#        contact_location:  directory to save
+#        contact_name:      name of the txt file
+# output: txt file with imagename and dirname were the image is located
+#==============================================================================
+def Make_DirFile_List(images, contact_location,  contact_name):
+    files = images[0:len(images)]
+    for file in files:
+        filename = file['image_file']
+        LogFileName(filename, contact_location, contact_name)
+
+
+#==============================================================================
+#================= save contact sheet as a png file ===========================
+#==============================================================================
 def save_png(image, drawable, new_filelocation, use_comment):
     compression = 9
     interlace, bkgd = False, False
     gama, offs, phys = False, False, False
     time, svtrans = True, False
-    pdb.file_png_save2(image, drawable, new_filelocation, new_filelocation, interlace, compression, bkgd, gama, offs, phys, time, use_comment, svtrans) 
+    pdb.file_png_save2(image, drawable, new_filelocation, new_filelocation,
+                       interlace, compression, bkgd, gama, offs, phys, time,
+                       use_comment, svtrans) 
 
+#==============================================================================
+#================= save contact sheet as a jpg file ===========================
+#==============================================================================
 def save_jpeg(image, name, comment=""):
     jpeg_save_defaults = (0.85, 0.0, 1, 0, "", 1, 0, 0, 0)
     args = list(jpeg_save_defaults)
@@ -72,16 +150,18 @@ def save_jpeg(image, name, comment=""):
     pdb.file_jpeg_save(image, image.active_layer, name, name, *args)
 
 
-
+#==============================================================================
+#================= generate a thumb ===========================================
+#==============================================================================
 def generate_thumb(filename,Thumb_width,Thumb_height):
-    Log(filename)
     img = pdb.gimp_file_load(filename,filename)
     #now resize the loaded image proportionally
     if (img.width>img.height):
         #landscape so scale height proportionally
         ratio = img.width/float(img.height)
         new = (Thumb_width,int(Thumb_width/ratio))
-        #if the new height exceed max thumb height then scale to thumb height
+        #if the new height exceed max thumb height
+        #then scale to thumb height
         if (new[1]>Thumb_height):
             new = (int(Thumb_height*ratio),Thumb_height)
     else:
@@ -92,66 +172,126 @@ def generate_thumb(filename,Thumb_width,Thumb_height):
             new = (Thumb_width,int(Thumb_width/ratio))
     #now resize the image
     pdb.gimp_image_scale(img,new[0],new[1])
-    return img
+    return img,new[0],new[1]                #modified: added the x- and y-size
 
+
+#==============================================================================
+#================= modify fontsize so it fits thumbwidth ======================
+#==============================================================================
 def CalcFontSize(text,Font,Size,CalcTextHeight,max_width):
-    #this procedure calculates the text size to fit within the width param, the text is reduced until the width is small enough
+    #this procedure calculates the text size to fit within the
+    #width param, the text is reduced until the width is small enough
     txtw,txtH,txte,txtd = pdb.gimp_text_get_extents_fontname(text,Size,PIXELS,Font)
     if (txtw<=max_width):
-        return Size
+        return Size,txtw
     while ((txtw>max_width) and (Size>0)):
         Size = Size -1
         txtw,txtH,txte,txtd = pdb.gimp_text_get_extents_fontname(text,Size,PIXELS,Font)
-    return Size
-    
-def Contact_Sheet(file_type, location, inc_filename, contact_name, contact_type, contact_location, contact_size, dpi,orient,num_col,num_rows):
-    images = get_images(file_type,location)
-    num_images = len(images)
-    #print "Number of img files "  + str(len(images))
-    #Log(str(images))
+    return Size,txtw
+
+
+#==============================================================================
+#===================== calculate papersize in pixels ==========================
+#==============================================================================
+def CalcPaperSize(ContactSize, dpi):
     #now make  a new drawing canvas of the correct size
-    width,height = (209.9,297)
-    if (contact_size =="A4"):
-        width,height = (209.9,297)
-    elif (contact_size == "Jumbo"):
+
+    if (ContactSize == 0):             #Jumbo
         width,height = (102,152)
-    elif (contact_size == "6x8"):
+    elif (ContactSize == 1):           #6x8
         width,height = (152,203)
-    elif (contact_size == "8x10"): 
-        width,height = (203,254)
-    #Log(str(width))
-    #Log(str(height))
-    width = int((width/25.4)*int(dpi))
-    height = int((height/25.4)*int(dpi))
-    #calculate the required size for the thumbs based on the number of images per sheet
-    #convert sizes to px
-    LEFT_PAGE_BORDER = int((mmLEFT_PAGE_BORDER/25.4)*float(dpi))
-    RIGHT_PAGE_BORDER = int((mmRIGHT_PAGE_BORDER/25.4)*float(dpi))
-    TOP_PAGE_BORDER = int((mmTOP_PAGE_BORDER/25.4)*float(dpi))
-    BOTTOM_PAGE_BORDER = int((mmBOTTOM_PAGE_BORDER/25.4)*float(dpi))
-    THUMB_MARGIN = int((mmTHUMB_MARGIN/25.4)*float(dpi))
-    FONT_SIZE = int((mmFONT_SIZE/25.4)*float(dpi))
-    ThumbsPerSheet = num_col*num_rows
+    elif (ContactSize == 2):           #8x10
+        width,height = (203,254)        
+    elif (ContactSize == 3):           #A4
+        width,height = (210,297)
+    elif (ContactSize == 4):           #A3
+        width,height = (297,420)        
+    elif (ContactSize == 5):           #Letter
+        width,height = (216,279)
+    elif (ContactSize == 6):           #Legal
+        width,height = (216,356)
+    elif (ContactSize == 7):           #Tabloid
+        width,height = (279,432)
+    else:
+        width,height = (210,297)
+        Log("error in pagesize, pagesize doesnot exist")
+
+    width = int((width/25.4)*dpi)              # calculate width in px
+    height = int((height/25.4)*dpi)            # calculate height in px
+
+    return width, height                        #size in pixels
+
+
+#==============================================================================
+#================= main routine generate contact sheet ========================
+#==============================================================================
+def Contact_Sheet(file_type, location, all_subdirs, inc_filename, contact_name,
+                  contact_type, contact_location, contact_size, dpi, orient,
+                  num_col, num_rows, PageBorderLR, PageBorderTB, mmTHUMB_MARGIN,
+                  mmFONT_SIZE, Dump_Filename_list):
+    
+
+    #investigate 'all' images in the choosen directory and subdirs
+    images = get_images(file_type, location, all_subdirs, Dump_Filename_list)
+    
+    #if necessary make a txt file with image name and image directory
+    if (Dump_Filename_list == True):
+        Make_DirFile_List(images, contact_location, contact_name)
+        
+    num_images = len(images)                        #calculate number of images
+
+    #make  a new drawing canvas of the correct size
+    width,height = CalcPaperSize(contact_size, dpi)      #dimensions in px
+
+    #calculate the required size for the thumbs based on the number of images
+    #per sheet
+    LEFT_PAGE_BORDER = int((PageBorderLR/25.4)*dpi)     #sizes are in px and
+    RIGHT_PAGE_BORDER = int((PageBorderLR/25.4)*dpi)    #floored with maximum
+    TOP_PAGE_BORDER = int((PageBorderTB/25.4)*dpi)      #error of one px
+    BOTTOM_PAGE_BORDER = int((PageBorderTB/25.4)*dpi)    
+    THUMB_MARGIN = int((mmTHUMB_MARGIN/25.4)*dpi)
+    FONT_SIZE = int((mmFONT_SIZE/25.4)*dpi)
+
+    #number of rows is limited so is ThumbsPerSheet
+    #Thumb sizes are in px, based on dpi setting
+    if (orient=="port"):
+        #Log('portret')
+        Thumb_width = ((width- LEFT_PAGE_BORDER - RIGHT_PAGE_BORDER)/num_col)- 2*THUMB_MARGIN        
+        UsableRows = floor((height- TOP_PAGE_BORDER - BOTTOM_PAGE_BORDER)/
+                        (Thumb_width + FONT_SIZE + 2*THUMB_MARGIN))
+    else:
+        #Log('landscape')
+        Thumb_width = ((height- LEFT_PAGE_BORDER - RIGHT_PAGE_BORDER)/num_col)- 2*THUMB_MARGIN
+        UsableRows = floor((width- TOP_PAGE_BORDER - BOTTOM_PAGE_BORDER)/
+                        (Thumb_width + FONT_SIZE + 2*THUMB_MARGIN))
+
+    #Number of chosen rows can never be bigger then usable rows
+    if (num_rows > UsableRows):
+        num_rows = UsableRows
+        
+
+    ThumbsPerSheet = int(num_col*num_rows)              #added 'int' for python v2.6
     img_no = 1
-    for sheetcount in range(int(ceil(len(images)/float(ThumbsPerSheet)))):
+    for sheetcount in range(int(ceil(num_images/float(ThumbsPerSheet)))):
     
         if (orient=="land"):
             sheetimg = gimp.Image(height,width,RGB)
-            bklayer = gimp.Layer(sheetimg,"Background",height,width,RGB_IMAGE,100,NORMAL_MODE)
-            sheetimg.disable_undo()
-            sheetimg.add_layer(bklayer,0)
+            bklayer = gimp.Layer(sheetimg,"Background",height,width,
+                                 RGB_IMAGE,100,NORMAL_MODE)
         else:
             sheetimg = gimp.Image(width,height,RGB)
-            bklayer = gimp.Layer(sheetimg,"Background",width,height,RGB_IMAGE,100,NORMAL_MODE)
-            sheetimg.disable_undo()
-            sheetimg.add_layer(bklayer,0)
-        #Log(str(sheetimg))
-        #Log(str(sheetimg.resolution))
+            bklayer = gimp.Layer(sheetimg,"Background",width,height,
+                                 RGB_IMAGE,100,NORMAL_MODE)
+
+        sheetimg.disable_undo()
+        sheetimg.add_layer(bklayer,0)
+
         #set the image resolution
         sheetimg.resolution = (float(dpi), float(dpi))
-        #now calculate sizes
-        Canvas_width = sheetimg.width - LEFT_PAGE_BORDER - RIGHT_PAGE_BORDER
         
+        #now calculate sizes; printable sheet dimensions are given
+        #in px based on the dpi setting
+        Canvas_width = sheetimg.width - LEFT_PAGE_BORDER - RIGHT_PAGE_BORDER 
         Canvas_height = sheetimg.height - TOP_PAGE_BORDER - BOTTOM_PAGE_BORDER
         #print ("Canvas width %d height %d" % ( Canvas_width,Canvas_height))
         
@@ -163,30 +303,48 @@ def Contact_Sheet(file_type, location, inc_filename, contact_name, contact_type,
         #print "sheet display" + str(sheetdsp)
         gimp.displays_flush()        
         
-        txtw,CalcTextHeight,txte,txtd = pdb.gimp_text_get_extents_fontname("Sheet %03d of %03d" % (sheetcount+1,int(ceil(len(images)/float(ThumbsPerSheet)))),FONT_SIZE,PIXELS,"Arial")
-        txtfloat = pdb.gimp_text_fontname(sheetimg, sheetimg.active_layer, LEFT_PAGE_BORDER, TOP_PAGE_BORDER-CalcTextHeight, "Sheet %03d of %03d"  % (sheetcount+1,int(ceil(len(images)/float(ThumbsPerSheet)))), -1, False, FONT_SIZE, PIXELS, "Arial")
+        txtw,CalcTextHeight,txte,txtd = pdb.gimp_text_get_extents_fontname( _("Sheet %03d of %03d") %
+                                            (sheetcount+1,int(ceil(num_images/float(ThumbsPerSheet)))),
+                                             FONT_SIZE,PIXELS,"Arial")
+##        txtfloat = pdb.gimp_text_fontname(sheetimg, sheetimg.active_layer,        #only for me
+##                        LEFT_PAGE_BORDER, TOP_PAGE_BORDER-CalcTextHeight,
+##                        "Sheet %03d of %03d, contactsheet designed by R, Gilham (za) and E. Sullock Enzlin (nl)"
+##                        % (sheetcount+1,int(ceil(num_images/float(ThumbsPerSheet)))),
+##                        -1, False, FONT_SIZE, PIXELS, "Arial")
+        txtfloat = pdb.gimp_text_fontname(sheetimg, sheetimg.active_layer,
+                        LEFT_PAGE_BORDER, TOP_PAGE_BORDER-CalcTextHeight,
+                        _("Sheet %03d of %03d") % (sheetcount+1,int(ceil(num_images/float(ThumbsPerSheet)))),
+                        -1, False, FONT_SIZE, PIXELS, "Arial")        
         pdb.gimp_floating_sel_anchor(txtfloat)
         
         CalcTextHeight =0
         txtw,txth,txte,txtd = (0,0,0,0)
         if (inc_filename == True):
-            txtw,CalcTextHeight,txte,txtd = pdb.gimp_text_get_extents_fontname(images[0]['base_name'],FONT_SIZE,PIXELS,"Arial")
-        
+            txtw,CalcTextHeight,txte,txtd = pdb.gimp_text_get_extents_fontname(images[0]['base_name'],
+                                                    FONT_SIZE,PIXELS,"Arial")
             
         #print "CalcText Height %d " %(CalcTextHeight)
-        Thumb_width = (Canvas_width/num_col)-2*THUMB_MARGIN
-        Thumb_height = Canvas_height/num_rows-2*THUMB_MARGIN - CalcTextHeight
-        
+        Thumb_width = (Canvas_width/num_col)-2*THUMB_MARGIN             #Thumb sizes are in px based on dpi setting
+        Thumb_height = Thumb_width                                      #now are all the thumbs equal in size
 
-        
         files = images[sheetcount*ThumbsPerSheet:(sheetcount+1)*ThumbsPerSheet]
         #now for each of the image files generate a thumbnail
         rcount = 0
         ccount = 0
         #generate thumb 
         for file in files:
-            thumbimg=generate_thumb(file['image_file'],Thumb_width,Thumb_height)
+            thumbimg,x_size,y_size = generate_thumb(file['image_file'],Thumb_width,Thumb_height)
             cpy = pdb.gimp_edit_copy(thumbimg.active_layer)
+            #center image within its minipage
+            if (x_size>y_size):
+                #landscape image, center vertical
+                y_offset = (Thumb_width - y_size)/2
+                x_offset = 0
+            else:
+                #portrait image, center horizontal
+                x_offset = (Thumb_height - x_size)/2
+                y_offset = 0
+
             gimp.delete(thumbimg)
             #now paste the new thumb into contact sheet
             newselect = pdb.gimp_edit_paste(sheetimg.active_layer,True)
@@ -194,15 +352,22 @@ def Contact_Sheet(file_type, location, inc_filename, contact_name, contact_type,
             #print str(newselect.offsets)
             #positition in top left corner 
             newselect.translate(-newselect.offsets[0],-newselect.offsets[1])
-            #now position in correct position
-            xpos = LEFT_PAGE_BORDER + ccount * (Thumb_width + (2 * THUMB_MARGIN)) + THUMB_MARGIN
-            ypos = TOP_PAGE_BORDER + rcount * (Thumb_height + (2 * THUMB_MARGIN)+ CalcTextHeight) + THUMB_MARGIN 
+            #now position in correct position, modified with x- and y-offset
+            xpos = LEFT_PAGE_BORDER + ccount * (Thumb_width + (2 * THUMB_MARGIN))+ THUMB_MARGIN  + x_offset
+            ypos = TOP_PAGE_BORDER + rcount * (Thumb_height + (2 * THUMB_MARGIN)+ CalcTextHeight) + THUMB_MARGIN + y_offset
+                
             newselect.translate(xpos,ypos)
             pdb.gimp_floating_sel_anchor(newselect)
             
             if (inc_filename == True):
-                Size = CalcFontSize(file['base_name'],"Arial",FONT_SIZE,CalcTextHeight,Thumb_width)
-                txtfloat = pdb.gimp_text_fontname(sheetimg, sheetimg.active_layer, xpos-THUMB_MARGIN, ypos+Thumb_height+THUMB_MARGIN, file['base_name'], -1, False, Size, PIXELS, "Arial")
+                ThumbName = file['base_name'] + file['extension']
+                Size,txtwidth = CalcFontSize(ThumbName,"Arial",FONT_SIZE,CalcTextHeight,Thumb_width)                
+                #calculate text position, round the center of the image
+                txt_xpos = xpos + (Thumb_width - txtwidth)/2 - x_offset
+                txt_ypos = ypos+Thumb_height+THUMB_MARGIN-y_offset
+
+                txtfloat = pdb.gimp_text_fontname(sheetimg, sheetimg.active_layer, txt_xpos,
+                                                  txt_ypos, ThumbName,-1, False, Size, PIXELS, "Arial")                 
                 pdb.gimp_floating_sel_anchor(txtfloat)
                 
             ccount = ccount + 1
@@ -211,19 +376,16 @@ def Contact_Sheet(file_type, location, inc_filename, contact_name, contact_type,
                 rcount = rcount + 1
             gimp.displays_flush()
 
-        
+        #save contactsheet
         contact_filename = contact_name + "_%03d" % (sheetcount) + contact_type
         contact_full_filename = os.path.join(contact_location, contact_filename)
         #print "File to save " + contact_full_filename
         if (contact_type == ".jpg"):
-            #save_jpeg(sheetimg,contact_full_filename,"Created with the GIMP and Robin Gilham's Contact sheet plugin")
             save_jpeg(sheetimg,contact_full_filename,"")
         else:
             save_png(sheetimg,pdb.gimp_image_get_active_drawable(sheetimg),contact_full_filename,False)
         gimp.delete(sheetimg)
         pdb.gimp_display_delete(sheetdsp) 
-
-
 
 
 register(
@@ -236,20 +398,38 @@ register(
         "<Toolbox>/Xtns/Batch/Contact Sheet",
         "",
         [
-        (PF_RADIO, "file_type", "File type:", ".jpg .jpeg .JPG", (("jpg", ".jpg .jpeg .JPG"), ("png", ".png .PNG"), ("tiff", ".tiff .tif .TIF .TIFF"))),
-        (PF_DIRNAME, "location", "Generate contact sheet of all files in this directory", ""),
-        (PF_BOOL, "inc_filename", "Include filename on contact sheet", True),
-        (PF_STRING, "contact_name",  "Contact sheet base name:", "contact_sheet"),
-        (PF_RADIO, "contact_type", "Contact sheet image type:", ".jpg", (("jpg", ".jpg"), ("png", ".png"))),
-        (PF_DIRNAME, "contact_location", "Where the contact sheet should be saved", ""),
-        (PF_RADIO, "contact_size", "Contact page sheet size:", "A4", (("A4 (20.9x29.7 cm)", "A4"), ("Jumbo (10.2x15.2 cm)", "Jumbo"), ("6x8 (15.2x20.3 cm)", "6x8"),("8x10 (20.3x25.4 cm)", "8x10"))),
-        (PF_RADIO, "dpi", "Contact sheet resolution", "72", (("72 dpi", "72"), ("300 dpi","300"))),
-        (PF_RADIO, "orient", "Orientation:", "land", (("portrate", "port"), ("landscape","land"))),
-        (PF_SPINNER, "num_col", "Number of images per row", 4, (1,32,1)),
-        (PF_SPINNER, "num_rows", "Number of rows", 4, (1,32,1))
+        (PF_OPTION, "file_type"  ,_("File type: ") , 0 ,[".jpg", ".png", ".tif", ".pcx", ".xcf", _("all registered formats")]),
+        (PF_DIRNAME, "location", _('Generate contact sheet of\n all files in this directory: '), ""),
+        (PF_BOOL, "all_subdirs", _("Include all subdirs? "), False),        
+        (PF_BOOL, "inc_filename", _('Include filename on contact sheet?'), True),
+        (PF_STRING, "contact_name",  _('Contact sheet base name: '), _('contact_sheet')),
+        (PF_RADIO, "contact_type", _('Contact sheet image type: '), ".jpg", (("jpg", ".jpg"), ("png", ".png"))),
+        (PF_DIRNAME, "contact_location", _('Where the contact sheet should be saved in: '), ""),
+        (PF_OPTION, "contact_size", _("Contact page sheet size: "), 3,
+                 ["Jumbo (10.2x15.2 cm)",
+                  "6x8 (15.2x20.3 cm)",
+                  "8x10 (20.3x25.4 cm)",
+                  "A4 (20.9x29.7 cm)",
+                  "A3 (29.7x42.0 cm)",
+                  "Letter (8.5x11 in)",
+                  "Legal (8.5x14 in)",
+                  "Tabloid (11x17 in)"]),
+        (PF_SPINNER, "dpi", _("Contact sheet resolution"), 96,(72,300,1)),
+        (PF_RADIO, "orient", _("Orientation:"), "port", ((_("portrait"), "port"), (_("landscape"),"land"))),
+        (PF_SPINNER, "num_col", _("Number of images per row"), 4, (1,32,1)),
+        (PF_SPINNER, "num_rows", _("Number of rows"), 5, (1,32,1)),
+        (PF_SPINNER, "PageBorderLR", _("Left/Right Page border [mm]"), 15, (1,32,1)),        
+        (PF_SPINNER, "PageBorderTB", _("Top/Bottom Page border [mm]"), 15, (1,32,1)),
+        (PF_SPINNER, "mmThumb_Margin", _("Margin round image [mm]"), 2, (1,10,1)),
+        (PF_SPINNER, "mmFont_Size", _("Font size [mm]"), 3, (2,5,1)),
+        (PF_BOOL, "Dump_Filename_list", _('Include filenamelist?'), False)
         ],
         [],
-        Contact_Sheet)
-
+        Contact_Sheet,
+        menu="<Save>", domain=("contactsheet", gimp.locale_directory)
+        )
 
 main()
+
+#==========================================
+#bugfix: number of rows now limited to paperheight
