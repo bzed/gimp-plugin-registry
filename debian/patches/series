@@ -1,13 +1,10 @@
 cmyk-tiff-2-pdf_pdfviewer.diff
-separate+_makefile_flags.diff
-contact-sheet-US-papersizes.diff
 bw-simulation-color-mixer-fix.diff
 menu_fix-ca.diff
 menu_bw-simulation.diff
 menu_smart-sharpen-redux.diff
 menu_add-filmgrain.diff
 menu_dbp.diff
-menu_sprocket-hole.diff
 menu_diana-holga2.diff
 refocus_lapack.diff
 refocus_fix_warnings.diff
