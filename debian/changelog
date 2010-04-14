@@ -1,3 +1,35 @@
+gimp-plugin-registry (3.1-1) unstable; urgency=low
+
+  * [4bfd4a1b] Add El Samuko GIMP Scripts.
+    http://sites.google.com/site/elsamuko/gimp
+  * [42f5bc94] Removing sprocket-hole plugin folder. Plugin is included
+    in the El Samuko Script collection.
+  * [596df7a3] Removing two of El Samuko's plugins. They don't seem to
+    be useful in general.
+  * [5270bcd3] Add description for new plugins.
+  * [cd19ab11] Add Makefile for El Samuko's plugins.
+  * [08bc4783] Add copyright information for El Samuko's scripts.
+  * [931110b5] Add url for El Samuko's Skripts.
+  * [4d3769f0] Add X11 Mouse Cursor (XMC) plug-in. (Closes: #571814) -
+    thanks to KiBi
+  * [bae7ff11] Link README file for El Samuko's scripts.
+  * [1ca6ccc2] Removing GREYCstoration, superseeded by gmic.
+  * [f2652ebc] Updating focus-blur to new upstream version.
+  * [727289da] Update contactsheet plugin.
+  * [17e0524a] Update normalmap url.
+  * [2d438c3e] Update save-for-web plugin.
+  * [1f4843ba] Updating seperate+ plugin.
+  * [00dbc268] Add dpkg source format file.
+  * [8c6603cf] Updating patches.
+  * [58b31655] Recommend gimp-gmic as replacement forGREYStoration.a
+               (Closes: #556120)
+  * [61d82953] Update copyright and control file.
+  * [ae5a04e7] Fix some minor bugs in the new plugins.
+  * [32d86637] Add new patch to fix the seperate+ Makefile.
+  * [64feec40] Patch xmc plugin not to use config.h.
+
+ -- Bernd Zeimetz <bzed@debian.org>  Wed, 14 Apr 2010 02:46:46 +0200
+
 gimp-plugin-registry (2.3-1) unstable; urgency=low
 
   * [bece4198] Drop dustcleaner plugin. As it seems upstream is dead and
