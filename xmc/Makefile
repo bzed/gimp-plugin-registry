@@ -1,4 +1,4 @@
-PLUGIN = file-xmc.c
+PLUGIN = file-xmc
 
 include ../common.mk
 
