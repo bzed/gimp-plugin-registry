@@ -1,7 +1,5 @@
-Index: gimp-plugin-registry-3.1/separate+/separate+-0.5.6/separate-core.c
-===================================================================
---- gimp-plugin-registry-3.1.orig/separate+/separate+-0.5.6/separate-core.c	2010-05-16 11:47:24.000000000 +0200
-+++ gimp-plugin-registry-3.1/separate+/separate+-0.5.6/separate-core.c	2010-05-16 11:49:21.000000000 +0200
+--- a/separate+/src/separate-core.c
++++ b/separate+/src/separate-core.c
 @@ -35,6 +35,8 @@
  #include "separate-core.h"
  #include "util.h"
@@ -11,3 +9,13 @@ Index: gimp-plugin-registry-3.1/separate+/separate+-0.5.6/separate-core.c
  
  
  #ifdef ENABLE_COLOR_MANAGEMENT
+--- a/separate+/src/separate-export.c
++++ b/separate+/src/separate-export.c
+@@ -37,6 +37,7 @@
+ #include "psd.h"
+ #include "jpeg.h"
+ 
++#include "util.h"
+ 
+ gchar *file_extention_table[] =
+ {
