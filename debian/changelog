@@ -33,7 +33,7 @@ gimp-plugin-registry (3.1-1) unstable; urgency=low
   * [4d3769f0] Add X11 Mouse Cursor (XMC) plug-in. (Closes: #571814) -
     thanks to KiBi
   * [bae7ff11] Link README file for El Samuko's scripts.
-  * [1ca6ccc2] Removing GREYCstoration, superseeded by gmic.
+  * [1ca6ccc2] Removing GREYCstoration, superseded by gmic.
   * [f2652ebc] Updating focus-blur to new upstream version.
   * [727289da] Update contactsheet plugin.
   * [17e0524a] Update normalmap url.
