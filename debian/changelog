@@ -1,3 +1,23 @@
+gimp-plugin-registry (3.1-2) unstable; urgency=low
+
+  * [6ccf6231] Don't register an additional menu item for contactsheet.
+    Fixing the following warning: Attempted to register the menu item
+    "<Save>" for procedure "python-fu-contact-sheet".
+  * [c06c792f] debian/control.in: Add Enhances: gimp
+  * [60b74a93] Updating debian/control.
+  * [1dc53806] Replace/Conflict to gimp-save-for-web. Hopefully this
+    will stop bug reports from people using gimp-save-for-web from getdeb.
+  * [928da2de] Rename patch seperate+_cflags to separate+_cflags.
+  * [b7ef9f20] Separate+: Add patch to fix implicitly converted
+    pointers. (Closes: #581819) - thanks to Michael Bienia
+  * [562aff7c] Remove -fno-tree-pre option from gcc flags. The
+    greystoration plugin is not included anymore and gcc should be
+    fixed. Two good reasons to remove -fno-tree-pre. (Closes: #484576)
+  * [8974165d] focusblur: Fix bashism in Makefile
+  * [b43f3679] Separate+: Fix a second implicit declaration.
+
+ -- Bernd Zeimetz <bzed@debian.org>  Sun, 16 May 2010 13:10:23 +0200
+
 gimp-plugin-registry (3.1-1) unstable; urgency=low
 
   * [4bfd4a1b] Add El Samuko GIMP Scripts.
