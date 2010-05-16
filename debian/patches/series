@@ -1,6 +1,7 @@
 contact_sheet_menu_fix
 xmc_no_config.h
 separate+_cflags
+separate_missing_include
 cmyk-tiff-2-pdf_pdfviewer.diff
 bw-simulation-color-mixer-fix.diff
 menu_fix-ca.diff
