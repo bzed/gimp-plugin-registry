@@ -41,7 +41,7 @@ gimp-plugin-registry (3.1-1) unstable; urgency=low
   * [1f4843ba] Updating seperate+ plugin.
   * [00dbc268] Add dpkg source format file.
   * [8c6603cf] Updating patches.
-  * [58b31655] Recommend gimp-gmic as replacement forGREYStoration.a
+  * [58b31655] Recommend gimp-gmic as a replacement forGREYStoration.
                (Closes: #556120)
   * [61d82953] Update copyright and control file.
   * [ae5a04e7] Fix some minor bugs in the new plugins.
