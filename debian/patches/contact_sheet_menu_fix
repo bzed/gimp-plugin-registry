@@ -4,12 +4,11 @@ attempted to register the menu item "<Save>" for procedure "python-fu-contact-sh
 
 --- a/contact-sheet/contactsheet.py
 +++ b/contact-sheet/contactsheet.py
-@@ -426,7 +426,7 @@ register(
+@@ -568,7 +568,6 @@ register(
          ],
          [],
          Contact_Sheet,
--        menu="<Save>", domain=("contactsheet", gimp.locale_directory)
-+        domain=("contactsheet", gimp.locale_directory)
+-        menu="<Save>",
+         domain=("contactsheet", gimp.locale_directory)
          )
  
- main()
