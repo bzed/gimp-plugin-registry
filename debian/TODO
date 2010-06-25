@@ -5,4 +5,9 @@ The following plugins should be included/considered:
 - http://registry.gimp.org/node/24496
 - http://registry.gimp.org/node/24494
 - http://registry.gimp.org/node/24473
-- gimpfx-foundry - http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=452207
+- http://registry.gimp.org/node/24441
+
+
+- maybe gimpfx-foundry - http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=452207
+- evaluate http://registry.gimp.org/node/24458
+
