@@ -3,7 +3,7 @@ CC=gcc
 
 build: build-stamp
 build-stamp:
-	set -e; cd build; $(CC) -L/usr/lib/libblas -lblas -llapack \
+	set -e; cd build; $(CC) -L/usr/lib/libblas -L/usr/lib/lapack -lblas -llapack \
 	                      $(LDFLAGS) $(CFLAGS) \
 	                      `gimptool-2.0 --libs` `gimptool-2.0 --cflags`  \
 	                      *.c -o refocus
