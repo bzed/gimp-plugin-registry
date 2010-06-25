@@ -1,3 +1,15 @@
+gimp-plugin-registry (3.3-1) unstable; urgency=low
+
+  * [b8d256e4] Build-Conflict against libatlas-base-dev. Hopefully this
+    ensures the package does not need atlas for a transition to testing.
+  * [f96d774e] contactsheet: Updating plugin.
+  * [8e5882af] contactsheet: Updating upstream url.
+  * [f3ccccac] Add TODO file.
+  * [c57b9b1a] Updating generated copyright file.
+  * [4570c5f3] Refreshing patches.
+
+ -- Bernd Zeimetz <bzed@debian.org>  Fri, 25 Jun 2010 11:46:57 +0200
+
 gimp-plugin-registry (3.2-1) unstable; urgency=low
 
   * [9132a18c] Spelling fix in debian/changelog.
@@ -5,7 +17,7 @@ gimp-plugin-registry (3.2-1) unstable; urgency=low
   * [a942d518] Updating debian/control.
   * Various fixes for lintian warnings from Stefan Ritter. Thanks!
 
- -- Bernd Zeimetz <bzed@debian.org>  Thu, 27 May 2010 14:59:22 +0200
+ -- Bernd Zeimetz <bzed@debian.org>  Fri, 25 Jun 2010 11:46:45 +0200
 
 gimp-plugin-registry (3.1-2) unstable; urgency=low
 
