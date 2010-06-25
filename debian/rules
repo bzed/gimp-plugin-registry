@@ -83,7 +83,7 @@ binary-arch: build install
 	dh_compress
 	dh_fixperms
 	dh_installdeb
-	dh_shlibdeps
+	dh_shlibdeps -l/usr/lib/lapack:/usr/lib/libblas
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
