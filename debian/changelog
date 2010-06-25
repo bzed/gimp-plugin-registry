@@ -1,3 +1,21 @@
+gimp-plugin-registry (3.3.1-1) unstable; urgency=low
+
+  * [71eaf547] Updating TODO.
+  * [8b27ad88] Add /usr/lib/libblas to the library search path for
+    refocus.
+  * [ab61f159] Prepare the "work-around-buggy-sbuild" release. Revert
+    "Build-Conflict against libatlas-base-dev." This reverts commit
+    b8d256e4dd7f03861be94e00444a4c93e80e93d9.
+  * [c7310c70] Allow to add extra CFLAGS/LDFLAGS in common.mk.
+  * [1e6fe57f] The xmc plugin needs to be linked against libxcursor.
+  * [b07255d3] Add /usr/lib/liblapack to the library search path for
+    refocus.
+  * [95eb3484] Force dpkg-shlibs to use liblapack/libblas instead of
+    atlas.
+  * [9d7319d0] Build-depend on libxcursor-dev as needed by xmc.
+
+ -- Bernd Zeimetz <bzed@debian.org>  Sat, 26 Jun 2010 00:10:09 +0200
+
 gimp-plugin-registry (3.3-1) unstable; urgency=low
 
   * [b8d256e4] Build-Conflict against libatlas-base-dev. Hopefully this
