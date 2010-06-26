@@ -8,7 +8,7 @@ Build-Depends: debhelper (>= 5), autotools-dev, quilt,
  libgtkglext1-dev, liblcms1-dev, libtiff4-dev,
  liblqr-1-0-dev (>= 0.3.0), intltool,
  libxcursor-dev
-Standards-Version: 3.8.1
+Standards-Version: 3.8.4
 Vcs-Git: git://git.recluse.de/debian/pkg-gimp-plugin-registry.git
 Vcs-Browser: http://git.recluse.de/?p=debian/pkg-gimp-plugin-registry.git;a=summary
 
@@ -23,7 +23,7 @@ Replaces: gimp-refocus (<< 0.9.0-2), gimp-save-for-web
 Provides: gimp-save-for-web
 Enhances: gimp
 Recommends: gimp-gmic
-Description: A repository of optional extensions for The GIMP
+Description: repository of optional extensions for The GIMP
  The package contains the following plugins:
  .
    * Add Film Grain (2.4):
@@ -107,6 +107,14 @@ Description: A repository of optional extensions for The GIMP
      Corrects chromatic aberration in photos
    * Focus-Blur (3.2.5):
      This plugin tries to simulate an out-of-focus blur
+   * GIMP FX Foundry (r111):
+     Probably the largest script collection available for The GIMP.
+   * GIMP-Mask:
+     Do and undo several popular image masking (that is, censoring)
+     methods (CP, FL, Q0, MEKO).
+   * Warming and Cooling Filters (May 24, 2010):
+     Warm or cool an image using one of several methods:
+     Wratten, Roy's Warm, Brauer's Warm, Pasty Cadaveric Look
    * Layer-Effects (2.4):
      This is a series of scripts that implement various layer effects:
      Drop Shadow, Inner Shadow, Outer Glow, Inner Glow, Bevel and Emboss,
