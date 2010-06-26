@@ -1,6 +1,6 @@
 gimp-plugin-registry (3.4-1) unstable; urgency=low
 
-  * [8bbfa39d] Seitch the order of libblas and liblapack build-dep. This
+  * [8bbfa39d] Switch the order of libblas and liblapack build-dep. This
     might stop sbuild from installing atlas as dependency of liblapack.
     Thanks for the suggestion to Kurt Roeckx - see bug #403246 for
     details.
