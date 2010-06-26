@@ -8,7 +8,7 @@ Build-Depends: debhelper (>= 5), autotools-dev, quilt,
  libgtkglext1-dev, liblcms1-dev, libtiff4-dev,
  liblqr-1-0-dev (>= 0.3.0), intltool,
  libxcursor-dev
-Standards-Version: 3.8.1
+Standards-Version: 3.8.4
 Vcs-Git: git://git.recluse.de/debian/pkg-gimp-plugin-registry.git
 Vcs-Browser: http://git.recluse.de/?p=debian/pkg-gimp-plugin-registry.git;a=summary
 
