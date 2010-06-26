@@ -119,10 +119,10 @@ update-control:
 	  for plugin in $(PLUGINS); do \
 	    if [ -f $$plugin/version ]; then \
 	      p_version=`cat $$plugin/version` ;\
-	      sed "s,{version},($$p_version),g" $$plugin/description ;\
+	      sed "s%{version}%($$p_version)%g" $$plugin/description ;\
 	    else \
 	      cat $$plugin/description ;\
-	    fi | grep '[a-zA-Z]' | sed 's,^,   ,';\
+	    fi | grep '[a-zA-Z]' | sed 's%^%   %';\
 	  done ;\
 	) > debian/control
 
