@@ -52,7 +52,7 @@ install: build
 	dh_clean -k 
 	dh_installdirs
 
-	for plugin in $(PLUGINS); do \
+	for plugin in `echo $(PLUGINS) | sed 's,gimp-fx-foundry,,;s,^,gimp-fx-foundry ,'`; do \
 		$(MAKE) -C $$plugin DESTDIR=$(DESTDIR) \
                                     PLUGINBINDIR=/usr/lib/gimp/2.0/plug-ins  \
 	                            PLUGINSCRIPTDIR=/usr/share/gimp/2.0/scripts \
