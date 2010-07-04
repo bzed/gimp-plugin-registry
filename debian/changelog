@@ -1,3 +1,19 @@
+gimp-plugin-registry (3.5-1) unstable; urgency=low
+
+  * [93ba2617] Restoring accidentally changed date of the changelog
+    entry of 3.2-1.
+  * [2f1ae711] Fix a spelling mistake in debian/changelog.
+  * [9689c25a] New plugin: traditional orton.
+  * [91c2a72e] Enhance common-py.mk. - pycompile scripts to ensure
+    they're syntactically correct. - handle script_srcdir and multiple
+    scripts.
+  * [beabb78c] New plugin: ez-perspective.
+  * [c2982ab6] We need python as build-dependency now.
+  * [ba92cfee] Bump Standards-Version to 3.9.0, no changes needed.
+  * [604a80cd] Updating control/copyright.
+
+ -- Bernd Zeimetz <bzed@debian.org>  Sun, 04 Jul 2010 14:17:45 +0200
+
 gimp-plugin-registry (3.4-1) unstable; urgency=low
 
   * [8bbfa39d] Switch the order of libblas and liblapack build-dep. This
