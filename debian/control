@@ -7,8 +7,8 @@ Build-Depends: debhelper (>= 5), autotools-dev, quilt,
  libblas-dev, liblapack-dev, libf2c2-dev, libfftw3-dev, libglew-dev,
  libgtkglext1-dev, liblcms1-dev, libtiff4-dev,
  liblqr-1-0-dev (>= 0.3.0), intltool,
- libxcursor-dev
-Standards-Version: 3.8.4
+ libxcursor-dev, python
+Standards-Version: 3.9.0
 Vcs-Git: git://git.recluse.de/debian/pkg-gimp-plugin-registry.git
 Vcs-Browser: http://git.recluse.de/?p=debian/pkg-gimp-plugin-registry.git;a=summary
 
@@ -103,6 +103,8 @@ Description: repository of optional extensions for The GIMP
        This script simulates the 3 Color Technicolor effect.
      * Vintage Look Script:
        This script simulates a 70s vintage look.
+   * EZ Perspective:
+     Specialized tool for easily correcting or changing perspective.
    * Fix-CA (3.0.2):
      Corrects chromatic aberration in photos
    * Focus-Blur (3.2.5):
@@ -150,6 +152,12 @@ Description: repository of optional extensions for The GIMP
      propagated along the second dimension of the image plane
      at a constant speed. The result is a picture of the time
      dependency of the object.
+   * Traditional Orton:
+     This is an effect invented by Michael Orton in the 1990’s, which
+     consists of taking two copies of an image, one blurred, and one sharp,
+     and mixing them to produce an image with a dreamy quality. It is
+     especially well suited to landscape and flower photography.
+     See http://www.cardinalpeak.com/blog/?p=569 for details.
    * Wavelet Decompose (0.1.2):
      The wavelet decompose plugin decomposes a layer of an image into layers
      of wavelet scales. This means that you can edit the image on different
