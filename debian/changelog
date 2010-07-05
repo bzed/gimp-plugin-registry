@@ -1,3 +1,14 @@
+gimp-plugin-registry (3.5.1-1) unstable; urgency=low
+
+  * [16de0f78] Remove url from plugin description.
+  * [b88dc866] Spelling fixes in plugin descriptions.
+  * [0146da1f] Ensure gimp-fx is installed first to prefer manually
+    selected plugins.
+  * [b9d25392] Work around various Python related bugs in Ubuntu.
+  * [74a4f964] Updating control file.
+
+ -- Bernd Zeimetz <bzed@debian.org>  Mon, 05 Jul 2010 18:26:57 +0200
+
 gimp-plugin-registry (3.5-1) unstable; urgency=low
 
   * [93ba2617] Restoring accidentally changed date of the changelog
