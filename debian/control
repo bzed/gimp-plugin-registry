@@ -37,7 +37,7 @@ Description: repository of optional extensions for The GIMP
      the channel mixer. Tries to produce results resembling
      tonal qualities of film.
    * CMYK Tiff 2 PDF for Gimp (20090321):
-     This plugin completes the prepress workflow of using Seperate+ to generate
+     This plugin completes the prepress workflow of using Separate+ to generate
      CMYK Tiff images by allowing you to convert the saved CMYK Tiff image into
      a PDF file.
    * Contact Sheet (2.02):
@@ -136,7 +136,7 @@ Description: repository of optional extensions for The GIMP
      tend to get blurry. The blurred impression of these images is due to the
      fact that image pixels are averaged with their neighbors. Blurred images
      don't have sharp boundaries and look as though they have been taken with
-     an unfocussed camera.
+     an unfocused camera.
    * Save for Web (0.29.0):
      Allows to experiment with various popular web format options. It shows
      an automatically updated preview and file size statistics.
@@ -157,7 +157,6 @@ Description: repository of optional extensions for The GIMP
      consists of taking two copies of an image, one blurred, and one sharp,
      and mixing them to produce an image with a dreamy quality. It is
      especially well suited to landscape and flower photography.
-     See http://www.cardinalpeak.com/blog/?p=569 for details.
    * Wavelet Decompose (0.1.2):
      The wavelet decompose plugin decomposes a layer of an image into layers
      of wavelet scales. This means that you can edit the image on different
@@ -168,7 +167,7 @@ Description: repository of optional extensions for The GIMP
    * Wavelet Denoise (0.3.1):
      The wavelet denoise plugin is a tool to selectively reduce noise in
      individual channels of an image with optional RGB<->YCbCr conversion.
-     It has a user inteface to adjust the amount of denoising applied. The
+     It has a user interface to adjust the amount of denoising applied. The
      wavelet nature of the algorithm makes the processing quite fast.
    * X11 Mouse Cursor (XMC) plug-in (2.0.6):
      Enables GIMP to import and export X11 mouse cursor files.
