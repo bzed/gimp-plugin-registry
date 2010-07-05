@@ -1,12 +1,19 @@
+PYDEFAULT := $(shell pyversions -vd)
+PYCOMPILE := $(shell which pycompile| grep -v 'not found')
+
 ifndef SCRIPT_SRCDIR
  SCRIPT_SRCDIR := $(CURDIR)
 endif
 
+ifdef PYCOMPILE
 build: $(SCRIPT:%=$(SCRIPT_SRCDIR)/%c)
 
 $(SCRIPT_SRCDIR)/%c: $(SCRIPT_SRCDIR)/%
-	pycompile $*
-
+	pycompile -V $(PYDEFAULT) $*
+else
+build:
+	#nothing to do without pycompile
+endif
 
 install: $(SCRIPT:%=$(DESTDIR)$(PLUGINSCRIPTDIR)/%)
 
