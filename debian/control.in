@@ -23,6 +23,6 @@ Replaces: gimp-refocus (<< 0.9.0-2), gimp-save-for-web
 Provides: gimp-save-for-web
 Enhances: gimp
 Recommends: gimp-gmic
-Description: repository of optional extensions for The GIMP
+Description: repository of optional extensions for GIMP
  The package contains the following plugins:
  .
