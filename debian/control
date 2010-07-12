@@ -127,6 +127,10 @@ Description: repository of optional extensions for GIMP
    * Normalmap (1.2.2):
      Allows you to convert images into RGB normal maps for use in
      per-pixel lighting applications.
+   * OpenRaster load/save handler (20100506-142cb16):
+     OpenRaster is an effort by the Create project[1] to offer a standardized
+     and open interchange format for raster-based applications. This plugin
+     allows to load and save files in the OpenRaster format.
    * Planet Render (1-2):
      Creates a planet. Color, size and sun orientation
      can be set.
