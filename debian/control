@@ -175,3 +175,4 @@ Description: repository of optional extensions for GIMP
      wavelet nature of the algorithm makes the processing quite fast.
    * X11 Mouse Cursor (XMC) plug-in (2.0.6):
      Enables GIMP to import and export X11 mouse cursor files.
+     (Only shipped if the package was built against libgimp-dev < 2.7~)
