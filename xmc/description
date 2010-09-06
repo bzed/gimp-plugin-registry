@@ -1,2 +1,3 @@
 * X11 Mouse Cursor (XMC) plug-in {version}:
   Enables GIMP to import and export X11 mouse cursor files.
+  (Only shipped if the package was built against libgimp-dev < 2.7~)
