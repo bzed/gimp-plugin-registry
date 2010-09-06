@@ -1,3 +1,14 @@
+gimp-plugin-registry (3.5.2-1) experimental; urgency=low
+
+  * [de938436] s/The GIMP/GIMP/ as suggested on irc.
+  * [45d63b59] Add openraster plugin. (Closes: #545398) (LP: #604521)
+  * [a0831874] Updating copyright/control files.
+  * [3a058f35] Don't build and install xmc for Gimp 2.7 or newer. (LP:
+    #630786)
+  * [c582018a] Updating debian/control.
+
+ -- Bernd Zeimetz <bzed@debian.org>  Mon, 06 Sep 2010 12:45:35 +0200
+
 gimp-plugin-registry (3.5.1-1) unstable; urgency=low
 
   * [16de0f78] Remove url from plugin description.
