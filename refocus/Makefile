@@ -5,7 +5,8 @@ build: build-stamp
 build-stamp:
 	set -e; cd build; $(CC) -L/usr/lib/libblas -L/usr/lib/lapack -lblas -llapack \
 	                      $(LDFLAGS) $(CFLAGS) \
-	                      `gimptool-2.0 --libs` `gimptool-2.0 --cflags`  \
+			      -I/usr/include/atlas -lm \
+	                      `pkg-config --libs gimp-2.0 gtk+-2.0` `pkg-config --cflags gimp-2.0 gtk+-2.0`  \
 	                      *.c -o refocus
 	touch build-stamp
 
