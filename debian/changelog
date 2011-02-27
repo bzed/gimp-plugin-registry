@@ -1,4 +1,4 @@
-gimp-plugin-registry (3.5.2-3) unstable; urgency=low
+gimp-plugin-registry (3.5.3-1) unstable; urgency=low
 
   * [371a43f5] Fix linker issues in refoxus plugin.
 
