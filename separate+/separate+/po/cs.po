@@ -1,0 +1,759 @@
+# Separate+ for The GIMP
+# Copyright (C) 2002-2004 Alastair Robinson
+# Yoshinori Yamakawa <yamma-ma@users.sourceforge.jp>, 2006-2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Separate+ 0.5.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-08-23 01:10+0900\n"
+"PO-Revision-Date: 2008-01-16 14:37+0100\n"
+"Last-Translator: Zdeněk Hataš <zdenek.hatas@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Poedit-Language: Czech\n"
+"X-Poedit-Country: CZECH REPUBLIC\n"
+
+#: icc_colorspace.c:122
+#, fuzzy
+msgid "Assign new colorspace"
+msgstr "Přiřadit barevný prostor"
+
+#: icc_colorspace.c:123
+msgid "Assign, replace or remove the ICC profile."
+msgstr ""
+
+#: icc_colorspace.c:127
+msgid "Assign colorspace..."
+msgstr "Přiřadit barevný prostor..."
+
+#: icc_colorspace.c:134
+#, fuzzy
+msgid "Convert to other colorspace"
+msgstr "Konvertovat barevný prostor"
+
+#: icc_colorspace.c:135
+#, fuzzy
+msgid "Convert to other RGB colorspace using ICC profiles."
+msgstr "Konvertovat barevný prostor"
+
+#: icc_colorspace.c:140
+msgid "Convert colorspace..."
+msgstr "Konvertovat barevný prostor..."
+
+#: icc_colorspace.c:147 icc_colorspace.c:1337
+msgid "Apply abstract profile"
+msgstr ""
+
+#: icc_colorspace.c:148
+msgid "Apply the abstract profile for color effects."
+msgstr ""
+
+#: icc_colorspace.c:152
+msgid "Apply abstract profile..."
+msgstr ""
+
+#: icc_colorspace.c:278 icc_colorspace.c:290 separate-core.c:155
+msgid "Rendering intent is invalid."
+msgstr "Metoda převodu není platná."
+
+#: icc_colorspace.c:285
+msgid "Target is unknown."
+msgstr ""
+
+#: icc_colorspace.c:295
+msgid "Abstract profile is required."
+msgstr ""
+
+#: icc_colorspace.c:805
+msgid "Conveting..."
+msgstr "Probíhá konverze..."
+
+#: icc_colorspace.c:944
+msgid "Can't get colormap!"
+msgstr "Nelze získat mapu barev!"
+
+#: icc_colorspace.c:975
+msgid "Unsupported BPP!"
+msgstr "Nepodporovaný BPP!"
+
+#: icc_colorspace.c:1044
+msgid "Assign colorspace"
+msgstr "Přiřadit barevný prostor"
+
+#: icc_colorspace.c:1061
+msgid "Current colorspace:"
+msgstr "Současný barevný prostor:"
+
+#: icc_colorspace.c:1069 icc_colorspace.c:1192
+msgid "Unknown (image has no profiles)"
+msgstr ""
+
+#: icc_colorspace.c:1075 icc_colorspace.c:1198
+msgid ""
+"<span size=\"smaller\" style=\"italic\">plug-in uses RGB workspace "
+"temporarily</span>"
+msgstr ""
+
+#: icc_colorspace.c:1086
+msgid "New colorspace:"
+msgstr "Nový barevný prostor:"
+
+#: icc_colorspace.c:1093
+msgid "_Unassign colorspace"
+msgstr "Nepřiřa_zený barevný profil:"
+
+#: icc_colorspace.c:1098 icc_colorspace.c:1243
+#, c-format
+msgid "_Workspace: %s"
+msgstr "Pracovní pro_stor: %s"
+
+#: icc_colorspace.c:1108 icc_colorspace.c:1253
+msgid "_Profile:"
+msgstr "_Profil:"
+
+#: icc_colorspace.c:1114 icc_colorspace.c:1259
+msgid "Choose RGB profile"
+msgstr "Zvolit RGB profil"
+
+#: icc_colorspace.c:1168
+msgid "Convert colorspace"
+msgstr "Konvertovat barevný prostor"
+
+#: icc_colorspace.c:1184
+msgid "Source colorspace:"
+msgstr "Zdrojový barevný prostor:"
+
+#: icc_colorspace.c:1209 icc_colorspace.c:1376 separate-gui.c:780
+#, fuzzy
+msgid "_Rendering intent:"
+msgstr "Metoda převodu:"
+
+#: icc_colorspace.c:1219 icc_colorspace.c:1386 separate-gui.c:786
+msgid "Perceptual"
+msgstr "Perceptuální"
+
+#: icc_colorspace.c:1220 icc_colorspace.c:1387 separate-gui.c:787
+msgid "Relative colorimetric"
+msgstr "Relativní kolorimetrická"
+
+#: icc_colorspace.c:1221 icc_colorspace.c:1388 separate-gui.c:788
+msgid "Saturation"
+msgstr "Sytost"
+
+#: icc_colorspace.c:1222 icc_colorspace.c:1389 separate-gui.c:789
+msgid "Absolute colorimetric"
+msgstr "Absolutní kolorimetrická"
+
+#: icc_colorspace.c:1223 icc_colorspace.c:1390 separate-gui.c:790
+msgid "Absolute colorimetric(2)"
+msgstr "Absolutní kolorimetrická(2)"
+
+#: icc_colorspace.c:1227 icc_colorspace.c:1394 separate-gui.c:795
+#, fuzzy
+msgid "Use _BPC algorithm"
+msgstr "Použít BPC algoritmus"
+
+#: icc_colorspace.c:1235
+msgid "Destination colorspace:"
+msgstr "Cílový barevný prostor:"
+
+#: icc_colorspace.c:1268 icc_colorspace.c:1414 separate-gui.c:823
+msgid "Use _dither"
+msgstr ""
+
+#: icc_colorspace.c:1278
+#, fuzzy
+msgid "_Flatten image to preserve appearance"
+msgstr "Zploštit obrázek ( pro zachování vzhledu )"
+
+#: icc_colorspace.c:1355
+#, fuzzy
+msgid "_Abstract profile:"
+msgstr "Souhrn"
+
+#: icc_colorspace.c:1366
+#, fuzzy
+msgid "Choose abstract profile"
+msgstr "Zvolit RGB profil"
+
+#: icc_colorspace.c:1398
+msgid "Target:"
+msgstr ""
+
+#: icc_colorspace.c:1406
+msgid "_Selection"
+msgstr ""
+
+#: icc_colorspace.c:1407
+msgid "Each _layer"
+msgstr ""
+
+#: icc_colorspace.c:1408
+msgid "_Flatten image"
+msgstr ""
+
+#: iccbutton.c:156
+msgid "Input"
+msgstr "Vstup"
+
+#: iccbutton.c:157
+msgid "Display"
+msgstr "Zobrazení"
+
+#: iccbutton.c:158
+msgid "Output"
+msgstr "Výstup"
+
+#: iccbutton.c:159
+msgid "Devicelink"
+msgstr ""
+
+#: iccbutton.c:160
+msgid "Abstract"
+msgstr "Souhrn"
+
+#: iccbutton.c:161
+msgid "Colorspace conversion"
+msgstr "Konverze barevného prostoru"
+
+#: iccbutton.c:162
+msgid "Named color"
+msgstr "Pojmenovaná barva"
+
+#: iccbutton.c:635 iccbutton.c:755
+msgid "(not selected)"
+msgstr "(nebyl zvolen)"
+
+#: iccbutton.c:832 iccbutton.c:1040 iccbutton.c:1173 separate-gui.c:1238
+msgid "None"
+msgstr "Žádný"
+
+#: iccbutton.c:1190
+msgid "More..."
+msgstr ""
+
+#: iccbutton.c:1190
+msgid "Show dialog..."
+msgstr ""
+
+#: iccbutton.c:1293
+msgid "Estimated TAC:"
+msgstr ""
+
+#: iccbutton.c:1302
+msgid "Matrix / LUT:"
+msgstr ""
+
+#: iccbutton.c:1304 iccbutton.c:1305
+msgid "matrix-lut|Yes"
+msgstr ""
+
+#: iccbutton.c:1304 iccbutton.c:1305
+msgid "matrix-lut|No"
+msgstr ""
+
+#: iccbutton.c:1322
+#, fuzzy
+msgid "Conversion:"
+msgstr "Konverze barevného prostoru"
+
+#: iccbutton.c:1324
+#, c-format
+msgid " to %c%c%c%c"
+msgstr ""
+
+#: iccbutton.c:1331 iccbutton.c:1591
+#, fuzzy
+msgid "Colorspace / PCS:"
+msgstr "Barevný prostor"
+
+#: iccbutton.c:1495
+msgid "Choose an ICC Profile"
+msgstr "Vybrat ICC Profil"
+
+#: iccbutton.c:1534
+msgid "Name"
+msgstr "Jméno"
+
+#: iccbutton.c:1540
+msgid "Class"
+msgstr "Třída"
+
+#: iccbutton.c:1547
+msgid "Colorspace"
+msgstr "Barevný prostor"
+
+#: iccbutton.c:1554
+msgid "PCS"
+msgstr "PCS"
+
+#: iccbutton.c:1561
+msgid "Path"
+msgstr "Cesta"
+
+#: iccbutton.c:1571
+msgid "Detail"
+msgstr ""
+
+#: iccbutton.c:1577
+#, fuzzy
+msgid "Profile class:"
+msgstr "_Profil:"
+
+#: iccbutton.c:1584
+msgid "ICC version:"
+msgstr ""
+
+#: iccbutton.c:1598
+msgid "Whitepoint:            "
+msgstr ""
+
+#: iccbutton.c:1615
+#, fuzzy
+msgid "_Path:"
+msgstr "Cesta:"
+
+#: iccbutton.c:1664
+msgid "Invalid profile"
+msgstr "Neplatný profil"
+
+#: iccbutton.c:1666
+msgid "Please check the filename, device class, and colorspace."
+msgstr "Zkontrolujte prosím jméno souboru, třídu zařízen a barevný prostor."
+
+#: import.c:82
+msgid "Import CMYK TIFF image"
+msgstr ""
+
+#: import.c:83
+msgid ""
+"Load the CMYK TIFF image, and generate four layers as pseudo C/M/Y/K "
+"channels.\n"
+"To convert to single-layered RGB image, try to use the \"plug-in-separate-"
+"proof\" procedure."
+msgstr ""
+
+#: import.c:90
+msgid "From CMYK TIFF"
+msgstr ""
+
+#: import.c:177
+#, c-format
+msgid "Cannot open : \"%s\""
+msgstr "Nelze otevřít : \"%s\""
+
+#: import.c:193
+#, c-format
+msgid "\"%s\" is unsupported."
+msgstr "\"%s\" není podporován."
+
+#: import.c:240 util.c:42 util.c:308 util.c:364 util.c:416
+msgid "Background"
+msgstr "Pozadí"
+
+#: import.c:250 separate-core.c:418 separate-core.c:540 separate-core.c:919
+msgid "Alpha of source image"
+msgstr ""
+
+#: import.c:260
+#, c-format
+msgid "Reading \"%s\"..."
+msgstr "Čtení \"%s\"..."
+
+#: import.c:382
+msgid "Import separated TIFF..."
+msgstr "Importovat separovaný TIFF..."
+
+#: import.c:396
+msgid "All files"
+msgstr ""
+
+#: import.c:401
+msgid "CMYK TIFF image"
+msgstr ""
+
+#: jpeg.c:180
+#, fuzzy
+msgid "Exporting JPEG..."
+msgstr "Probíhá separace..."
+
+#: jpeg.c:286
+msgid "Failed to exporting JPEG."
+msgstr ""
+
+#: lcms_wrapper.c:360
+#, c-format
+msgid "%s(broken text)..."
+msgstr "%s(broken text)..."
+
+#: lcms_wrapper.c:372
+msgid "(no name)"
+msgstr "(žádné jméno)"
+
+#: psd.c:126 psd.c:296
+#, c-format
+msgid "Exporting Photoshop PSD (%s channel)..."
+msgstr ""
+
+#: separate-core.c:180
+#, fuzzy
+msgid "Cannot read the embedded profile.\n"
+msgstr "Vložený profil má prioritu"
+
+#: separate-core.c:192
+msgid "Cannot open the source/devicelink profile.\n"
+msgstr ""
+
+#: separate-core.c:206
+msgid "Cannot open the destination profile.\n"
+msgstr ""
+
+#: separate-core.c:234 separate-core.c:736
+#, fuzzy
+msgid ""
+"Cannot build transform.\n"
+"There might be an error in the specification of the profile."
+msgstr ""
+"Interní chyba.\n"
+"Toto může být způsobeno chybou ve specifikaci profilu."
+
+#: separate-core.c:436 separate-core.c:554 separate-core.c:935
+msgid "Separating..."
+msgstr "Probíhá separace..."
+
+#: separate-core.c:621
+msgid "Proofing mode is invalid."
+msgstr "Mód náhledu není validní."
+
+#: separate-core.c:627
+msgid "Image is not separated..."
+msgstr "Obrázek je neseparovaný..."
+
+#: separate-core.c:646
+msgid "C"
+msgstr "C"
+
+#: separate-core.c:646
+msgid "M"
+msgstr "M"
+
+#: separate-core.c:646
+msgid "Y"
+msgstr "Y"
+
+#: separate-core.c:646
+msgid "K"
+msgstr "K"
+
+#: separate-core.c:657
+#, c-format
+msgid "Couldn't get channel(s) : %s"
+msgstr "Není možné použít kanál(y) : %s"
+
+#: separate-core.c:687
+#, fuzzy
+msgid "Cannot open the CMYK profile."
+msgstr "Zvolte CMYK profil:"
+
+#: separate-core.c:701
+msgid "Cannot open the display profile."
+msgstr ""
+
+#: separate-core.c:777
+msgid "Proofing..."
+msgstr "Vytvářím náhled..."
+
+#: separate-gui.c:150 separate-gui.c:163 separate-gui.c:176
+msgid "Generate CMYK separations"
+msgstr ""
+
+#: separate-gui.c:151
+msgid ""
+"Separate performs CMYK colour separation of an image, into the four layers."
+msgstr "Separate provede CMYK separaci barev obrázku do čtyř vrstev."
+
+#: separate-gui.c:156
+msgid "<Image>/Image/Separate/Separate"
+msgstr ""
+
+#: separate-gui.c:164
+msgid ""
+"Separate performs CMYK colour separation of an RGB image, into the alpha-"
+"channels of four coloured layers."
+msgstr ""
+"Separate provede CMYK separaci barev RGB obrázku do alfa kanálů čtyř "
+"barevných vrstev."
+
+#: separate-gui.c:177
+msgid ""
+"Separate performs CMYK colour separation of an RGB image, into four "
+"greyscale layers."
+msgstr ""
+"Separate provede CMYK separaci barev obrázku RGB obrázku do čtyř vrstev "
+"odstínů šedi."
+
+#: separate-gui.c:189
+msgid "Softproofing CMYK colour"
+msgstr ""
+
+#: separate-gui.c:190
+msgid ""
+"Separate proofs a CMYK colour separation, by transforming back into RGB, "
+"with media-white simulation."
+msgstr ""
+"Separate vytvoří náhled CMYK separace zpětnou trasformací do RGB se simulací "
+"bílé."
+
+#: separate-gui.c:195
+msgid "<Image>/Image/Separate/Proof"
+msgstr ""
+
+#: separate-gui.c:202
+msgid "Generate duotone separations"
+msgstr ""
+
+#: separate-gui.c:209
+msgid "<Image>/Image/Separate/Duotone"
+msgstr ""
+
+#: separate-gui.c:216
+#, fuzzy
+msgid "Save separated image"
+msgstr "Uložit separovaný obrázek do formátu TIFF."
+
+#: separate-gui.c:217
+msgid ""
+"Save separated image in TIFF format.\n"
+"Note that this procedure is provided for backward compatibility."
+msgstr ""
+
+#: separate-gui.c:229
+#, fuzzy
+msgid "Export separated image"
+msgstr "Uložit separovaný obrázek do formátu TIFF."
+
+#: separate-gui.c:230
+msgid ""
+"Export separated image.\n"
+"Availavle formats are listed in README file."
+msgstr ""
+
+#: separate-gui.c:234
+msgid "<Image>/Image/Separate/Export..."
+msgstr ""
+
+#: separate-gui.c:410 separate-gui.c:476
+msgid "Separate: Internal calling error!"
+msgstr "Separate: interní chyba!"
+
+#: separate-gui.c:426
+msgid "This is not a CMYK separated image!"
+msgstr "Toto není CMYK separovaný obrázek!"
+
+#: separate-gui.c:600
+#, fuzzy
+msgid "Device_link profile:"
+msgstr "Neplatný profil"
+
+#: separate-gui.c:601
+#, fuzzy
+msgid "Choose devicelink profile..."
+msgstr "Zvolte RGB profil..."
+
+#: separate-gui.c:614 separate-gui.c:689
+#, fuzzy
+msgid "_Source color space:"
+msgstr "Zdrojový prostor barev:"
+
+#: separate-gui.c:615
+msgid "Choose source profile (RGB)..."
+msgstr "Zvolte zdrojový profil (RGB)..."
+
+#: separate-gui.c:667
+#, fuzzy
+msgid "Separate"
+msgstr "Probíhá separace..."
+
+#: separate-gui.c:707
+#, fuzzy
+msgid "_Give priority to embedded profile"
+msgstr "Vložený profil má prioritu"
+
+#: separate-gui.c:740
+#, fuzzy
+msgid "(no profiles embedded)"
+msgstr "(není vložen profil)"
+
+#: separate-gui.c:758
+#, fuzzy
+msgid "D_estination color space:"
+msgstr "Cílový prostor barev:"
+
+#: separate-gui.c:767
+msgid "Choose output profile (CMYK)..."
+msgstr "Zvolte výstupní profil (CMYK)..."
+
+#: separate-gui.c:800
+msgid "Options:"
+msgstr "Volby:"
+
+#: separate-gui.c:804
+#, fuzzy
+msgid "_Use devicelink profile"
+msgstr "Zvolte RGB profil..."
+
+#: separate-gui.c:811
+#, fuzzy
+msgid "_Preserve pure black"
+msgstr "Zachovat černou"
+
+#: separate-gui.c:815
+#, fuzzy
+msgid "O_verprint pure black"
+msgstr "Přepsat černou"
+
+#: separate-gui.c:834
+#, fuzzy
+msgid "_Make CMYK pseudo-composite"
+msgstr "Vytvořit pseudo-kompozitní CMYK"
+
+#: separate-gui.c:934
+#, fuzzy
+msgid "Proof"
+msgstr "Vytvářím náhled..."
+
+#: separate-gui.c:962
+#, fuzzy
+msgid "_Monitor color space:"
+msgstr "Pracovní prostor/Profil monitoru"
+
+#: separate-gui.c:972
+msgid "Choose RGB profile..."
+msgstr "Zvolte RGB profil..."
+
+#: separate-gui.c:985
+#, fuzzy
+msgid "_Separated image's color space:"
+msgstr "Barevný prostor separovaného obrázku:"
+
+#: separate-gui.c:995
+msgid "Choose CMYK profile..."
+msgstr "Zvolte CMYK profil:"
+
+#: separate-gui.c:1008
+#, fuzzy
+msgid "_Give priority to attached profile"
+msgstr "Dát prioritu připojenému profilu"
+
+#: separate-gui.c:1044
+#, fuzzy
+msgid "(no profiles attached)"
+msgstr "( nepřipojen žádný profil )"
+
+#: separate-gui.c:1066
+#, fuzzy
+msgid "M_ode:"
+msgstr "Mód:"
+
+#: separate-gui.c:1073
+msgid "Normal"
+msgstr "Normální"
+
+#: separate-gui.c:1074
+msgid "Simulate black ink"
+msgstr "Simulace černého inkoustu"
+
+#: separate-gui.c:1075
+msgid "Simulate media white"
+msgstr "Simulace bílé média"
+
+#: separate-gui.c:1142
+#, fuzzy
+msgid "Export CMYK image..."
+msgstr "Vytvářím CMYK vrstvy..."
+
+#: separate-gui.c:1171
+#, fuzzy
+msgid "_Format:"
+msgstr "Normální"
+
+#: separate-gui.c:1180
+msgid "Auto"
+msgstr ""
+
+#: separate-gui.c:1181
+msgid "TIFF"
+msgstr ""
+
+#: separate-gui.c:1182
+msgid "JPEG"
+msgstr ""
+
+#: separate-gui.c:1183
+msgid "Photoshop PSD"
+msgstr ""
+
+#: separate-gui.c:1188
+msgid "Co_mpress pixel data"
+msgstr ""
+
+#: separate-gui.c:1201
+msgid "Clippi_ng path:"
+msgstr ""
+
+#: separate-gui.c:1209
+msgid "Don't specify"
+msgstr ""
+
+#: separate-gui.c:1233
+#, fuzzy
+msgid "_Embed color profile:"
+msgstr "Vložit barevný profil:"
+
+#: separate-gui.c:1239
+msgid "CMYK default profile"
+msgstr "Výchozí profil CMYK"
+
+#: separate-gui.c:1240
+msgid "Print simulation profile"
+msgstr "Profil simulace tisku"
+
+#: separate-gui.c:1248
+#, c-format
+msgid "Own profile : %s"
+msgstr "Vlastní profil : %s"
+
+#: tiff.c:78
+#, fuzzy
+msgid "Exporting TIFF..."
+msgstr "Probíhá separace..."
+
+#: util.c:305
+msgid "Layer 1"
+msgstr ""
+
+#: util.c:488
+#, c-format
+msgid "Untitled-%s.tif"
+msgstr "Bezejména-%s.tif"
+
+#~ msgid "Creating CMYK layers..."
+#~ msgstr "Vytvářím CMYK vrstvy..."
+
+#~ msgid "Save separated image in TIFF format."
+#~ msgstr "Uložit separovaný obrázek do formátu TIFF."
+
+#~ msgid "Save separated TIFF..."
+#~ msgstr "Uložit separovaný TIFF.."
+
+#, fuzzy
+#~ msgid "Saving..."
+#~ msgstr "Probíhá separace..."
+
+#~ msgid "None ( use RGB workspace temporarily )"
+#~ msgstr "Žádný ( dočasně použít pracovní prostor RGB )"

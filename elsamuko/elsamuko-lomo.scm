@@ -177,7 +177,7 @@
         )
     
     ;add c41-effect
-    ;old red
+    ;old red from djinn (http://registry.gimp.org/node/4683)
     (if(= c41 1)(begin
                   (gimp-curves-spline draw  HISTOGRAM-VALUE 8 #(0 0 68 64 190 219 255 255))
                   (gimp-curves-spline draw  HISTOGRAM-RED   8 #(0 0 39 93 193 147 255 255))
@@ -186,7 +186,7 @@
                   )
        )
     
-    ;xpro green
+    ;xpro green from lilahpops (http://www.lilahpops.com/cross-processing-with-the-gimp/)
     (if(= c41 2)(begin
                   (gimp-curves-spline draw  HISTOGRAM-RED  10 #(0 0 80 84 149 192 191 248 255 255))
                   (gimp-curves-spline draw  HISTOGRAM-GREEN 8 #(0 0 70 81 159 220 255 255))
@@ -212,12 +212,10 @@
     
     ;movie (from http://tutorials.lombergar.com/achieve_the_indie_movie_look.html)
     (if(= c41 5)(begin
-                  (gimp-levels draw HISTOGRAM-VALUE
-                               40 255 ;input
-                               1 ;gamma
-                               0 255) ;output
-                  (gimp-color-balance draw MIDTONES   TRUE 19 -3 -43)
-                  (gimp-color-balance draw HIGHLIGHTS TRUE 25 -4 -12)
+                  (gimp-curves-spline draw  HISTOGRAM-VALUE 4 #(40 0 255 255))
+                  (gimp-curves-spline draw  HISTOGRAM-RED   6 #(0  0 127 157 255 255))
+                  (gimp-curves-spline draw  HISTOGRAM-GREEN 4 #(0  8 255 255))
+                  (gimp-curves-spline draw  HISTOGRAM-BLUE  6 #(0  0 127 106 255 245))
                   )
        )
     
@@ -246,7 +244,7 @@
                   )
        )
     
-    ;LAB
+    ;LAB from Martin Evening (http://www.photoshopforphotographers.com/pscs2/download/movie-06.pdf)
     (if(= c41 7)(begin
                   (set! drawA  (car (gimp-layer-copy draw FALSE)))
                   (set! drawB (car (gimp-layer-copy draw FALSE)))
@@ -302,7 +300,7 @@
                   (set! blue-layer (car (gimp-layer-copy draw TRUE)))
                   (gimp-image-add-layer img blue-layer -1)
                   (gimp-drawable-set-name blue-layer "Blue Filter")
-                  (gimp-layer-set-opacity blue-layer 30)
+                  (gimp-layer-set-opacity blue-layer 40)
                   (gimp-layer-set-mode blue-layer SCREEN-MODE)
                   (plug-in-colors-channel-mixer 1 img blue-layer TRUE
                                                 0 0 1 ;R
@@ -315,9 +313,32 @@
                   (gimp-context-set-background '(0 0 255))
                   (gimp-drawable-fill blue-layer BACKGROUND-FILL)
                   
-                  (gimp-curves-spline draw  HISTOGRAM-RED   6 #(0 0 127 190 255 255))
-                  (gimp-curves-spline draw  HISTOGRAM-GREEN 6 #(0 0 127  62 240 255))
-                  (gimp-curves-spline draw  HISTOGRAM-BLUE  4 #(0 0 255 0))
+                  (gimp-curves-spline draw HISTOGRAM-RED   6 #(0 0 127 190 255 255))
+                  (gimp-curves-spline draw HISTOGRAM-GREEN 6 #(0 0 127  62 240 255))
+                  (gimp-curves-spline draw HISTOGRAM-BLUE  4 #(0 0 255 0))
+                  )
+       )
+    
+    ;retro bw
+    (if(= c41 10)(begin
+                  (gimp-desaturate-full draw DESATURATE-LUMINOSITY)
+                  ;(gimp-curves-spline draw HISTOGRAM-RED   4 #(0 15 255 255))
+                  (gimp-curves-spline draw HISTOGRAM-BLUE  4 #(0 0 255 230))
+                  (gimp-curves-spline draw HISTOGRAM-VALUE 8 #(0 0 63 52 191 202 255 255))
+                  )
+       )
+    
+    ;paynes bw
+    (if(= c41 11)(begin
+                  (gimp-desaturate-full draw DESATURATE-LUMINOSITY)
+                  (gimp-colorize draw 215 11 0)
+                  )
+       )
+    
+    ;sepia
+    (if(= c41 12)(begin
+                  (gimp-desaturate-full draw DESATURATE-LUMINOSITY)
+                  (gimp-colorize draw 30 25 0)
                   )
        )
     
@@ -364,6 +385,7 @@
     ;if double vignetting is needed, duplicate layer and set duplicate opacity to 80%
     (gimp-edit-blend vignette 2 0 2 100 0 REPEAT-NONE TRUE FALSE 0 0 TRUE blend_x blend_y endingx endingy)
     (gimp-layer-scale vignette (* owidth avig) (* oheight avig) 1)
+    (plug-in-spread 1 img vignette 50 50)
     (if (= adv TRUE) 
         ( begin 
            (set! hvignette (car (gimp-layer-copy vignette 0)))
@@ -379,6 +401,7 @@
     ;apply a radial blend from center to farthest side of layer
     (gimp-context-swap-colors)
     (gimp-edit-blend overexpo 2 0 2 100 0 REPEAT-NONE FALSE FALSE 0 0 TRUE blend_x blend_y endingx endingy)
+    (plug-in-spread 1 img overexpo 50 50)
     
     ;adding the black vignette
     ;selecting a feathered circle, invert selection and fill up with black
@@ -503,7 +526,10 @@ Latest version can be downloaded from http://registry.gimp.org/node/7870"
                                                              "Vintage"
                                                              "Xpro LAB"
                                                              "Light Blue"
-                                                             "Redscale")
+                                                             "Redscale"
+                                                             "Retro B/W"
+                                                             "Paynes B/W"
+                                                             "Sepia")
                     SF-TOGGLE     _"Invert LAB-A"          FALSE
                     SF-TOGGLE     _"Invert LAB-B"          FALSE
                     SF-TOGGLE     _"Double Vignetting"     TRUE

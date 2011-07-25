@@ -1,0 +1,116 @@
+=================== icc_colorspace Plug-in Readme ==================
+
+----- Introduction
+This is a GIMP plug-in for the ICC profile assignment or removal, the 
+RGB -> RGB color space conversion and the application of abstract 
+profile for image documents.
+
+
+----- Requirements
+This Plug-in requires LittleCMS version 1.15 or later, or, 2.0 or later. 
+Bundled win32 binarie is built for a Pentium III or its compatible CPUs. 
+These are tested with The GIMP for Windows version 2.6.10.
+
+
+----- What you need
+* GIMP (Version 2.4 or later)
+
+* ICC Profiles
+   sRGB profile is included. Standard profiles such as Adobe RGB or 
+   ColorMatch RGB is downloadable from Adobe website.
+
+  (Mac)
+   http://www.adobe.com/support/downloads/iccprofiles/iccprofiles_mac.html
+  (Win/Linux)
+   http://www.adobe.com/support/downloads/iccprofiles/iccprofiles_win.html
+
+* Basic knowledge about ICC-based color management
+
+
+----- How to use
+1. Color space (profile) assignment
+
+To assign a color space, select "Image -> Mode -> Assign colorspace" 
+from the menu of the image.
+
+After the dialog opens, specify a RGB workspace ("RGB profile" in color 
+management preferences) or any profile. To remove the profile that is 
+currently assigned, choose "Unassign colorspace".
+
+*To specify any profile, click a button that a profile name is displayed 
+to choose from the list, or drop the file icon of profile into the button.
+
+After that, click OK to start assignment (removal).
+
+2. Color space conversion
+
+To convert the color space of an image (into an another RGB space), choose 
+"Image -> Mode -> Convert colorspace..." from the menu of the image.
+
+After the open of the dialog, specify the profile of the destination color 
+space.
+
+Next, choose the Rendering intent. Generally, "Perceptual" or "Relative 
+colorimetric" will do. If these options are chosen, selecting "Use BPC 
+algorithm" usually generates better results.
+
+
+NOTE : "Absolute colorimetric (2)" is an option to reproduce the results 
+from Photoshop CS2.
+To obtain the same results as any other application or CMMs, choose 
+options any other than (2).
+
+
+If the conversion result contains banding, it is good way to try "Use 
+dither" option.
+
+Finally, select "Flatten image" as necessary. The conversion of color 
+spaces affects the layer projection because pixel values of each layer 
+are modified. In case this effect is not ignorable, We recommend merging 
+layers.
+
+After that, click OK to start conversion.
+
+3. Abstract profile application
+
+Abstract profile is a profile that performs color conversion in the Lab 
+(CIE L*a*b*) color space, and is generally used for applying effects or 
+corrections related to color. As for applications supporting abstract 
+profile, not so many are found; ColorSync utility and Photoshop CS4 or 
+later supports it.
+
+In Mac OS X several abstract profiles are installed. Also, sample profiles 
+comes with a ZIP file of Separate+.
+
+To use abstract profile with an icc_colorspace plug-in, choose "Color -> 
+Apply abstract profile..." from image menu.
+
+Specify abstract profile and its target from the dialog, and click OK. 
+To apply it for whole active layer, make sure to deselect region and 
+then choose "Selection".
+
+For detailed information about the function or operation of icc_colorspace 
+plug-in, refer to handbooks about Photoshop or color management.
+
+----- Building and Installing
+Same procedure and notes as readme file of Separate+.
+
+
+----- Future Conception
+Some of them may not be feasible...
+
+* Supporting device link profiles
+* Simple tool for making abstract profiles
+* Conversion using CMM in ICM2.0 (Windows)
+
+
+----- Author
+Yoshinori Yamakawa <yamma-ma at users.sourceforge.jp>
+
+http://cue.yellowmagic.info/softwares/separate-plus/index.html
+
+
+----- License
+This plug-in is licensed under the GNU General Public License version 2.
+
+For more information, see COPYING.

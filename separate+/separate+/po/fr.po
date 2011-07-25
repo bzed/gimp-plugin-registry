@@ -1,0 +1,733 @@
+# Separate+ for The GIMP
+# Copyright (C) 2002-2004 Alastair Robinson
+# Yoshinori Yamakawa <yamma-ma@users.sourceforge.jp>, 2006-2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Separate+ 0.5.7\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-08-23 01:10+0900\n"
+"PO-Revision-Date: 2010-02-27 03:00+0900\n"
+"Last-Translator: cedric Gemy <cedric.gemy@gmail.com>\n"
+"Language-Team: LANGUAGE <gnomefr@traduc.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: icc_colorspace.c:122
+msgid "Assign new colorspace"
+msgstr "Assigner un espace de couleur"
+
+#: icc_colorspace.c:123
+msgid "Assign, replace or remove the ICC profile."
+msgstr "Assigner, remplacer ou enlever le profil ICC"
+
+#: icc_colorspace.c:127
+msgid "Assign colorspace..."
+msgstr "Assignation de l'espace de couleur..."
+
+#: icc_colorspace.c:134
+msgid "Convert to other colorspace"
+msgstr "Convertir l'espace de couleur"
+
+#: icc_colorspace.c:135
+msgid "Convert to other RGB colorspace using ICC profiles."
+msgstr "Convertir l'espace de couleur en utilisant un profil ICC"
+
+#: icc_colorspace.c:140
+msgid "Convert colorspace..."
+msgstr "Conversion de l'espace de couleur..."
+
+#: icc_colorspace.c:147 icc_colorspace.c:1337
+msgid "Apply abstract profile"
+msgstr "Appliquer un profil abstrait"
+
+#: icc_colorspace.c:148
+msgid "Apply the abstract profile for color effects."
+msgstr "Applique le profil abstrait pour les effets de couleur."
+
+#: icc_colorspace.c:152
+msgid "Apply abstract profile..."
+msgstr "Appliquer un profil abstrait"
+
+#: icc_colorspace.c:278 icc_colorspace.c:290 separate-core.c:155
+msgid "Rendering intent is invalid."
+msgstr "Le mode de rendu n'est pas valide."
+
+#: icc_colorspace.c:285
+msgid "Target is unknown."
+msgstr "Cible inconnue"
+
+#: icc_colorspace.c:295
+msgid "Abstract profile is required."
+msgstr "Profil abstrait requis"
+
+#: icc_colorspace.c:805
+msgid "Conveting..."
+msgstr "Conversion..."
+
+#: icc_colorspace.c:944
+msgid "Can't get colormap!"
+msgstr "Ne peut obtenir la palette des couleurs !"
+
+#: icc_colorspace.c:975
+msgid "Unsupported BPP!"
+msgstr "BPP non supportée !"
+
+#: icc_colorspace.c:1044
+msgid "Assign colorspace"
+msgstr "Assigner un espace de couleur"
+
+#: icc_colorspace.c:1061
+msgid "Current colorspace:"
+msgstr "Espace de couleur courant :"
+
+#: icc_colorspace.c:1069 icc_colorspace.c:1192
+msgid "Unknown (image has no profiles)"
+msgstr "Inconnu (image sans profil)"
+
+#: icc_colorspace.c:1075 icc_colorspace.c:1198
+msgid ""
+"<span size=\"smaller\" style=\"italic\">plug-in uses RGB workspace "
+"temporarily</span>"
+msgstr ""
+"<span size=\"smaller\" style=\"italic\">Le plug-in utilise temporairement "
+"l'espace de travail RVB</span>"
+
+#: icc_colorspace.c:1086
+msgid "New colorspace:"
+msgstr "Nouvel espace de couleur :"
+
+#: icc_colorspace.c:1093
+msgid "_Unassign colorspace"
+msgstr "_Enlever l'assignation d'espace de couleur"
+
+#: icc_colorspace.c:1098 icc_colorspace.c:1243
+#, c-format
+msgid "_Workspace: %s"
+msgstr "E_space de travail : %s"
+
+#: icc_colorspace.c:1108 icc_colorspace.c:1253
+msgid "_Profile:"
+msgstr "_Profil :"
+
+#: icc_colorspace.c:1114 icc_colorspace.c:1259
+msgid "Choose RGB profile"
+msgstr "Choisissez un profil RVB"
+
+#: icc_colorspace.c:1168
+msgid "Convert colorspace"
+msgstr "Convertir l'espace de couleur"
+
+#: icc_colorspace.c:1184
+msgid "Source colorspace:"
+msgstr "Espace de couleur source :"
+
+#: icc_colorspace.c:1209 icc_colorspace.c:1376 separate-gui.c:780
+msgid "_Rendering intent:"
+msgstr "Mode de rendu :"
+
+#: icc_colorspace.c:1219 icc_colorspace.c:1386 separate-gui.c:786
+msgid "Perceptual"
+msgstr "Perceptif"
+
+#: icc_colorspace.c:1220 icc_colorspace.c:1387 separate-gui.c:787
+msgid "Relative colorimetric"
+msgstr "Colorimétrie relative"
+
+#: icc_colorspace.c:1221 icc_colorspace.c:1388 separate-gui.c:788
+msgid "Saturation"
+msgstr "Saturation"
+
+#: icc_colorspace.c:1222 icc_colorspace.c:1389 separate-gui.c:789
+msgid "Absolute colorimetric"
+msgstr "Colorimétrie absolue"
+
+#: icc_colorspace.c:1223 icc_colorspace.c:1390 separate-gui.c:790
+msgid "Absolute colorimetric(2)"
+msgstr "Colorimétrie absolue (2)"
+
+#: icc_colorspace.c:1227 icc_colorspace.c:1394 separate-gui.c:795
+msgid "Use _BPC algorithm"
+msgstr "Utiliser l'algorithme BPC"
+
+#: icc_colorspace.c:1235
+msgid "Destination colorspace:"
+msgstr "Espace de couleur de destination :"
+
+#: icc_colorspace.c:1268 icc_colorspace.c:1414 separate-gui.c:823
+msgid "Use _dither"
+msgstr "Utiliser des contours progressifs"
+
+#: icc_colorspace.c:1278
+msgid "_Flatten image to preserve appearance"
+msgstr "Aplatir l'image (pour préserver son apparence)"
+
+#: icc_colorspace.c:1355
+msgid "_Abstract profile:"
+msgstr "Profil abstrait:"
+
+#: icc_colorspace.c:1366
+msgid "Choose abstract profile"
+msgstr "Choisissez un profil abstrait"
+
+#: icc_colorspace.c:1398
+msgid "Target:"
+msgstr "Cible:"
+
+#: icc_colorspace.c:1406
+msgid "_Selection"
+msgstr "_Sélection"
+
+#: icc_colorspace.c:1407
+msgid "Each _layer"
+msgstr "Chaque ca_lque"
+
+#: icc_colorspace.c:1408
+msgid "_Flatten image"
+msgstr "Aplatir l'_image"
+
+#: iccbutton.c:156
+msgid "Input"
+msgstr "Entrée"
+
+#: iccbutton.c:157
+msgid "Display"
+msgstr "Affichage"
+
+#: iccbutton.c:158
+msgid "Output"
+msgstr "Sortie"
+
+#: iccbutton.c:159
+msgid "Devicelink"
+msgstr "DeviceLink"
+
+#: iccbutton.c:160
+msgid "Abstract"
+msgstr "Abstraction"
+
+#: iccbutton.c:161
+msgid "Colorspace conversion"
+msgstr "Conversion d'espace de couleur"
+
+#: iccbutton.c:162
+msgid "Named color"
+msgstr "Couleur nommée"
+
+#: iccbutton.c:635 iccbutton.c:755
+msgid "(not selected)"
+msgstr "(pas sélectionné)"
+
+#: iccbutton.c:832 iccbutton.c:1040 iccbutton.c:1173 separate-gui.c:1238
+msgid "None"
+msgstr "Aucun"
+
+#: iccbutton.c:1190
+msgid "More..."
+msgstr "Plus..."
+
+#: iccbutton.c:1190
+msgid "Show dialog..."
+msgstr ""
+
+#: iccbutton.c:1293
+msgid "Estimated TAC:"
+msgstr ""
+
+#: iccbutton.c:1302
+msgid "Matrix / LUT:"
+msgstr ""
+
+#: iccbutton.c:1304 iccbutton.c:1305
+msgid "matrix-lut|Yes"
+msgstr ""
+
+#: iccbutton.c:1304 iccbutton.c:1305
+msgid "matrix-lut|No"
+msgstr ""
+
+#: iccbutton.c:1322
+#, fuzzy
+msgid "Conversion:"
+msgstr "Conversion d'espace de couleur"
+
+#: iccbutton.c:1324
+#, c-format
+msgid " to %c%c%c%c"
+msgstr ""
+
+#: iccbutton.c:1331 iccbutton.c:1591
+#, fuzzy
+msgid "Colorspace / PCS:"
+msgstr "Espace de couleur"
+
+#: iccbutton.c:1495
+msgid "Choose an ICC Profile"
+msgstr "Choisissez un profil ICC"
+
+#: iccbutton.c:1534
+msgid "Name"
+msgstr "Nom"
+
+#: iccbutton.c:1540
+msgid "Class"
+msgstr "Classe"
+
+#: iccbutton.c:1547
+msgid "Colorspace"
+msgstr "Espace de couleur"
+
+#: iccbutton.c:1554
+msgid "PCS"
+msgstr "PCS"
+
+#: iccbutton.c:1561
+msgid "Path"
+msgstr "Chemin"
+
+#: iccbutton.c:1571
+msgid "Detail"
+msgstr ""
+
+#: iccbutton.c:1577
+#, fuzzy
+msgid "Profile class:"
+msgstr "_Profil :"
+
+#: iccbutton.c:1584
+msgid "ICC version:"
+msgstr ""
+
+#: iccbutton.c:1598
+msgid "Whitepoint:            "
+msgstr ""
+
+#: iccbutton.c:1615
+#, fuzzy
+msgid "_Path:"
+msgstr "Chemin :"
+
+#: iccbutton.c:1664
+msgid "Invalid profile"
+msgstr "Profil non valide"
+
+#: iccbutton.c:1666
+msgid "Please check the filename, device class, and colorspace."
+msgstr ""
+"Veuillez vérifier le nom de fichier, la classe de périphérique et l'espace "
+"de couleur."
+
+#: import.c:82
+msgid "Import CMYK TIFF image"
+msgstr "Importer une image TIFF CMJN"
+
+#: import.c:83
+msgid ""
+"Load the CMYK TIFF image, and generate four layers as pseudo C/M/Y/K "
+"channels.\n"
+"To convert to single-layered RGB image, try to use the \"plug-in-separate-"
+"proof\" procedure."
+msgstr ""
+"Charge l'image TIFF CMJN et génère 4 calques C/M/J/N à la place des canaux.\n"
+"Pour la convertir en image RVB monocalque, utilisez la procédure separate-"
+"proof"
+
+#: import.c:90
+msgid "From CMYK TIFF"
+msgstr "A partir d'un TIFF CMJN"
+
+#: import.c:177
+#, c-format
+msgid "Cannot open : \"%s\""
+msgstr "Ne peut ouvrir : « %s »"
+
+#: import.c:193
+#, c-format
+msgid "\"%s\" is unsupported."
+msgstr "« %s » n'est pas supporté"
+
+#: import.c:240 util.c:42 util.c:308 util.c:364 util.c:416
+msgid "Background"
+msgstr "Arrière _plan"
+
+#: import.c:250 separate-core.c:418 separate-core.c:540 separate-core.c:919
+msgid "Alpha of source image"
+msgstr ""
+
+#: import.c:260
+#, c-format
+msgid "Reading \"%s\"..."
+msgstr "Lecture de « %s »..."
+
+#: import.c:382
+msgid "Import separated TIFF..."
+msgstr "Importer un TIFF séparé..."
+
+#: import.c:396
+msgid "All files"
+msgstr ""
+
+#: import.c:401
+#, fuzzy
+msgid "CMYK TIFF image"
+msgstr "Importer une image TIFF CMJN"
+
+#: jpeg.c:180
+msgid "Exporting JPEG..."
+msgstr "Export en JPEG..."
+
+#: jpeg.c:286
+msgid "Failed to exporting JPEG."
+msgstr "Echec de l'export en JPEG."
+
+#: lcms_wrapper.c:360
+#, c-format
+msgid "%s(broken text)..."
+msgstr "%s (texte endommagé)..."
+
+#: lcms_wrapper.c:372
+msgid "(no name)"
+msgstr "(pas de nom)"
+
+#: psd.c:126 psd.c:296
+#, c-format
+msgid "Exporting Photoshop PSD (%s channel)..."
+msgstr "Export en PSD (couche %s)..."
+
+#: separate-core.c:180
+msgid "Cannot read the embedded profile.\n"
+msgstr "Donner la priorité au profil embarqué.\n"
+
+#: separate-core.c:192
+msgid "Cannot open the source/devicelink profile.\n"
+msgstr "Impossible d'ouvrir le profile source.\n"
+
+#: separate-core.c:206
+msgid "Cannot open the destination profile.\n"
+msgstr "Impossible d'ouvrir le profil de destination.\n"
+
+#: separate-core.c:234 separate-core.c:736
+msgid ""
+"Cannot build transform.\n"
+"There might be an error in the specification of the profile."
+msgstr ""
+"Ereur interne.\n"
+"Il peut y avoir une erreur dans la spécification du profil."
+
+#: separate-core.c:436 separate-core.c:554 separate-core.c:935
+msgid "Separating..."
+msgstr "Séparation..."
+
+#: separate-core.c:621
+msgid "Proofing mode is invalid."
+msgstr "Le mode de simulation n'est pas valide."
+
+#: separate-core.c:627
+msgid "Image is not separated..."
+msgstr "L'image n'est pas séparée..."
+
+#: separate-core.c:646
+msgid "C"
+msgstr "C"
+
+#: separate-core.c:646
+msgid "M"
+msgstr "M"
+
+#: separate-core.c:646
+msgid "Y"
+msgstr "J"
+
+#: separate-core.c:646
+msgid "K"
+msgstr "N"
+
+#: separate-core.c:657
+#, c-format
+msgid "Couldn't get channel(s) : %s"
+msgstr "Ne peut obtenir le canal : %s"
+
+#: separate-core.c:687
+msgid "Cannot open the CMYK profile."
+msgstr "Impossible d'ouvrir le profil CMJN..."
+
+#: separate-core.c:701
+msgid "Cannot open the display profile."
+msgstr "Impossible d'ouvrir le profil d'écran."
+
+#: separate-core.c:777
+msgid "Proofing..."
+msgstr "Simulation..."
+
+#: separate-gui.c:150 separate-gui.c:163 separate-gui.c:176
+msgid "Generate CMYK separations"
+msgstr "Faire les séparations"
+
+#: separate-gui.c:151
+msgid ""
+"Separate performs CMYK colour separation of an image, into the four layers."
+msgstr ""
+"Separate réalise la séparation CMJN d'un image dans quatre calques séparés."
+
+#: separate-gui.c:156
+msgid "<Image>/Image/Separate/Separate"
+msgstr ""
+
+#: separate-gui.c:164
+msgid ""
+"Separate performs CMYK colour separation of an RGB image, into the alpha-"
+"channels of four coloured layers."
+msgstr ""
+"Separate réalise la séparation CMJN d'un image dans chaque canal alpha de "
+"quatre calques séparés."
+
+#: separate-gui.c:177
+msgid ""
+"Separate performs CMYK colour separation of an RGB image, into four "
+"greyscale layers."
+msgstr ""
+"Separate réalise la séparation CMJN d'un image dans quatre calques en tons "
+"de gris séparés."
+
+#: separate-gui.c:189
+msgid "Softproofing CMYK colour"
+msgstr "Génération logicielle des couleurs CMJN"
+
+#: separate-gui.c:190
+msgid ""
+"Separate proofs a CMYK colour separation, by transforming back into RGB, "
+"with media-white simulation."
+msgstr ""
+"Separate simule une séparation CMJN avec un média de fond blanc puis revient "
+"au RVB."
+
+#: separate-gui.c:195
+msgid "<Image>/Image/Separate/Proof"
+msgstr ""
+
+#: separate-gui.c:202
+msgid "Generate duotone separations"
+msgstr "Génére une séparation bichrome"
+
+#: separate-gui.c:209
+msgid "<Image>/Image/Separate/Duotone"
+msgstr ""
+
+#: separate-gui.c:216
+msgid "Save separated image"
+msgstr "Enregistrer l'image séparée."
+
+#: separate-gui.c:217
+msgid ""
+"Save separated image in TIFF format.\n"
+"Note that this procedure is provided for backward compatibility."
+msgstr ""
+"Enregistre l'image séparée en TIFF.\n"
+"Notez que cette procédure en fournie pour compatibilité."
+
+#: separate-gui.c:229
+msgid "Export separated image"
+msgstr "Exporter l'image séparée."
+
+#: separate-gui.c:230
+msgid ""
+"Export separated image.\n"
+"Availavle formats are listed in README file."
+msgstr ""
+"Exporter l'image séparée.\n"
+"Les formats disponibles sont listés dans le fichier README."
+
+#: separate-gui.c:234
+msgid "<Image>/Image/Separate/Export..."
+msgstr ""
+
+#: separate-gui.c:410 separate-gui.c:476
+msgid "Separate: Internal calling error!"
+msgstr "Separate : erreur d'appel interne !"
+
+#: separate-gui.c:426
+msgid "This is not a CMYK separated image!"
+msgstr "Ce n'est pas une image CMJN séparée !"
+
+#: separate-gui.c:600
+msgid "Device_link profile:"
+msgstr "Profil DeviceLink:"
+
+#: separate-gui.c:601
+msgid "Choose devicelink profile..."
+msgstr "Choisissez un profil DeviceLink..."
+
+#: separate-gui.c:614 separate-gui.c:689
+msgid "_Source color space:"
+msgstr "Espace de couleur _source :"
+
+#: separate-gui.c:615
+msgid "Choose source profile (RGB)..."
+msgstr "Choisissez votre profil source (RVB)..."
+
+#: separate-gui.c:667
+msgid "Separate"
+msgstr "Séparation..."
+
+#: separate-gui.c:707
+msgid "_Give priority to embedded profile"
+msgstr "Donner la priorité au profil embarqué"
+
+#: separate-gui.c:740
+msgid "(no profiles embedded)"
+msgstr "(pas de profil embarqué)"
+
+#: separate-gui.c:758
+msgid "D_estination color space:"
+msgstr "_Espace de couleur de destination :"
+
+#: separate-gui.c:767
+msgid "Choose output profile (CMYK)..."
+msgstr "Choisissez votre profil de destination (CMJN)..."
+
+#: separate-gui.c:800
+msgid "Options:"
+msgstr "Options :"
+
+#: separate-gui.c:804
+msgid "_Use devicelink profile"
+msgstr "_Utiliser le profil DeviceLink"
+
+#: separate-gui.c:811
+msgid "_Preserve pure black"
+msgstr "_Préserver le noir pur"
+
+#: separate-gui.c:815
+msgid "O_verprint pure black"
+msgstr "Surimpression du noir"
+
+#: separate-gui.c:834
+msgid "_Make CMYK pseudo-composite"
+msgstr "Faire un C_MJN pseudo composite"
+
+#: separate-gui.c:934
+msgid "Proof"
+msgstr "Simulation..."
+
+#: separate-gui.c:962
+msgid "_Monitor color space:"
+msgstr "Espace de couleur de _moniteur:"
+
+#: separate-gui.c:972
+msgid "Choose RGB profile..."
+msgstr "Choisissez un profil RVB..."
+
+#: separate-gui.c:985
+msgid "_Separated image's color space:"
+msgstr "Espace de couleur de l'image _séparée :"
+
+#: separate-gui.c:995
+msgid "Choose CMYK profile..."
+msgstr "Choisissez un profil CMJN..."
+
+#: separate-gui.c:1008
+msgid "_Give priority to attached profile"
+msgstr "Donner la priorité au profil attaché"
+
+#: separate-gui.c:1044
+msgid "(no profiles attached)"
+msgstr "(pas de profil attaché)"
+
+#: separate-gui.c:1066
+msgid "M_ode:"
+msgstr "M_ode :"
+
+#: separate-gui.c:1073
+msgid "Normal"
+msgstr "Normal"
+
+#: separate-gui.c:1074
+msgid "Simulate black ink"
+msgstr "Simuler l'encre noire"
+
+#: separate-gui.c:1075
+msgid "Simulate media white"
+msgstr "Simuler le blanc"
+
+#: separate-gui.c:1142
+msgid "Export CMYK image..."
+msgstr "Exporte l'image CMJN..."
+
+#: separate-gui.c:1171
+msgid "_Format:"
+msgstr "Format:"
+
+#: separate-gui.c:1180
+msgid "Auto"
+msgstr ""
+
+#: separate-gui.c:1181
+msgid "TIFF"
+msgstr ""
+
+#: separate-gui.c:1182
+msgid "JPEG"
+msgstr ""
+
+#: separate-gui.c:1183
+msgid "Photoshop PSD"
+msgstr ""
+
+#: separate-gui.c:1188
+msgid "Co_mpress pixel data"
+msgstr "Co_mpresser les données"
+
+#: separate-gui.c:1201
+msgid "Clippi_ng path:"
+msgstr "Chemi_n de découpe"
+
+#: separate-gui.c:1209
+msgid "Don't specify"
+msgstr "Ne pas spécifier"
+
+#: separate-gui.c:1233
+msgid "_Embed color profile:"
+msgstr "Profil de couleur _embarqué :"
+
+#: separate-gui.c:1239
+msgid "CMYK default profile"
+msgstr "Profil CMJN par défaut"
+
+#: separate-gui.c:1240
+msgid "Print simulation profile"
+msgstr "Profil de simulation d'impression"
+
+#: separate-gui.c:1248
+#, c-format
+msgid "Own profile : %s"
+msgstr "Votre profil : %s"
+
+#: tiff.c:78
+msgid "Exporting TIFF..."
+msgstr "Export en TIFF..."
+
+#: util.c:305
+msgid "Layer 1"
+msgstr ""
+
+#: util.c:488
+#, c-format
+msgid "Untitled-%s.tif"
+msgstr "Sans titre-%s.tif"
+
+#~ msgid "Creating CMYK layers..."
+#~ msgstr "Création des calques CMJN..."
+
+#~ msgid "Save separated image in TIFF format."
+#~ msgstr "Enregistrer l'image séparée au format TIFF."
+
+#~ msgid "Save separated TIFF..."
+#~ msgstr "Enregistrer en TIFF séparé"
+
+#~ msgid "Saving..."
+#~ msgstr "Séparation..."
+
+#~ msgid "None ( use RGB workspace temporarily )"
+#~ msgstr "Aucun (utiliser temporairement l'espace de travail RVB)"

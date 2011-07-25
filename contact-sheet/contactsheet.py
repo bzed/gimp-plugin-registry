@@ -18,6 +18,14 @@
 """
 ## VERSION HISTORY
 ##
+## Version 2.15 release date 25-dec-2010
+## Fixed mbcs decode not read by Linux
+##
+## Version 2.14 release date 27-nov-2010
+## Fixed impossible to read foreign characters
+## Fixed now skip non-image files with images extensions
+## change: numbering files now same as on paper (request G.Sprik) 
+##
 ## Version 2.13 release date 16 june 2010
 ## added several new sheetsizes including two banners
 ##
@@ -185,7 +193,7 @@ def get_images(FileType, original_location, all_subdirs, DirFileList, SortedImag
         Log("error in file type")
 
     if (all_subdirs == True):                       #include all subdirectory's
-       for dirpath, dirnames, filenames in os.walk(original_location, topdown=True):
+       for dirpath, dirnames, filenames in os.walk(original_location.decode('idna'), topdown=True):
            for filename in filenames:
               basename, ext = os.path.splitext(filename)
               if ((len(ext)>2) and (ext in FileType)):
@@ -194,7 +202,7 @@ def get_images(FileType, original_location, all_subdirs, DirFileList, SortedImag
                  if os.path.isfile(imagefile):
                     images.append(original_image)
     else:                                           #only the choosen directory
-        for filename in os.listdir(original_location):
+        for filename in os.listdir(original_location.decode('idna')):
             basename, ext = os.path.splitext(filename)
             if ((len(ext)>2) and (ext in FileType)):
                 imagefile = os.path.join(original_location, filename)
@@ -254,7 +262,17 @@ def save_jpeg(image, name, comment=""):
 #================= generate a thumb ===========================================
 #==============================================================================
 def generate_thumb(filename,Thumb_width,Thumb_height):
-    img = pdb.gimp_file_load(filename,filename)
+
+    #Log('Entering generate_thumb routine')
+    valid_image = True
+    try:
+        img = pdb.gimp_file_load(filename,filename)     #load image
+    except RuntimeError:
+        Log('Not a valid image: ' + filename)
+        valid_image = False
+        img=[]
+        return img, 0, 0, valid_image
+    
     #now resize the loaded image proportionally
     if (img.width>img.height):
         #landscape so scale height proportionally
@@ -272,7 +290,7 @@ def generate_thumb(filename,Thumb_width,Thumb_height):
             new = (Thumb_width,int(Thumb_width/ratio))
     #now resize the image
     pdb.gimp_image_scale(img,new[0],new[1])
-    return img,new[0],new[1]                #modified: added the x- and y-size
+    return img,new[0],new[1], valid_image     #modified: added the x- and y-size
 
 
 #==============================================================================
@@ -456,7 +474,10 @@ def Contact_Sheet(file_type, location, all_subdirs, inc_filename, inc_extension,
         ccount = 0
         #generate thumb 
         for file in files:
-            thumbimg,x_size,y_size = generate_thumb(file['image_file'],Thumb_width,Thumb_height)
+            thumbimg,x_size,y_size,valid_image = generate_thumb(file['image_file'],Thumb_width,Thumb_height)
+            if valid_image == False:
+                continue                                #next image
+            
             cpy = pdb.gimp_edit_copy(thumbimg.active_layer)
             #center image within its minipage
             if (x_size>y_size):
@@ -505,7 +526,7 @@ def Contact_Sheet(file_type, location, all_subdirs, inc_filename, inc_extension,
             gimp.displays_flush()
 
         #save contactsheet
-        contact_filename = contact_name + "_%03d" % (sheetcount) + contact_type
+        contact_filename = contact_name + "_%03d" % (sheetcount+1) + contact_type
         contact_full_filename = os.path.join(contact_location, contact_filename)
         #print "File to save " + contact_full_filename
         if (contact_type == ".jpg"):
@@ -521,13 +542,13 @@ def Contact_Sheet(file_type, location, all_subdirs, inc_filename, inc_extension,
 
 
 register(
-        "python_fu_contact_sheet_V213",
+        "python_fu_contact_sheet_V215",
         _("Generates a contact sheet(s) for a directory of images. If you find this script useful or any bugs I would love to hear from you robin.gilham@gmail.com\nHeck you could even consider a donation"),
         _("Generates contact sheet(s) with a configurable number of thumbnails for all files located in a directory"),
         "Robin Gilham, E. Sullock Enzlin",
         "Licensed under the GPL v2",
-        "2008, 2009",
-        "<Toolbox>/Xtns/Batch/Contact Sheet",
+        "2008, 2009, 2010, 2011",
+        "<Toolbox>/Xtns/Batch/Contact Sheet V2.15",
         "",
         [
         (PF_OPTION, "file_type"  ,_("File type: "), 0 ,[".jpg", ".png", ".tif", ".pcx",
@@ -553,7 +574,7 @@ register(
                   "Tabloid (11x17 in)",
                   "banner 1 (20,9x100 cm)",
                   "banner 2 (29,7x100 cm)",]),
-        (PF_SPINNER, "dpi", _("Contact sheet resolution"), 96,(72,1000,1)),
+        (PF_SPINNER, "dpi", _("Contact sheet resolution"), 150,(72,1000,1)),
         (PF_RADIO, "orient", _("Orientation:"), "port", ((_("portrait"), "port"), (_("landscape"),"land"))),
         (PF_SPINNER, "num_col", _("Number of images per row"), 4, (1,256,1)),
         (PF_SPINNER, "num_rows", _("Number of rows"), 5, (1,256,1)),

@@ -1,11 +1,14 @@
 Put the *.scm files in the GIMP scripts folder (~/.gimp-2.6/scripts/) and refresh scripts (<Image>/Filters/Script-Fu/Refresh Scripts) or restart GIMP.
 You will find the scripts then at these places in the GIMP image menu (tail -n1 *.scm):
 
-==> elsamuko-antique-border.scm <==                     
+==> elsamuko-antique-border.scm <==
 (script-fu-menu-register "elsamuko-antique-border" _"<Image>/Filters/Decor")
 
 ==> elsamuko-che-guevara.scm <==
 (script-fu-menu-register "elsamuko-che-guevara" _"<Image>/Filters/Artistic")
+
+==> elsamuko-color-tint.scm <==
+(script-fu-menu-register "elsamuko-color-tint" _"<Image>/Colors")
 
 ==> elsamuko-cyanotype.scm <==
 (script-fu-menu-register "elsamuko-cyanotype" _"<Image>/Filters/Artistic")
@@ -13,8 +16,14 @@ You will find the scripts then at these places in the GIMP image menu (tail -n1 
 ==> elsamuko-difference-layers.scm <==
 (script-fu-menu-register "elsamuko-difference-layers" _"<Image>/Layer")
 
+==> elsamuko-error-level-analysis.scm <==
+(script-fu-menu-register "elsamuko-error-level-analysis" _"<Image>/Image")
+
 ==> elsamuko-escape-lines.scm <==
 (script-fu-menu-register "elsamuko-escape-lines" _"<Image>/Filters/Render")
+
+==> elsamuko-glass-displacement.scm <==
+(script-fu-menu-register "elsamuko-glass-displacement" _"<Image>/Filters/Distorts")
 
 ==> elsamuko-grain.scm <==
 (script-fu-menu-register "elsamuko-grain" _"<Image>/Filters/Generic")
@@ -43,6 +52,9 @@ You will find the scripts then at these places in the GIMP image menu (tail -n1 
 ==> elsamuko-slide-with-sprockets.scm <==
 (script-fu-menu-register "elsamuko-sprocketholes" _"<Image>/Filters/Decor")
 
+==> elsamuko-sunny-landscape.scm <==
+(script-fu-menu-register "elsamuko-sunny-landscape" _"<Image>/Filters/Light and Shadow")
+
 ==> elsamuko-technicolor-2-color.scm <==
 (script-fu-menu-register "elsamuko-technicolor-2-color" _"<Image>/Colors")
 
@@ -53,13 +65,11 @@ You will find the scripts then at these places in the GIMP image menu (tail -n1 
 (script-fu-menu-register "elsamuko-wb-puzzle" _"<Image>/Filters/Light and Shadow")
 
 ==> mm1-vintage-look.scm <==
-(script-fu-menu-register "mm1-vintage-look" _"<Image>/Filters/Decor")
+(script-fu-menu-register "mm1-vintage-look" _"<Image>/Filters/Artistic")
 
 ==> tuxcomputers-split-tone.scm <==
 (script-fu-menu-register "tuxcomputers-split-tone" _"<Image>/Script-Fu/Color")
 
-==> elsamuko-sunny-landscape.scm <==
-(script-fu-menu-register "elsamuko-sunny-landscape" _"<Image>/Filters/Light and Shadow")
 
 Happy gimping!
 elsamuko

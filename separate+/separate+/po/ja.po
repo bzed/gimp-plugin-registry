@@ -1,0 +1,741 @@
+# Separate+ for The GIMP
+# Copyright (C) 2002-2004 Alastair Robinson
+# Yoshinori Yamakawa <yamma-ma@users.sourceforge.jp>, 2006-2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Separate+ 0.5.8\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-08-23 01:10+0900\n"
+"PO-Revision-Date: 2010-08-23 01:36+0900\n"
+"Last-Translator: Yoshinori Yamakawa <yamma-ma@users.sourceforge.jp>\n"
+"Language-Team: Japanese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: icc_colorspace.c:122
+msgid "Assign new colorspace"
+msgstr "カラースペースを割り当てます"
+
+#: icc_colorspace.c:123
+msgid "Assign, replace or remove the ICC profile."
+msgstr "画像へのICCプロファイルの割り当て、差し替え、また割り当て済みのプロファイルを削除します"
+
+#: icc_colorspace.c:127
+msgid "Assign colorspace..."
+msgstr "カラースペースの割り当て..."
+
+#: icc_colorspace.c:134
+msgid "Convert to other colorspace"
+msgstr "他のカラースペースへ変換します"
+
+#: icc_colorspace.c:135
+msgid "Convert to other RGB colorspace using ICC profiles."
+msgstr "ICCプロファイルを使用して、画像を他のカラースペースに変換します"
+
+#: icc_colorspace.c:140
+msgid "Convert colorspace..."
+msgstr "カラースペースの変換..."
+
+#: icc_colorspace.c:147
+#: icc_colorspace.c:1337
+msgid "Apply abstract profile"
+msgstr "抽象プロファイルの適用"
+
+#: icc_colorspace.c:148
+msgid "Apply the abstract profile for color effects."
+msgstr "抽象プロファイルを使用して色効果を適用します。"
+
+#: icc_colorspace.c:152
+msgid "Apply abstract profile..."
+msgstr "抽象プロファイルの適用..."
+
+#: icc_colorspace.c:278
+#: icc_colorspace.c:290
+#: separate-core.c:155
+msgid "Rendering intent is invalid."
+msgstr "レンダリングインテントの値が間違っています。"
+
+#: icc_colorspace.c:285
+msgid "Target is unknown."
+msgstr "適用対象が不明です。"
+
+#: icc_colorspace.c:295
+msgid "Abstract profile is required."
+msgstr "抽象プロファイルが必要です。"
+
+#: icc_colorspace.c:805
+msgid "Conveting..."
+msgstr "変換中..."
+
+#: icc_colorspace.c:944
+msgid "Can't get colormap!"
+msgstr "カラーマップを取得できません！"
+
+#: icc_colorspace.c:975
+msgid "Unsupported BPP!"
+msgstr "非対応のピクセル/バイト値です！"
+
+#: icc_colorspace.c:1044
+msgid "Assign colorspace"
+msgstr "カラースペースの割り当て"
+
+#: icc_colorspace.c:1061
+msgid "Current colorspace:"
+msgstr "現在のカラースペース:"
+
+#: icc_colorspace.c:1069
+#: icc_colorspace.c:1192
+msgid "Unknown (image has no profiles)"
+msgstr "不明（プロファイルなし）"
+
+#: icc_colorspace.c:1075
+#: icc_colorspace.c:1198
+msgid "<span size=\"smaller\" style=\"italic\">plug-in uses RGB workspace temporarily</span>"
+msgstr "<span size=\"smaller\" style=\"italic\">RGB作業スペースで代用されます</span>"
+
+#: icc_colorspace.c:1086
+msgid "New colorspace:"
+msgstr "新しいカラースペース:"
+
+#: icc_colorspace.c:1093
+msgid "_Unassign colorspace"
+msgstr "割り当てなし(_U)"
+
+#: icc_colorspace.c:1098
+#: icc_colorspace.c:1243
+#, c-format
+msgid "_Workspace: %s"
+msgstr "RGB作業スペース(_W): %s"
+
+#: icc_colorspace.c:1108
+#: icc_colorspace.c:1253
+msgid "_Profile:"
+msgstr "プロファイル(_P):"
+
+#: icc_colorspace.c:1114
+#: icc_colorspace.c:1259
+msgid "Choose RGB profile"
+msgstr "RGBプロファイルを選択..."
+
+#: icc_colorspace.c:1168
+msgid "Convert colorspace"
+msgstr "カラースペースの変換"
+
+#: icc_colorspace.c:1184
+msgid "Source colorspace:"
+msgstr "ソースカラースペース:"
+
+#: icc_colorspace.c:1209
+#: icc_colorspace.c:1376
+#: separate-gui.c:780
+msgid "_Rendering intent:"
+msgstr "レンダリングインテント(_R):"
+
+#: icc_colorspace.c:1219
+#: icc_colorspace.c:1386
+#: separate-gui.c:786
+msgid "Perceptual"
+msgstr "知覚的"
+
+#: icc_colorspace.c:1220
+#: icc_colorspace.c:1387
+#: separate-gui.c:787
+msgid "Relative colorimetric"
+msgstr "相対的な色域を維持"
+
+#: icc_colorspace.c:1221
+#: icc_colorspace.c:1388
+#: separate-gui.c:788
+msgid "Saturation"
+msgstr "彩度"
+
+#: icc_colorspace.c:1222
+#: icc_colorspace.c:1389
+#: separate-gui.c:789
+msgid "Absolute colorimetric"
+msgstr "絶対的な色域を維持"
+
+#: icc_colorspace.c:1223
+#: icc_colorspace.c:1390
+#: separate-gui.c:790
+msgid "Absolute colorimetric(2)"
+msgstr "絶対的な色域を維持(2)"
+
+#: icc_colorspace.c:1227
+#: icc_colorspace.c:1394
+#: separate-gui.c:795
+msgid "Use _BPC algorithm"
+msgstr "黒点の補正を使用(_B)"
+
+#: icc_colorspace.c:1235
+msgid "Destination colorspace:"
+msgstr "変換先カラースペース:"
+
+#: icc_colorspace.c:1268
+#: icc_colorspace.c:1414
+#: separate-gui.c:823
+msgid "Use _dither"
+msgstr "ディザを使用(_D)"
+
+#: icc_colorspace.c:1278
+msgid "_Flatten image to preserve appearance"
+msgstr "画像を統合して見た目を保持(_F)"
+
+#: icc_colorspace.c:1355
+msgid "_Abstract profile:"
+msgstr "抽象プロファイル(_A):"
+
+#: icc_colorspace.c:1366
+msgid "Choose abstract profile"
+msgstr "抽象プロファイルを選択..."
+
+#: icc_colorspace.c:1398
+msgid "Target:"
+msgstr "適用対象:"
+
+#: icc_colorspace.c:1406
+msgid "_Selection"
+msgstr "選択範囲(_S)"
+
+#: icc_colorspace.c:1407
+msgid "Each _layer"
+msgstr "全てのレイヤー(_L)"
+
+#: icc_colorspace.c:1408
+msgid "_Flatten image"
+msgstr "画像を統合して適用(_F)"
+
+#: iccbutton.c:156
+msgid "Input"
+msgstr "入力"
+
+#: iccbutton.c:157
+msgid "Display"
+msgstr "表示"
+
+#: iccbutton.c:158
+msgid "Output"
+msgstr "出力"
+
+#: iccbutton.c:159
+msgid "Devicelink"
+msgstr "デバイスリンク"
+
+#: iccbutton.c:160
+msgid "Abstract"
+msgstr "抽象"
+
+#: iccbutton.c:161
+msgid "Colorspace conversion"
+msgstr "色空間変換"
+
+#: iccbutton.c:162
+msgid "Named color"
+msgstr "名前付きカラー"
+
+#: iccbutton.c:635
+#: iccbutton.c:755
+msgid "(not selected)"
+msgstr "（未選択）"
+
+#: iccbutton.c:832
+#: iccbutton.c:1040
+#: iccbutton.c:1173
+#: separate-gui.c:1238
+msgid "None"
+msgstr "なし"
+
+#: iccbutton.c:1190
+msgid "More..."
+msgstr "他のプロファイルを選択..."
+
+#: iccbutton.c:1190
+msgid "Show dialog..."
+msgstr "ダイアログを表示..."
+
+#: iccbutton.c:1293
+msgid "Estimated TAC:"
+msgstr "概算総インキ量:"
+
+#: iccbutton.c:1302
+msgid "Matrix / LUT:"
+msgstr "マトリックス / LUT:"
+
+#: iccbutton.c:1304
+#: iccbutton.c:1305
+msgid "matrix-lut|Yes"
+msgstr "あり"
+
+#: iccbutton.c:1304
+#: iccbutton.c:1305
+msgid "matrix-lut|No"
+msgstr "なし"
+
+#: iccbutton.c:1322
+msgid "Conversion:"
+msgstr "変換内容:"
+
+#: iccbutton.c:1324
+#, c-format
+msgid " to %c%c%c%c"
+msgstr " から %c%c%c%c"
+
+#: iccbutton.c:1331
+#: iccbutton.c:1591
+msgid "Colorspace / PCS:"
+msgstr "色空間 / PCS:"
+
+#: iccbutton.c:1495
+msgid "Choose an ICC Profile"
+msgstr "ICCプロファイルを選択"
+
+#: iccbutton.c:1534
+msgid "Name"
+msgstr "名称"
+
+#: iccbutton.c:1540
+msgid "Class"
+msgstr "クラス"
+
+#: iccbutton.c:1547
+msgid "Colorspace"
+msgstr "色空間"
+
+#: iccbutton.c:1554
+msgid "PCS"
+msgstr "PCS"
+
+#: iccbutton.c:1561
+msgid "Path"
+msgstr "ファイル名"
+
+#: iccbutton.c:1571
+msgid "Detail"
+msgstr "詳細"
+
+#: iccbutton.c:1577
+msgid "Profile class:"
+msgstr "クラス:"
+
+#: iccbutton.c:1584
+msgid "ICC version:"
+msgstr "ICCバージョン:"
+
+#: iccbutton.c:1598
+msgid "Whitepoint:            "
+msgstr "白色点:　　　　　　"
+
+#: iccbutton.c:1615
+msgid "_Path:"
+msgstr "ファイル名(_P):"
+
+#: iccbutton.c:1664
+msgid "Invalid profile"
+msgstr "無効なプロファイル"
+
+#: iccbutton.c:1666
+msgid "Please check the filename, device class, and colorspace."
+msgstr "プロファイルのファイル名、クラス、色空間が適切かどうか確認してください。"
+
+#: import.c:82
+msgid "Import CMYK TIFF image"
+msgstr "CMYK TIFF画像を取り込みます"
+
+#: import.c:83
+msgid ""
+"Load the CMYK TIFF image, and generate four layers as pseudo C/M/Y/K channels.\n"
+"To convert to single-layered RGB image, try to use the \"plug-in-separate-proof\" procedure."
+msgstr ""
+"CMYK TIFF画像を読み込み、CMYKの各チャンネルから4枚のレイヤーを生成します。\n"
+"単一レイヤーのRGB画像に変換するには、\"plug-in-separate-proof\"プロシージャを使用してみてください。"
+
+#: import.c:90
+msgid "From CMYK TIFF"
+msgstr "CMYK TIFF画像から"
+
+#: import.c:177
+#, c-format
+msgid "Cannot open : \"%s\""
+msgstr "\"%s\"を開くことができません。"
+
+#: import.c:193
+#, c-format
+msgid "\"%s\" is unsupported."
+msgstr "\"%s\"は非対応のTIFFファイルです。"
+
+#: import.c:240
+#: util.c:42
+#: util.c:308
+#: util.c:364
+#: util.c:416
+msgid "Background"
+msgstr "背景"
+
+#: import.c:250
+#: separate-core.c:418
+#: separate-core.c:540
+#: separate-core.c:919
+msgid "Alpha of source image"
+msgstr "元画像のアルファ値"
+
+#: import.c:260
+#, c-format
+msgid "Reading \"%s\"..."
+msgstr "\"%s\"を読み込み中..."
+
+#: import.c:382
+msgid "Import separated TIFF..."
+msgstr "分解済みTIFFを読み込み..."
+
+#: import.c:396
+msgid "All files"
+msgstr "全てのファイル"
+
+#: import.c:401
+msgid "CMYK TIFF image"
+msgstr "CMYK TIFF画像"
+
+#: jpeg.c:180
+msgid "Exporting JPEG..."
+msgstr "JPEG形式で書き出し中..."
+
+#: jpeg.c:286
+msgid "Failed to exporting JPEG."
+msgstr "JPEG書き出しに失敗しました。"
+
+#: lcms_wrapper.c:360
+#, c-format
+msgid "%s(broken text)..."
+msgstr "%s（破損テキスト）..."
+
+#: lcms_wrapper.c:372
+msgid "(no name)"
+msgstr "（名称なし）"
+
+#: psd.c:126
+#: psd.c:296
+#, c-format
+msgid "Exporting Photoshop PSD (%s channel)..."
+msgstr "Photoshop PSD形式で書き出し中（%s）..."
+
+#: separate-core.c:180
+msgid "Cannot read the embedded profile.\n"
+msgstr "埋め込みプロファイルを読み込むことができません。\n"
+
+#: separate-core.c:192
+msgid "Cannot open the source/devicelink profile.\n"
+msgstr "ソース/デバイスリンクプロファイルを開くことができません。\n"
+
+#: separate-core.c:206
+msgid "Cannot open the destination profile.\n"
+msgstr "変換先プロファイルを開くことができません。\n"
+
+#: separate-core.c:234
+#: separate-core.c:736
+msgid ""
+"Cannot build transform.\n"
+"There might be an error in the specification of the profile."
+msgstr ""
+"変換テーブルが構築できません。\n"
+"プロファイルの指定が間違っているかもしれません。"
+
+#: separate-core.c:436
+#: separate-core.c:554
+#: separate-core.c:935
+msgid "Separating..."
+msgstr "分解中..."
+
+#: separate-core.c:621
+msgid "Proofing mode is invalid."
+msgstr "校正モードが間違っています。"
+
+#: separate-core.c:627
+msgid "Image is not separated..."
+msgstr "分解済み画像ではありません。"
+
+#: separate-core.c:646
+msgid "C"
+msgstr "C版"
+
+#: separate-core.c:646
+msgid "M"
+msgstr "M版"
+
+#: separate-core.c:646
+msgid "Y"
+msgstr "Y版"
+
+#: separate-core.c:646
+msgid "K"
+msgstr "スミ版"
+
+#: separate-core.c:657
+#, c-format
+msgid "Couldn't get channel(s) : %s"
+msgstr "%sを取得することができません。"
+
+#: separate-core.c:687
+msgid "Cannot open the CMYK profile."
+msgstr "CMYKプロファイルを開くことができません。"
+
+#: separate-core.c:701
+msgid "Cannot open the display profile."
+msgstr "ディスプレイプロファイルを開くことができません。"
+
+#: separate-core.c:777
+msgid "Proofing..."
+msgstr "プルーフ画像を生成中..."
+
+#: separate-gui.c:150
+#: separate-gui.c:163
+#: separate-gui.c:176
+msgid "Generate CMYK separations"
+msgstr "4色分解画像を生成します"
+
+#: separate-gui.c:151
+msgid "Separate performs CMYK colour separation of an image, into the four layers."
+msgstr "RGB画像をCMYKに分解し、4枚のレイヤーとして新規画像に出力します。"
+
+#: separate-gui.c:156
+msgid "<Image>/Image/Separate/Separate"
+msgstr "<Image>/Image/Separate/色分解"
+
+#: separate-gui.c:164
+msgid "Separate performs CMYK colour separation of an RGB image, into the alpha-channels of four coloured layers."
+msgstr "RGB画像をCMYKに分解し、アルファチャンネルを持つ4枚の着色されたレイヤーとして新規画像に出力します。"
+
+#: separate-gui.c:177
+msgid "Separate performs CMYK colour separation of an RGB image, into four greyscale layers."
+msgstr "RGB画像をCMYKに分解し、4枚のレイヤーとして新規グレースケール画像に出力します。"
+
+#: separate-gui.c:189
+msgid "Softproofing CMYK colour"
+msgstr "CMYKカラーをモニタで校正します"
+
+#: separate-gui.c:190
+msgid "Separate proofs a CMYK colour separation, by transforming back into RGB, with media-white simulation."
+msgstr ""
+"CMYKに分解された画像を、ソフトプルーフ用にRGB画像へ変換します。\n"
+"紙色のシミュレーションが可能です。"
+
+#: separate-gui.c:195
+msgid "<Image>/Image/Separate/Proof"
+msgstr "<Image>/Image/Separate/色校正"
+
+#: separate-gui.c:202
+msgid "Generate duotone separations"
+msgstr "2色分解画像を生成します"
+
+#: separate-gui.c:209
+msgid "<Image>/Image/Separate/Duotone"
+msgstr "<Image>/Image/Separate/デュオトーン"
+
+#: separate-gui.c:216
+msgid "Save separated image"
+msgstr "分解済み画像を保存します"
+
+#: separate-gui.c:217
+msgid ""
+"Save separated image in TIFF format.\n"
+"Note that this procedure is provided for backward compatibility."
+msgstr ""
+"分解済み画像をTIFF形式で保存します。\n"
+"このプロシージャは後方互換性のために提供されています。"
+
+#: separate-gui.c:229
+msgid "Export separated image"
+msgstr "分解済み画像を書き出します"
+
+#: separate-gui.c:230
+msgid ""
+"Export separated image.\n"
+"Availavle formats are listed in README file."
+msgstr ""
+"分解済み画像をファイルに書き出します。\n"
+"利用可能なファイル形式は添付ドキュメントを参照してください。"
+
+#: separate-gui.c:234
+msgid "<Image>/Image/Separate/Export..."
+msgstr "<Image>/Image/Separate/書き出し..."
+
+#: separate-gui.c:410
+#: separate-gui.c:476
+msgid "Separate: Internal calling error!"
+msgstr "Separate: 内部エラーが発生しました。"
+
+#: separate-gui.c:426
+msgid "This is not a CMYK separated image!"
+msgstr "分解済みCMYK画像ではありません！"
+
+#: separate-gui.c:600
+msgid "Device_link profile:"
+msgstr "デバイスリンクプロファイル(_L):"
+
+#: separate-gui.c:601
+msgid "Choose devicelink profile..."
+msgstr "デバイスリンクプロファイルを選択..."
+
+#: separate-gui.c:614
+#: separate-gui.c:689
+msgid "_Source color space:"
+msgstr "ソースカラースペース(_S):"
+
+#: separate-gui.c:615
+msgid "Choose source profile (RGB)..."
+msgstr "ソースプロファイル（RGB）を選択..."
+
+#: separate-gui.c:667
+msgid "Separate"
+msgstr "色分解"
+
+#: separate-gui.c:707
+msgid "_Give priority to embedded profile"
+msgstr "埋め込みプロファイルを優先(_G)"
+
+#: separate-gui.c:740
+msgid "(no profiles embedded)"
+msgstr "(埋め込みなし)"
+
+#: separate-gui.c:758
+msgid "D_estination color space:"
+msgstr "変換先カラースペース(_E):"
+
+#: separate-gui.c:767
+msgid "Choose output profile (CMYK)..."
+msgstr "出力プロファイル（CMYK）を選択..."
+
+#: separate-gui.c:800
+msgid "Options:"
+msgstr "追加設定:"
+
+#: separate-gui.c:804
+msgid "_Use devicelink profile"
+msgstr "デバイスリンクプロファイルを使用(_U)"
+
+#: separate-gui.c:811
+msgid "_Preserve pure black"
+msgstr "黒をスミベタに置換え(_P)"
+
+#: separate-gui.c:815
+msgid "O_verprint pure black"
+msgstr "スミベタの代わりにリッチブラックを使用(_O)"
+
+#: separate-gui.c:834
+msgid "_Make CMYK pseudo-composite"
+msgstr "CMYK擬似コンポジットを作成(_M)"
+
+#: separate-gui.c:934
+msgid "Proof"
+msgstr "色校正"
+
+#: separate-gui.c:962
+msgid "_Monitor color space:"
+msgstr "モニタのカラースペース(_M):"
+
+#: separate-gui.c:972
+msgid "Choose RGB profile..."
+msgstr "RGBプロファイルを選択..."
+
+#: separate-gui.c:985
+msgid "_Separated image's color space:"
+msgstr "分解画像のカラースペース(_S):"
+
+#: separate-gui.c:995
+msgid "Choose CMYK profile..."
+msgstr "CMYKプロファイルを選択..."
+
+#: separate-gui.c:1008
+msgid "_Give priority to attached profile"
+msgstr "分解時のプロファイルを優先(_G)"
+
+#: separate-gui.c:1044
+msgid "(no profiles attached)"
+msgstr "(プロファイルなし)"
+
+#: separate-gui.c:1066
+msgid "M_ode:"
+msgstr "モード(_M):"
+
+#: separate-gui.c:1073
+msgid "Normal"
+msgstr "通常"
+
+#: separate-gui.c:1074
+msgid "Simulate black ink"
+msgstr "黒インキのシミュレート"
+
+#: separate-gui.c:1075
+msgid "Simulate media white"
+msgstr "紙色のシミュレート"
+
+#: separate-gui.c:1142
+msgid "Export CMYK image..."
+msgstr "CMYK画像の書き出し..."
+
+#: separate-gui.c:1171
+msgid "_Format:"
+msgstr "ファイル形式(_F):"
+
+#: separate-gui.c:1180
+msgid "Auto"
+msgstr "自動選択"
+
+#: separate-gui.c:1181
+msgid "TIFF"
+msgstr ""
+
+#: separate-gui.c:1182
+msgid "JPEG"
+msgstr ""
+
+#: separate-gui.c:1183
+msgid "Photoshop PSD"
+msgstr ""
+
+#: separate-gui.c:1188
+msgid "Co_mpress pixel data"
+msgstr "圧縮を使用(_M)"
+
+#: separate-gui.c:1201
+msgid "Clippi_ng path:"
+msgstr "クリッピングパス(_I):"
+
+#: separate-gui.c:1209
+msgid "Don't specify"
+msgstr "指定しない"
+
+#: separate-gui.c:1233
+msgid "_Embed color profile:"
+msgstr "プロファイルを埋め込み(_E):"
+
+#: separate-gui.c:1239
+msgid "CMYK default profile"
+msgstr "デフォルトCMYKプロファイル"
+
+#: separate-gui.c:1240
+msgid "Print simulation profile"
+msgstr "印刷シミュレーションプロファイル"
+
+#: separate-gui.c:1248
+#, c-format
+msgid "Own profile : %s"
+msgstr "分解時のプロファイル: %s"
+
+#: tiff.c:78
+msgid "Exporting TIFF..."
+msgstr "TIFF形式で書き出し中..."
+
+#: util.c:305
+msgid "Layer 1"
+msgstr "レイヤー 1"
+
+#: util.c:488
+#, c-format
+msgid "Untitled-%s.tif"
+msgstr "名称未設定-%s.tif"
+
+#~ msgid "Creating CMYK layers..."
+#~ msgstr "CMYKレイヤーを作成中..."
