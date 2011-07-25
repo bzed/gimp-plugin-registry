@@ -51,16 +51,17 @@ separate_writetiffdata (TIFF    *out,
   int32 sw = width;
   int32 sl = MIN (height, STRIPHEIGHT);
 
-  GimpDrawable *drw[4];
-  GimpPixelRgn pixrgn[4];
-  gchar *chanbuf[4];
+  GimpDrawable *drw[5];
+  GimpPixelRgn pixrgn[5];
+  gchar *chanbuf[5];
 
   drw[0] = separate_find_channel (imageID,sep_C);
   drw[1] = separate_find_channel (imageID,sep_M);
   drw[2] = separate_find_channel (imageID,sep_Y);
   drw[3] = separate_find_channel (imageID,sep_K);
+  drw[4] = separate_find_alpha   (imageID);
 
-  for (i=0; i < 4; ++i)
+  for (i = 0; i < 5; ++i)
     {
       if (!(chanbuf[i] = malloc (sw * sl)))
         result = FALSE;
@@ -79,13 +80,13 @@ separate_writetiffdata (TIFF    *out,
   for (i = 0; i < StripCount; i++)
     {
       int j;
-      unsigned char *src[4] = {NULL, NULL, NULL, NULL};
+      unsigned char *src[5] = {NULL, NULL, NULL, NULL, NULL};
       unsigned char *dest = BufferOut;
       int x, y;
 
       gimp_progress_update (((double)i) / ((double)StripCount));
 
-      for (j = 0; j < 4; ++j)
+      for (j = 0; j < 5; ++j)
         {
           if (drw[j])
             {
@@ -102,22 +103,48 @@ separate_writetiffdata (TIFF    *out,
         {
           for (x = 0; x < sw; ++x)
             {
-              if (src[0])
-                *dest++ = *src[0]++;
+              if (src[4])
+                {
+                  guint a = *src[4]++;
+
+                  if (src[0])
+                    *dest++ = *src[0]++ * a / 255;
+                  else
+                    *dest++ = 0;
+                  if (src[1])
+                    *dest++ = *src[1]++ * a / 255;
+                  else
+                    *dest++ = 0;
+                  if (src[2])
+                    *dest++ = *src[2]++ * a / 255;
+                  else
+                    *dest++ = 0;
+                  if (src[3])
+                    *dest++ = *src[3]++ * a / 255;
+                  else
+                    *dest++ = 0;
+
+                  *dest++ = a;
+                }
               else
-                *dest++ = 0;
-              if (src[1])
-                *dest++ = *src[1]++;
-              else
-                *dest++ = 0;
-              if (src[2])
-                *dest++ = *src[2]++;
-              else
-                *dest++ =0;
-              if (src[3])
-                *dest++ = *src[3]++;
-              else
-                *dest++ = 0;
+                {
+                  if (src[0])
+                    *dest++ = *src[0]++;
+                  else
+                    *dest++ = 0;
+                  if (src[1])
+                    *dest++ = *src[1]++;
+                  else
+                    *dest++ = 0;
+                  if (src[2])
+                    *dest++ = *src[2]++;
+                  else
+                    *dest++ = 0;
+                  if (src[3])
+                    *dest++ = *src[3]++;
+                  else
+                    *dest++ = 0;
+                }
             }
         }
       TIFFWriteEncodedStrip (out, i, BufferOut, BufSizeOut);
@@ -167,10 +194,20 @@ separate_tiff_export (gchar         *filename,
       height = gimp_image_height (imageID);
 
       TIFFSetField (out, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_SEPARATED);
-      TIFFSetField (out, TIFFTAG_SAMPLESPERPIXEL, 4);
       TIFFSetField (out, TIFFTAG_PLANARCONFIG, PLANARCONFIG_CONTIG);
       TIFFSetField (out, TIFFTAG_INKSET, INKSET_CMYK);
       TIFFSetField (out, TIFFTAG_BITSPERSAMPLE, 8);
+
+      if (separate_find_alpha (imageID))
+        {
+          guint16 tmp[] = {EXTRASAMPLE_ASSOCALPHA};
+
+          TIFFSetField (out, TIFFTAG_SAMPLESPERPIXEL, 5);
+          TIFFSetField (out, TIFFTAG_EXTRASAMPLES, 1, tmp);
+        }
+      else
+        TIFFSetField (out, TIFFTAG_SAMPLESPERPIXEL, 4);
+
       TIFFSetField (out, TIFFTAG_IMAGEWIDTH, width);
       TIFFSetField (out, TIFFTAG_IMAGELENGTH, height);
       TIFFSetField (out, TIFFTAG_RESOLUTIONUNIT, RESUNIT_INCH);

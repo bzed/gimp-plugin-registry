@@ -24,24 +24,41 @@
 
 enum separate_channel {sep_C,sep_M,sep_Y,sep_K};
 
-gboolean separate_is_CMYK(gint32 image_id);
+gboolean separate_is_CMYK (gint32 image_id);
 
-char *separate_filename_change_extension(char *root,char *newext);
-char *separate_filename_add_suffix(char *root,char *suffix);
-gint separate_path_get_extention_offset (gchar *filename);
+char *separate_filename_change_extension (char  *root,
+                                          char  *newext);
+char *separate_filename_add_suffix       (char  *root,
+                                          char  *suffix);
+gint separate_path_get_extention_offset  (gchar *filename);
 
-gint32 separate_create_RGB(gchar *filename,
-	guint width, guint height, gint32 *layers);
-gint32 separate_create_planes_grey(gchar *filename,
-	guint width, guint height, gint32 *layers);
-gint32 separate_create_planes_CMYK(gchar *filename,
-	guint width, guint height, gint32 *layers,guchar *primaries);
-gint32 separate_create_planes_Duotone(gchar *filename,
-	guint width, guint height, gint32 *layers);
+gint32 separate_create_RGB            (gchar    *filename,
+                                       guint     width,
+                                       guint     height,
+                                       gboolean  has_alpha,
+                                       gint32   *layers);
+gint32 separate_create_planes_grey    (gchar    *filename,
+                                       guint     width,
+                                       guint     height,
+                                       gint32   *layers);
+gint32 separate_create_planes_CMYK    (gchar    *filename,
+                                       guint     width,
+                                       guint     height,
+                                       gint32   *layers,
+                                       guchar   *primaries);
+gint32 separate_create_planes_Duotone (gchar    *filename,
+                                       guint     width,
+                                       guint     height,
+                                       gint32   *layers);
 
-void separate_init_settings  (SeparateContext *sc, enum separate_function func, gboolean get_last_values);
-void separate_store_settings (SeparateContext *sc, enum separate_function func);
+void separate_init_settings  (SeparateContext        *sc,
+                              enum separate_function  func,
+                              gboolean                get_last_values);
+void separate_store_settings (SeparateContext        *sc,
+                              enum separate_function  func);
 
-GimpDrawable *separate_find_channel(gint32 image_id,enum separate_channel channel);
+GimpDrawable *separate_find_channel (gint32                image_id,
+                                     enum separate_channel channel);
+GimpDrawable *separate_find_alpha   (gint32                image_id);
 
 #endif

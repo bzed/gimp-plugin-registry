@@ -26,6 +26,8 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "platform.h"
+
 #include "separate.h"
 #include "separate-core.h"
 #include "separate-export.h"
@@ -61,7 +63,65 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
+/* Arguments */
+static const GimpParamDef separate_args[] =
+{
+  { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+  { GIMP_PDB_IMAGE, "image", "Input image" },
+  { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+  { GIMP_PDB_STRING, "input_profile", "Input ICC profile" },
+  { GIMP_PDB_INT32, "use_embedded_profile", "Use embedded source profile if possible (TRUE, FALSE)" },
+  { GIMP_PDB_STRING, "output_profile", "Output ICC profile" },
+  { GIMP_PDB_INT32, "rendering_intent", "Rendering intent (0-3)" },
+  { GIMP_PDB_INT32, "use_bpc", "Use BPC algorithm (TRUE, FALSE)" },
+  { GIMP_PDB_INT32, "preserve_black", "Preserve pure black (TRUE, FALSE)" },
+  { GIMP_PDB_INT32, "overprint_black", "Overprint pure black (TRUE, FALSE)" },
+  { GIMP_PDB_INT32, "use_dither", "Use dither (TRUE, FALSE)" },
+  { GIMP_PDB_INT32, "pseudo_composite", "Make CMYK pseudo-composite (TRUE, FALSE)" }
+};
+
+static const GimpParamDef proof_args[] =
+{
+  { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+  { GIMP_PDB_IMAGE, "image", "Input image" },
+  { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+  { GIMP_PDB_STRING, "display_profile", "Monitor profile" },
+  { GIMP_PDB_STRING, "proofing_profile", "Proofing profile" },
+#ifdef ENABLE_COLOR_MANAGEMENT
+  { GIMP_PDB_INT32, "use_attached_profile", "Use attached proofing profile if possible (TRUE, FALSE)" },
+#endif
+  { GIMP_PDB_INT32, "mode", "0:Normal, 1:Black ink simulation, 2:Media white simulation" }
+};
+
+static const GimpParamDef exportargs[] =
+{
+  { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+  { GIMP_PDB_IMAGE, "image", "Input image" },
+  { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+  { GIMP_PDB_STRING, "filename", "Filename" },
+#ifdef ENABLE_COLOR_MANAGEMENT
+  { GIMP_PDB_INT32, "embed_profile", "0:None, 1:CMYK profile, 2:Print simulation profile, 3:Own profile" },
+#endif
+  { GIMP_PDB_INT32, "filetype", "-1:Auto, 1:TIFF" },
+  { GIMP_PDB_INT32, "compression", "Compress pixel data if available (TRUE, FALSE)" },
+  { GIMP_PDB_VECTORS, "vectors", "Clipping path or -1" }
+};
+
+static GimpParamDef duotone_args[] =
+{
+  { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+  { GIMP_PDB_IMAGE, "image", "Input image" },
+  { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+};
+
+static gint n_separate_args;
+static gint n_proof_args;
+static gint n_export_args;
+static gint n_duotone_args;
+
+
 MAIN ()
+
 
 static void
 query (void)
@@ -69,86 +129,23 @@ query (void)
   /* setup for localization */
   INIT_I18N ();
 
-  /* Arguments for CMYK Separation routines */
+  n_separate_args = sizeof (separate_args) / sizeof (separate_args[0]);
+  n_proof_args = sizeof (proof_args) / sizeof (proof_args[0]);
+  n_export_args = sizeof(exportargs) / sizeof (exportargs[0]);
+  n_duotone_args = sizeof (duotone_args) / sizeof (duotone_args[0]);
 
-  static GimpParamDef args[] =
+  static GimpParamDef return_vals[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_STRING, "input_profile", "Input ICC profile" },
-    { GIMP_PDB_STRING, "output_profile", "Output ICC profile" },
-    { GIMP_PDB_INT8, "preserve_black", "Preserve pure black (TRUE,FALSE)" },
-    { GIMP_PDB_INT8, "overprint_black", "Overprint pure black (TRUE,FALSE)" },
-    { GIMP_PDB_INT32, "rendering_intent", "Rendering intent (0-3)" },
-    { GIMP_PDB_INT8, "use_bpc", "Use BPC algorithm (TRUE,FALSE)" },
-    { GIMP_PDB_INT8, "option", "Use embedded source profile if possible (TRUE,FALSE)" }
-#ifdef SEPARATE_SEPARATE
-    ,{ GIMP_PDB_INT8, "pseudo_composite", "Make CMYK pseudo-composite (TRUE,FALSE)" }
-#endif
-  };
-  static gint nargs = sizeof (args) / sizeof (args[0]);
-  static GimpParamDef rargs[] =
-  {
-    //{ GIMP_PDB_STATUS , "status", "Success or failure"},
     { GIMP_PDB_IMAGE, "new_image", "Separated image" }
   };
-  static gint nrargs = sizeof (rargs) / sizeof (rargs[0]);
+  static gint n_return_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
-  /* Arguments for Proofing routines */
-
-  static GimpParamDef proofargs[] =
+  static GimpParamDef proof_return_vals[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_STRING, "display_profile", "Monitor(or workspace) profile" },
-    { GIMP_PDB_STRING, "proofing_profile", "Proofing profile" },
-    { GIMP_PDB_INT32, "mode", "0:Normal, 1:Black ink simulation, 2:Media white simulation" }
-#ifdef ENABLE_COLOR_MANAGEMENT
-    ,{ GIMP_PDB_INT8, "option", "Use attached proofing profile if possible (TRUE,FALSE)" }
-#endif
-  };
-  static gint nproofargs = sizeof (proofargs) / sizeof (proofargs[0]);
-  static GimpParamDef proofrargs[] =
-  {
-    //{ GIMP_PDB_STATUS , "status", "Success or failure"},
     { GIMP_PDB_IMAGE, "new_image", "Proof image" }
   };
-  static gint nproofrargs = sizeof (proofrargs) / sizeof (proofrargs[0]);
+  static gint n_proof_return_vals = sizeof (proof_return_vals) / sizeof (proof_return_vals[0]);
 
-  /* Arguments for CMYK TIFF saver */
-
-  static GimpParamDef saveargs[] =
-  {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_STRING, "filename", "Filename" },
-#ifdef ENABLE_COLOR_MANAGEMENT
-    { GIMP_PDB_INT8, "embed_profile", "0:None, 1:CMYK profile, 2:Print simulation profile, 3:Own profile" },
-#endif
-    { GIMP_PDB_INT32, "filetype", "-1:Auto, 1:TIFF" },
-    { GIMP_PDB_INT32, "compression", "Compress pixel data if available (TRUE,FALSE)" },
-    { GIMP_PDB_VECTORS, "vectors", "Clipping path or -1" }
-  };
-  static gint nsaveargs = sizeof(saveargs) / sizeof (saveargs[0]);
-  /*static GimpParamDef saverargs[] =
-  {
-    { GIMP_PDB_STATUS , "status", "Success or failure"},
-  };
-  static gint nsaverargs = sizeof (saverargs) / sizeof (saverargs[0]);*/
-
-  /* Arguments for DuoTone separation code */
-  static GimpParamDef duotoneargs[] =
-  {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-  };
-  static gint nduotoneargs = sizeof (duotoneargs) / sizeof (duotoneargs[0]);
-
-#ifdef SEPARATE_SEPARATE
   gimp_install_procedure ("plug_in_separate_separate",
                           _("Generate CMYK separations"),
                           _("Separate performs CMYK colour separation of an image, into "
@@ -159,9 +156,8 @@ query (void)
                           N_("<Image>/Image/Separate/Separate"),
                           "RGB*",
                           GIMP_PLUGIN,
-                          nargs, nrargs,
-                          args, rargs);
-#endif
+                          n_separate_args, n_return_vals,
+                          separate_args, return_vals);
 
   gimp_install_procedure ("plug_in_separate_full",
                           _("Generate CMYK separations"),
@@ -170,18 +166,11 @@ query (void)
                           "Alastair Robinson, Yoshinori Yamakawa",
                           "Alastair Robinson",
                           "2002-2010",
-#ifdef SEPARATE_SEPARATE
                           "",
                           "RGB*",
                           GIMP_PLUGIN,
-                          nargs - 1, nrargs,
-#else
-                          "<Image>/Image/Separate/Separate (to Colour)",
-                          "RGB*",
-                          GIMP_PLUGIN,
-                          nargs, nrargs,
-#endif
-                          args, rargs);
+                          n_separate_args - 1, n_return_vals,
+                          separate_args, return_vals);
 
   gimp_install_procedure ("plug_in_separate_light",
                           _("Generate CMYK separations"),
@@ -190,18 +179,11 @@ query (void)
                           "Alastair Robinson, Yoshinori Yamakawa",
                           "Alastair Robinson",
                           "2002-2010",
-#ifdef SEPARATE_SEPARATE
                           "",
                           "RGB*",
                           GIMP_PLUGIN,
-                          nargs - 1, nrargs,
-#else
-                          "<Image>/Image/Separate/Separate (normal)",
-                          "RGB*",
-                          GIMP_PLUGIN,
-                          nargs, nrargs,
-#endif
-                          args, rargs);
+                          n_separate_args - 1, n_return_vals,
+                          separate_args, return_vals);
 
   gimp_install_procedure ("plug_in_separate_proof",
                           _("Softproofing CMYK colour"),
@@ -213,8 +195,8 @@ query (void)
                           N_("<Image>/Image/Separate/Proof"),
                           "RGB*,GRAY*",
                           GIMP_PLUGIN,
-                          nproofargs, nproofrargs,
-                          proofargs, proofrargs);
+                          n_proof_args, n_proof_return_vals,
+                          proof_args, proof_return_vals);
 
   gimp_install_procedure ("plug_in_separate_duotone",
                           _("Generate duotone separations"),
@@ -227,8 +209,8 @@ query (void)
                           N_("<Image>/Image/Separate/Duotone"),
                           "RGB*",
                           GIMP_PLUGIN,
-                          nduotoneargs, nrargs,
-                          duotoneargs, rargs);
+                          n_duotone_args, n_return_vals,
+                          duotone_args, return_vals);
 
   gimp_install_procedure ("plug_in_separate_save",
                           _("Save separated image"),
@@ -240,8 +222,8 @@ query (void)
                           NULL,
                           "RGB*,GRAY*",
                           GIMP_PLUGIN,
-                          nsaveargs - 3, 0,
-                          saveargs, NULL);
+                          n_export_args - 3, 0,
+                          exportargs, NULL);
 
   gimp_install_procedure ("plug_in_separate_export",
                           _("Export separated image"),
@@ -252,20 +234,15 @@ query (void)
                           N_("<Image>/Image/Separate/Export..."),
                           "RGB*,GRAY*",
                           GIMP_PLUGIN,
-                          nsaveargs, 0,
-                          saveargs, NULL);
+                          n_export_args, 0,
+                          exportargs, NULL);
 
-#ifdef SEPARATE_SEPARATE
-  gimp_plugin_icon_register( "plug_in_separate_separate" ,GIMP_ICON_TYPE_INLINE_PIXBUF, separate_icon_cmyk );
-#else
-  gimp_plugin_icon_register( "plug_in_separate_full" ,GIMP_ICON_TYPE_INLINE_PIXBUF, separate_icon_cmyk );
-  gimp_plugin_icon_register( "plug_in_separate_light",GIMP_ICON_TYPE_INLINE_PIXBUF, separate_icon_cmyk );
-#endif
-  gimp_plugin_icon_register( "plug_in_separate_duotone",GIMP_ICON_TYPE_INLINE_PIXBUF, separate_icon_duotone );
+  gimp_plugin_icon_register ("plug_in_separate_separate" ,GIMP_ICON_TYPE_INLINE_PIXBUF, separate_icon_cmyk);
+  gimp_plugin_icon_register ("plug_in_separate_duotone",GIMP_ICON_TYPE_INLINE_PIXBUF, separate_icon_duotone);
 #ifdef GIMP_STOCK_DISPLAY_FILTER_PROOF
-  gimp_plugin_icon_register( "plug_in_separate_proof" ,GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_DISPLAY_FILTER_PROOF );
+  gimp_plugin_icon_register ("plug_in_separate_proof" ,GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_DISPLAY_FILTER_PROOF);
 #endif
-  gimp_plugin_icon_register( "plug_in_separate_export" ,GIMP_ICON_TYPE_STOCK_ID, GTK_STOCK_SAVE_AS );
+  gimp_plugin_icon_register ("plug_in_separate_export" ,GIMP_ICON_TYPE_STOCK_ID, GTK_STOCK_SAVE_AS);
 
   gimp_plugin_domain_register (GETTEXT_PACKAGE, NULL);
 }
@@ -284,13 +261,18 @@ run (const gchar      *name,
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   SeparateContext mysc;
   enum separate_function func = SEP_NONE;
+  gint index = 0;
 
-  run_mode = param[0].data.d_int32;
+  n_separate_args = sizeof (separate_args) / sizeof (separate_args[0]);
+  n_proof_args = sizeof (proof_args) / sizeof (proof_args[0]);
+  n_export_args = sizeof(exportargs) / sizeof (exportargs[0]);
+  n_duotone_args = sizeof (duotone_args) / sizeof (duotone_args[0]);
 
-#ifdef SEPARATE_SEPARATE
+  run_mode = param[index++].data.d_int32;
+  index++; /* skip the image parameter */
+
   if (strcmp (name, "plug_in_separate_separate") == 0)
     func = SEP_SEPARATE;
-#endif
   if (strcmp (name, "plug_in_separate_full") == 0)
     func = SEP_FULL;
   else if (strcmp (name, "plug_in_separate_light") == 0)
@@ -307,52 +289,51 @@ run (const gchar      *name,
   /* setup for localization */
   INIT_I18N ();
 
-  cmsErrorAction (LCMS_ERROR_IGNORE);
-
-  /*  Get the specified drawable  */
-  drawable = gimp_drawable_get (param[2].data.d_drawable);
+  lcms_error_setup ();
 
   values[1].data.d_image = -1;
 
   separate_init_settings (&mysc, func, (run_mode != GIMP_RUN_NONINTERACTIVE));
-  mysc.imageID = gimp_drawable_get_image (param[2].data.d_drawable);//param[1].data.d_image;
+
+  /*  Get the specified drawable  */
+  drawable = gimp_drawable_get (param[index].data.d_drawable);
+  mysc.imageID = gimp_drawable_get_image (param[index++].data.d_drawable);//param[1].data.d_image;
 
 
   switch (func)
     {
-#ifdef SEPARATE_SEPARATE
     case SEP_SEPARATE:
-#endif
     case SEP_FULL:
     case SEP_LIGHT:
     case SEP_PROOF:
       switch (run_mode)
         {
         case GIMP_RUN_NONINTERACTIVE:
-#ifdef SEPARATE_SEPARATE
           if (func == SEP_SEPARATE)
             {
-              if (nparams != 11)
+              if (nparams != n_separate_args)
                 status = GIMP_PDB_CALLING_ERROR;
             }
           else
-#endif
-#ifdef ENABLE_COLOR_MANAGEMENT
-            if (nparams != (func == SEP_PROOF ? 7 : 10))
-#else
-            if (nparams != (func == SEP_PROOF ? 6 : 10))
-#endif
-              status = GIMP_PDB_CALLING_ERROR;
+            {
+              if (nparams != (func == SEP_PROOF ? n_proof_args : n_separate_args - 1))
+                status = GIMP_PDB_CALLING_ERROR;
+            }
 
           if (status == GIMP_PDB_SUCCESS)
             {
               /* Collect the profile filenames */
               gchar *rgbprofile, *cmykprofile;
-              rgbprofile = param[3].data.d_string;
-              cmykprofile = param[4].data.d_string;
+
+              rgbprofile = param[index++].data.d_string;
 
               if (func == SEP_PROOF)
                 {
+                  cmykprofile = param[index++].data.d_string;
+#ifdef ENABLE_COLOR_MANAGEMENT
+                  mysc.ps.profile = param[index++].data.d_int32;
+#endif
+
                   if (rgbprofile && strlen (rgbprofile))
                     {
                       g_free (mysc.displayfilename);
@@ -364,13 +345,13 @@ run (const gchar      *name,
                       mysc.prooffilename = g_strdup (cmykprofile);
                     }
 
-                  mysc.ps.mode = param[5].data.d_int32 == -1 ? mysc.ps.mode : param[5].data.d_int32;
-#ifdef ENABLE_COLOR_MANAGEMENT
-                  mysc.ps.profile = param[6].data.d_int8;
-#endif
+                  mysc.ps.mode = param[index++].data.d_int32 == -1 ? mysc.ps.mode : param[5].data.d_int32;
                 }
               else
                 {
+                  mysc.ss.profile = param[index++].data.d_int32;
+                  cmykprofile = param[index++].data.d_string;
+
                   if (rgbprofile && strlen (rgbprofile))
                     {
                       g_free (mysc.rgbfilename);
@@ -382,18 +363,18 @@ run (const gchar      *name,
                       mysc.cmykfilename = g_strdup (cmykprofile);
                     }
 
-                  mysc.ss.preserveblack = param[5].data.d_int8;
-                  mysc.ss.overprintblack = param[6].data.d_int8;
-                  mysc.ss.intent = param[7].data.d_int32 == -1 ? mysc.ss.intent : param[7].data.d_int32;
-                  mysc.ss.bpc = param[8].data.d_int8;
-                  mysc.ss.profile = param[9].data.d_int8;
+                  mysc.ss.intent = param[index].data.d_int32 == -1 ? mysc.ss.intent : param[index].data.d_int32;
+                  index++;
+                  mysc.ss.bpc = param[index++].data.d_int32;
+                  mysc.ss.preserveblack = param[index++].data.d_int32;
+                  mysc.ss.overprintblack = param[index++].data.d_int32;
+                  mysc.ss.dither = param[index++].data.d_int32;
                 }
             }
           break;
         case GIMP_RUN_INTERACTIVE:
-#ifdef SEPARATE_SEPARATE
           mysc.integrated = (func == SEP_SEPARATE);
-#endif
+
           if (!(func == SEP_PROOF ? proof_dialog (&mysc) : separate_dialog (&mysc)))
             status = GIMP_PDB_EXECUTION_ERROR;
           break;
@@ -410,22 +391,20 @@ run (const gchar      *name,
 
           switch (func)
             {
-#ifdef SEPARATE_SEPARATE
             case SEP_SEPARATE:
-              if ((run_mode == GIMP_RUN_NONINTERACTIVE) ? param[10].data.d_int8 : mysc.ss.composite)
-                separate_full (drawable,&values[1],&mysc);
+              if ((run_mode == GIMP_RUN_NONINTERACTIVE) ? param[index].data.d_int32 : mysc.ss.composite)
+                separate_full (drawable, &values[1], &mysc);
               else
-                separate_light (drawable,&values[1],&mysc);
+                separate_light (drawable, &values[1], &mysc);
               break;
-#endif
             case SEP_FULL:
-              separate_full (drawable,&values[1],&mysc);
+              separate_full (drawable, &values[1], &mysc);
               break;
             case SEP_LIGHT:
-              separate_light(drawable,&values[1],&mysc);
+              separate_light (drawable, &values[1], &mysc);
               break;
             case SEP_PROOF:
-              separate_proof (drawable,&values[1],&mysc);
+              separate_proof (drawable, &values[1], &mysc);
               break;
             default:
               gimp_message (_("Separate: Internal calling error!"));
@@ -435,8 +414,8 @@ run (const gchar      *name,
             {
               gimp_displays_flush();
 
-              if( values[1].data.d_image != -1 )
-                separate_store_settings( &mysc, func );
+              if (values[1].data.d_image != -1)
+                separate_store_settings (&mysc, func);
             }
         }
       break;
@@ -452,23 +431,18 @@ run (const gchar      *name,
           switch (run_mode)
             {
             case GIMP_RUN_NONINTERACTIVE:
-#ifdef ENABLE_COLOR_MANAGEMENT
-              if (nparams != (func == SEP_SAVE ? 5 : 8))
-#else
-              if (nparams != (func == SEP_SAVE ? 4 : 7))
-#endif
+              if (nparams != (func == SEP_SAVE ? n_export_args - 3 : n_export_args))
                 status = GIMP_PDB_CALLING_ERROR;
 
               if (status == GIMP_PDB_SUCCESS)
                 {
                   /* Collect the filenames */
-                  gint index = 3;
                   gchar *filename;
 
                   filename= param[index++].data.d_string;
                   gimp_image_set_filename (mysc.imageID, filename);
 #ifdef ENABLE_COLOR_MANAGEMENT
-                  mysc.sas.embedprofile = param[index++].data.d_int8;
+                  mysc.sas.embedprofile = param[index++].data.d_int32;
 #endif
                   if (func == SEP_EXPORT)
                     {
@@ -623,9 +597,10 @@ setup_widgets (gboolean         is_devicelink,
       gtk_widget_set_sensitive (GTK_WIDGET (sc->bpcselector), FALSE);
       gtk_widget_set_sensitive (GTK_WIDGET (sc->profileselector), FALSE);
       gtk_widget_set_sensitive (GTK_WIDGET (sc->profilelabel), FALSE);
-      gtk_label_set_text (GTK_LABEL (sc->srclabel), _("Devicelink profile:"));
+      gtk_label_set_text_with_mnemonic (GTK_LABEL (sc->srclabel), _("Device_link profile:"));
       icc_button_set_title (button, _("Choose devicelink profile..."));
       ICC_BUTTON_SET_DEVLINK_MASK (button);
+      icc_button_set_enable_empty (ICC_BUTTON (sc->rgbfileselector), FALSE);
       icc_button_set_enable_empty (ICC_BUTTON (sc->cmykfileselector), TRUE);
       separate_is_ready (sc);
     }
@@ -636,9 +611,10 @@ setup_widgets (gboolean         is_devicelink,
       gtk_widget_set_sensitive (GTK_WIDGET (sc->bpcselector), TRUE);
       gtk_widget_set_sensitive (GTK_WIDGET (sc->profileselector), TRUE);
       gtk_widget_set_sensitive (GTK_WIDGET (sc->profilelabel), TRUE);
-      gtk_label_set_text (GTK_LABEL (sc->srclabel), _("Source color space:"));
+      gtk_label_set_text_with_mnemonic (GTK_LABEL (sc->srclabel), _("_Source color space:"));
       icc_button_set_title (button, _("Choose source profile (RGB)..."));
       ICC_BUTTON_SET_RGB_MASK (button);
+      icc_button_set_enable_empty (ICC_BUTTON (sc->rgbfileselector), TRUE);
       icc_button_set_enable_empty (ICC_BUTTON (sc->cmykfileselector), FALSE);
       separate_is_ready (sc);
     }
@@ -680,9 +656,8 @@ separate_dialog (SeparateContext *sc)
   GtkWidget *devicelinkselector;
   GtkWidget *pureblackselector;
   GtkWidget *overprintselector;
-#ifdef SEPARATE_SEPARATE
+  GtkWidget *ditherselector;
   GtkWidget *compositeselector;
-#endif
   gboolean   run;
   gboolean   is_devicelink;
 
@@ -695,29 +670,33 @@ separate_dialog (SeparateContext *sc)
                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                 GTK_STOCK_OK, GTK_RESPONSE_OK,
                                 NULL);
+  gimp_window_set_transient (GTK_WINDOW (sc->dialog));
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (sc->dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (sc->dialog)->vbox), vbox, TRUE, TRUE, 0);
 
-#ifdef SEPARATE_SEPARATE
-  table = GTK_TABLE (gtk_table_new (2, 10, FALSE));
-#else
-  table = GTK_TABLE (gtk_table_new( 2, 9, FALSE));
-#endif
+  table = GTK_TABLE (gtk_table_new (2, 11, FALSE));
   gtk_table_set_col_spacing (table, 0, 8);
   gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (table), TRUE, TRUE, 0);
 
   /* Profile file selectors */
 
-  sc->srclabel = gtk_label_new (_("Source color space:"));
+  sc->srclabel = gtk_label_new_with_mnemonic (_("_Source color space:"));
   gtk_misc_set_alignment (GTK_MISC (sc->srclabel), 1, 0.5);
   gtk_table_attach (table, sc->srclabel, 0, 1, 0, 1, GTK_FILL, 0, 0, 0);
 
   sc->rgbfileselector = icc_button_new ();
+  gtk_label_set_mnemonic_widget (GTK_LABEL (sc->srclabel), sc->rgbfileselector);
   g_signal_connect_swapped (G_OBJECT (sc->rgbfileselector), "changed",
                             G_CALLBACK (separate_is_ready), (gpointer)sc);
   icc_button_set_max_entries (ICC_BUTTON (sc->rgbfileselector), 10);
+  icc_button_dialog_set_show_detail (ICC_BUTTON (sc->rgbfileselector), TRUE);
+  icc_button_dialog_set_list_columns (ICC_BUTTON (sc->rgbfileselector), ICC_BUTTON_COLUMN_ICON | ICC_BUTTON_COLUMN_PATH);
   icc_button_set_filename (ICC_BUTTON (sc->rgbfileselector),
                            sc->rgbfilename ? sc->rgbfilename : sc->alt_rgbfilename,
                            FALSE);
@@ -725,7 +704,7 @@ separate_dialog (SeparateContext *sc)
 
   gtk_table_attach (table, sc->rgbfileselector, 1, 2, 0, 1, GTK_FILL | GTK_EXPAND, 0, 0, 0);
 
-  sc->profileselector = gtk_check_button_new_with_label (_("Give priority to embedded profile"));
+  sc->profileselector = gtk_check_button_new_with_mnemonic (_("_Give priority to embedded profile"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sc->profileselector), sc->ss.profile);
   g_signal_connect_swapped (G_OBJECT (sc->profileselector), "toggled",
                             G_CALLBACK (separate_is_ready), (gpointer)sc);
@@ -742,7 +721,7 @@ separate_dialog (SeparateContext *sc)
         if ((hProfile = cmsOpenProfileFromMem ((gpointer)gimp_parasite_data (parasite),
                                                gimp_parasite_data_size (parasite))) != NULL)
           {
-            gchar *desc = _icc_button_get_profile_desc (hProfile);
+            gchar *desc = lcms_get_profile_desc (hProfile);
             labelStr = g_strdup_printf ("%s", desc);
             g_free (desc);
             cmsCloseProfile (hProfile);
@@ -758,7 +737,7 @@ separate_dialog (SeparateContext *sc)
         sc->has_embedded_profile = TRUE;
       }
     else
-      sc->profilelabel = gtk_label_new (_("( no profiles embedded )"));
+      sc->profilelabel = gtk_label_new (_("(no profiles embedded)"));
 
     gtk_label_set_ellipsize (GTK_LABEL (sc->profilelabel), PANGO_ELLIPSIZE_MIDDLE);
     gtk_misc_set_alignment (GTK_MISC (sc->profilelabel), 0, 0.5);
@@ -776,17 +755,20 @@ separate_dialog (SeparateContext *sc)
   gtk_table_attach (table, temp, 1, 2, 2, 3, GTK_FILL, 0, 0, 0);
   gtk_table_set_row_spacing (table, 2, 8);
 
-  temp = gtk_label_new (_("Destination color space:"));
+  temp = gtk_label_new_with_mnemonic (_("D_estination color space:"));
   gtk_misc_set_alignment (GTK_MISC (temp), 1, 0.5);
   gtk_table_attach (table, temp, 0, 1, 3, 4, GTK_FILL, 0, 0, 0);
 
   sc->cmykfileselector = icc_button_new ();
+  gtk_label_set_mnemonic_widget (GTK_LABEL (temp), sc->cmykfileselector);
   g_signal_connect_swapped (G_OBJECT (sc->cmykfileselector), "changed",
                             G_CALLBACK (separate_is_ready), (gpointer)sc);
   icc_button_set_max_entries (ICC_BUTTON (sc->cmykfileselector), 10);
   icc_button_set_title (ICC_BUTTON (sc->cmykfileselector), _("Choose output profile (CMYK)..."));
-  /* ƒ{ƒ^ƒ“‚Ìƒ‰ƒxƒ‹‚ªi–¢‘I‘ðj‚É‚È‚Á‚Ä‚µ‚Ü‚¤‚±‚Æ‚Ö‚Ì‰ñ”ðô */
+  /* ãƒœã‚¿ãƒ³ã®ãƒ©ãƒ™ãƒ«ãŒï¼ˆæœªé¸æŠžï¼‰ã«ãªã£ã¦ã—ã¾ã†ã“ã¨ã¸ã®å›žé¿ç­– */
   icc_button_set_enable_empty (ICC_BUTTON (sc->cmykfileselector), is_devicelink);
+  icc_button_dialog_set_show_detail (ICC_BUTTON (sc->cmykfileselector), TRUE);
+  icc_button_dialog_set_list_columns (ICC_BUTTON (sc->cmykfileselector), ICC_BUTTON_COLUMN_ICON | ICC_BUTTON_COLUMN_PATH);
   icc_button_set_filename (ICC_BUTTON (sc->cmykfileselector),
                            (!is_devicelink && !sc->cmykfilename) ? sc->alt_cmykfilename : sc->cmykfilename,
                            FALSE);
@@ -795,11 +777,12 @@ separate_dialog (SeparateContext *sc)
   gtk_table_attach (table, sc->cmykfileselector, 1, 2, 3, 4, GTK_FILL | GTK_EXPAND, 0, 0, 0);
   gtk_table_set_row_spacing (table, 3, 12 );
 
-  sc->intentlabel = gtk_label_new (_("Rendering intent:"));
+  sc->intentlabel = gtk_label_new_with_mnemonic (_("_Rendering intent:"));
   gtk_misc_set_alignment (GTK_MISC (sc->intentlabel), 1, 0.5);
   gtk_table_attach (table, sc->intentlabel, 0, 1, 4, 5, GTK_FILL, 0, 0, 0);
 
   sc->intentselector = gtk_combo_box_new_text ();
+  gtk_label_set_mnemonic_widget (GTK_LABEL (sc->intentlabel), sc->intentselector);
   gtk_combo_box_append_text (GTK_COMBO_BOX (sc->intentselector), _("Perceptual"));
   gtk_combo_box_append_text (GTK_COMBO_BOX (sc->intentselector), _("Relative colorimetric"));
   gtk_combo_box_append_text (GTK_COMBO_BOX (sc->intentselector), _("Saturation"));
@@ -809,7 +792,7 @@ separate_dialog (SeparateContext *sc)
                             sc->ss.intent < 0 ? 0 : ( sc->ss.intent > 4 ? 4 : sc->ss.intent));
   gtk_table_attach (table, sc->intentselector, 1, 2, 4, 5, GTK_FILL, 0, 0, 0);
 
-  sc->bpcselector = gtk_check_button_new_with_label (_("Use BPC algorithm"));
+  sc->bpcselector = gtk_check_button_new_with_mnemonic (_("Use _BPC algorithm"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sc->bpcselector), sc->ss.bpc);
   gtk_table_attach (table, sc->bpcselector, 1, 2, 5, 6, GTK_FILL, 0, 0, 0);
   gtk_table_set_row_spacing (table, 5, 8);
@@ -818,18 +801,18 @@ separate_dialog (SeparateContext *sc)
   gtk_misc_set_alignment (GTK_MISC (temp), 1, 0.5);
   gtk_table_attach (table, temp, 0, 1, 6, 7, GTK_FILL, 0, 0, 0);
 
-  devicelinkselector = gtk_check_button_new_with_label (_("Use devicelink profile"));
+  devicelinkselector = gtk_check_button_new_with_mnemonic (_("_Use devicelink profile"));
   gtk_table_attach (table, devicelinkselector, 1, 2, 6, 7, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (devicelinkselector), is_devicelink);
 
   g_signal_connect (G_OBJECT( devicelinkselector), "toggled",
                     G_CALLBACK (callback_devicelink_toggled), (gpointer)sc);
 
-  pureblackselector = gtk_check_button_new_with_label (_("Preserve pure black"));
+  pureblackselector = gtk_check_button_new_with_mnemonic (_("_Preserve pure black"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pureblackselector), sc->ss.preserveblack);
   gtk_table_attach (table, pureblackselector, 1, 2, 7, 8, GTK_FILL, 0, 0, 0);
 
-  overprintselector = gtk_check_button_new_with_label (_("Overprint pure black"));
+  overprintselector = gtk_check_button_new_with_mnemonic (_("O_verprint pure black"));
   gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON (overprintselector), sc->ss.overprintblack);
   gtk_widget_set_sensitive (GTK_WIDGET (overprintselector), sc->ss.preserveblack);
   gtk_table_attach (table, overprintselector, 1, 2, 8, 9, GTK_FILL, 0, 0, 0);
@@ -837,14 +820,21 @@ separate_dialog (SeparateContext *sc)
   g_signal_connect (G_OBJECT( pureblackselector), "toggled",
                     G_CALLBACK (callback_preserve_black_toggled), (gpointer)overprintselector);
 
-#ifdef SEPARATE_SEPARATE
+  ditherselector = gtk_check_button_new_with_mnemonic (_("Use _dither"));
+#ifdef ENABLE_DITHER
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ditherselector), sc->ss.dither);
+#else
+  gtk_widget_set_sensitive (ditherselector, FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ditherselector), FALSE);
+#endif
+  gtk_table_attach (table, ditherselector, 1, 2, 9, 10, GTK_FILL, 0, 0, 0);
+
   if (sc->integrated)
     {
-      compositeselector = gtk_check_button_new_with_label (_("Make CMYK pseudo-composite"));
+      compositeselector = gtk_check_button_new_with_mnemonic (_("_Make CMYK pseudo-composite"));
       gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON (compositeselector), sc->ss.composite);
-      gtk_table_attach (table, compositeselector, 1, 2, 9, 10, GTK_FILL, 0, 0, 0);
+      gtk_table_attach (table, compositeselector, 1, 2, 11, 12, GTK_FILL, 0, 0, 0);
     }
-#endif
 
   setup_widgets (is_devicelink, sc);
 
@@ -879,15 +869,15 @@ separate_dialog (SeparateContext *sc)
       else
         g_free (tmp);
 
-    sc->ss.preserveblack = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (pureblackselector));
-    sc->ss.overprintblack = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (overprintselector));
-    sc->ss.intent = gtk_combo_box_get_active (GTK_COMBO_BOX (sc->intentselector));
-    sc->ss.bpc = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (sc->bpcselector));
-    sc->ss.profile = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (sc->profileselector));
-#ifdef SEPARATE_SEPARATE
-    if (sc->integrated)
-      sc->ss.composite = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (compositeselector));
-#endif
+      sc->ss.preserveblack = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (pureblackselector));
+      sc->ss.overprintblack = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (overprintselector));
+      sc->ss.intent = gtk_combo_box_get_active (GTK_COMBO_BOX (sc->intentselector));
+      sc->ss.bpc = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (sc->bpcselector));
+      sc->ss.profile = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (sc->profileselector));
+      sc->ss.dither = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ditherselector));
+
+      if (sc->integrated)
+        sc->ss.composite = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (compositeselector));
     }
 
   gtk_widget_destroy (sc->dialog);
@@ -947,6 +937,11 @@ proof_dialog (SeparateContext *sc)
                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                 GTK_STOCK_OK, GTK_RESPONSE_OK,
                                 NULL);
+  gimp_window_set_transient (GTK_WINDOW (sc->dialog));
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (sc->dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12 );
@@ -964,16 +959,19 @@ proof_dialog (SeparateContext *sc)
 
   /* Profile file selectors */
 
-  temp = gtk_label_new (_("Monitor color space:"));
+  temp = gtk_label_new_with_mnemonic (_("_Monitor color space:"));
   gtk_misc_set_alignment (GTK_MISC (temp), 1, 0.5);
   gtk_table_attach (table, temp, 0, 1, attach, attach + 1, GTK_FILL, 0, 0, 0);
   gtk_widget_show (temp);
 
   sc->rgbfileselector = icc_button_new ();
+  gtk_label_set_mnemonic_widget (GTK_LABEL (temp), sc->rgbfileselector);
   g_signal_connect_swapped (G_OBJECT (sc->rgbfileselector), "changed",
                             G_CALLBACK (proof_is_ready), (gpointer)sc);
   icc_button_set_max_entries (ICC_BUTTON (sc->rgbfileselector), 10);
   icc_button_set_title (ICC_BUTTON( sc->rgbfileselector), _("Choose RGB profile..."));
+  icc_button_dialog_set_show_detail (ICC_BUTTON (sc->rgbfileselector), TRUE);
+  icc_button_dialog_set_list_columns (ICC_BUTTON (sc->rgbfileselector), ICC_BUTTON_COLUMN_ICON | ICC_BUTTON_COLUMN_PATH);
   icc_button_set_filename (ICC_BUTTON (sc->rgbfileselector),
                            !sc->displayfilename ? sc->alt_displayfilename : sc->displayfilename,
                            FALSE);
@@ -984,16 +982,19 @@ proof_dialog (SeparateContext *sc)
   gtk_widget_show (sc->rgbfileselector);
   gtk_table_set_row_spacing (table, 0, 8);
   
-  temp = gtk_label_new (_("Separated image's color space:"));
+  temp = gtk_label_new_with_mnemonic (_("_Separated image's color space:"));
   gtk_misc_set_alignment (GTK_MISC( temp ), 1, 0.5 );
   gtk_table_attach (table, temp, 0, 1, attach, attach + 1, GTK_FILL, 0, 0, 0);
   gtk_widget_show (temp);
 
   sc->cmykfileselector = icc_button_new ();
+  gtk_label_set_mnemonic_widget (GTK_LABEL (temp), sc->cmykfileselector);
   g_signal_connect_swapped (G_OBJECT (sc->cmykfileselector), "changed",
                             G_CALLBACK (proof_is_ready), (gpointer)sc);
   icc_button_set_max_entries (ICC_BUTTON (sc->cmykfileselector), 10);
   icc_button_set_title (ICC_BUTTON (sc->cmykfileselector), _("Choose CMYK profile..."));
+  icc_button_dialog_set_show_detail (ICC_BUTTON (sc->cmykfileselector), TRUE);
+  icc_button_dialog_set_list_columns (ICC_BUTTON (sc->cmykfileselector), ICC_BUTTON_COLUMN_ICON | ICC_BUTTON_COLUMN_PATH);
   icc_button_set_filename (ICC_BUTTON (sc->cmykfileselector),
                            !sc->prooffilename ? sc->alt_prooffilename : sc->prooffilename,
                            FALSE);
@@ -1004,7 +1005,7 @@ proof_dialog (SeparateContext *sc)
   attach++;
 
 #ifdef ENABLE_COLOR_MANAGEMENT
-  sc->profileselector = gtk_check_button_new_with_label (_("Give priority to attached profile"));
+  sc->profileselector = gtk_check_button_new_with_mnemonic (_("_Give priority to attached profile"));
   g_signal_connect_swapped (G_OBJECT (sc->profileselector), "toggled",
                             G_CALLBACK (proof_is_ready), (gpointer)sc);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sc->profileselector), sc->ps.profile);
@@ -1024,7 +1025,7 @@ proof_dialog (SeparateContext *sc)
         if ((hProfile = cmsOpenProfileFromMem ((gpointer)gimp_parasite_data (parasite),
                                                gimp_parasite_data_size (parasite))) != NULL)
           {
-            gchar *desc = _icc_button_get_profile_desc (hProfile);
+            gchar *desc = lcms_get_profile_desc (hProfile);
             labelStr = g_strdup_printf ("%s", desc);
             g_free (desc);
             cmsCloseProfile (hProfile);
@@ -1040,7 +1041,7 @@ proof_dialog (SeparateContext *sc)
         g_free (labelStr);
       }
     else
-      label = gtk_label_new (_("( no profiles attached )"));
+      label = gtk_label_new (_("(no profiles attached)"));
 
     gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
     gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
@@ -1062,12 +1063,13 @@ proof_dialog (SeparateContext *sc)
 
   gtk_table_set_row_spacing( table, attach - 1, 12 );
 
-  temp=gtk_label_new (_("Mode:"));
+  temp = gtk_label_new_with_mnemonic (_("M_ode:"));
   gtk_misc_set_alignment (GTK_MISC (temp), 1, 0.5);
   gtk_table_attach (table, temp, 0, 1, attach, attach + 1, GTK_FILL, 0, 0, 0);
   gtk_widget_show (temp);
 
   modeselector = gtk_combo_box_new_text ();
+  gtk_label_set_mnemonic_widget (GTK_LABEL (temp), modeselector);
   gtk_combo_box_append_text (GTK_COMBO_BOX (modeselector), _("Normal"));
   gtk_combo_box_append_text (GTK_COMBO_BOX (modeselector), _("Simulate black ink"));
   gtk_combo_box_append_text (GTK_COMBO_BOX (modeselector), _("Simulate media white"));
@@ -1140,9 +1142,14 @@ separate_save_dialog (SeparateContext *sc)
   sc->filenamefileselector = gtk_file_chooser_dialog_new (_("Export CMYK image..."),
                                                           NULL,
                                                           GTK_FILE_CHOOSER_ACTION_SAVE,
-                                                          GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
                                                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                                          GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
                                                           NULL);
+  gimp_window_set_transient (GTK_WINDOW (sc->filenamefileselector));
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (sc->filenamefileselector),
+                                           GTK_RESPONSE_ACCEPT,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
   gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (sc->filenamefileselector), dirname);
   gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (sc->filenamefileselector), basename);
   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (sc->filenamefileselector), TRUE);
@@ -1158,10 +1165,10 @@ separate_save_dialog (SeparateContext *sc)
 #endif
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 8);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (sc->filenamefileselector)->vbox),
-                      table, TRUE, TRUE, 0);
+                      table, FALSE, TRUE, 0);
 
   /* file type selector */
-  label = gtk_label_new (_("Format:"));
+  label = gtk_label_new_with_mnemonic (_("_Format:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1, GTK_FILL, 0, 0, 4);
   hbox = gtk_hbox_new (FALSE, 6);
@@ -1169,6 +1176,7 @@ separate_save_dialog (SeparateContext *sc)
   row++;
 
   combo1 = gtk_combo_box_new_text ();
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo1);
   gtk_combo_box_append_text (GTK_COMBO_BOX (combo1), _("Auto"));
   gtk_combo_box_append_text (GTK_COMBO_BOX (combo1), _("TIFF"));
   gtk_combo_box_append_text (GTK_COMBO_BOX (combo1), _("JPEG"));
@@ -1190,10 +1198,11 @@ separate_save_dialog (SeparateContext *sc)
 
     if (n_vectors)
       {
-        label = gtk_label_new (_("Clipping path:"));
+        label = gtk_label_new_with_mnemonic (_("Clippi_ng path:"));
         gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
         gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1, GTK_FILL, 0, 0, 4);
         combo2 = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
+        gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo2);
 
         gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (combo2),
                                    GIMP_INT_STORE_VALUE, -1,
@@ -1221,10 +1230,11 @@ separate_save_dialog (SeparateContext *sc)
     gint lastItemIndex = 2;
 
     //hbox = gtk_hbox_new (FALSE, 8);
-    label = gtk_label_new (_("Embed color profile:"));
+    label = gtk_label_new_with_mnemonic (_("_Embed color profile:"));
     gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
     gtk_table_attach (GTK_TABLE (table), label, 0, 1, row, row + 1, GTK_FILL, 0, 0, 4);
     combo3 = gtk_combo_box_new_text ();
+    gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo3);
     gtk_combo_box_append_text (GTK_COMBO_BOX (combo3), _("None"));
     gtk_combo_box_append_text (GTK_COMBO_BOX (combo3), _("CMYK default profile"));
     gtk_combo_box_append_text (GTK_COMBO_BOX (combo3), _("Print simulation profile"));
@@ -1234,7 +1244,7 @@ separate_save_dialog (SeparateContext *sc)
                                                       gimp_parasite_data_size (parasite));
       if (hProfile)
         {
-          gchar *desc = _icc_button_get_profile_desc (hProfile);
+          gchar *desc = lcms_get_profile_desc (hProfile);
           gchar *text = g_strdup_printf (_("Own profile : %s"), desc);
 
           gtk_combo_box_append_text (GTK_COMBO_BOX (combo3), text);

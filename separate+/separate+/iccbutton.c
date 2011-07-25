@@ -5,7 +5,6 @@
 
 #include "iccbutton.h"
 #include "iccclassicons.h"
-#include <locale.h>
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 
@@ -18,12 +17,6 @@
 #define _WIN32_WINNT 0x0500
 #include <windows.h>
 #include <icm.h>
-#endif
-
-#if defined MACOSX && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
-#include <CoreFoundation/CFString.h>
-#include <CoreFoundation/CFLocale.h>
-#include <CoreFoundation/CFPreferences.h>
 #endif
 
 static cmsHPROFILE checkProfile   (const gchar    *path,
@@ -42,27 +35,6 @@ static void setupMenu             (IccButton      *button);
 
 
 static gint nInstances = 0;
-
-
-////////// Utils
-
-inline cmsHPROFILE
-lcms_open_profile (gchar *filename)
-{
-  cmsHPROFILE profile;
-
-#ifdef G_OS_WIN32
-  gchar *_filename = g_win32_locale_filename_from_utf8 (filename);
-
-  profile = cmsOpenProfileFromFile (_filename, "r");
-
-  g_free (_filename);
-#else
-  profile = cmsOpenProfileFromFile (filename, "r");
-#endif
-
-  return profile;
-}
 
 
 ////////// Signals
@@ -110,7 +82,7 @@ profile_data_new_from_file (const gchar  *path,
       _data = g_new (profileData, 1);
 
       _data->path       = g_strdup (path);
-      _data->name       = _icc_button_get_profile_desc (profile);
+      _data->name       = lcms_get_profile_desc (profile);
       _data->class      = cmsGetDeviceClass (profile);
       _data->colorspace = g_strndup ((sig = GUINT32_TO_BE (cmsGetColorSpace (profile)), (gchar *)&sig), 4);
       _data->pcs        = g_strndup ((sig = GUINT32_TO_BE (cmsGetPCS (profile)), (gchar *)&sig), 4);
@@ -288,208 +260,6 @@ icc_button_drag_data_received (GtkWidget        *widget,
   g_strfreev (uris);
 
   gtk_drag_finish (context, success, FALSE, time);
-}
-
-
-/***************************************************************
-  Get a localized text from the 'mluc' type tag
-  That text is already converted to UTF-8 from UTF-16BE
-
-  Note : In the future, this function will be moved to external
-         library.
-****************************************************************/
-
-static gchar *
-readLocalizedText (cmsHPROFILE    profile,
-                   icTagSignature sig)
-{
-  LPLCMSICCPROFILE icc = (LPLCMSICCPROFILE)profile;
-
-  size_t offset, size;
-  gint n;
-
-  if (profile != NULL && (n = _cmsSearchTag (profile, sig, FALSE)) >= 0)
-    {
-      gchar *buf = NULL;
-
-      icTagBase base;
-
-      offset = icc->TagOffsets[n];
-      size = icc->TagSizes[n];
-
-      if (icc->Seek (icc, offset))
-        return NULL;
-
-      icc->Read (&base, sizeof (icTagBase), 1, icc);
-      base.sig = g_ntohl (base.sig);
-
-      size -= sizeof (icTagBase);
-
-      switch (base.sig)
-        {
-        case icSigTextDescriptionType: {
-          icUInt32Number length;
-
-          icc->Read (&length, sizeof (icUInt32Number), 1, icc);
-          length = g_ntohl (length);
-          if (length <= 0)
-            return NULL;
-          length = length > ICC_PROFILE_DESC_MAX ? ICC_PROFILE_DESC_MAX : length;
-
-          if ((buf = g_new0 (gchar, length + 1)) != NULL)
-            icc->Read (buf, sizeof (gchar), length, icc);
-
-          return buf; }
-        case icSigMultiLocalizedUnicodeType: {
-          gchar *utf8String = NULL;
-
-          icUInt32Number nNames, nameRecordSize;
-          icUInt16Number lang, region, _lang, _region;
-          gchar *locale;
-
-          guint i;
-
-          size_t entryLength = 0, entryOffset = 0, _entryLength = 0, _entryOffset = 0;
-          gboolean flag = FALSE;
-
-#ifdef G_OS_WIN32
-          locale = g_win32_getlocale ();
-#elif defined MACOSX && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
-          {
-            static gchar *localeIDString = NULL;
-
-            if (localeIDString == NULL)
-              {
-                CFTypeRef array = CFPreferencesCopyAppValue (CFSTR ("AppleLanguages"), kCFPreferencesCurrentApplication);
-                CFTypeRef localeID = CFPreferencesCopyAppValue (CFSTR ("AppleLocale"), kCFPreferencesCurrentApplication);
-                CFTypeRef languageID = NULL;
-
-                gchar *langStr = NULL, *localeStr = NULL;
-
-                if (array != NULL && CFGetTypeID (array) == CFArrayGetTypeID())
-                  languageID = CFArrayGetValueAtIndex (array, 0);
-                if (languageID != NULL && CFGetTypeID (languageID) == CFStringGetTypeID())
-                  langStr = CFStringGetCStringPtr (languageID, kCFStringEncodingASCII);
-
-                if (localeID != NULL && CFGetTypeID (localeID) == CFStringGetTypeID())
-                  localeStr = CFStringGetCStringPtr (localeID, kCFStringEncodingASCII);
-
-                if (langStr == NULL ||
-                    (localeStr != NULL && strncmp (langStr, localeStr, 2) == 0))
-                  localeIDString = localeStr;
-                else
-                  localeIDString = langStr;
-
-                localeIDString = g_strdup (localeIDString == NULL ? "C" : localeIDString);
-
-                if (array) CFRelease (array);
-                if (localeID) CFRelease (localeID);
-                if (languageID) CFRelease (languageID);
-              }
-            locale = localeIDString;
-          }
-#else
-          locale = setlocale (LC_ALL, NULL);
-#endif
-          _lang = locale[0] << 8 | locale[1];
-          _region = strlen (locale) >= 5 ? locale[3] << 8 | locale[4] : 0;
-
-#ifdef G_OS_WIN32
-          g_free (locale);
-#endif
-
-          icc->Read (&nNames, sizeof (icUInt32Number), 1, icc);
-          nNames = g_ntohl (nNames);
-          icc->Read (&nameRecordSize, sizeof (icUInt32Number), 1, icc);
-
-          // scan name records
-          for (i = 0; i < nNames; i++)
-            {
-              icc->Read (&lang, sizeof (icUInt16Number), 1, icc);
-              lang = g_ntohs (lang );
-              icc->Read (&region, sizeof (icUInt16Number), 1, icc);
-              region = g_ntohs (region);
-
-              icc->Read (&_entryLength, sizeof (icUInt32Number), 1, icc);
-              icc->Read (&_entryOffset, sizeof (icUInt32Number), 1, icc);
-
-              if (strncasecmp ((gchar *)(&lang), (gchar *)(&_lang), 2) == 0)
-                {
-                  if (!flag || strncasecmp ((gchar *)(&region), (gchar *)(&_region), 2) == 0)
-                    {
-                      flag = TRUE;
-                      entryLength = g_ntohl (_entryLength);
-                      entryOffset = g_ntohl (_entryOffset);
-                    }
-                }
-              else if (i == 0)
-                {
-                  entryLength = g_ntohl (_entryLength);
-                  entryOffset = g_ntohl (_entryOffset);
-                }
-            }
-
-          if (entryLength <= 0)
-            return NULL;
-          entryLength = entryLength > ICC_PROFILE_DESC_MAX ? ICC_PROFILE_DESC_MAX : entryLength;
-
-          if ((buf = g_new0 (gchar, entryLength + 1)) != NULL)
-            {
-              icc->Seek (icc, offset + entryOffset);
-              icc->Read (buf, sizeof (gchar), entryLength, icc);
-              utf8String = g_convert (buf, entryLength, "UTF-8", "UTF-16BE", NULL, &i, NULL);
-            }
-          g_free (buf);
-
-          return  utf8String; }
-        default:
-          return NULL;
-        }
-    }
-  else
-    return NULL;
-}
-
-
-// The private tag used in the ICC profiles provided by Apple,Inc.
-
-enum
-{
-  icSigProfileDescriptionMLTag = 0x6473636dL    /* 'dscm' */
-};
-
-
-// Get a localized name of the profile.
-// The returned value should be freed when no longer needed.
-// Note : In the future, this function will be moved to external library.
-
-gchar *
-_icc_button_get_profile_desc (cmsHPROFILE profile)
-{
-  static gchar *utf8String = NULL;
-
-  if (!profile)
-    return NULL;
-
-  if (!(utf8String = readLocalizedText (profile, icSigProfileDescriptionMLTag)))
-    utf8String = readLocalizedText (profile, icSigProfileDescriptionTag);
-
-  if (utf8String)
-    {
-      gchar *errorChar, *str;
-
-      if (!g_utf8_validate (utf8String, -1, (const gchar **)&errorChar))
-        {
-          *errorChar = '\0'; /* avoid crashing with sorting profiles by descriptions */
-          str = g_strdup_printf (_("%s(broken text)..."), utf8String);
-          g_free (utf8String);
-          utf8String = str;
-        }
-    }
-  else
-    utf8String = g_strdup (_("(no name)"));
-
-  return utf8String;
 }
 
 
@@ -704,7 +474,7 @@ searchProfile (void)
   GetColorDirectory (NULL, NULL, &DirNameSize);
   searchPath[4] = g_try_malloc0 (DirNameSize);
   GetColorDirectory (NULL, searchPath[4], &DirNameSize);
-#elif defined MACOSX
+#elif defined __APPLE__
   gchar *searchPath[6];
   searchPath[3] = g_build_filename (g_get_home_dir (), "Library/ColorSync/Profiles", NULL);
   searchPath[4] = g_strdup ("/Library/Application Support/Adobe/Color/Profiles");
@@ -851,6 +621,8 @@ icc_button_init (IccButton *button)
   button->pcsMask = ICC_BUTTON_COLORSPACE_ALL;
   button->colorspaceMask = ICC_BUTTON_COLORSPACE_ALL;
   button->enable_empty = TRUE;
+  button->dialog_show_detail = TRUE;
+  button->dialog_list_columns = ICC_BUTTON_COLUMN_ALL;
 
   button->popupMenu = NULL;
   button->menuItems = NULL;
@@ -1172,6 +944,40 @@ icc_button_is_empty (IccButton *button)
   return (button->path == NULL);
 }
 
+void
+icc_button_dialog_set_show_detail (IccButton *button,
+                                   gboolean   show_detail)
+{
+  g_return_if_fail (IS_ICC_BUTTON (button));
+
+  button->dialog_show_detail = show_detail;
+}
+
+gboolean
+icc_button_dialog_get_show_detail (IccButton *button)
+{
+  g_return_val_if_fail (IS_ICC_BUTTON (button), FALSE);
+
+  return button->dialog_show_detail;
+}
+
+void
+icc_button_dialog_set_list_columns (IccButton *button,
+                                    guint16    list_columns)
+{
+  g_return_if_fail (IS_ICC_BUTTON (button));
+
+  button->dialog_list_columns = list_columns;
+}
+
+guint16
+icc_button_dialog_get_list_columns (IccButton *button)
+{
+  g_return_val_if_fail (IS_ICC_BUTTON (button), 0);
+
+  return button->dialog_list_columns;
+}
+
 /* Profile info of current selection */
 const gchar *
 icc_button_get_profile_desc (IccButton *button)
@@ -1209,7 +1015,7 @@ icc_button_get_colorspace (IccButton *button)
 /* If ICCButton is clicked: */
 
 enum {
-  COLUMN_ICON,
+  COLUMN_STOCK_ID,
   COLUMN_NAME,
   COLUMN_CLASS,
   COLUMN_COLORSPACE,
@@ -1257,15 +1063,12 @@ setupData (IccButton *button)
         {
           gsize nWritten;
           gchar *tmp;
-          GdkPixbuf *icon;
 
           tmp = g_filename_to_utf8 (data->path, -1, NULL, &nWritten, NULL);
-          icon = gtk_widget_render_icon (GTK_WIDGET (button), get_stock_id_from_profile_data (data),
-                                         GTK_ICON_SIZE_MENU, NULL);
 
           gtk_list_store_append (store, &iter);
           gtk_list_store_set (store, &iter,
-                              COLUMN_ICON, icon,
+                              COLUMN_STOCK_ID, get_stock_id_from_profile_data (data),
                               COLUMN_NAME, data->name,
                               COLUMN_CLASS, getProfileClassDisplayName (data->class),
                               COLUMN_COLORSPACE, data->colorspace,
@@ -1273,7 +1076,6 @@ setupData (IccButton *button)
                               COLUMN_PATH, tmp,
                               -1);
           g_free (tmp);
-          g_object_unref (icon);
 
           if (button->path != NULL &&
               strcmp (button->path, data->path) == 0 &&
@@ -1381,17 +1183,15 @@ setupMenu (IccButton *button)
                             G_CALLBACK (icc_button_choose_profile),
                             button);
         }
-          
-      if (button->menuItems->len < button->nEntries)
-        {
-          item = gtk_separator_menu_item_new();
-          gtk_menu_shell_append( GTK_MENU_SHELL (button->popupMenu), item);
-          item = gtk_menu_item_new_with_label (_("More..."));
-          gtk_menu_shell_append (GTK_MENU_SHELL (button->popupMenu), item);
-          g_signal_connect (G_OBJECT (item), "activate",
-                            G_CALLBACK (icc_button_run_dialog),
-                            button);
-        }
+
+      item = gtk_separator_menu_item_new();
+      gtk_menu_shell_append( GTK_MENU_SHELL (button->popupMenu), item);
+      item = gtk_menu_item_new_with_label (button->menuItems->len < button->nEntries ?
+                                           _("More...") : _("Show dialog..."));
+      gtk_menu_shell_append (GTK_MENU_SHELL (button->popupMenu), item);
+      g_signal_connect (G_OBJECT (item), "activate",
+                        G_CALLBACK (icc_button_run_dialog),
+                        button);
 
       gtk_widget_show_all (button->popupMenu);
 
@@ -1423,8 +1223,134 @@ icc_dialog_selected (GtkTreeView *treeView,
     {
       if (gtk_tree_selection_get_selected (selection, &model, &iter))
         {
+          cmsHPROFILE profile = NULL;
+          GString *str = g_string_new (NULL);
+
           gtk_tree_model_get(model, &iter, COLUMN_PATH, &path, -1);
           gtk_entry_set_text(GTK_ENTRY (button->entry), path);
+
+          /* update the detail text */
+          path = g_filename_from_utf8 (path, -1, NULL, NULL, NULL);
+          if (path && (profile = lcms_open_profile (path)))
+            {
+              gchar c;
+              guint32 version, class, colorspace, pcs;
+
+              class      = cmsGetDeviceClass (profile);
+              colorspace = cmsGetColorSpace (profile);
+              pcs        = cmsGetPCS (profile);
+
+              gtk_label_set_text (GTK_LABEL (button->class_label), getProfileClassDisplayName (class));
+
+              version = lcms_get_encoded_icc_version (profile);
+              g_string_printf (str, "%d.%d.%d.%d",
+                               version >> 24, version >> 20 & 0xf,        /* major and minor version */
+                               version >> 16 & 0xf, version >> 12 & 0xf); /* revision number */
+              gtk_label_set_text (GTK_LABEL (button->version_label), str->str);
+
+              /* whitepoint */
+              if (class == icSigLinkClass)
+                gtk_label_set_text (GTK_LABEL (button->whitepoint_label), "n/a");
+              else
+                {
+                  cmsCIEXYZ wtpt, awtpt;
+                  cmsCIExyY xyy;
+                  gdouble temperature;
+
+                  if (lcms_get_adapted_whitepoint (profile, &wtpt, &awtpt))
+                    {
+                      cmsXYZ2xyY (&xyy, &wtpt);
+
+#ifdef USE_LCMS2
+                      if (class == icSigDisplayClass && colorspace == icSigRgbData)
+                        {
+                          cmsTempFromWhitePoint (&temperature, &xyy);
+                          g_string_printf (str, "%.1f", temperature);
+
+                          if (awtpt.X >= 0)
+                            {
+                              cmsXYZ2xyY (&xyy, &awtpt);
+                              cmsTempFromWhitePoint (&temperature, &xyy);
+                              g_string_append_printf (str, " / %.1f", temperature);
+                            }
+
+                          g_string_append_printf (str, "K", temperature);
+                        }
+                      else
+#endif
+                        g_string_printf (str, "x%.3f, y%.3f", xyy.x, xyy.y);
+
+                      gtk_label_set_text (GTK_LABEL (button->whitepoint_label), str->str);
+                    }
+                  else
+                    gtk_label_set_text (GTK_LABEL (button->whitepoint_label), "n/a");
+                }
+
+#ifdef USE_LCMS2
+              /* TAC */
+              if (class == icSigOutputClass && colorspace == icSigCmykData)
+                {
+                  gtk_label_set_text (GTK_LABEL (button->matrix_label1), _("Estimated TAC:"));
+                  g_string_printf (str, "%.0f%%", cmsDetectTAC (profile));
+                  gtk_label_set_text (GTK_LABEL (button->matrix_label2), str->str);
+                }
+              else
+#endif
+              /* matrix-based profile? */
+              if (class == icSigDisplayClass)
+                {
+                  gtk_label_set_text (GTK_LABEL (button->matrix_label1), _("Matrix / LUT:"));
+                  g_string_printf (str, "%s / %s",
+                                   lcms_is_matrix_shaper (profile) ? Q_("matrix-lut|Yes") : Q_("matrix-lut|No"),
+                                   lcms_has_lut (profile) ? Q_("matrix-lut|Yes") : Q_("matrix-lut|No"));
+                  gtk_label_set_text (GTK_LABEL (button->matrix_label2), str->str);
+                }
+              else
+                {
+                  gtk_label_set_text (GTK_LABEL (button->matrix_label1), "");
+                  gtk_label_set_text (GTK_LABEL (button->matrix_label2), "");
+                }
+
+              /* colorspace / PCS */
+              g_string_printf (str, "%c%c%c%c",
+                               colorspace >> 24, colorspace >> 16 & 0xff,
+                               colorspace >> 8 & 0xff, (c = colorspace & 0xff, c == 0x20 ? 0 : c));
+              g_string_set_size (str, strlen (str->str));
+
+              if (class == icSigLinkClass || class == icSigAbstractClass)
+                {
+                  gtk_label_set_text (GTK_LABEL (button->colorspace_label1), _("Conversion:"));
+
+                  g_string_append_printf (str, _(" to %c%c%c%c"),
+                                          pcs >> 24, pcs >> 16 & 0xff,
+                                          pcs >> 8 & 0xff, (c = pcs & 0xff, c == 0x20 ? 0 : c));
+                  gtk_label_set_text (GTK_LABEL (button->colorspace_label2), str->str);
+                }
+              else
+                {
+                  gtk_label_set_text (GTK_LABEL (button->colorspace_label1), _("Colorspace / PCS:"));
+
+                  g_string_append_printf (str, " / %c%c%c%c",
+                                          pcs >> 24, pcs >> 16 & 0xff,
+                                          pcs >> 8 & 0xff, (c = pcs & 0xff, c == 0x20 ? 0 : c));
+                }
+
+              gtk_label_set_text (GTK_LABEL (button->colorspace_label2), str->str);
+
+              cmsCloseProfile (profile);
+              g_free (path);
+            }
+          else
+            {
+              gtk_label_set_text (GTK_LABEL (button->class_label), "n/a");
+              gtk_label_set_text (GTK_LABEL (button->version_label), "n/a");
+              gtk_label_set_text (GTK_LABEL (button->colorspace_label2), "n/a");
+              gtk_label_set_text (GTK_LABEL (button->whitepoint_label), "n/a");
+              gtk_label_set_text (GTK_LABEL (button->matrix_label1), "");
+              gtk_label_set_text (GTK_LABEL (button->matrix_label2), "");
+            }
+
+          g_string_free (str, TRUE);
         }
     }
 }
@@ -1556,7 +1482,8 @@ icc_button_run_dialog (GtkWidget *widget,
 {
   IccButton         *button = ICC_BUTTON (data);
   GtkWidget         *label;
-  GtkWidget         *hbox;
+  GtkWidget         *vbox, *hbox;
+  GtkWidget         *frame;
   GtkListStore      *listStore;
   GtkCellRenderer   *renderer;
   GtkTreeViewColumn *column;
@@ -1568,33 +1495,40 @@ icc_button_run_dialog (GtkWidget *widget,
     gtk_dialog_new_with_buttons (button->title ? button->title : _("Choose an ICC Profile"),
                                  NULL,
                                  GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_NO_SEPARATOR,
-                                 GTK_STOCK_OK,
-                                 GTK_RESPONSE_ACCEPT,
                                  GTK_STOCK_CANCEL,
                                  GTK_RESPONSE_REJECT,
+                                 GTK_STOCK_OK,
+                                 GTK_RESPONSE_ACCEPT,
                                  NULL);
 
-  gtk_widget_set_size_request (button->dialog, 480, 320);
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (button->dialog)->vbox), 6);
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (button->dialog),
+                                           GTK_RESPONSE_ACCEPT,
+                                           GTK_RESPONSE_REJECT,
+                                           -1);
+  gtk_widget_set_size_request (button->dialog, 540, -1);
+
+  hbox = gtk_hbox_new (FALSE, 8);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 8);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (button->dialog)->vbox), hbox, TRUE, TRUE, 0);
 
   button->scrolledWindow = gtk_scrolled_window_new (NULL, NULL);
-  gtk_container_set_border_width (GTK_CONTAINER (button->scrolledWindow), 6);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (button->scrolledWindow), GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (button->scrolledWindow),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
 
-  listStore = gtk_list_store_new (N_COLUMNS, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+  listStore = gtk_list_store_new (N_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
   button->treeView = gtk_tree_view_new_with_model (GTK_TREE_MODEL (listStore));
   g_signal_connect (G_OBJECT (button->treeView), "cursor-changed", G_CALLBACK (icc_dialog_selected), button);
   g_signal_connect (G_OBJECT (button->treeView), "row-activated", G_CALLBACK (icc_dialog_double_clicked), button);
   g_object_unref (listStore);
 
   renderer = gtk_cell_renderer_pixbuf_new ();
-  column = gtk_tree_view_column_new_with_attributes ("    ", renderer, "pixbuf", COLUMN_ICON, NULL);
+  column = gtk_tree_view_column_new_with_attributes ("", renderer, "stock-id", COLUMN_STOCK_ID, NULL);
   gtk_tree_view_column_set_resizable (column, FALSE);
   gtk_tree_view_append_column (GTK_TREE_VIEW (button->treeView), column);
-  //gtk_tree_view_column_set_sort_column_id (column, COLUMN_ICON);
+  gtk_tree_view_column_set_sort_column_id (column, COLUMN_STOCK_ID);
+  gtk_tree_view_column_set_visible (column, button->dialog_list_columns & ICC_BUTTON_COLUMN_ICON);
 
   renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("Name"), renderer, "text", COLUMN_NAME, NULL);
@@ -1607,39 +1541,86 @@ icc_button_run_dialog (GtkWidget *widget,
   gtk_tree_view_append_column (GTK_TREE_VIEW (button->treeView), column);
   gtk_tree_view_column_set_resizable (column, TRUE);
   gtk_tree_view_column_set_sort_column_id (column, COLUMN_CLASS);
+  gtk_tree_view_column_set_visible (column, button->dialog_list_columns & ICC_BUTTON_COLUMN_CLASS);
 
   renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("Colorspace"), renderer, "text", COLUMN_COLORSPACE, NULL);
   gtk_tree_view_column_set_resizable (column, TRUE );
   gtk_tree_view_append_column (GTK_TREE_VIEW (button->treeView), column);
   gtk_tree_view_column_set_sort_column_id (column, COLUMN_COLORSPACE);
+  gtk_tree_view_column_set_visible (column, button->dialog_list_columns & ICC_BUTTON_COLUMN_COLORSPACE);
 
   renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("PCS"), renderer, "text", COLUMN_PCS, NULL);
   gtk_tree_view_column_set_resizable( column, TRUE);
   gtk_tree_view_append_column (GTK_TREE_VIEW (button->treeView), column);
   gtk_tree_view_column_set_sort_column_id (column, COLUMN_PCS);
+  gtk_tree_view_column_set_visible (column, button->dialog_list_columns & ICC_BUTTON_COLUMN_PCS);
 
   renderer = gtk_cell_renderer_text_new ();
   column = gtk_tree_view_column_new_with_attributes (_("Path"), renderer, "text", COLUMN_PATH, NULL);
   gtk_tree_view_column_set_resizable (column, TRUE);
   gtk_tree_view_append_column (GTK_TREE_VIEW (button->treeView), column);
   gtk_tree_view_column_set_sort_column_id (column, COLUMN_PATH);
+  gtk_tree_view_column_set_visible (column, button->dialog_list_columns & ICC_BUTTON_COLUMN_PATH);
 
   gtk_container_add (GTK_CONTAINER (button->scrolledWindow), button->treeView);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (button->dialog)->vbox), button->scrolledWindow, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button->scrolledWindow, TRUE, TRUE, 0);
+
+  /* Detail */
+  frame = gtk_frame_new (_("Detail"));
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 8);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+
+  label = gtk_label_new (_("Profile class:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  button->class_label = gtk_label_new ("n/a");
+  gtk_misc_set_alignment (GTK_MISC (button->class_label), 1.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), button->class_label, FALSE, FALSE, 0);
+
+  label = gtk_label_new (_("ICC version:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  button->version_label = gtk_label_new ("n/a");
+  gtk_misc_set_alignment (GTK_MISC (button->version_label), 1.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), button->version_label, FALSE, FALSE, 0);
+
+  button->colorspace_label1 = gtk_label_new (_("Colorspace / PCS:"));
+  gtk_misc_set_alignment (GTK_MISC (button->colorspace_label1), 0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), button->colorspace_label1, FALSE, FALSE, 0);
+  button->colorspace_label2 = gtk_label_new ("n/a");
+  gtk_misc_set_alignment (GTK_MISC (button->colorspace_label2), 1.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), button->colorspace_label2, FALSE, FALSE, 0);
+
+  label = gtk_label_new (_("Whitepoint:            "));
+  gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  button->whitepoint_label = gtk_label_new ("n/a");
+  gtk_misc_set_alignment (GTK_MISC (button->whitepoint_label), 1.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), button->whitepoint_label, FALSE, FALSE, 0);
+
+  button->matrix_label1 = gtk_label_new ("");
+  gtk_misc_set_alignment (GTK_MISC (button->matrix_label1), 0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), button->matrix_label1, FALSE, FALSE, 0);
+  button->matrix_label2 = gtk_label_new ("");
+  gtk_misc_set_alignment (GTK_MISC (button->matrix_label2), 1.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox), button->matrix_label2, FALSE, FALSE, 0);
 
   // Path entry
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_border_width (GTK_CONTAINER (hbox), 6);
-  label = gtk_label_new (_("Path:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_container_border_width (GTK_CONTAINER (hbox), 8);
+  label = gtk_label_new_with_mnemonic (_("_Path:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, TRUE, 0);
   button->entry = gtk_entry_new ();
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), button->entry);
   gtk_drag_dest_set (button->entry, GTK_DEST_DEFAULT_ALL,
                      targets, 1, GDK_ACTION_COPY);
   g_signal_connect (G_OBJECT (button->entry), "drag_data_received",
                     G_CALLBACK (icc_button_drag_data_received), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox ), button->entry, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button->entry, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (button->dialog)->vbox), hbox, FALSE, FALSE, 0);
 
   setupData (button);
@@ -1658,6 +1639,9 @@ icc_button_run_dialog (GtkWidget *widget,
     }
 
   gtk_widget_show_all (button->dialog);
+
+  if (!button->dialog_show_detail)
+    gtk_widget_hide (frame);
 
   do
     {

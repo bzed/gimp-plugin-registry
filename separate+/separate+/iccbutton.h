@@ -7,11 +7,7 @@
 #define __ICC_BUTTON_H__
 
 #include <gtk/gtkbutton.h>
-#include <lcms.h>
-
-/* Utils (non-class functions) */
-cmsHPROFILE  lcms_open_profile            (gchar       *filename);
-gchar       *_icc_button_get_profile_desc (cmsHPROFILE  profile);
+#include "lcms_wrapper.h"
 
 /* Stock IDs */
 #define ICC_BUTTON_STOCK_INPUT_CLASS       "icc-button-input-class"
@@ -32,8 +28,6 @@ G_BEGIN_DECLS
 #define IS_ICC_BUTTON( obj )         ( G_TYPE_CHECK_INSTANCE_TYPE( ( obj ), ICC_BUTTON_TYPE ) )
 #define IS_ICC_BUTTON_CLASS( klass ) ( G_TYPE_CHECK_INSTANCE_TYPE( ( klass ), ICC_BUTTON_TYPE ) )
 
-#define ICC_PROFILE_DESC_MAX 2048
-
 enum {
   ICC_BUTTON_CLASS_INPUT    = 1 << 0,
   ICC_BUTTON_CLASS_OUTPUT   = 1 << 1,
@@ -53,11 +47,29 @@ enum {
   ICC_BUTTON_COLORSPACE_ALL  = 0xffff
 };
 
+enum {
+  ICC_BUTTON_COLUMN_ICON       = 1 << 0,
+  ICC_BUTTON_COLUMN_CLASS      = 1 << 1,
+  ICC_BUTTON_COLUMN_COLORSPACE = 1 << 2,
+  ICC_BUTTON_COLUMN_PCS        = 1 << 3,
+  ICC_BUTTON_COLUMN_PATH       = 1 << 4,
+  ICC_BUTTON_COLUMN_ALL        = 0xffff
+};
+
 typedef struct _IccButton {
   GtkButton button;
   GtkWidget *hbox;
   GtkWidget *icon;
   GtkWidget *label;
+  GtkWidget *class_label;
+  GtkWidget *version_label;
+  GtkWidget *colorspace_label1;
+  GtkWidget *colorspace_label2;
+  GtkWidget *pcs_label1;
+  GtkWidget *pcs_label2;
+  GtkWidget *whitepoint_label;
+  GtkWidget *matrix_label1;
+  GtkWidget *matrix_label2;
 
   GtkWidget *dialog;
   GtkWidget *scrolledWindow;
@@ -66,7 +78,7 @@ typedef struct _IccButton {
 
   GtkWidget *popupMenu;
   GPtrArray *menuItems;
-  gint nEntries; /* マスクで指定した条件に一致するプロファイルの総数 */
+  gint nEntries; /* 繝槭せ繧ｯ縺ｧ謖�螳壹＠縺滓擅莉ｶ縺ｫ荳閾ｴ縺吶ｋ繝励Ο繝輔ぃ繧､繝ｫ縺ｮ邱乗焚 */
   gint menuWidth;
   gint menuHeight;
   glong last_updated;
@@ -79,8 +91,10 @@ typedef struct _IccButton {
   guint16 classMask;
   guint16 pcsMask;
   guint16 colorspaceMask;
-  gint maxEntries; /* ポップアップに表示するプロファイルの最大数 */
+  gint maxEntries; /* 繝昴ャ繝励い繝�繝励↓陦ｨ遉ｺ縺吶ｋ繝励Ο繝輔ぃ繧､繝ｫ縺ｮ譛螟ｧ謨ｰ */
   gboolean enable_empty;
+  gboolean dialog_show_detail;
+  guint16 dialog_list_columns;
 } IccButton;
 
 typedef struct _IccButtonClass {
@@ -110,10 +124,16 @@ gchar     *icc_button_get_filename      (IccButton   *button);
 gboolean   icc_button_set_max_entries   (IccButton   *button,
                                          gint         n);
 gint       icc_button_get_max_entries   (IccButton   *button);
-void       icc_button_set_enable_empty  (IccButton   *button,
-                                         gboolean     enabled);
 gboolean   icc_button_get_enable_empty  (IccButton   *button);
 gboolean   icc_button_is_empty          (IccButton   *button);
+void       icc_button_dialog_set_show_detail
+                                        (IccButton   *button,
+                                         gboolean     show_detail);
+gboolean   icc_button_dialog_get_show_detail (IccButton *button);
+void       icc_button_dialog_set_list_columns
+                                        (IccButton   *button,
+                                         guint16      list_columns);
+guint16    icc_button_dialog_get_list_columns (IccButton *button);
 
 /* Profile info of current selection */
 const gchar *icc_button_get_profile_desc  (IccButton *button);

@@ -34,6 +34,7 @@
 #include "separate.h"
 #include "separate-core.h"
 #include "util.h"
+#include "iccbutton.h"
 
 
 
@@ -128,10 +129,11 @@ static gboolean
 setup_transform (SeparateContext *sc)
 {
   cmsHPROFILE hInProfile = NULL, hOutProfile = NULL;
-  gint32 src_type;
+  DWORD src_format, dst_format;
 
   sc->drawable_has_alpha = gimp_drawable_has_alpha (sc->drawable->drawable_id);
-  src_type = sc->drawable_has_alpha ? TYPE_RGBA_8 : TYPE_RGB_8;
+  src_format = sc->drawable_has_alpha ? TYPE_RGBA_8 : TYPE_RGB_8;
+  dst_format = sc->ss.dither ? TYPE_CMYK_8 | DITHER_SH (1) : TYPE_CMYK_8;
 
   if (!sc->rgbfilename)
     {
@@ -142,7 +144,7 @@ setup_transform (SeparateContext *sc)
   hInProfile = lcms_open_profile (sc->rgbfilename);
 
   if (hInProfile && cmsGetDeviceClass (hInProfile) == icSigLinkClass)
-    sc->hTransform = cmsCreateTransform (hInProfile, src_type, NULL, TYPE_CMYK_8, 0, 0);
+    sc->hTransform = cmsCreateTransform (hInProfile, src_format, NULL, dst_format, 0, 0);
   else
     {
       DWORD dwFlags = 0;
@@ -219,7 +221,7 @@ setup_transform (SeparateContext *sc)
 
       intent = sc->ss.intent > INTENT_ABSOLUTE_COLORIMETRIC ? INTENT_ABSOLUTE_COLORIMETRIC : sc->ss.intent;
 
-      sc->hTransform = cmsCreateTransform (hInProfile, src_type, hOutProfile, TYPE_CMYK_8, intent, dwFlags);
+      sc->hTransform = cmsCreateTransform (hInProfile, src_format, hOutProfile, dst_format, intent, dwFlags);
 
       cmsCloseProfile (hOutProfile);
     }
@@ -241,19 +243,20 @@ separate_core (SeparateContext *sc,
                unsigned char   *src,
                gint             size)
 {
-  gint i, b1, b2, b3, b4;
-  guchar *dp1, *dp2, *dp3, *dp4;
+  gint i, b1, b2, b3, b4, b5;
+  guchar *dp1, *dp2, *dp3, *dp4, *dp5;
   static guchar richBlack[] = "\0\0\0\0";
 
   /* keep ink limit */
-  if( *( (gint32 *)richBlack ) == 0 ) {
-    gdouble ratio;
-    cmsDoTransform( sc->hTransform, "\0\0\0\0", richBlack, 1 );
-    ratio = ( 255.0 - richBlack[3] ) / ( richBlack[0] + richBlack[1] + richBlack[2] );
-    richBlack[0] = CLAMP( richBlack[0] - richBlack[0] * ratio, 0, 255 );
-    richBlack[1] = CLAMP( richBlack[1] - richBlack[1] * ratio, 0, 255 );
-    richBlack[2] = CLAMP( richBlack[2] - richBlack[2] * ratio, 0, 255 );
-  }
+  if (*((gint32 *)richBlack) == 0 )
+    {
+      gdouble ratio;
+      cmsDoTransform (sc->hTransform, "\0\0\0\0", richBlack, 1);
+      ratio = (255.0 - richBlack[3]) / (richBlack[0] + richBlack[1] + richBlack[2]);
+      richBlack[0] = CLAMP (richBlack[0] - richBlack[0] * ratio, 0, 255);
+      richBlack[1] = CLAMP (richBlack[1] - richBlack[1] * ratio, 0, 255);
+      richBlack[2] = CLAMP (richBlack[2] - richBlack[2] * ratio, 0, 255);
+    }
 
   b1 = sc->bpp[0];
   b2 = sc->bpp[1];
@@ -265,42 +268,66 @@ separate_core (SeparateContext *sc,
   dp3 = sc->destptr[2];
   dp4 = sc->destptr[3];
 
-  cmsDoTransform( sc->hTransform, src, sc->cmyktemp, size );
-
-  if( sc->ss.preserveblack ) {
-    for( i=0; i < size; ++i ) {
-      int r = *src++;
-      int g = *src++;
-      int b = *src++;
-      if( sc->drawable_has_alpha )
-        ++src;
-
-      if( ( r|g|b ) != 0 ) {
-        dp1[i*b1] = sc->cmyktemp[i*4+3];
-        dp2[i*b2] = sc->cmyktemp[i*4+2]; //ly
-        dp3[i*b3] = sc->cmyktemp[i*4+1]; //lm
-        dp4[i*b4] = sc->cmyktemp[i*4];   //lc
-      } else {
-        dp1[i*b1] = 255;
-        if( !( sc->ss.overprintblack ) ) {
-          dp2[i*b2] = 0;
-          dp3[i*b3] = 0;
-          dp4[i*b4] = 0;
-        } else {
-          dp2[i*b2] = richBlack[2];
-          dp3[i*b3] = richBlack[1];
-          dp4[i*b4] = richBlack[0];
-        }
-      }
+  if (sc->drawable_has_alpha)
+    {
+      b5 = sc->bpp[4];
+      dp5 = sc->destptr[4];
     }
-  } else {
-    for( i=0; i < size; ++i ) {
-        dp1[i*b1] = sc->cmyktemp[i*4+3];
-        dp2[i*b2] = sc->cmyktemp[i*4+2];
-        dp3[i*b3] = sc->cmyktemp[i*4+1];
-        dp4[i*b4] = sc->cmyktemp[i*4];
-      }
-  }
+
+  cmsDoTransform (sc->hTransform, src, sc->cmyktemp, size);
+
+  if (sc->ss.preserveblack)
+    {
+      for (i = 0; i < size; ++i)
+        {
+          int r = *src++;
+          int g = *src++;
+          int b = *src++;
+
+          if ((r | g | b) != 0)
+            {
+              dp1[i*b1] = sc->cmyktemp[i*4+3];
+              dp2[i*b2] = sc->cmyktemp[i*4+2]; //ly
+              dp3[i*b3] = sc->cmyktemp[i*4+1]; //lm
+              dp4[i*b4] = sc->cmyktemp[i*4];   //lc
+            }
+          else
+            {
+              dp1[i*b1] = 255;
+              if (!(sc->ss.overprintblack))
+                {
+                  dp2[i*b2] = 0;
+                  dp3[i*b3] = 0;
+                  dp4[i*b4] = 0;
+                }
+              else
+                {
+                  dp2[i*b2] = richBlack[2];
+                  dp3[i*b3] = richBlack[1];
+                  dp4[i*b4] = richBlack[0];
+                }
+            }
+
+          if (sc->drawable_has_alpha)
+            dp5[i*b5] = *(src++);
+        }
+    }
+  else
+    {
+      for (i = 0; i < size; ++i)
+        {
+          dp1[i*b1] = sc->cmyktemp[i*4+3];
+          dp2[i*b2] = sc->cmyktemp[i*4+2];
+          dp3[i*b3] = sc->cmyktemp[i*4+1];
+          dp4[i*b4] = sc->cmyktemp[i*4];
+
+          if (sc->drawable_has_alpha)
+            {
+              src += 3;
+              dp5[i*b5] = *(src++);
+            }
+        }
+    }
 }
 
 
@@ -315,13 +342,6 @@ separate_full (GimpDrawable    *drawable,
   guchar *src;
   gint32 rgbimage = sc->imageID;
 
-  guchar cmykprimaries[] =
-  {
-      0,   0,   0, 255,
-      0,   0, 255,   0,
-      0, 255,   0,   0,
-    255,   0,   0,   0
-  };
   guchar rgbprimaries[] =
   {
       0,   0,   0,
@@ -331,6 +351,14 @@ separate_full (GimpDrawable    *drawable,
   };
 
 #if 0
+  guchar cmykprimaries[] =
+  {
+      0,   0,   0, 255,
+      0,   0, 255,   0,
+      0, 255,   0,   0,
+    255,   0,   0,   0
+  };
+
   sc->hTransform = cmsCreateTransform (hOutProfile, TYPE_CMYK_8,
                                        hInProfile, TYPE_RGB_8,
                                        INTENT_RELATIVE_COLORIMETRIC,
@@ -357,13 +385,15 @@ separate_full (GimpDrawable    *drawable,
   {
     gint32 new_image_id, counter;
     gdouble xres, yres;
-    GimpDrawable *drawables[4];
-    GimpPixelRgn pixrgn[4];
+    gint n_drawables = 4;
+    GimpDrawable *drawables[5];
+    GimpPixelRgn pixrgn[5];
     gint32 layers[4];
     gint32 mask[4];
     gint32 ntiles = 0, tilecounter = 0;
 
-    char *filename = separate_filename_add_suffix (gimp_image_get_filename (gimp_drawable_get_image (drawable->drawable_id)), "CMYK");
+    gchar *filename = separate_filename_add_suffix (gimp_image_get_filename (gimp_drawable_get_image (drawable->drawable_id)), "CMYK");
+
     values[0].data.d_image = new_image_id =
       separate_create_planes_CMYK (filename,
                                    drawable->width, drawable->height,
@@ -373,7 +403,6 @@ separate_full (GimpDrawable    *drawable,
     gimp_image_get_resolution (rgbimage, &xres, &yres);
     gimp_image_set_resolution (new_image_id, xres, yres);
 
-
     for (counter = 0; counter < 4; ++counter)
       {
         mask[counter] = gimp_layer_create_mask (layers[counter], GIMP_ADD_WHITE_MASK);
@@ -381,20 +410,42 @@ separate_full (GimpDrawable    *drawable,
         drawables[counter] = gimp_drawable_get (mask[counter]);
       }
 
-    gimp_pixel_rgn_init( &srcPR, drawable, 0, 0, width, height, FALSE, FALSE );
-    for (counter = 0; counter < 4; ++counter)
+    if (sc->drawable_has_alpha)
+      {
+        const GimpRGB color = {1.0, 1.0, 1.0};
+        gint32 channel;
+
+        channel = gimp_channel_new (new_image_id, _("Alpha of source image"),
+                                    width, height, 100.0, &color);
+        gimp_channel_set_show_masked (channel, TRUE);
+        gimp_drawable_set_visible (channel, FALSE);
+        gimp_image_add_channel (new_image_id, channel, 0);
+
+        drawables[4] = gimp_drawable_get (channel);
+
+        n_drawables++;
+      }
+
+    gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
+
+    for (counter = 0; counter < n_drawables; ++counter)
       gimp_pixel_rgn_init (&pixrgn[counter], drawables[counter], 0, 0, width, height, TRUE, FALSE);
 
     sc->cmyktemp = g_new (guchar, 64 * 64 * 4);
 
     gimp_progress_init (_("Separating..."));
     ntiles = drawable->ntile_rows * drawable->ntile_cols;
-    tileiterator = gimp_pixel_rgns_register (5, &srcPR, &pixrgn[0], &pixrgn[1], &pixrgn[2], &pixrgn[3]);
+    tileiterator = gimp_pixel_rgns_register (n_drawables + 1, &srcPR,
+                                             &pixrgn[0],
+                                             &pixrgn[1],
+                                             &pixrgn[2],
+                                             &pixrgn[3],
+                                             &pixrgn[4]);
     while (tileiterator)
       {
         src = srcPR.data;
 
-        for (counter = 0; counter < 4; ++counter)
+        for (counter = 0; counter < n_drawables; ++counter)
           {
             sc->destptr[counter] = pixrgn[counter].data;
             sc->bpp[counter] = pixrgn[counter].bpp;
@@ -417,7 +468,7 @@ separate_full (GimpDrawable    *drawable,
 
     duplicate_paths (sc->imageID, new_image_id);
 
-    for (counter = 0; counter < 4; ++counter)
+    for (counter = 0; counter < n_drawables; ++counter)
       {
         gimp_drawable_flush (drawables[counter]);
         gimp_drawable_update (drawables[counter]->drawable_id, 0, 0, width, height);
@@ -457,37 +508,62 @@ separate_light (GimpDrawable    *drawable,
   {
     gint32 new_image_id, counter;
     gdouble xres, yres;
-    GimpDrawable *drawables[4];
-    GimpPixelRgn pixrgn[4];
+    gint n_drawables = 4;
+    GimpDrawable *drawables[5];
+    GimpPixelRgn pixrgn[5];
     gint32 layers[4];
 
     enum layerid { LAYER_K, LAYER_Y, LAYER_M, LAYER_C };
 
-    char *filename = separate_filename_add_suffix (gimp_image_get_filename (gimp_drawable_get_image (drawable->drawable_id)), "CMYK");
+    gchar *filename = separate_filename_add_suffix (gimp_image_get_filename (gimp_drawable_get_image (drawable->drawable_id)), "CMYK");
+
     values[0].data.d_image = new_image_id =
-      separate_create_planes_grey (filename, drawable->width,drawable->height, layers);
+      separate_create_planes_grey (filename, drawable->width, drawable->height, layers);
     g_free (filename);
 
     gimp_image_get_resolution (rgbimage, &xres, &yres);
     gimp_image_set_resolution (new_image_id, xres, yres);
 
     gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-    for (counter=0; counter<4; ++counter)
+
+    for (counter = 0; counter < 4; ++counter)
       {
         drawables[counter] = gimp_drawable_get (layers[counter]);
         gimp_pixel_rgn_init (&pixrgn[counter], drawables[counter], 0, 0, width, height, TRUE, FALSE);
+      }
+
+    if (sc->drawable_has_alpha)
+      {
+        const GimpRGB color = {1.0, 1.0, 1.0};
+        gint32 channel;
+
+        channel = gimp_channel_new (new_image_id, _("Alpha of source image"),
+                                    width, height, 100.0, &color);
+        gimp_channel_set_show_masked (channel, TRUE);
+        gimp_drawable_set_visible (channel, FALSE);
+        gimp_image_add_channel (new_image_id, channel, 0);
+
+        drawables[4] = gimp_drawable_get (channel);
+        gimp_pixel_rgn_init (&pixrgn[4], drawables[4], 0, 0, width, height, TRUE, FALSE);
+
+        n_drawables++;
       }
 
     sc->cmyktemp = g_new (guchar, 64 * 64 * 4);
 
     gimp_progress_init (_("Separating..."));
     ntiles = drawable->ntile_cols * drawable->ntile_rows;
-    tileiterator = gimp_pixel_rgns_register (5, &srcPR, &pixrgn[0], &pixrgn[1], &pixrgn[2], &pixrgn[3]);
+    tileiterator = gimp_pixel_rgns_register (n_drawables + 1, &srcPR,
+                                             &pixrgn[0],
+                                             &pixrgn[1],
+                                             &pixrgn[2],
+                                             &pixrgn[3],
+                                             &pixrgn[4]);
     while (tileiterator)
       {
         src = srcPR.data;
 
-        for (counter=0; counter < 4; ++counter)
+        for (counter=0; counter < n_drawables; ++counter)
           {
             sc->destptr[counter] = pixrgn[counter].data;
             sc->bpp[counter] = pixrgn[counter].bpp;
@@ -509,7 +585,7 @@ separate_light (GimpDrawable    *drawable,
 
     duplicate_paths (sc->imageID, new_image_id);
 
-    for (counter=0; counter < 4; ++counter)
+    for (counter = 0; counter < n_drawables; ++counter)
       {
         gimp_drawable_flush (drawables[counter]);
         gimp_drawable_update (drawables[counter]->drawable_id, 0, 0, width, height);
@@ -530,7 +606,8 @@ separate_proof (GimpDrawable    *drawable,
   gint ntiles=0, tilecounter=0;
   gint32 cmykimage = sc->imageID;
 
-  GimpDrawable *drawables[5];
+  gint n_drawables = 4;
+  GimpDrawable *drawables[6] = {0};
 
   cmsHPROFILE hInProfile = NULL, hOutProfile;
   cmsHTRANSFORM hTransform;
@@ -551,10 +628,18 @@ separate_proof (GimpDrawable    *drawable,
       return;
     }
 
-  drawables[0] = separate_find_channel (cmykimage, sep_C);
-  drawables[1] = separate_find_channel (cmykimage, sep_M);
-  drawables[2] = separate_find_channel (cmykimage, sep_Y);
-  drawables[3] = separate_find_channel (cmykimage, sep_K);
+  drawables[1] = separate_find_channel (cmykimage, sep_C);
+  drawables[2] = separate_find_channel (cmykimage, sep_M);
+  drawables[3] = separate_find_channel (cmykimage, sep_Y);
+  drawables[4] = separate_find_channel (cmykimage, sep_K);
+
+  if ((drawables[5] = separate_find_alpha (cmykimage)))
+    {
+      n_drawables++;
+      sc->drawable_has_alpha = TRUE;
+    }
+  else
+    sc->drawable_has_alpha = FALSE;
 
   {
     int i, n = 0;
@@ -562,7 +647,7 @@ separate_proof (GimpDrawable    *drawable,
     gchar* missing_channels[7];
     for (i = 0; i < 4; i++)
       {
-        if (drawables[i] == 0)
+        if (drawables[i + 1] == 0)
           missing_channels[n++] = channel_names[i];
       }
     if (n)
@@ -586,13 +671,14 @@ separate_proof (GimpDrawable    *drawable,
 #ifdef ENABLE_COLOR_MANAGEMENT
   if (sc->ps.profile)
     {
-    GimpParasite *parasite = gimp_image_parasite_find (cmykimage, CMYKPROFILE);
-    if (parasite)
-      {
-        hInProfile = cmsOpenProfileFromMem ((gpointer)gimp_parasite_data (parasite),
-                                            gimp_parasite_data_size (parasite));
-        gimp_parasite_free (parasite);
-      }
+      GimpParasite *parasite = gimp_image_parasite_find (cmykimage, CMYKPROFILE);
+
+      if (parasite)
+        {
+          hInProfile = cmsOpenProfileFromMem ((gpointer)gimp_parasite_data (parasite),
+                                              gimp_parasite_data_size (parasite));
+          gimp_parasite_free (parasite);
+        }
     }
   if (!hInProfile)
 #endif
@@ -628,7 +714,7 @@ separate_proof (GimpDrawable    *drawable,
       intent = INTENT_ABSOLUTE_COLORIMETRIC;
       dwFLAGS = cmsFLAGS_NOWHITEONWHITEFIXUP;
 
-      cmsTakeMediaWhitePoint (&whitePoint, hOutProfile);
+      whitePoint = lcms_get_whitepoint (hOutProfile);
       cmsXYZ2xyY (&wp_xyY, &whitePoint);
       cmsSetAdaptationState ((pow (fabs (wp_xyY.x - D50_xyY->x), 2) +
                              pow (fabs (wp_xyY.y - D50_xyY->y), 2) > 0.000005) ? 1.0 : 0);
@@ -641,8 +727,8 @@ separate_proof (GimpDrawable    *drawable,
 
       cmsSetAdaptationState (0);
     }
-  hTransform = cmsCreateTransform (hInProfile,  TYPE_CMYK_8,
-                                   hOutProfile, TYPE_RGB_8,
+  hTransform = cmsCreateTransform (hInProfile,  sc->drawable_has_alpha ? TYPE_CMYKA_8 : TYPE_CMYK_8,
+                                   hOutProfile, sc->drawable_has_alpha ? TYPE_RGBA_8 : TYPE_RGB_8,
                                    intent,
                                    dwFLAGS);
   if (!hTransform)
@@ -666,50 +752,60 @@ separate_proof (GimpDrawable    *drawable,
   {
     gint32 new_image_id, counter;
     gdouble xres, yres;
-    GimpPixelRgn pixrgn[5];
+    GimpPixelRgn pixrgn[6] = { {0}, {0}, {0}, {0}, {0}, {0} };
     gint32 layers[1];
+    gint srcbpp = n_drawables;
     guchar *cmyktemp;
 
     char *filename = separate_filename_add_suffix (gimp_image_get_filename (cmykimage), "Proof"); 
     values[0].data.d_image = new_image_id =
-      separate_create_RGB (filename, drawable->width, drawable->height, layers);
+      separate_create_RGB (filename, drawable->width, drawable->height, sc->drawable_has_alpha, layers);
     g_free (filename);
 
     gimp_image_get_resolution (cmykimage, &xres, &yres);
     gimp_image_set_resolution (new_image_id, xres, yres);
 
-    drawables[4]=gimp_drawable_get (layers[0]);
+    drawables[0] = gimp_drawable_get (layers[0]);
 
-    for (counter = 0; counter < 4; ++counter)
+    for (counter = 1; counter <= n_drawables; counter++)
       gimp_pixel_rgn_init (&pixrgn[counter], drawables[counter], 0, 0, width, height, FALSE, FALSE);
-    gimp_pixel_rgn_init (&pixrgn[4], drawables[4], 0, 0, width, height, TRUE, FALSE);
 
-    cmyktemp = g_new (guchar, pixrgn[4].w * pixrgn[4].h * 4);
+    gimp_pixel_rgn_init (&pixrgn[0], drawables[0], 0, 0, width, height, TRUE, FALSE);
+
+    cmyktemp = g_new (guchar, pixrgn[0].w * pixrgn[0].h * srcbpp);
 
     gimp_progress_init (_("Proofing..."));
-    ntiles = drawables[4]->ntile_cols*drawables[4]->ntile_rows;
-    tileiterator = gimp_pixel_rgns_register (5, &pixrgn[4], &pixrgn[0], &pixrgn[1], &pixrgn[2], &pixrgn[3]);
+    ntiles = drawables[0]->ntile_cols * drawables[0]->ntile_rows;
+    tileiterator = gimp_pixel_rgns_register (n_drawables + 1, &pixrgn[0],
+                                             &pixrgn[1],   /* C */
+                                             &pixrgn[2],   /* M */
+                                             &pixrgn[3],   /* Y */
+                                             &pixrgn[4],   /* K */
+                                             &pixrgn[5]);  /* A */
 
     while (tileiterator)
       {
         long i;
-        guchar *ptr[5];
+        guchar *ptr[6];
 
-        for (counter=0; counter<5; ++counter)
+        for (counter = 0; counter <= n_drawables; ++counter)
           ptr[counter] = pixrgn[counter].data;
 
-        for (i=0; i < (pixrgn[4].w * pixrgn[4].h); ++i)
+        for (i = 0; i < (pixrgn[0].w * pixrgn[0].h); i++)
           {
-            cmyktemp[i * 4]    = (ptr[0])[i * pixrgn[0].bpp];
-            cmyktemp[i * 4 +1] = (ptr[1])[i * pixrgn[1].bpp];
-            cmyktemp[i * 4 +2] = (ptr[2])[i * pixrgn[2].bpp];
-            cmyktemp[i * 4 +3] = (ptr[3])[i * pixrgn[3].bpp];
+            cmyktemp[i * srcbpp]     = (ptr[1])[i * pixrgn[1].bpp];
+            cmyktemp[i * srcbpp + 1] = (ptr[2])[i * pixrgn[2].bpp];
+            cmyktemp[i * srcbpp + 2] = (ptr[3])[i * pixrgn[3].bpp];
+            cmyktemp[i * srcbpp + 3] = (ptr[4])[i * pixrgn[4].bpp];
+
+            if (sc->drawable_has_alpha)
+              (ptr[0])[i * pixrgn[0].bpp + 3] = (ptr[5])[i * pixrgn[5].bpp];
           }
 
         cmsDoTransform (hTransform,
                         cmyktemp,
-                        ptr[4],
-                        pixrgn[4].w * pixrgn[4].h);
+                        ptr[0],
+                        pixrgn[0].w * pixrgn[0].h);
 
         gimp_progress_update (((double)tilecounter) / ((double)ntiles));
         ++tilecounter;
@@ -795,55 +891,79 @@ separate_duotone (GimpDrawable    *drawable,
 
   {
     gint32 new_image_id, counter;
-    GimpDrawable *drawables[2];
-    GimpPixelRgn pixrgn[2];
+    gint n_drawables = 2;
+    GimpDrawable *drawables[3];
+    GimpPixelRgn pixrgn[3];
     gint32 layers[2];
     gint32 mask[2];
     gint32 ntiles = 0, tilecounter = 0;
 
-    gchar *filename = separate_filename_add_suffix (gimp_image_get_filename (sc->imageID),"MK"); 
+    gchar *filename = separate_filename_add_suffix (gimp_image_get_filename (sc->imageID), "MK"); 
+
     values[0].data.d_image = new_image_id =
       separate_create_planes_Duotone (filename, drawable->width, drawable->height, layers);
     g_free (filename);
 
-    for (counter=0; counter<2; ++counter)
+    for (counter = 0; counter < 2; ++counter)
       {
-        mask[counter] = gimp_layer_create_mask (layers[counter],GIMP_ADD_WHITE_MASK);
-        gimp_layer_add_mask (layers[counter],mask[counter]);
-        drawables[counter]=gimp_drawable_get (mask[counter]);
+        mask[counter] = gimp_layer_create_mask (layers[counter], GIMP_ADD_WHITE_MASK);
+        gimp_layer_add_mask (layers[counter], mask[counter]);
+        drawables[counter] = gimp_drawable_get (mask[counter]);
+      }
+
+    if (gimp_drawable_has_alpha (drawable->drawable_id))
+      {
+        const GimpRGB color = {1.0, 1.0, 1.0};
+        gint32 channel;
+
+        channel = gimp_channel_new (new_image_id, _("Alpha of source image"),
+                                    width, height, 100.0, &color);
+        gimp_channel_set_show_masked (channel, TRUE);
+        gimp_drawable_set_visible (channel, TRUE);
+        gimp_image_add_channel (new_image_id, channel, 0);
+
+        drawables[2] = gimp_drawable_get (channel);
+
+        n_drawables++;
       }
 
     gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-    for (counter=0; counter<2; ++counter)
-      {
-        gimp_pixel_rgn_init (&pixrgn[counter], drawables[counter], 0, 0, width, height, TRUE, FALSE);
-      }
+
+    for (counter = 0; counter < n_drawables; ++counter)
+      gimp_pixel_rgn_init (&pixrgn[counter], drawables[counter], 0, 0, width, height, TRUE, FALSE);
 
     gimp_progress_init (_("Separating..."));
-    ntiles = drawable->ntile_rows*drawable->ntile_cols;
-    tileiterator = gimp_pixel_rgns_register (3,&srcPR, &pixrgn[0], &pixrgn[1]);
+    ntiles = drawable->ntile_rows * drawable->ntile_cols;
+    tileiterator = gimp_pixel_rgns_register (n_drawables + 1, &srcPR,
+                                             &pixrgn[0],
+                                             &pixrgn[1],
+                                             &pixrgn[2]);
     while (tileiterator)
       {
         long i;
-        guchar *destptr[2];
+        guchar *destptr[3];
         src = srcPR.data;
 
-        for (counter=0; counter < 2; ++counter)
+        for (counter = 0; counter < n_drawables; ++counter)
           destptr[counter] = pixrgn[counter].data;
 
-        for (i=0; i < (srcPR.w*srcPR.h); ++i)
+        for (i = 0; i < (srcPR.w * srcPR.h); ++i)
           {
             int r, g, b, t;
-            r = src[i * srcPR.bpp];
-            g = src[i * srcPR.bpp + 1];
-            b = src[i * srcPR.bpp + 2];
+            r = *src++;
+            g = *src++;
+            b = *src++;
             t = (g + b) / 2;
+
             if (r > t)
               g = b = t;
             else
               r = g = (r + g + b) / 3;
+
             (destptr[0])[i * pixrgn[0].bpp] = 255 - r;
             (destptr[1])[i * pixrgn[1].bpp] = r - g;
+            if (n_drawables > 2)
+              (destptr[2])[i * pixrgn[2].bpp] = *src++;
           }
 
         gimp_progress_update (((double) tilecounter) / ((double) ntiles));
@@ -854,7 +974,7 @@ separate_duotone (GimpDrawable    *drawable,
 
     duplicate_paths (sc->imageID, new_image_id);
 
-    for (counter=0; counter < 2; ++counter)
+    for (counter=0; counter < n_drawables; ++counter)
       {
         gimp_drawable_flush (drawables[counter]);
         gimp_drawable_update (drawables[counter]->drawable_id, 0, 0, width, height);

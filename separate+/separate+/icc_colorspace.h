@@ -6,7 +6,7 @@
 #ifndef ICC_COLORSPACE_H
 #define ICC_COLORSPACE_H
 
-#include "lcms.h"
+#include "lcms_wrapper.h"
 
 #ifdef ENABLE_COLOR_MANAGEMENT
 typedef GimpColorRenderingIntent ICCRenderingIntent;
@@ -40,16 +40,19 @@ typedef struct _AssignSettings
 
 typedef struct _ConvertSettings
 {
-  gboolean use_workspace;
   ICCRenderingIntent intent;
-  IccColorspaceConvertTarget target;
   gboolean bpc;
-  /*gboolean flatten;*/
+  IccColorspaceConvertTarget target;
+  gboolean dither;
+  gboolean use_workspace;
 } ConvertSettings;
 
 typedef struct _AbstractSettings
 {
+  ICCRenderingIntent intent;
+  gboolean bpc;
   IccColorspaceConvertTarget target;
+  gboolean dither;
 } AbstractSettings;
 
 typedef struct _IccColorspaceContext
@@ -57,7 +60,6 @@ typedef struct _IccColorspaceContext
   /* Settings */
   AssignSettings as;
   ConvertSettings cs;
-  AbstractSettings bs;
 
   GimpRunMode run_mode;
   IccColorspaceFunction func;
@@ -69,7 +71,6 @@ typedef struct _IccColorspaceContext
   /* Core related */
   gint32 imageID;
   GimpImageBaseType type;
-  IccColorspaceConvertTarget target;
 
   gchar *profile; /* 変換先・割り当てプロファイルの実体 */
   gsize profileSize;
@@ -80,10 +81,16 @@ typedef struct _IccColorspaceContext
   cmsHPROFILE hProfile;
   cmsHPROFILE hWorkspaceProfile;
   cmsHTRANSFORM hTransform;
+  cmsHTRANSFORM hTransformA;
 
   /* Progress bar */
   gdouble percentage;
   gdouble step;
+
+#ifdef ENABLE_BENCHMARK
+  GTimer *timer1;
+  GTimer *timer2;
+#endif
 } IccColorspaceContext;
 
 #endif

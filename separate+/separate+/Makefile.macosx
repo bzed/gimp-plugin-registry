@@ -1,8 +1,17 @@
 GIMP_VER = 2.4
 
+#USE_LCMS2 = yes
+
 PREFIX      = /opt/local
 INSTALLDIR  = $(PREFIX)/lib/gimp/2.0/plug-ins
 #INSTALLDIR = $(HOME)/.gimp-$(GIMP_VER)/plug-ins
+
+ifdef USE_LCMS2
+  LCMS_PKG  = lcms2
+  CFLAGS   += -DUSE_LCMS2
+else
+  LCMS_PKG  = lcms
+endif
 
 GTK_INCLUDE  = `pkg-config gtk+-2.0 --cflags`
 GTK_LIB      = `pkg-config gtk+-2.0 --libs`
@@ -10,14 +19,14 @@ GIMP_INCLUDE = `pkg-config gimp-2.0 --cflags` `pkg-config gimpui-2.0 --cflags`
 GIMP_LIB     = `pkg-config gimp-2.0 --libs` `pkg-config gimpui-2.0 --libs`
 CF_INCLUDE   = -I/System/Library/Frameworks/Corefoundation.Framework/Headers
 CF_LIB       = -Wl,-framework -Wl,CoreFoundation
-LCMS_INCLUDE = `pkg-config lcms --cflags`
-LCMS_LIB     = `pkg-config lcms --libs`
+LCMS_INCLUDE = `pkg-config $(LCMS_PKG) --cflags`
+LCMS_LIB     = `pkg-config $(LCMS_PKG) --libs`
 TIFF_LIB     = -ltiff
 JPEG_LIB     = -ljpeg
 
 GETTEXT_PACKAGE = gimp20-separate
 
-VERSION = 0.5.5
+VERSION = 0.5.8
 CC      = gcc -g
 DEPEND  = gccmakedep
 RM      = rm -f
@@ -26,12 +35,10 @@ MAKE    = make PREFIX="$(PREFIX)"
 .SUFFIXES: .c .o
 
 # If you will use with the GIMP 2.2.x, remove "-DENABLE_COLOR_MANAGEMENT".
-# If you don't want to merge "normal" and "to Colour" dialog,
-#                                            remove "-DSEPARATE_SEPARATE".
 CM      = -DENABLE_COLOR_MANAGEMENT
 NLS     = -DENABLE_NLS -DGETTEXT_PACKAGE="\"$(GETTEXT_PACKAGE)\""
-CFLAGS += -DMACOSX $(CF_INCLUDE) $(GIMP_INCLUDE) $(GTK_INCLUDE) $(LCMS_INCLUDE) $(CM) $(NLS) \
-          -DSEPARATE_SEPARATE -DUSE_ICC_BUTTON
+CFLAGS += $(CF_INCLUDE) $(GIMP_INCLUDE) $(GTK_INCLUDE) $(LCMS_INCLUDE) $(CM) $(NLS) \
+          -DUSE_ICC_BUTTON
 LIBS    = $(CF_LIB) $(GIMP_LIB) $(GTK_LIB) $(LCMS_LIB) $(TIFF_LIB) $(JPEG_LIB)
 
 SOURCES = $(SEPARATE_SOURCES) $(IMPORT_SOURCES) \
@@ -39,7 +46,7 @@ SOURCES = $(SEPARATE_SOURCES) $(IMPORT_SOURCES) \
 
 OBJECTS = $(SOURCES:.c=.o)
 
-EXTRA_SOURCES = iccbutton.c
+EXTRA_SOURCES = iccbutton.c lcms_wrapper.c
 
 SEPARATE_SOURCES = separate-core.c separate-gui.c separate-export.c util.c tiff.c psd.c jpeg.c
 
@@ -111,12 +118,13 @@ uninstall: uninstall-plugins uninstall-catalogs
 
 
 #
-iccbutton.o: iccbutton.h iccclassicons.h
-separate-core.o: separate.h separate-core.h
+iccbutton.o: iccbutton.h iccclassicons.h lcms_wrapper.h
+lcms_wrapper.o: lcms_wrapper.h
+separate-core.o: separate.h separate-core.h lcms_wrapper.h
 separate-export.o: separate.h separate-export.h tiff.h psd.h jpeg.h
 separate-gui.o: separate.h separate-core.h separate-export.h iccbutton.h icon.h
 import.o: separate.h
-icc_colorspace.o: icc_colorspace.h iccbutton.h
+icc_colorspace.o: icc_colorspace.h iccbutton.h lcms_wrapper.h
 tiff.o: separate.h util.h tiff.h
 psd.o: separate.h util.h psd.h
 jpeg.o: separate.h util.h jpeg.h

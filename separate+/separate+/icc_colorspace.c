@@ -44,7 +44,6 @@ static gboolean icc_colorspace_compare_display_profile (cmsHPROFILE           hP
 
 static gboolean icc_colorspace_assign                  (IccColorspaceContext *context);
 static gboolean icc_colorspace_convert                 (IccColorspaceContext *context);
-/*static gboolean icc_colorspace_apply_abstract_profile  (IccColorspaceContext *context);*/
 static gboolean icc_colorspace_convert_colormap        (IccColorspaceContext *context);
 static gboolean icc_colorspace_convert_layer           (IccColorspaceContext *context,
                                                         GimpDrawable         *drawable,
@@ -66,7 +65,48 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
+/* Arguments */
+static const GimpParamDef assign_args[] =
+{
+  { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+  { GIMP_PDB_IMAGE, "image", "Input image" },
+  { GIMP_PDB_DRAWABLE, "drawable", "(unused)" },
+  { GIMP_PDB_INT32, "unassign", "Unassign profile (TRUE, FALSE)" },
+  { GIMP_PDB_STRING, "profile", "ICC profile (empty:workspace)" }
+};
+
+static const GimpParamDef convert_args[] =
+{
+  { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+  { GIMP_PDB_IMAGE, "image", "Input image" },
+  { GIMP_PDB_DRAWABLE, "drawable", "(unused)" },
+  { GIMP_PDB_STRING, "src-profile", "(unused in this version, should be empty)" },
+  { GIMP_PDB_STRING, "dest-profile", "Destination profile (empty:workspace)" },
+  { GIMP_PDB_INT32, "intent", "0:Perceptual, 1:Rel. Colorimetric, 2:Saturation, 3-4:Abs. Colorimetric" },
+  { GIMP_PDB_INT32, "use_bpc", "Use BPC algorithm (TRUE, FALSE)" },
+  { GIMP_PDB_INT32, "use_dither", "Use dither (TRUE, FALSE)" },
+  { GIMP_PDB_INT32, "flatten", "Flatten the image before converting (TRUE, FALSE)" }
+};
+
+static const GimpParamDef abstract_args[] =
+{
+  { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+  { GIMP_PDB_IMAGE, "image", "Input image" },
+  { GIMP_PDB_DRAWABLE, "drawable", "(unused)" },
+  { GIMP_PDB_STRING, "abstract-profile", "Abstract profile" },
+  { GIMP_PDB_INT32, "intent", "0:Perceptual, 1:Rel. Colorimetric, 2:Saturation, 3-4:Abs. Colorimetric" },
+  { GIMP_PDB_INT32, "use_bpc", "Use BPC algorithm (TRUE, FALSE)" },
+  { GIMP_PDB_INT32, "use_dither", "Use dither (TRUE, FALSE)" },
+  { GIMP_PDB_INT32, "target", "0:Selection, 1:Each layer, 2:Flatten image" }
+};
+
+static gint n_assign_args;
+static gint n_convert_args;
+static gint n_abstract_args;
+
+
 MAIN ()
+
 
 static void
 query (void)
@@ -74,46 +114,9 @@ query (void)
   /* setup for localization */
   INIT_I18N ();
 
-  /* Arguments for Colorspace assignment routines */
-
-  static GimpParamDef assign_args[] =
-  {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "(unused)" },
-    { GIMP_PDB_INT32, "unassign", "Unassign profile (TRUE / FALSE)" },
-    { GIMP_PDB_STRING, "profile", "ICC profile ( empty : workspace )" }
-  };
-  static gint n_assign_args = sizeof(assign_args) / sizeof(assign_args[0]);
-
-  /* Arguments for Converting routines */
-
-  static GimpParamDef convert_args[] =
-  {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "(unused)" },
-    { GIMP_PDB_STRING, "src-profile", "Optional : source profile or devicelink profile ( should be NULL )" },
-    { GIMP_PDB_STRING, "dest-profile", "Destination profile ( empty : workspace )" },
-    { GIMP_PDB_INT32, "intent", "0:Perceptual 1:Rel. Colorimetric 2:Saturation 3,4:Abs. Colorimetric" },
-    { GIMP_PDB_INT32, "use_bpc", "Use BPC algorithm ( TRUE / FALSE )" },
-    { GIMP_PDB_INT32, "flatten", "Flatten the image before converting ( TRUE / FALSE )" }/*,
-    { GIMP_PDB_INT32, "num-profiles", "Optional : number of abstract profiles ( should be zero )" },
-    { GIMP_PDB_STRINGARRAY, "abstract-profiles", "Optional : abstract profiles ( should be NULL )" }*/
-  };
-  static gint n_convert_args = sizeof(convert_args) / sizeof(convert_args[0]);
-
-  /* Arguments for Applying abstract profile routines */
-
-  static GimpParamDef abstract_args[] =
-  {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "(unused)" },
-    { GIMP_PDB_STRING, "abstract-profile", "Abstract profile" },
-    { GIMP_PDB_INT32, "target", "0:Selection 1:Each layers 2:Flatten image" }
-  };
-  static gint n_abstract_args = sizeof(abstract_args) / sizeof(abstract_args[0]);
+  n_assign_args = sizeof(assign_args) / sizeof(assign_args[0]);
+  n_convert_args = sizeof(convert_args) / sizeof(convert_args[0]);
+  n_abstract_args = sizeof(abstract_args) / sizeof(abstract_args[0]);
 
   gimp_install_procedure ("plug-in-icc-colorspace-assign",
                           _("Assign new colorspace"),
@@ -173,6 +176,10 @@ run (const gchar      *name,
 
   IccColorspaceContext context;
 
+  n_assign_args = sizeof(assign_args) / sizeof(assign_args[0]);
+  n_convert_args = sizeof(convert_args) / sizeof(convert_args[0]);
+  n_abstract_args = sizeof(abstract_args) / sizeof(abstract_args[0]);
+
   run_mode = context.run_mode = param[0].data.d_int32;
 
   context.imageID = param[1].data.d_image;
@@ -189,7 +196,7 @@ run (const gchar      *name,
   /* setup for localization */
   INIT_I18N ();
 
-  cmsErrorAction (LCMS_ERROR_IGNORE);
+  lcms_error_setup ();
 
   icc_colorspace_init (&context);
 
@@ -201,7 +208,7 @@ run (const gchar      *name,
           switch (context.func)
             {
             case ICC_COLORSPACE_ASSIGN:
-              if (nparams != 5)
+              if (nparams != n_assign_args)
                 status = GIMP_PDB_CALLING_ERROR;
               else
                 {
@@ -216,7 +223,7 @@ run (const gchar      *name,
 
               break;
             case ICC_COLORSPACE_CONVERT:
-              if (nparams != 8)
+              if (nparams != n_convert_args)
                 status = GIMP_PDB_CALLING_ERROR;
               else
                 {
@@ -224,19 +231,22 @@ run (const gchar      *name,
                   context.cs.use_workspace = (context.filename[0] == '\0');
                   context.cs.intent        = param[5].data.d_int32;
                   context.cs.bpc           = param[6].data.d_int32 ? TRUE : FALSE;
-                  context.target           = param[7].data.d_int32 ? ICC_COLORSPACE_TARGET_FLATTEN_IMAGE : ICC_COLORSPACE_TARGET_LAYERS;
-                  /*context.cs.flatten       = param[7].data.d_int32 ? TRUE : FALSE;*/
+                  context.cs.dither        = param[7].data.d_int32 ? TRUE : FALSE;
+                  context.cs.target        = param[8].data.d_int32 ? ICC_COLORSPACE_TARGET_FLATTEN_IMAGE : ICC_COLORSPACE_TARGET_LAYERS;
                 }
 
               break;
             case ICC_COLORSPACE_ABSTRACT:
-              if (nparams != 5)
+              if (nparams != n_abstract_args)
                 status = GIMP_PDB_CALLING_ERROR;
               else
                 {
                   context.filenames[0] = g_strdup (param[3].data.d_string);
                   context.n_filenames  = 1;
-                  context.target       = param[4].data.d_int32;
+                  context.cs.intent    = param[4].data.d_int32;
+                  context.cs.bpc       = param[5].data.d_int32 ? TRUE : FALSE;
+                  context.cs.dither    = param[6].data.d_int32 ? TRUE : FALSE;
+                  context.cs.target    = param[7].data.d_int32;
                 }
 
               break;
@@ -270,9 +280,14 @@ run (const gchar      *name,
             }
           break;
         case ICC_COLORSPACE_ABSTRACT:
-          if (context.bs.target < 0 || context.bs.target > ICC_COLORSPACE_TARGET_FLATTEN_IMAGE)
+          if (context.cs.target < 0 || context.cs.target > ICC_COLORSPACE_TARGET_FLATTEN_IMAGE)
             {
               gimp_message (_("Target is unknown."));
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          else if (context.cs.intent < 0 || context.cs.intent > INTENT_ABSOLUTE_COLORIMETRIC + 1)
+            {
+              gimp_message (_("Rendering intent is invalid."));
               status = GIMP_PDB_CALLING_ERROR;
             }
           else if (!context.filenames[0] || context.filenames[0][0] == '\0')
@@ -358,10 +373,7 @@ icc_colorspace_init (IccColorspaceContext *context)
           break;
         case ICC_COLORSPACE_CONVERT:
           if ((size = gimp_get_data_size ("icc_colorspace_convert_settings")) == sizeof(context->cs))
-            {
-              gimp_get_data ("icc_colorspace_convert_settings", &context->cs);
-              context->target = context->cs.target;
-            }
+            gimp_get_data ("icc_colorspace_convert_settings", &context->cs);
 
           if ((size = gimp_get_data_size ("icc_colorspace_convert_destination_profile")))
             {
@@ -373,10 +385,12 @@ icc_colorspace_init (IccColorspaceContext *context)
             context->cs.use_workspace = TRUE;
           break;
         case ICC_COLORSPACE_ABSTRACT:
-          if ((size = gimp_get_data_size ("icc_colorspace_abstract_settings")) == sizeof(context->bs))
+          if ((size = gimp_get_data_size ("icc_colorspace_abstract_settings")) == sizeof(AbstractSettings))
+            gimp_get_data ("icc_colorspace_abstract_settings", &context->cs);
+          else
             {
-              gimp_get_data ("icc_colorspace_abstract_settings", &context->bs);
-              context->target = context->bs.target;
+              context->cs.intent = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+              context->cs.bpc    = TRUE;
             }
 
           if ((size = gimp_get_data_size ("icc_colorspace_abstract_profile")))
@@ -386,10 +400,6 @@ icc_colorspace_init (IccColorspaceContext *context)
               context->n_filenames = 1;
             }
 
-          //context->cs.intent = GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC + 1;
-          //context->cs.intent = GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL;
-          context->cs.intent = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
-          context->cs.bpc    = TRUE;
           break;
         case ICC_COLORSPACE_NONE:
         default:
@@ -470,6 +480,11 @@ icc_colorspace_cleanup (IccColorspaceContext *context)
   g_free (context->workspaceProfile);
 
   g_free (context->filename);
+
+  if (context->hTransform)
+    cmsDeleteTransform (context->hTransform);
+  if (context->hTransformA)
+    cmsDeleteTransform (context->hTransformA);
 }
 
 static void
@@ -485,14 +500,12 @@ icc_colorspace_store_settings (IccColorspaceContext *context)
     case ICC_COLORSPACE_CONVERT:
       if (context->filename)
         gimp_set_data ("icc_colorspace_convert_destination_profile", context->filename, strlen (context->filename) + 1);
-      context->cs.target = context->target;
       gimp_set_data ("icc_colorspace_convert_settings", &context->cs, sizeof(context->cs));
       break;
     case ICC_COLORSPACE_ABSTRACT:
       if (context->filenames[0])
         gimp_set_data ("icc_colorspace_abstract_profile", context->filenames[0], strlen (context->filenames[0]) + 1);
-      context->bs.target = context->target;
-      gimp_set_data ("icc_colorspace_abstract_settings", &context->bs, sizeof(context->bs));
+      gimp_set_data ("icc_colorspace_abstract_settings", &context->cs, sizeof(AbstractSettings));
       break;
     case ICC_COLORSPACE_NONE:
     default:
@@ -546,13 +559,13 @@ icc_colorspace_compare_display_profile (cmsHPROFILE hProfile1,
       LPGAMMATABLE gamma1, gamma2;
       gboolean result = TRUE;
 
-      cmsTakeMediaWhitePoint (&xyz1.Red, hProfile1);
-      cmsTakeMediaWhitePoint (&xyz2.Red, hProfile2);
+      xyz1.Red = lcms_get_whitepoint (hProfile1);
+      xyz2.Red = lcms_get_whitepoint (hProfile2);
       if (!_xyzcmp (xyz1.Red, xyz2.Red))
         return FALSE;
 
-      cmsTakeColorants (&xyz1, hProfile1);
-      cmsTakeColorants (&xyz2, hProfile2);
+      xyz1 = lcms_get_colorants (hProfile1);
+      xyz2 = lcms_get_colorants (hProfile2);
       if (!_xyzcmp (xyz1.Red, xyz2.Red) ||
           !_xyzcmp (xyz1.Green, xyz2.Green) ||
           !_xyzcmp (xyz1.Blue, xyz2.Blue))
@@ -560,15 +573,15 @@ icc_colorspace_compare_display_profile (cmsHPROFILE hProfile1,
 
       for (i = 0; i < 3 && result == TRUE; i++)
         {
-          gamma1 = cmsReadICCGamma (hProfile1, trcTags[i]);
-          gamma2 = cmsReadICCGamma (hProfile2, trcTags[i]);
-          if (floor (cmsEstimateGamma (gamma1) * 10 + 0.5) != floor (cmsEstimateGamma (gamma2) * 10 + 0.5))
+          gamma1 = lcms_get_gamma (hProfile1, trcTags[i]);
+          gamma2 = lcms_get_gamma (hProfile2, trcTags[i]);
+          if (floor (lcms_estimate_gamma (gamma1) * 10 + 0.5) != floor (lcms_estimate_gamma (gamma2) * 10 + 0.5))
             result = FALSE;
 
           if (gamma1)
-            cmsFreeGamma (gamma1);
+            lcms_free_gamma (gamma1);
           if (gamma2)
-            cmsFreeGamma (gamma2);
+            lcms_free_gamma (gamma2);
         }
 
       return result;
@@ -669,6 +682,13 @@ icc_colorspace_convert (IccColorspaceContext *context)
 
   gboolean skip = FALSE;
 
+#ifdef ENABLE_BENCHMARK
+  GString *msg;
+
+  msg = g_string_new ("");
+  context->timer1 = g_timer_new ();
+#endif
+
   /* Setup the source profile */
   if (context->hProfile)
     {
@@ -720,10 +740,6 @@ icc_colorspace_convert (IccColorspaceContext *context)
           destProfile = context->workspaceProfile;
           destProfileSize = context->workspaceProfileSize;
         }
-
-      /*hDestProfile = context->hWorkspaceProfile;
-      destProfile = context->workspaceProfile;
-      destProfileSize = context->workspaceProfileSize;*/
     }
   else if (g_file_get_contents (context->filename, &destProfile, &destProfileSize, NULL))
     {
@@ -744,8 +760,6 @@ icc_colorspace_convert (IccColorspaceContext *context)
           skip = TRUE;
           return_val = FALSE;
         }
-
-      /*hDestProfile = cmsOpenProfileFromMem (destProfile, destProfileSize);*/
     }
   else
     {
@@ -757,6 +771,7 @@ icc_colorspace_convert (IccColorspaceContext *context)
     {
       /* Setup transform */
       ICCRenderingIntent intent = context->cs.intent;
+      DWORD format = TYPE_RGB_8;
       DWORD dwFLAGS = 0;
 
       /* Photoshop CS2 (and above) compatibility */
@@ -773,34 +788,60 @@ icc_colorspace_convert (IccColorspaceContext *context)
         dwFLAGS |= cmsFLAGS_BLACKPOINTCOMPENSATION;
       if (context->func == ICC_COLORSPACE_ABSTRACT || context->cs.intent == INTENT_ABSOLUTE_COLORIMETRIC)
         dwFLAGS |= cmsFLAGS_NOWHITEONWHITEFIXUP;
+      if (context->cs.dither && context->type != GIMP_INDEXED)
+        format |= DITHER_SH (1);
 
-      /*context->hTransform = cmsCreateTransform (hSrcProfile, TYPE_RGBA_8,
-                                                hDestProfile, TYPE_RGBA_8,
-                                                intent, dwFLAGS);*/
-      context->hTransform = cmsCreateMultiprofileTransform (profiles, n_profiles,
-                                                            TYPE_RGBA_8, TYPE_RGBA_8,
-                                                            intent, dwFLAGS);
+#ifdef ENABLE_BENCHMARK
+      context->timer2 = g_timer_new ();
+#endif
 
-      if (context->hTransform)
+      context->hTransform  = cmsCreateMultiprofileTransform (profiles, n_profiles,
+                                                             format, format,
+                                                             intent, dwFLAGS);
+      format |= EXTRA_SH (1);
+      context->hTransformA = cmsCreateMultiprofileTransform (profiles, n_profiles,
+                                                             format, format,
+                                                             intent, dwFLAGS);
+
+#ifdef ENABLE_BENCHMARK
+      g_string_printf (msg, "LCMS header version : %d\nTransform setup : %fsec.",
+                       LCMS_VERSION,
+                       g_timer_elapsed (context->timer2, NULL));
+      g_timer_start (context->timer2);
+      g_timer_stop (context->timer2);
+      g_timer_reset (context->timer2);
+#endif
+
+      if (context->hTransform && context->hTransformA)
         {
           gint32 *layerID;
+          gint32 selectionID = -1;
           gint i, nLayers, nTiles;
           GimpDrawable **drawables;
 
-          if (context->target == ICC_COLORSPACE_TARGET_FLATTEN_IMAGE)
+          if (context->cs.target == ICC_COLORSPACE_TARGET_FLATTEN_IMAGE)
             gimp_image_flatten (context->imageID);
 
           gimp_progress_init (_("Conveting..."));
 
           /* Get layer IDs */
-          if (context->target == ICC_COLORSPACE_TARGET_SELECTION)
+          if (context->cs.target == ICC_COLORSPACE_TARGET_SELECTION)
             {
               layerID = g_new (gint32, 1);
               *layerID = gimp_image_get_active_layer (context->imageID);
               nLayers = 1;
             }
           else
-            layerID = gimp_image_get_layers (context->imageID, &nLayers);
+            {
+              /* unselect temporarily */
+              if (!gimp_selection_is_empty (context->imageID))
+                {
+                  selectionID = gimp_selection_save (context->imageID);
+                  gimp_selection_none (context->imageID);
+                }
+
+              layerID = gimp_image_get_layers (context->imageID, &nLayers);
+            }
           drawables = (GimpDrawable **)g_new (GimpDrawable, nLayers);
 
           if (context->type == GIMP_INDEXED)
@@ -824,8 +865,12 @@ icc_colorspace_convert (IccColorspaceContext *context)
 
               /* Do transform... */
               for (i = 0; i < nLayers; i++)
-                return_val = icc_colorspace_convert_layer (context, drawables[i], (context->target == ICC_COLORSPACE_TARGET_SELECTION)) ? return_val : FALSE;
+                return_val = icc_colorspace_convert_layer (context, drawables[i], (context->cs.target == ICC_COLORSPACE_TARGET_SELECTION)) ? return_val : FALSE;
             }
+#ifdef ENABLE_BENCHMARK
+          g_string_append_printf (msg, "\nApplying transform : %fsec.", g_timer_elapsed (context->timer2, NULL));
+          g_timer_destroy (context->timer2);
+#endif
 
           /* Embed destination profile */
           /* Profile is embedded, and cannot be used independently */
@@ -849,15 +894,19 @@ icc_colorspace_convert (IccColorspaceContext *context)
           for (i = 0; i < nLayers; i++)
             {
               gimp_drawable_update (layerID[i], 0, 0, drawables[i]->width, drawables[i]->height);
-              gimp_drawable_detach (drawables[i] );
+              gimp_drawable_detach (drawables[i]);
+            }
+
+          if (selectionID != -1)
+            {
+              gimp_selection_load (selectionID);
+              gimp_image_remove_channel (context->imageID, selectionID);
             }
 
           g_free (drawables);
           g_free (layerID);
 
           gimp_progress_update (1.0);
-
-          cmsDeleteTransform (context->hTransform);
         }
       else
         return_val = FALSE;
@@ -885,33 +934,6 @@ icc_colorspace_convert (IccColorspaceContext *context)
                                           PARASITE_FLAGS,
                                           destProfileSize, destProfile);
 #endif
-          /*
-          if (gimp_image_attach_new_parasite (context->imageID, "icc-profile",
-                                              PARASITE_FLAGS,
-                                              destProfileSize, destProfile))
-            {
-              gint i, nLayers;
-              gint32 *layerID;
-              gint offsetX, offsetY;
-
-              layerID = gimp_image_get_layers (context->imageID, &nLayers);
-
-              for (i = 0; i < nLayers && !gimp_drawable_get_visible (layerID[i]); i++) ;
-
-              if (i < nLayers)
-                {
-                  gimp_drawable_offsets (layerID[i], &offsetX, &offsetY);
-
-                  gimp_drawable_update (layerID[i], -offsetX, -offsetY,
-                                        gimp_image_width (context->imageID),
-                                        gimp_image_height (context->imageID));
-                }
-
-              g_free (layerID);
-            }
-          else
-            return_val = FALSE;
-          */
         }
     }
 
@@ -932,6 +954,13 @@ icc_colorspace_convert (IccColorspaceContext *context)
 
   gimp_displays_flush ();
 
+#ifdef ENABLE_BENCHMARK
+  g_string_append_printf (msg, "\nPlugin execution time : %fsec.", g_timer_elapsed (context->timer1, NULL));
+  gimp_message (msg->str);
+  g_string_free (msg, TRUE);
+  g_timer_destroy (context->timer1);
+#endif
+
   return return_val;
 }
 
@@ -947,9 +976,15 @@ icc_colorspace_convert_colormap (IccColorspaceContext *context)
       return FALSE;
     }
 
-  cmsChangeBuffersFormat (context->hTransform, TYPE_RGB_8, TYPE_RGB_8);
+#ifdef ENABLE_BENCHMARK
+  g_timer_continue (context->timer2);
+#endif
 
   cmsDoTransform (context->hTransform, colorMap, colorMap, nColors);
+
+#ifdef ENABLE_BENCHMARK
+  g_timer_stop (context->timer2);
+#endif
 
   return gimp_image_set_colormap (context->imageID, colorMap, nColors);
 }
@@ -965,14 +1000,15 @@ icc_colorspace_convert_layer (IccColorspaceContext *context,
   gint x1, y1, x2, y2, width, height;
 
   gint bpp;
+  cmsHTRANSFORM transform;
 
   layerID = drawable->drawable_id;
   bpp = gimp_drawable_bpp (layerID);
 
   if (bpp == 4)
-    cmsChangeBuffersFormat (context->hTransform, TYPE_RGBA_8, TYPE_RGBA_8);
+    transform = context->hTransformA;
   else if (bpp == 3)
-    cmsChangeBuffersFormat (context->hTransform, TYPE_RGB_8, TYPE_RGB_8);
+    transform = context->hTransform;
   else
     {
       gimp_message (_("Unsupported BPP!"));
@@ -1005,8 +1041,17 @@ icc_colorspace_convert_layer (IccColorspaceContext *context,
       if (bpp == 4)
         g_memmove (region_out.data, region_in.data, region_in.rowstride * region_in.h);
 
+
+#ifdef ENABLE_BENCHMARK
+      g_timer_continue (context->timer2);
+#endif
+
       for (i = 0; i < region_in.h; i++, in += region_in.rowstride, out += region_out.rowstride)
-        cmsDoTransform (context->hTransform, in, out, region_in.w);
+        cmsDoTransform (transform, in, out, region_in.w);
+
+#ifdef ENABLE_BENCHMARK
+      g_timer_stop (context->timer2);
+#endif
 
       context->percentage += context->step;
       gimp_progress_update (context->percentage);
@@ -1050,6 +1095,11 @@ assign_dialog (IccColorspaceContext *context)
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK, GTK_RESPONSE_OK,
                             NULL);
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   vbox1 = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox1), 12);
@@ -1063,7 +1113,7 @@ assign_dialog (IccColorspaceContext *context)
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
 
-  profileDesc = _icc_button_get_profile_desc (context->hProfile);
+  profileDesc = lcms_get_profile_desc (context->hProfile);
   label = gtk_label_new (profileDesc ? profileDesc : _("Unknown (image has no profiles)"));
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
   gtk_box_pack_start (GTK_BOX (vbox2), label, TRUE, TRUE, 0);
@@ -1092,7 +1142,7 @@ assign_dialog (IccColorspaceContext *context)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radioButton[0]), (context->as.mode == ICC_COLORSPACE_ASSIGN_NONE));
   gtk_box_pack_start (GTK_BOX (vbox2), radioButton[0], TRUE, TRUE, 0);
 
-  profileDesc = _icc_button_get_profile_desc (context->hWorkspaceProfile);
+  profileDesc = lcms_get_profile_desc (context->hWorkspaceProfile);
   string = g_strdup_printf (_("_Workspace: %s"), profileDesc ? profileDesc : "sRGB");
   radioButton[1] = gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON (radioButton[0]), string);
   g_free (profileDesc);
@@ -1113,6 +1163,8 @@ assign_dialog (IccColorspaceContext *context)
   icc_button_set_mask (ICC_BUTTON (destProfile), ICC_BUTTON_CLASS_INPUT | ICC_BUTTON_CLASS_OUTPUT | ICC_BUTTON_CLASS_DISPLAY, ICC_BUTTON_COLORSPACE_ALL, ICC_BUTTON_COLORSPACE_RGB);
   icc_button_set_filename (ICC_BUTTON (destProfile), context->filename, FALSE);
   icc_button_set_enable_empty (ICC_BUTTON (destProfile), FALSE);
+  icc_button_dialog_set_show_detail (ICC_BUTTON (destProfile), TRUE);
+  icc_button_dialog_set_list_columns (ICC_BUTTON (destProfile), ICC_BUTTON_COLUMN_ICON | ICC_BUTTON_COLUMN_PATH);
   g_signal_connect (G_OBJECT (destProfile), "changed", G_CALLBACK (icc_button_changed), radioButton[2]);
   gtk_box_pack_start (GTK_BOX (hbox), destProfile, TRUE, TRUE, 0);
 
@@ -1152,7 +1204,7 @@ convert_dialog (IccColorspaceContext *context)
   GtkWidget *hbox, *vbox1, *vbox2;
   GtkWidget *destProfile;
   GtkWidget *radioButton[2];
-  GtkWidget *checkButton[2];
+  GtkWidget *checkButton[3];
   GtkWidget *comboBox;
 
   gchar *profileDesc, *string;
@@ -1167,6 +1219,11 @@ convert_dialog (IccColorspaceContext *context)
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK, GTK_RESPONSE_OK,
                             NULL);
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   vbox1 = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox1), 12);
@@ -1179,7 +1236,7 @@ convert_dialog (IccColorspaceContext *context)
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
 
-  profileDesc = _icc_button_get_profile_desc (context->hProfile);
+  profileDesc = lcms_get_profile_desc (context->hProfile);
   label = gtk_label_new (profileDesc ? profileDesc : _("Unknown (image has no profiles)"));
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
   gtk_box_pack_start (GTK_BOX (vbox2), label, TRUE, TRUE, 0);
@@ -1196,7 +1253,9 @@ convert_dialog (IccColorspaceContext *context)
   arrow = gtk_arrow_new (GTK_ARROW_DOWN, GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox1), arrow, TRUE, TRUE, 0);
 
-  frame = gtk_frame_new (_("Rendering intent:"));
+  frame = gtk_frame_new (NULL);
+  label = gtk_label_new_with_mnemonic (_("_Rendering intent:"));
+  gtk_frame_set_label_widget (GTK_FRAME (frame), label);
   gtk_box_pack_start (GTK_BOX (vbox1), frame, TRUE, TRUE, 0);
 
   vbox2 = gtk_vbox_new (FALSE, 0);
@@ -1204,6 +1263,7 @@ convert_dialog (IccColorspaceContext *context)
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
 
   comboBox = gtk_combo_box_new_text ();
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), comboBox);
   gtk_combo_box_append_text (GTK_COMBO_BOX (comboBox), _("Perceptual"));
   gtk_combo_box_append_text (GTK_COMBO_BOX (comboBox), _("Relative colorimetric"));
   gtk_combo_box_append_text (GTK_COMBO_BOX (comboBox), _("Saturation"));
@@ -1212,7 +1272,7 @@ convert_dialog (IccColorspaceContext *context)
   gtk_combo_box_set_active (GTK_COMBO_BOX (comboBox), context->cs.intent);
   gtk_box_pack_start (GTK_BOX (vbox2), comboBox, FALSE, TRUE, 0);
 
-  checkButton[0] = gtk_check_button_new_with_label (_("Use BPC algorithm"));
+  checkButton[0] = gtk_check_button_new_with_mnemonic (_("Use _BPC algorithm"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkButton[0]), context->cs.bpc);
   gtk_box_pack_start (GTK_BOX (vbox2), checkButton[0], TRUE, TRUE, 0);
 
@@ -1227,7 +1287,7 @@ convert_dialog (IccColorspaceContext *context)
   gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
 
-  profileDesc = _icc_button_get_profile_desc (context->hWorkspaceProfile);
+  profileDesc = lcms_get_profile_desc (context->hWorkspaceProfile);
   string = g_strdup_printf (_("_Workspace: %s"), profileDesc ? profileDesc : "sRGB");
   radioButton[0] = gtk_radio_button_new_with_mnemonic (NULL, string);
   g_free (profileDesc);
@@ -1248,13 +1308,25 @@ convert_dialog (IccColorspaceContext *context)
   icc_button_set_mask (ICC_BUTTON (destProfile), ICC_BUTTON_CLASS_OUTPUT | ICC_BUTTON_CLASS_DISPLAY, ICC_BUTTON_COLORSPACE_ALL, ICC_BUTTON_COLORSPACE_RGB);
   icc_button_set_filename (ICC_BUTTON (destProfile), context->filename, FALSE);
   icc_button_set_enable_empty (ICC_BUTTON (destProfile), FALSE);
+  icc_button_dialog_set_show_detail (ICC_BUTTON (destProfile), TRUE);
+  icc_button_dialog_set_list_columns (ICC_BUTTON (destProfile), ICC_BUTTON_COLUMN_ICON | ICC_BUTTON_COLUMN_PATH);
   g_signal_connect (G_OBJECT (destProfile), "changed", G_CALLBACK (icc_button_changed), radioButton[1]);
   gtk_box_pack_start (GTK_BOX (hbox), destProfile, TRUE, TRUE, 0);
 
-  checkButton[1] = gtk_check_button_new_with_label (_("Flatten image ( to preserve appearance )"));
+  checkButton[1] = gtk_check_button_new_with_mnemonic (_("Use _dither"));
+#ifdef ENABLE_DITHER
   gtk_widget_set_sensitive (checkButton[1], (context->type != GIMP_INDEXED));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkButton[1]), (context->target == ICC_COLORSPACE_TARGET_FLATTEN_IMAGE));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkButton[1]), context->cs.dither);
+#else
+  gtk_widget_set_sensitive (checkButton[1], FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkButton[1]), FALSE);
+#endif
   gtk_box_pack_start (GTK_BOX (vbox1), checkButton[1], TRUE, TRUE, 0);
+
+  checkButton[2] = gtk_check_button_new_with_mnemonic (_("_Flatten image to preserve appearance"));
+  gtk_widget_set_sensitive (checkButton[2], (context->type != GIMP_INDEXED));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkButton[2]), (context->cs.target == ICC_COLORSPACE_TARGET_FLATTEN_IMAGE));
+  gtk_box_pack_start (GTK_BOX (vbox1), checkButton[2], TRUE, TRUE, 0);
 
   gtk_widget_show_all (dialog);
 
@@ -1274,7 +1346,8 @@ convert_dialog (IccColorspaceContext *context)
       context->cs.intent = gtk_combo_box_get_active (GTK_COMBO_BOX (comboBox));
       context->cs.bpc = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkButton[0]));
 
-      context->target = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkButton[1])) ? ICC_COLORSPACE_TARGET_FLATTEN_IMAGE : ICC_COLORSPACE_TARGET_LAYERS;
+      context->cs.dither = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkButton[1]));
+      context->cs.target = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkButton[2])) ? ICC_COLORSPACE_TARGET_FLATTEN_IMAGE : ICC_COLORSPACE_TARGET_LAYERS;
     }
 
   gtk_widget_destroy (dialog);
@@ -1299,6 +1372,8 @@ abstract_dialog (IccColorspaceContext *context)
   GtkWidget *arrow;
   GtkWidget *hbox, *vbox1, *vbox2;
   GtkWidget *destProfile;
+  GtkWidget *comboBox;
+  GtkWidget *checkButton[2];
   GtkWidget *radioButton[3];
 
   gchar *profileDesc, *string;
@@ -1313,13 +1388,20 @@ abstract_dialog (IccColorspaceContext *context)
                             GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                             GTK_STOCK_OK, GTK_RESPONSE_OK,
                             NULL);
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
 
   vbox1 = gtk_vbox_new (FALSE, 8);
   gtk_container_set_border_width (GTK_CONTAINER (vbox1), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox1, TRUE, TRUE, 0);
 
 
-  frame = gtk_frame_new (_("Abstract profile:"));
+  frame = gtk_frame_new (NULL);
+  label = gtk_label_new_with_mnemonic (_("_Abstract profile:"));
+  gtk_frame_set_label_widget (GTK_FRAME (frame), label);
   gtk_box_pack_start (GTK_BOX (vbox1), frame, TRUE, TRUE, 0);
 
   vbox2 = gtk_vbox_new (FALSE, 0);
@@ -1327,14 +1409,39 @@ abstract_dialog (IccColorspaceContext *context)
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
 
   destProfile = icc_button_new ();
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), destProfile);
   icc_button_set_max_entries (ICC_BUTTON (destProfile), 10);
   icc_button_set_title (ICC_BUTTON (destProfile), _("Choose abstract profile"));
   icc_button_set_mask (ICC_BUTTON (destProfile), ICC_BUTTON_CLASS_ABSTRACT, ICC_BUTTON_COLORSPACE_ALL, ICC_BUTTON_COLORSPACE_ALL);
   icc_button_set_enable_empty (ICC_BUTTON (destProfile), FALSE);
+  icc_button_dialog_set_show_detail (ICC_BUTTON (destProfile), TRUE);
+  icc_button_dialog_set_list_columns (ICC_BUTTON (destProfile), ICC_BUTTON_COLUMN_ICON | ICC_BUTTON_COLUMN_PATH);
   icc_button_set_filename (ICC_BUTTON (destProfile), context->filenames[0], FALSE);
   g_signal_connect (G_OBJECT (destProfile), "changed", G_CALLBACK (absolute_is_ready), dialog);
   gtk_box_pack_start (GTK_BOX (vbox2), destProfile, TRUE, TRUE, 0);
 
+  frame = gtk_frame_new (NULL);
+  label = gtk_label_new_with_mnemonic (_("_Rendering intent:"));
+  gtk_frame_set_label_widget (GTK_FRAME (frame), label);
+  gtk_box_pack_start (GTK_BOX (vbox1), frame, TRUE, TRUE, 0);
+
+  vbox2 = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 8);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+
+  comboBox = gtk_combo_box_new_text ();
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), comboBox);
+  gtk_combo_box_append_text (GTK_COMBO_BOX (comboBox), _("Perceptual"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (comboBox), _("Relative colorimetric"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (comboBox), _("Saturation"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (comboBox), _("Absolute colorimetric"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (comboBox), _("Absolute colorimetric(2)"));
+  gtk_combo_box_set_active (GTK_COMBO_BOX (comboBox), context->cs.intent);
+  gtk_box_pack_start (GTK_BOX (vbox2), comboBox, FALSE, TRUE, 0);
+
+  checkButton[0] = gtk_check_button_new_with_mnemonic (_("Use _BPC algorithm"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkButton[0]), context->cs.bpc);
+  gtk_box_pack_start (GTK_BOX (vbox2), checkButton[0], TRUE, TRUE, 0);
 
   frame = gtk_frame_new (_("Target:"));
   gtk_widget_set_sensitive (frame, (context->type != GIMP_INDEXED));
@@ -1346,11 +1453,21 @@ abstract_dialog (IccColorspaceContext *context)
 
   radioButton[0] = gtk_radio_button_new_with_mnemonic (NULL, _("_Selection"));
   radioButton[1] = gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON (radioButton[0]), _("Each _layer"));
-  radioButton[2] = gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON (radioButton[0]), _("Flatten _image"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radioButton[context->target]), TRUE);
+  radioButton[2] = gtk_radio_button_new_with_mnemonic_from_widget (GTK_RADIO_BUTTON (radioButton[0]), _("_Flatten image"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radioButton[context->cs.target]), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox2), radioButton[0], TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox2), radioButton[1], TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox2), radioButton[2], TRUE, TRUE, 0);
+
+  checkButton[1] = gtk_check_button_new_with_mnemonic (_("Use _dither"));
+#ifdef ENABLE_DITHER
+  gtk_widget_set_sensitive (checkButton[1], (context->type != GIMP_INDEXED));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkButton[1]), context->cs.dither);
+#else
+  gtk_widget_set_sensitive (checkButton[1], FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkButton[1]), FALSE);
+#endif
+  gtk_box_pack_start (GTK_BOX (vbox1), checkButton[1], TRUE, TRUE, 0);
 
 
   gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog), GTK_RESPONSE_OK,
@@ -1367,9 +1484,16 @@ abstract_dialog (IccColorspaceContext *context)
       g_free (context->filenames[0]);
       if ((context->filenames[0] = icc_button_get_filename (ICC_BUTTON (destProfile))))
           context->n_filenames = 1;
-      //context->cs.flatten = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (radioButton[2]));
+
+      context->cs.intent = gtk_combo_box_get_active (GTK_COMBO_BOX (comboBox));
+      context->cs.bpc    = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkButton[0]));
+      context->cs.dither = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkButton[1]));
+
       for (i = 0; i < 3; i++)
-        if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (radioButton[i]))) context->target = i;
+        {
+          if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (radioButton[i])))
+            context->cs.target = i;
+        }
     }
 
   gtk_widget_destroy (dialog);

@@ -23,7 +23,7 @@
 #define SEPARATE_H
 
 #include <gtk/gtk.h>
-#include <lcms.h>
+#include "lcms_wrapper.h"
 
 #define CMYKPROFILE "plug_in_separate_save/cmyk-profile"
 
@@ -33,11 +33,7 @@ typedef GimpColorRenderingIntent SeparateRenderingIntent;
 typedef gint SeparateRenderingIntent;
 #endif
 
-#ifdef SEPARATE_SEPARATE
 enum separate_function { SEP_NONE, SEP_DUOTONE, SEP_SEPARATE, SEP_FULL, SEP_LIGHT, SEP_PROOF, SEP_SAVE, SEP_EXPORT, SEP_LOAD };
-#else
-enum separate_function { SEP_NONE, SEP_DUOTONE, SEP_FULL, SEP_LIGHT, SEP_PROOF, SEP_SAVE, SEP_EXPORT, SEP_LOAD };
-#endif
 
 typedef struct _SeparateSettings
 {
@@ -46,9 +42,8 @@ typedef struct _SeparateSettings
   gboolean profile;
   SeparateRenderingIntent intent;
   gboolean bpc;
-#ifdef SEPARATE_SEPARATE
+  gboolean dither;
   gboolean composite;
-#endif
 } SeparateSettings;
 
 typedef struct _ProofSettings
@@ -59,7 +54,7 @@ typedef struct _ProofSettings
 
 typedef struct _SaveSettings
 {
-  gint8 embedprofile;
+  gint32 embedprofile;
   gint32 filetype;
   gint32 clipping_path_id;
   gboolean compression;
@@ -93,9 +88,7 @@ typedef struct _SeparateContext
   GtkWidget *intentlabel;
   GtkWidget *bpcselector;
   gboolean dialogresult;
-#ifdef SEPARATE_SEPARATE
   gboolean integrated;
-#endif
   gboolean has_embedded_profile;
 
   /* Core related */
@@ -104,8 +97,8 @@ typedef struct _SeparateContext
   gboolean drawable_has_alpha;
   cmsHTRANSFORM hTransform;
   guchar *cmyktemp;
-  guchar *destptr[4];
-  int bpp[4];
+  guchar *destptr[5];
+  int bpp[5];
 } SeparateContext;
 
 #endif

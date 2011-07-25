@@ -35,9 +35,9 @@ separate_import (bonus)
 
 
 ----- Requirements
-Plug-ins require LittleCMS version 1.15 or later. 
+The Plug-ins require LittleCMS version 1.15 or later, or, 2.0 or later. 
 Bundled win32 binaries are built for a Pentium III or its compatible 
-CPUs. These are tested with The GIMP for Windows version 2.6.8.
+CPUs. These are tested with The GIMP for Windows version 2.6.10.
 
 ----- What you need
 * Basic knowledge about ICC-based color management
@@ -153,8 +153,11 @@ For rendering intent, select "Perceptual" or "Relative colorimetric"
 For "Make CMYK pseudo-composite", select if you are planning to tweak 
 after separation.
 
-After above-mentioned specification and clicking OK, a new image with 4 
-layers (and sometimes a Background layer) is generated.
+After the above-mentioned specification and clicking OK, a new image 
+with 4 layers is generated.
+*Additionally, when you created pseudo-composite, the image may contain 
+a background layer; when you separated transparent layers with alpha, 
+the image may contain a copy of the original alpha channel.
 
 Each layer corresponds to an individual CMYK color; you can alter it or 
 adjust the tone curve or level if required. Nevertheless, do not change 
@@ -164,7 +167,7 @@ XCF format (Saving as PSD format eliminates the information about the
 profile used for the separation).
 
 To check the separated color through display screen, Select Image -> 
-Separate -> Proof from "Windows of separated image" menu.
+Separate -> Proof from the document window of separated image.
 
 For "Monitor color space", specify the profile of your monitor. 
 If you need to check the profile, select "View -> Display Filters..." 
@@ -187,12 +190,16 @@ is generated. Note that you cannot check in appropriate color if "Color
 Management -> Mode of operation" in Preferences is "Print simulation". 
 When your check is finished, you can close the window.
 
-Finally, export the result to a file. Choose "Image -> Separate -> 
-Export..." from the menu of "Separated Image" window. Input a path and 
-click "Save" button to complete. Here, you can embed a profile or choose 
-a clipping path.
+Finally, export the result to a file. If you would like to separate 
+transparent layers containing alpha and to export them as a TIFF file 
+with preserving the transparent area, make "Alpha of source image" 
+channel displayed in advance. Choose "Image -> Separate -> Export..." 
+from the document window of separated image. Input a path and click 
+"Save" button to complete. Here, you can embed a profile or choose a 
+clipping path.
 *It is common that profiles are not embedded in images for printing 
 company.
+
 
 ----- Color separation using devicelink profile
 Turn on "Use devicelink profile" switch in Separate dialog. This 
@@ -203,7 +210,7 @@ selection does not affect the result of separation). If not needed, it
 can remain unselected.
 
 If you execute it non-interactively, assign a devicelink profile for 
-the 4th parameter (input-profile). For 5th parameter (output-profile), 
+the 4th parameter (input-profile). For 6th parameter (output-profile), 
 set an empty string or assign a profile attached after the separation 
 (if an empty string, profiles are not attached).
 
@@ -247,6 +254,15 @@ set an empty string or assign a profile attached after the separation
   - Overprint pure black
     For the pixels of RGB=0,0,0, it replaces K values with 100%.(CMY 
     values are almost the same as regular converting results.)
+
+  - Use dither
+    It approximates pixels whose conversion result value cannot be 
+    expressed by an 8-bit integer with dithering.
+    When gradation with banding is generated, use dithering and the 
+    problem may be improved.
+    *Because this option depends on the function of Little CMS version 
+    1.18, it is not effective in the environment where the Little CMS 
+    library of version 1.17 or earlier is installed in.
 
   - Make CMYK pseudo-composite
     Usually, separating results are output in the form of grayscale 
@@ -371,9 +387,6 @@ will be of some help.
 * When you build with Windows, the use of MinGW/MSYS environment is 
   recommended.
 
-* When you build with Mac OS X, add "-DMACOSX" to the compilation option 
-  of gcc.
-
 * platform.h describes the default values of the profile path, so change 
   it as necessary. In addition, iccbutton.c contains a search path of 
   Profile Choice dialog, which should be fundamentally no need to be 
@@ -387,9 +400,17 @@ will be of some help.
   Therefore, the version 0.5.4 or later version may not build for GIMP 
   2.2.
 
-* To disable the dialog sharing between Separate(normal) and Separate(to 
-  Color), delete "-DSEPARATE_SEPARETE" in Makefile. This will also 
-  disable "plug-in-separate-separate" procedure.
+* Building with the header file of Little CMS version 1.17 or earlier 
+  disables the option of "Use dither" on the dialog.
+  *Using the header file of version 1.18 or later enables the option 
+  choice. In case the version of runtime library is 1.17 or earlier, 
+  dithering is disabled.
+
+* To use the version 2 family of Little CMS, set the variable USE_LCMS2 
+  at reasonable value to build. You may uncomment the 3rd line of 
+  Makefile or run a make command such as "make USE_LCMS2=yes".
+  *At present, LCMS2 does not support dithering; therefore a dithering 
+  option is disabled.
 
 * If you build on the environment in which multiple versions of GIMP are 
   installed, beware of the location of .pc files that pkg-config command 

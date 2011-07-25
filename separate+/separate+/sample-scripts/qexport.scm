@@ -19,7 +19,7 @@
 		   (set! layer (car ( gimp-edit-named-paste drawable buffer TRUE ) ) )
 		   ( gimp-buffer-delete buffer )
 		   ( gimp-floating-sel-to-layer layer )
-		   (set! cmykimg (car ( plug-in-separate-full 1 img layer "" "" tgl_preserve tgl_overprint -1 tgl_bpc TRUE ) ) )
+		   (set! cmykimg (car ( plug-in-separate-full 1 img layer "" TRUE "" -1 tgl_bpc tgl_preserve tgl_overprint TRUE ) ) )
 
 		   ( gimp-image-set-active-layer img drawable )
 		   (if (= tgl_real_overprint TRUE ) ( gimp-drawable-set-visible drawable visible ) () )

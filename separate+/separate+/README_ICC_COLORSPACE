@@ -1,15 +1,16 @@
 =================== icc_colorspace Plug-in Readme ==================
 
 ----- Introduction
-This plug-in provides function that is equivalent to "Assign Profile" 
-and "Convert To Profile" in Photoshop.
+This is a GIMP plug-in for the ICC profile assignment or removal, the 
+RGB -> RGB color space conversion and the application of abstract 
+profile for image documents.
 
 
 ----- Requirements
-The operation of this plug-in requires LittleCMS version 1.15 or later. 
-Attached Windows binary code is built for a Pentium III or its 
-compatible CPUs The operation has been checked by GIMP for Windows 
-version 2.6.8.
+This Plug-in requires LittleCMS version 1.15 or later, or, 2.0 or later. 
+Bundled win32 binarie is built for a Pentium III or its compatible CPUs. 
+These are tested with The GIMP for Windows version 2.6.10.
+
 
 ----- What you need
 * GIMP (Version 2.4 or later)
@@ -59,6 +60,9 @@ from Photoshop CS2.
 To obtain the same results as any other application or CMMs, choose 
 options any other than (2).
 
+
+If the conversion result contains banding, it is good way to try "Use 
+dither" option.
 
 Finally, select "Flatten image" as necessary. The conversion of color 
 spaces affects the layer projection because pixel values of each layer 

@@ -1,7 +1,7 @@
 LOCALEDIR = $(PREFIX)/share/locale
 #LOCALEDIR = $(PREFIX)/lib/locale
 GETTEXT_PACKAGE = gimp20-separate
-LINGUAS = cs fr ja ru pl ko
+LINGUAS = cs es fr ja ru pl ko
 POFILES = $(LINGUAS:%=%.po)
 CATALOGS = $(LINGUAS:%=%.gmo)
 
