@@ -1,8 +1,8 @@
 --- a/separate+/src/separate-core.c
 +++ b/separate+/src/separate-core.c
-@@ -35,6 +35,8 @@
- #include "separate-core.h"
+@@ -36,6 +36,8 @@
  #include "util.h"
+ #include "iccbutton.h"
  
 +#include "iccbutton.h"
 +

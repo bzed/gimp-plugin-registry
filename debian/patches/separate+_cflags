@@ -1,15 +1,15 @@
 --- a/separate+/src/Makefile
 +++ b/separate+/src/Makefile
-@@ -28,7 +28,7 @@ MAKE    = make PREFIX="$(PREFIX)"
- #                                            remove "-DSEPARATE_SEPARATE".
+@@ -35,7 +35,7 @@ MAKE    = make PREFIX="$(PREFIX)"
+ # If you will use with the GIMP 2.2.x, remove "-DENABLE_COLOR_MANAGEMENT".
  CM      = -DENABLE_COLOR_MANAGEMENT
  NLS     = -DENABLE_NLS -DGETTEXT_PACKAGE="\"$(GETTEXT_PACKAGE)\""
 -CFLAGS += $(GIMP_INCLUDE) $(GTK_INCLUDE) $(LCMS_INCLUDE) $(CM) $(NLS) \
-+SEP_CFLAGS += $(CFLAGS) $(GIMP_INCLUDE) $(GTK_INCLUDE) $(LCMS_INCLUDE) $(CM) $(NLS) \
-           -DSEPARATE_SEPARATE -DUSE_ICC_BUTTON
++SEP_CFLAGS += $(GIMP_INCLUDE) $(GTK_INCLUDE) $(LCMS_INCLUDE) $(CM) $(NLS) \
+           -DUSE_ICC_BUTTON
  LIBS    = $(GIMP_LIB) $(GTK_LIB) $(LCMS_LIB) $(TIFF_LIB) $(JPEG_LIB)
  
-@@ -58,7 +58,7 @@ TARGETS = separate separate_import icc_c
+@@ -65,7 +65,7 @@ TARGETS = separate separate_import icc_c
  all: plugins catalogs
  
  depend:
@@ -18,7 +18,7 @@
  
  clean-plugins:
  	$(RM) $(OBJECTS) $(TARGETS) core *~
-@@ -105,7 +105,7 @@ uninstall: uninstall-plugins uninstall-c
+@@ -112,7 +112,7 @@ uninstall: uninstall-plugins uninstall-c
  
  # Inference rules
  .c.o:
