@@ -1,3 +1,18 @@
+gimp-plugin-registry (3.6.0-1) unstable; urgency=low
+
+  * [c94875ed] More fixes for weird Ubuntu issues.
+  * [daf3b032] Move *.c in front of the linker options in gcc call.
+  * [4746d4ec] Revert "exposure-blend: Dropping plugin." as requested.
+    This reverts commit bbd383fe7138af722758fc4373fefad26b142cf2.
+  * [010d0cf5] Liquid-Rescale: Updating to 0.7.1
+  * [a2114978] Rename seperate+ source folder.
+  * [81425b5c] Seperate+: Update to version 0.5.8
+  * [2a0bb193] Contactsheet: Updating to version 2.15
+  * [fe2c8eb2] Elsamuko: Updating to latest version from
+               https://sites.google.com/site/elsamuko/gimp
+
+ -- Bernd Zeimetz <bzed@debian.org>  Mon, 25 Jul 2011 16:47:34 +0200
+
 gimp-plugin-registry (3.5.3-1) unstable; urgency=low
 
   * [371a43f5] Fix linker issues in refoxus plugin.
