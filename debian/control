@@ -40,7 +40,7 @@ Description: repository of optional extensions for GIMP
      This plugin completes the prepress workflow of using Separate+ to generate
      CMYK Tiff images by allowing you to convert the saved CMYK Tiff image into
      a PDF file.
-   * Contact Sheet (2.02):
+   * Contact Sheet (2.15):
      Generates a contact sheet(s) for a directory of images.
    * David's Batch Processor (1.1.9):
      A simple batch processing plugin for The Gimp - it allows
@@ -103,6 +103,9 @@ Description: repository of optional extensions for GIMP
        This script simulates the 3 Color Technicolor effect.
      * Vintage Look Script:
        This script simulates a 70s vintage look.
+      * Exposure Blend (1.3b):
+        Prompt for 3 images in a bracketed exposure series (e.g. 0,-2,+2 EV)
+        and blend these into a contrast enhanced image.
    * EZ Perspective:
      Specialized tool for easily correcting or changing perspective.
    * Fix-CA (3.0.2):
@@ -121,7 +124,7 @@ Description: repository of optional extensions for GIMP
      This is a series of scripts that implement various layer effects:
      Drop Shadow, Inner Shadow, Outer Glow, Inner Glow, Bevel and Emboss,
      Satin, Color Overlay, Gradient Overlay, Pattern Overlay, Stroke
-   * Liquid Rescale (0.7.0):
+   * Liquid Rescale (0.7.1):
      Content-aware rescaling. Keeps the features of the image while
      rescaling along a single direction.
    * Normalmap (1.2.2):
@@ -144,7 +147,7 @@ Description: repository of optional extensions for GIMP
    * Save for Web (0.29.0):
      Allows to experiment with various popular web format options. It shows
      an automatically updated preview and file size statistics.
-   * Separate+ (0.5.6):
+   * Separate+ (0.5.8):
      Separate+ is a plug-in that generates color separations from an RGB
      image, proofs CMYK colors on the monitor and exports the CMYK TIFF file.
    * Smart Sharpen (redux) (2.4):
