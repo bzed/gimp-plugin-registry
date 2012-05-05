@@ -18,6 +18,9 @@
 """
 ## VERSION HISTORY
 ##
+## Version 2.16 release date 28-nov-2011
+## Fixed type error integer expexted got float
+##
 ## Version 2.15 release date 25-dec-2010
 ## Fixed mbcs decode not read by Linux
 ##
@@ -500,6 +503,8 @@ def Contact_Sheet(file_type, location, all_subdirs, inc_filename, inc_extension,
             xpos = LEFT_PAGE_BORDER + ccount * (Thumb_width + (2 * THUMB_MARGIN))+ THUMB_MARGIN  + x_offset
             ypos = TOP_PAGE_BORDER + rcount * (Thumb_height + (2 * THUMB_MARGIN)
                                                + CalcTextHeight) + THUMB_MARGIN + y_offset
+            xpos = int(xpos)    #changed to int: on ubuntu type error integer expected got float.
+            ypos = int(ypos)
                 
             newselect.translate(xpos,ypos)
             pdb.gimp_floating_sel_anchor(newselect)
@@ -542,7 +547,7 @@ def Contact_Sheet(file_type, location, all_subdirs, inc_filename, inc_extension,
 
 
 register(
-        "python_fu_contact_sheet_V215",
+        "python_fu_contact_sheet_V216",
         _("Generates a contact sheet(s) for a directory of images. If you find this script useful or any bugs I would love to hear from you robin.gilham@gmail.com\nHeck you could even consider a donation"),
         _("Generates contact sheet(s) with a configurable number of thumbnails for all files located in a directory"),
         "Robin Gilham, E. Sullock Enzlin",
