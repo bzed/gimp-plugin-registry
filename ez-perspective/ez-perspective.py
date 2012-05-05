@@ -57,14 +57,14 @@ gettext.install("gimp20", locale_directory, unicode=True)
 # Main function (via GUI)
 ##############################
 def python_fu_ez_perspective_correction(img, drawable,
-                                        uds, lrs, rots,  # as sliders
+                                        uds, lrs, rots, # as sliders
                                         ud,   lr,  rot, # as explicit values
-                                        efl,             # Effective Focal Length
+                                        efl,            # Effective Focal Length
                                         quality, crop,
                                        ):
     """
     Change the perspective of the given image+drawable as specified
-    by the angles, (effective), focal length, and quality/crop settings.
+    by the angles, (effective) focal length, and quality/crop settings.
     
     Specifically, parse the UI values and pass on to the underlying function
     which actually does the transform.
@@ -112,7 +112,7 @@ def proj_trans_image(img, drawable,
                     ):
     """
     Change the perspective of the given image+drawable as specified
-    by the angles, (effective), focal length, and quality/crop settings.
+    by the angles, (effective) focal length, and quality/crop settings.
     
     angles = (ud, lr, rot), in degrees,
     efl = effective focal length, in millimeters, based on diagonal angle of view
@@ -150,6 +150,44 @@ def proj_trans_image(img, drawable,
     # Finish
     gimp.displays_flush()
     img.undo_group_end()
+
+##############################
+# Non-interactive
+# (for batch processing)
+##############################
+def python_fu_ez_perspective_correction_non_interactive(
+    in_file_name, out_file_name,
+    ud,   lr,  rot, # as explicit values (angles)
+    efl,            # Effective Focal Length
+    quality, crop,
+    ):
+    """
+    Change the perspective of the given file as specified
+    by the angles, (effective) focal length, and quality/crop settings.
+    
+    angles are: ud, lr, rot – in degrees,
+    efl = effective focal length, in millimeters, based on diagonal angle of view
+    quality and crop are text fields, as per UI in 
+    python_fu_ez_perspective_correction
+    """
+    # Load file
+    image = pdb.gimp_file_load(in_file_name, in_file_name,
+                               run_mode=RUN_NONINTERACTIVE)
+    drawable = pdb.gimp_image_get_active_layer(image)
+    
+    # Apply transform
+    # Note the 0 pads, and the *10 because sliders are in units
+    # of 1/10, but these arguments are the actual angles
+    python_fu_ez_perspective_correction(image, drawable,
+                                        0, 0, 0,
+                                        ud*10, lr*10, rot*10,
+                                        efl,
+                                        quality, crop)
+    # Save file
+    pdb.gimp_image_flatten(image) # Flatten first
+    drawable = pdb.gimp_image_get_active_layer(image)
+    pdb.gimp_file_save(image, drawable, out_file_name, out_file_name, run_mode=RUN_NONINTERACTIVE)
+    pdb.gimp_image_delete(image) # Cleanup
 
 
 ##############################
@@ -434,46 +472,72 @@ def proj_trans_point(ud_deg, lr_deg, rot_deg, x_in, y_in, z_fix):
 ############################################################
 
 register(
-  "python-fu-ez-perspective-correction", # Function name
-  _(""), # Blurb / description
-  _("Fix camera perspective via an easy interface"), # Help
-  "Nils R. Barth", # Author
-  _("Creative Commons CC0; public domain"), # Copyright notice
-  "2010 June 28", # Date
-  _("E_Z Perspective..."), # Menu label
-  "RGB*,GRAY*",
-  [
-    (PF_IMAGE,    "img",      _("Input image"),    None),
-    (PF_DRAWABLE, "drawable", _("Input drawable"), None),
+    "python-fu-ez-perspective-correction", # Function name
+    _(""), # Blurb / description
+    _("Fix camera perspective via an easy interface"), # Help
+    "Nils R. Barth", # Author
+    _("Creative Commons CC0; public domain"), # Copyright notice
+    "2011 May 25", # Date
+    _("E_Z Perspective..."), # Menu label
+    "RGB*,GRAY*",
+    [
+      (PF_IMAGE,    "img",      _("Input image"),    None),
+      (PF_DRAWABLE, "drawable", _("Input drawable"), None),
 
-    # Have sliders and spin boxes, so can easily set, but can also be precise
-    (PF_SLIDER, "uds", _("up/down angle (\\/ /\\)"),    0, (-90, 90, 1 ) ),
-    (PF_SLIDER, "lrs", _("left/right angle (> <)"), 0, (-90, 90, 1 ) ),
-    (PF_SLIDER, "ros", _("rotation angle"),   0, (-90, 90, 1 ) ),
+      # Have sliders and spin boxes, so can easily set, but can also be precise
+      (PF_SLIDER, "uds", _("up/down angle (\\/ /\\)"),    0, (-90, 90, 1 ) ),
+      (PF_SLIDER, "lrs", _("left/right angle (> <)"), 0, (-90, 90, 1 ) ),
+      (PF_SLIDER, "ros", _("rotation angle"),   0, (-90, 90, 1 ) ),
     
-    # Can’t deal with decimals, it seems – hack around by using tenths
-    (PF_SPINNER, "ud", _("up/down angle (in tenths)"),    0, (-900, 900, 1) ),
-    (PF_SPINNER, "lr", _("left/right angle (in tenths)"), 0, (-900, 900, 1) ),
-    (PF_SPINNER, "ro", _("rotation angle (in tenths)"),   0, (-900, 900, 1) ),
+      # Can’t deal with decimals, it seems – hack around by using tenths
+      (PF_SPINNER, "ud", _("up/down angle (in tenths)"),    0, (-900, 900, 1) ),
+      (PF_SPINNER, "lr", _("left/right angle (in tenths)"), 0, (-900, 900, 1) ),
+      (PF_SPINNER, "ro", _("rotation angle (in tenths)"),   0, (-900, 900, 1) ),
     
-    (PF_SPINNER, "efl", _("focal length (35 mm equivalent)"), 50, (10, 600, 10) ), # contains sane length, defaults to normal lens; outside the range can key in manually, naturally
-    # Quality (interpolation) and crop parameters
-    (PF_RADIO, "quality", _("quality"), "fast", (
-        (_("_fast"), "fast"),
-        (_("_good"), "good")
-    )),
-    (PF_RADIO, "crop", _("crop"), "adjust", (
-        (_("_adjust (no clip or crop)"), "adjust"),
-        (_("c_lip"), "clip"),
-        (_("crop to _result"), "crop to result"),
-        (_("crop with _aspect"), "crop with aspect"),
-    )),
-  ],
-  [],
-  python_fu_ez_perspective_correction,
-  menu="<Image>/Filters/Distorts",
-  domain=("gimp20-template", locale_directory) 
+      (PF_SPINNER, "efl", _("focal length (35 mm equivalent)"), 50, (10, 600, 10) ), # contains sane length, defaults to normal lens; outside the range can key in manually, naturally
+      # Quality (interpolation) and crop parameters
+      (PF_RADIO, "quality", _("quality"), "fast", (
+          (_("_fast"), "fast"),
+          (_("_good"), "good")
+      )),
+      (PF_RADIO, "crop", _("crop"), "adjust", (
+          (_("_adjust (no clip or crop)"), "adjust"),
+          (_("c_lip"), "clip"),
+          (_("crop to _result"), "crop to result"),
+          (_("crop with _aspect"), "crop with aspect"),
+      )),
+    ],
+    [], # No results
+    python_fu_ez_perspective_correction, # Internal function name
+    menu="<Image>/Filters/Distorts", # Register in menu
+    domain=("gimp20-template", locale_directory) 
   )
+
+register(
+    "python_fu_ez_perspective_correction_non_interactive", # Function name
+    _(""), # Blurb / description
+    _("Fix camera perspective non-interactively"), # Help
+    "Nils R. Barth", # Author
+    _("Creative Commons CC0; public domain"), # Copyright notice
+    "2011 May 25", # Date
+    "", # Don’t put in menu
+    "", # Doesn’t operate on drawables
+    [
+      (PF_STRING, "in_file_name",  _("Input file name"),  None),
+      (PF_STRING, "out_file_name", _("Output file name"), None),
+
+      (PF_FLOAT,  "ud", _("up/down angle (in degrees)"),    None),
+      (PF_FLOAT,  "lr", _("left/right angle (in degrees)"), None),
+      (PF_FLOAT,  "ro", _("rotation angle (in degrees)"),   None),
+      
+      (PF_FLOAT,  "efl", _("focal length (35 mm equivalent)"), None),
+
+      (PF_STRING, "quality", _("interpolation quality"), None),
+      (PF_STRING, "crop",    _("crop type"), None),
+    ],
+    [], # No results
+    python_fu_ez_perspective_correction_non_interactive)
+
 
 ############################################################
 # Main (go!)
