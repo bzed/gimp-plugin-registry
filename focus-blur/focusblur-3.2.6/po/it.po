@@ -1,18 +1,16 @@
-# SOME DESCRIPTIVE TITLE.
+# translation of gimp focus-blur plug-in.
 # This file is put in the public domain.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# Carlo Baldassi
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: LAST AUTHOR <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2008-10-19 00:24+0900\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: gimp focus-blur plug-in 3.1.4\n"
+"Report-Msgid-Bugs-To: das atmark dream dot japan\n"
+"POT-Creation-Date: 2009-08-11 22:01+0900\n"
+"PO-Revision-Date: 2009-08-11 22:00+0900\n"
+"Last-Translator: Carlo Baldassi <carlobaldassi@yahoo.it>\n"
+"Language-Team: Italian\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/brush.c:122
@@ -25,7 +23,7 @@ msgstr ""
 
 #: src/fftblur.c:288 src/render.c:162
 msgid "Focus Blur..."
-msgstr ""
+msgstr "Fuori fuoco..."
 
 #: src/fftblurbuffer.c:94
 msgid "Failed to update diffusion table."
@@ -53,157 +51,161 @@ msgstr ""
 
 #: src/focusblurenums.c:51 src/focusblurstock.c:49
 msgid "Flat"
-msgstr ""
+msgstr "Piatto"
 
 #: src/focusblurenums.c:52 src/focusblurstock.c:50
 msgid "Spherical"
-msgstr ""
+msgstr "Sferica"
 
 #: src/focusblurenums.c:53 src/focusblurstock.c:51
 msgid "Gaussian"
-msgstr ""
+msgstr "Gaussiana"
 
 #: src/focusblurenums.c:54 src/focusblurstock.c:52
 msgid "Ring"
-msgstr ""
+msgstr "Ad anello"
 
 #: src/focusblurenums.c:55 src/focusblurstock.c:53
 msgid "Concave"
-msgstr ""
+msgstr "Concavo"
 
 #: src/focusblurenums.c:56 src/focusblurstock.c:54
 msgid "Brush"
-msgstr ""
+msgstr "Pennelli"
 
 #: src/focusblurenums.c:86
 msgid "Luminosity"
-msgstr ""
+msgstr "Luminosità"
 
 #: src/focusblurenums.c:87
 msgid "Saturation"
-msgstr ""
+msgstr "Saturazione"
 
 #: src/focusblurenums.c:119
 msgid "Best"
-msgstr ""
+msgstr "Migliore"
 
 #: src/focusblurenums.c:120
 msgid "Normal"
-msgstr ""
+msgstr "Normale"
 
 #: src/focusblurenums.c:121
 msgid "Low"
-msgstr ""
+msgstr "Bassa"
 
 #: src/focusblurenums.c:122
 msgid "Defective"
-msgstr ""
+msgstr "Carente"
 
-#: src/focusblurrc.c:375
+#: src/focusblurrc.c:374
 msgid "Resource file is invalid."
 msgstr ""
 
-#: src/gimpplugin.c:77
+#: src/gimpplugin.c:78
 msgid "Make a out of focus with luminosity and depth, like a sight or lenses"
 msgstr ""
+"Simula un fuori fuoco con luminosità e profondità, come attraverso una lente"
 
-#: src/gimpplugin.c:86
+#: src/gimpplugin.c:87
 msgid "_Focus Blur..."
-msgstr ""
+msgstr "_Focus Blur..."
 
-#: src/interface.c:133
+#: src/interface.c:96
 msgid "Focus Blur"
-msgstr ""
+msgstr "Focus Blur"
 
-#: src/interface.c:184
+#: src/interface.c:147
 msgid "_Basic"
-msgstr ""
+msgstr "_Base"
 
-#: src/interface.c:196
+#: src/interface.c:159
 msgid "Diffusion Model and _Radius:"
-msgstr ""
+msgstr "Modello di diffusione e Ra_ggio:"
 
-#: src/interface.c:219 src/interface.c:750
+#: src/interface.c:182 src/interface.c:750
 #, c-format
 msgid "Brush:%s"
-msgstr ""
+msgstr "Pennelli:%s"
 
-#: src/interface.c:254
-msgid "P_eak radius for Shining:"
-msgstr ""
+#: src/interface.c:217
+msgid "Pea_k radius for Shining:"
+msgstr "Raggio del picco di _luminosità"
+
+#: src/interface.c:229
+msgid "_Use Depth map:"
+msgstr "_Usa una mappa per la profondità:"
 
 #: src/interface.c:266
-msgid "_Use Depth map:"
-msgstr ""
+msgid "Foc_al depth:"
+msgstr "Profo_ndità focale:"
 
-#: src/interface.c:303
-msgid "_Focal depth:"
-msgstr ""
-
-#: src/interface.c:319
+#: src/interface.c:282
 msgid "_Model"
+msgstr "_Modello"
+
+#: src/interface.c:304
+msgid "Make a ba_lance of brush"
 msgstr ""
 
-#: src/interface.c:341
-msgid "Make a _balance of brush"
-msgstr ""
-
-#: src/interface.c:357
+#: src/interface.c:320
 msgid "_Rotation:"
-msgstr ""
+msgstr "_Rotazione:"
 
-#: src/interface.c:371
+#: src/interface.c:334
 msgid "F_illing inside:"
-msgstr ""
+msgstr "Riempimen_to:"
 
-#: src/interface.c:385
+#: src/interface.c:348
 msgid "Sof_tness:"
-msgstr ""
+msgstr "_Sfocatura:"
 
-#: src/interface.c:400
+#: src/interface.c:363
 msgid "_Shine"
-msgstr ""
+msgstr "B_rillìo"
 
-#: src/interface.c:414
+#: src/interface.c:377
 msgid "Sensing t_ype:"
-msgstr ""
+msgstr "Appli_ca a:"
 
-#: src/interface.c:421
-msgid "_Threshold:"
-msgstr ""
+#: src/interface.c:384
+msgid "T_hreshold:"
+msgstr "So_glia:"
 
-#: src/interface.c:435
+#: src/interface.c:398
 msgid "_Level:"
-msgstr ""
+msgstr "_Livello:"
 
-#: src/interface.c:449
+#: src/interface.c:412
 msgid "C_urve:"
-msgstr ""
+msgstr "C_urvatura:"
 
-#: src/interface.c:465
+#: src/interface.c:428
 msgid "_Depth"
-msgstr ""
+msgstr "_Profondità"
 
-#: src/interface.c:470
+#: src/interface.c:433
 msgid "Depth with p_recedence"
-msgstr ""
+msgstr "Preceden_za alla profondità"
 
-#: src/interface.c:485
+#: src/interface.c:448
 msgid "Evade _anti-alias"
 msgstr ""
 
-#: src/interface.c:504
+#: src/interface.c:467
 msgid "Pre_ferences"
-msgstr ""
+msgstr "Pre_ferenze"
 
-#: src/interface.c:521
+#: src/interface.c:484
 msgid "Rendering _quality:"
-msgstr ""
+msgstr "_Qualità del risultato:"
 
-#: src/interface.c:537
+#: src/interface.c:500
 msgid "Pre_view quality:"
-msgstr ""
+msgstr "Qualità dell'an_teprima:"
 
-#: src/interface.c:550
+#: src/interface.c:513
 msgid "Dis_able support for multi-threads"
-msgstr ""
+msgstr "Disabilita il multi-t_hread"
+
+#~ msgid "Soft_ness delay:"
+#~ msgstr "_Dilazione della sfocatura:"

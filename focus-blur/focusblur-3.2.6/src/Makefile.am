@@ -44,7 +44,7 @@ focusblur_SOURCES += \
 	fftblurproc.h
 endif
 
-if OS_WIN32
+if PLATFORM_WIN32
 mwindows = -mwindows
 endif
 

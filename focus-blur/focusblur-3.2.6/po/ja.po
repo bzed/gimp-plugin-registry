@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Focus Blur 3.2.4\n"
-"Report-Msgid-Bugs-To: LAST AUTHOR <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2008-10-19 00:24+0900\n"
-"PO-Revision-Date: 2009-07-31 12:02+0900\n"
+"Report-Msgid-Bugs-To: das atmark dream dot japan\n"
+"POT-Creation-Date: 2009-08-11 22:01+0900\n"
+"PO-Revision-Date: 2009-08-11 21:58+0900\n"
 "Last-Translator: Kyoichiro Suda\n"
 "Language-Team: Japanese <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -98,111 +98,111 @@ msgstr "低い"
 msgid "Defective"
 msgstr "欠陥的"
 
-#: src/focusblurrc.c:375
+#: src/focusblurrc.c:374
 msgid "Resource file is invalid."
 msgstr "リソースファイルは無効です。"
 
-#: src/gimpplugin.c:77
+#: src/gimpplugin.c:78
 msgid "Make a out of focus with luminosity and depth, like a sight or lenses"
 msgstr "視覚やレンズのような光量と奥行を伴うボケを加える"
 
-#: src/gimpplugin.c:86
+#: src/gimpplugin.c:87
 msgid "_Focus Blur..."
 msgstr "焦点ぼかし(_F)..."
 
-#: src/interface.c:133
+#: src/interface.c:96
 msgid "Focus Blur"
 msgstr "焦点ぼかし"
 
-#: src/interface.c:184
+#: src/interface.c:147
 msgid "_Basic"
 msgstr "基礎(_B)"
 
-#: src/interface.c:196
+#: src/interface.c:159
 msgid "Diffusion Model and _Radius:"
 msgstr "拡散モデルと半径(_R):"
 
-#: src/interface.c:219 src/interface.c:750
+#: src/interface.c:182 src/interface.c:750
 #, c-format
 msgid "Brush:%s"
 msgstr "ブラシ:%s"
 
-#: src/interface.c:254
-msgid "P_eak radius for Shining:"
-msgstr "最高に輝く半径(_E):"
+#: src/interface.c:217
+msgid "Pea_k radius for Shining:"
+msgstr "最高に輝く半径(_K):"
 
-#: src/interface.c:266
+#: src/interface.c:229
 msgid "_Use Depth map:"
 msgstr "奥行マップを使う(_U):"
 
-#: src/interface.c:303
-msgid "_Focal depth:"
-msgstr "焦点(_F):"
+#: src/interface.c:266
+msgid "Foc_al depth:"
+msgstr "焦点(_A):"
 
-#: src/interface.c:319
+#: src/interface.c:282
 msgid "_Model"
 msgstr "モデル(_M)"
 
-#: src/interface.c:341
-msgid "Make a _balance of brush"
-msgstr "ブラシの均衡をとる(_B)"
+#: src/interface.c:304
+msgid "Make a ba_lance of brush"
+msgstr "ブラシの均衡をとる(_L)"
 
-#: src/interface.c:357
+#: src/interface.c:320
 msgid "_Rotation:"
 msgstr "回転(_R):"
 
-#: src/interface.c:371
+#: src/interface.c:334
 msgid "F_illing inside:"
-msgstr "内側塗りつぶし(_F):"
+msgstr "内側塗りつぶし(_I):"
 
-#: src/interface.c:385
+#: src/interface.c:348
 msgid "Sof_tness:"
 msgstr "ソフト(_T):"
 
-#: src/interface.c:400
+#: src/interface.c:363
 msgid "_Shine"
 msgstr "輝き(_S)"
 
-#: src/interface.c:414
+#: src/interface.c:377
 msgid "Sensing t_ype:"
 msgstr "反応タイプ(_Y):"
 
-#: src/interface.c:421
-msgid "_Threshold:"
-msgstr "閾値(_T):"
+#: src/interface.c:384
+msgid "T_hreshold:"
+msgstr "閾値(_H):"
 
-#: src/interface.c:435
+#: src/interface.c:398
 msgid "_Level:"
 msgstr "レベル(_L):"
 
-#: src/interface.c:449
+#: src/interface.c:412
 msgid "C_urve:"
 msgstr "カーブ(_U):"
 
-#: src/interface.c:465
+#: src/interface.c:428
 msgid "_Depth"
 msgstr "奥行(_D)"
 
-#: src/interface.c:470
+#: src/interface.c:433
 msgid "Depth with p_recedence"
 msgstr "奥行で優先づけをする(_R)"
 
-#: src/interface.c:485
+#: src/interface.c:448
 msgid "Evade _anti-alias"
-msgstr "アンチエイリアスを回避する(_a)"
+msgstr "アンチエイリアスを回避する(_A)"
 
-#: src/interface.c:504
+#: src/interface.c:467
 msgid "Pre_ferences"
 msgstr "設定(_F)"
 
-#: src/interface.c:521
+#: src/interface.c:484
 msgid "Rendering _quality:"
 msgstr "レンダリング品質(_Q):"
 
-#: src/interface.c:537
+#: src/interface.c:500
 msgid "Pre_view quality:"
 msgstr "プレビュー品質(_V):"
 
-#: src/interface.c:550
+#: src/interface.c:513
 msgid "Dis_able support for multi-threads"
 msgstr "マルチスレッドサポートを無効にする(_A)"

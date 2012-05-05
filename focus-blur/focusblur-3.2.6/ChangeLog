@@ -1,3 +1,13 @@
+2010-06-22  Kyoichiro Suda <das atmark dream dot japan>
+
+	* configure.ac, po/Makefile.in.in: updated intltool.
+
+	* Made 3.2.6 release.
+
+2010-05-23  Kyoichiro Suda <das atmark dream dot japan>
+
+	* pixmaps/Makefile.am: fixed bashisms. Reported by Bernd Zeimetz.
+
 2009-07-31  Kyoichiro Suda <das atmark dream dot japan>
 
 	* src/diffusion.c (focusblur_diffusion_blur): fixed blurring brush

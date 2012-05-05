@@ -2,10 +2,10 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.54)
-AC_INIT([Focus Blur], [3.2.5], [das atmark dream dot japan], [focusblur])
+AC_INIT([Focus Blur], [3.2.6], [das atmark dream dot japan], [focusblur])
 AC_CONFIG_SRCDIR([src/gimpplugin.c])
 AC_CONFIG_HEADER([config.h])
-AM_INIT_AUTOMAKE([no-define no-dist-gzip dist-bzip2])
+AM_INIT_AUTOMAKE([no-define no-dist-gzip dist-bzip2 dist-xz])
 
 # Checks for programs.
 AC_PROG_CC
@@ -19,21 +19,21 @@ AC_PREFIX_DEFAULT([NONE])
 # Check for Win32
 #################
 
-AC_MSG_CHECKING([for native Win32])
+AC_MSG_CHECKING([for some Win32 platform])
 case "$target_or_host" in
-  *-*-mingw*)
-    os_win32=yes
+  *-*-mingw* |　*-*-cygwin*)
+    platform_win32=yes
     PATHSEP=';'
     ;;
   *)
-    os_win32=no
+    platform_win32=no
     PATHSEP=':'
     ;;
 esac
-AC_MSG_RESULT([$os_win32])
+AC_MSG_RESULT([$platform_win32])
 AC_SUBST(PATHSEP)
-AM_CONDITIONAL(OS_WIN32, test "$os_win32" = "yes")
-AM_CONDITIONAL(OS_UNIX, test "$os_win32" != "yes")
+AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
+AM_CONDITIONAL(PLATFORM_UNIX, test "$platform_win32" != "yes")
 
 
 # Checks for libraries.
@@ -118,7 +118,8 @@ AC_ARG_ENABLE(mp,
                              [disable support for multiple processors]))
 if test "x$enable_mp" != "xno"; then
   PKG_CHECK_MODULES(GTHREAD, [gthread-2.0],
-    AC_DEFINE(ENABLE_MP, 1, [Define to 1 to enable support for multi-thread.]))
+    AC_DEFINE(ENABLE_MP, 1,
+              [Define to 1 to enable support for multiple processors.]))
 fi
 
 
@@ -146,18 +147,21 @@ AC_SUBST(FFTW3_CFLAGS)
 AC_SUBST(FFTW3_LIBS)
 
 
-############
-# I18N stuff
-############
+# gettext i18n support
 
 GETTEXT_PACKAGE="gimp20-focusblur"
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
                    [The gettext translation domain.])
 ALL_LINGUAS="it ja ru"
-#AC_PROG_INTLTOOL
-#AM_GLIB_GNU_GETTEXT
-AM_GNU_GETTEXT
+
+######################
+# Internationalisation
+######################
+
+IT_PROG_INTLTOOL(0.36.3)
+AM_GLIB_GNU_GETTEXT
+
 
 AC_CONFIG_FILES([Makefile src/Makefile pixmaps/Makefile po/Makefile.in])
 

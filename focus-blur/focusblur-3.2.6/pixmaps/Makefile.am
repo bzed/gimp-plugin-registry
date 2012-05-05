@@ -10,12 +10,11 @@ icons = \
 EXTRA_DIST = $(icons)
 
 pixbufs.h: $(icons)
-	{ echo -e '#include <gdk-pixbuf/gdk-pixdata.h>\n' ; \
+	{ echo '#include <gdk-pixbuf/gdk-pixdata.h>' ; \
 	$(GDK_PIXBUF_CSOURCE) --struct --rle --build-list \
 	$$(for i in $(icons) ; do \
-		name=$${i%%.*} ; \
-		name=$${name//-/_} ; \
-		echo $$name $$i ; \
+		echo $$i | sed -e 's;\..*;;' -e 's;-;_;g' ; \
+		echo -n $$i" " ; \
 	done) | \
 	sed -e '/pixel_data:/a(guint8 *)' ; \
 	} > $@

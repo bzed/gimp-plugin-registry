@@ -66,43 +66,6 @@ static void     focusblur_update_widget_brushmodel (GObject     *object,
 
 /*---- Funcs ----*/
 
-static GtkWidget*
-focusblur_notebook_append_vbox (GtkNotebook *notebook,
-                                gchar       *label_text)
-{
-  GtkWidget *vbox;
-
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_notebook_append_page (notebook, vbox,
-                            gtk_label_new_with_mnemonic (label_text));
-  gtk_widget_show (vbox);
-
-  return vbox;
-}
-
-
-static GtkWidget*
-focusblur_notebook_append_table (GtkNotebook *notebook,
-                                 gchar       *label_text,
-                                 gint         rows)
-{
-  GtkWidget *vbox;
-  GtkWidget *table;
-
-  vbox = focusblur_notebook_append_vbox (notebook, label_text);
-
-  table = gtk_table_new (rows, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  return table;
-}
-
-
 gboolean
 focusblur_dialog (FblurParam *param)
 {
@@ -251,7 +214,7 @@ focusblur_dialog (FblurParam *param)
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (spinbutton);
 
-  label = gtk_label_new_with_mnemonic (_("P_eak radius for Shining:"));
+  label = gtk_label_new_with_mnemonic (_("Pea_k radius for Shining:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 2, 3);
@@ -300,7 +263,7 @@ focusblur_dialog (FblurParam *param)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("_Focal depth:"), 100, 0,
+                              _("Foc_al depth:"), 100, 0,
                               param->store.focal_depth,
                               0.0, 100.0, 1.0, 10.0, 2, TRUE, 0, 0,
                               NULL, NULL);
@@ -316,7 +279,7 @@ focusblur_dialog (FblurParam *param)
   /* Model parameters */
 
   table = focusblur_notebook_append_table (GTK_NOTEBOOK (notebook),
-                                           _("_Model"), 3);
+                                           _("_Model"), 5);
   row = 0;
 
   /* Brush select button */
@@ -338,7 +301,7 @@ focusblur_dialog (FblurParam *param)
 
   /* Brush balance */
 
-  toggle = gtk_check_button_new_with_mnemonic (_("Make a _balance of brush"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Make a ba_lance of brush"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                 param->store.enable_brush_balance);
   g_signal_connect (G_OBJECT (toggle), "toggled",
@@ -418,7 +381,7 @@ focusblur_dialog (FblurParam *param)
   /* Shine Threshold */
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row ++,
-                              _("_Threshold:"), 100, 0,
+                              _("T_hreshold:"), 100, 0,
                               param->store.shine_threshold,
                               0.0, 100.0, 1.0, 10.0, 2, TRUE, 0, 0,
                               NULL, NULL);
@@ -462,7 +425,7 @@ focusblur_dialog (FblurParam *param)
   /* Depth parameters */
 
   table = focusblur_notebook_append_table (GTK_NOTEBOOK (notebook),
-                                           _("_Depth"), 1);
+                                           _("_Depth"), 2);
   row = 0;
 
   /* Depth Precedence */
@@ -501,7 +464,7 @@ focusblur_dialog (FblurParam *param)
   /* Recordable parameters */
 
   table = focusblur_notebook_append_table (GTK_NOTEBOOK (notebook),
-                                           _("Pre_ferences"), 2);
+                                           _("Pre_ferences"), 3);
   row = 0;
 
 #  ifdef HAVE_FFTW3
@@ -569,6 +532,43 @@ focusblur_dialog (FblurParam *param)
   gtk_widget_destroy (dialog);
 
   return run;
+}
+
+
+static GtkWidget*
+focusblur_notebook_append_vbox (GtkNotebook *notebook,
+                                gchar       *label_text)
+{
+  GtkWidget *vbox;
+
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_notebook_append_page (notebook, vbox,
+                            gtk_label_new_with_mnemonic (label_text));
+  gtk_widget_show (vbox);
+
+  return vbox;
+}
+
+
+static GtkWidget*
+focusblur_notebook_append_table (GtkNotebook *notebook,
+                                 gchar       *label_text,
+                                 gint         rows)
+{
+  GtkWidget *vbox;
+  GtkWidget *table;
+
+  vbox = focusblur_notebook_append_vbox (notebook, label_text);
+
+  table = gtk_table_new (rows, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  return table;
 }
 
 

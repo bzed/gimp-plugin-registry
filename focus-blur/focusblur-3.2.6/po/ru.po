@@ -7,15 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: das atmark dream dot japan\n"
-"POT-Creation-Date: 2008-10-19 00:24+0900\n"
-"PO-Revision-Date: 2009-07-31 12:09+0900\n"
+"POT-Creation-Date: 2009-08-11 22:01+0900\n"
+"PO-Revision-Date: 2009-08-11 22:00+0900\n"
 "Last-Translator: Yury Aliaev <mutabor@altlinux.org>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: src/brush.c:122
 msgid "gimp_brush_get_pixels() is failed."
@@ -101,122 +102,114 @@ msgstr "Низкое"
 msgid "Defective"
 msgstr "Ужасное"
 
-#: src/focusblurrc.c:375
+#: src/focusblurrc.c:374
 msgid "Resource file is invalid."
 msgstr "Некорректный файл ресурса."
 
-#: src/gimpplugin.c:77
+#: src/gimpplugin.c:78
 msgid "Make a out of focus with luminosity and depth, like a sight or lenses"
 msgstr "Имитация размывания вне зоны резко изображаемого пространства"
 
-#: src/gimpplugin.c:86
+#: src/gimpplugin.c:87
 msgid "_Focus Blur..."
 msgstr "Размывание вне зоны ГРИП..."
 
-#: src/interface.c:133
+#: src/interface.c:96
 msgid "Focus Blur"
 msgstr "Размывание вне зоны ГРИП"
 
-#: src/interface.c:184
+#: src/interface.c:147
 msgid "_Basic"
 msgstr "О_сновные"
 
-#: src/interface.c:196
+#: src/interface.c:159
 msgid "Diffusion Model and _Radius:"
 msgstr "М_одель рассеивания и радиус:"
 
-#: src/interface.c:219 src/interface.c:750
+#: src/interface.c:182 src/interface.c:750
 #, c-format
 msgid "Brush:%s"
 msgstr "Кисть:%s"
 
-#: src/interface.c:254
-msgid "P_eak radius for Shining:"
+#: src/interface.c:217
+msgid "Pea_k radius for Shining:"
 msgstr "Пиковый _радиус сияния:"
 
-#: src/interface.c:266
+#: src/interface.c:229
 msgid "_Use Depth map:"
 msgstr "_Использовать карту расстояний:"
 
-#: src/interface.c:303
-msgid "_Focal depth:"
+#: src/interface.c:266
+msgid "Foc_al depth:"
 msgstr "_Фокусное расстояние:"
 
-#: src/interface.c:319
+#: src/interface.c:282
 msgid "_Model"
 msgstr "_Модель"
 
-#: src/interface.c:341
-msgid "Make a _balance of brush"
+#: src/interface.c:304
+msgid "Make a ba_lance of brush"
 msgstr "C_балансировать кисть."
 
-#: src/interface.c:357
+#: src/interface.c:320
 msgid "_Rotation:"
 msgstr "_Вращение:"
 
-#: src/interface.c:371
+#: src/interface.c:334
 msgid "F_illing inside:"
 msgstr "_Заполнение изнутри:"
 
-#: src/interface.c:385
+#: src/interface.c:348
 msgid "Sof_tness:"
 msgstr "М_ягкость:"
 
-#: src/interface.c:400
+#: src/interface.c:363
 msgid "_Shine"
 msgstr "_Свет"
 
-#: src/interface.c:414
+#: src/interface.c:377
 msgid "Sensing t_ype:"
 msgstr "Тип _измерения:"
 
-#: src/interface.c:421
-msgid "_Threshold:"
+#: src/interface.c:384
+msgid "T_hreshold:"
 msgstr "П_орог:"
 
-#: src/interface.c:435
+#: src/interface.c:398
 msgid "_Level:"
 msgstr "_Уровень:"
 
-#: src/interface.c:449
+#: src/interface.c:412
 msgid "C_urve:"
 msgstr "_Кривая:"
 
-#: src/interface.c:465
+#: src/interface.c:428
 msgid "_Depth"
 msgstr "_Глубина"
 
-#: src/interface.c:470
+#: src/interface.c:433
 msgid "Depth with p_recedence"
 msgstr "_Приоритет глубины"
 
-#: src/interface.c:485
+#: src/interface.c:448
 msgid "Evade _anti-alias"
 msgstr ""
 
-#: src/interface.c:504
+#: src/interface.c:467
 msgid "Pre_ferences"
 msgstr "_Параметры"
 
-#: src/interface.c:521
+#: src/interface.c:484
 msgid "Rendering _quality:"
 msgstr "_Качество обработки:"
 
-#: src/interface.c:537
+#: src/interface.c:500
 msgid "Pre_view quality:"
 msgstr "Качество _эскиза:"
 
-#: src/interface.c:550
+#: src/interface.c:513
 msgid "Dis_able support for multi-threads"
 msgstr "Отключить поддержку _многопоточности"
 
 #~ msgid "Soft_ness delay:"
 #~ msgstr "З_адержка мягкости:"
-
-#, fuzzy
-#~ msgid "Depth with fill _behind"
-#~ msgstr "_Приоритет глубины"
-
-#, fuzzy
-#~ msgid "Depth with fu_zzy"
-#~ msgstr "_Приоритет глубины"
