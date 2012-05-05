@@ -4,7 +4,7 @@ attempted to register the menu item "<Save>" for procedure "python-fu-contact-sh
 
 --- a/contact-sheet/contactsheet.py
 +++ b/contact-sheet/contactsheet.py
-@@ -589,7 +589,6 @@ register(
+@@ -594,7 +594,6 @@ register(
          ],
          [],
          Contact_Sheet,

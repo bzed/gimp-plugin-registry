@@ -1,9 +1,0 @@
---- a/smart-sharpen-redux/Eg-SmartSharpen.scm
-+++ b/smart-sharpen-redux/Eg-SmartSharpen.scm
-@@ -123,5 +123,5 @@
- )
- ;
- (script-fu-menu-register "script-fu-Eg-SmartSharpen"
--			 "<Image>/Filters/Eg")
-+			 "<Image>/Filters/Enhance")
- ;

@@ -1,4 +1,3 @@
-focusblur_fix-bashism
 contact_sheet_menu_fix
 xmc_no_config.h
 separate+_cflags
@@ -7,7 +6,6 @@ cmyk-tiff-2-pdf_pdfviewer.diff
 bw-simulation-color-mixer-fix.diff
 menu_fix-ca.diff
 menu_bw-simulation.diff
-menu_smart-sharpen-redux.diff
 menu_add-filmgrain.diff
 menu_dbp.diff
 menu_diana-holga2.diff
