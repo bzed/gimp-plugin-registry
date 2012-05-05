@@ -860,7 +860,7 @@ http://kcd.sourceforge.net/fix-ca.php
 focus-blur:
 
 The plugin was downloaded from:
-http://sudakyo.hp.infoseek.co.jp/gimp/fblur/focusblur_e.html
+http://registry.gimp.org/node/1444
 
   Focus Blur -- blur with focus plug-in.
   Copyright (C) 2002-2007 Kyoichiro Suda
@@ -1231,7 +1231,7 @@ http://liquidrescale.wikidot.com/
 normalmap:
 
 The plugin was downloaded from:
-http://nifelheim.dyndns.org/~cocidius/normalmap/
+http://code.google.com/p/gimp-normalmap/
 
   Copyright (C) 2002 Shawn Kirst <skirst@fuse.net>
 
@@ -1255,7 +1255,7 @@ http://nifelheim.dyndns.org/~cocidius/normalmap/
 openraster:
 
 The plugin was downloaded from:
-http://gitorious.org/openraster/openraster-misc/blobs/master/gimp-plugins/file-ora.py
+http://gitorious.org/openraster/gimp-plugin-file-ora/blobs/master/file-ora.py
 
   This file (file-ora.py) is part of oratools
     http://gitorious.org/mypaint/oratools
@@ -1510,13 +1510,16 @@ http://cue.yellowmagic.info/softwares/separate-plus/index.html
 
 
 ************************************************************
-smart-sharpen-redux:
+smart-seperate-sharpen:
 
 The plugin was downloaded from:
-http://registry.gimp.org/node/108
+http://registry.gimp.org/node/24876
 
-  Martin Egger (martin.egger@gmx.net)
-  (C) 2007, Bern, Switzerland
+  Martin Egger (martin.egger@gmx.net),
+  Michael Kolodny (m_kolodny@phreego.com) added 'Texture Sharpening'
+  and included 'Seperate Sharpen'
+  Copyright (C) 2012, Bern, Switzerland
+
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -1529,9 +1532,8 @@ http://registry.gimp.org/node/108
   GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
-  MA 02110-1301, USA.
+  along with this program; if not, see <http://www.gnu.org/licenses>.
+
 
 
 ************************************************************
