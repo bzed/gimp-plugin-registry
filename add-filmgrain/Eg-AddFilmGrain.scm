@@ -1,13 +1,15 @@
 ;
-; Add film grain, 2.4
+; Add film grain, 2.8
 ;
 ; Martin Egger (martin.egger@gmx.net)
-; (C) 2006, Bern, Switzerland
+; (C) 2012, Bern, Switzerland
 ;
 ; You can find more about adding realistic film grain to BW images at
 ; http://www.outbackphoto.com/workflow/wf_95/essay.html
 ;
-; This script was tested with Gimp 2.4
+; This script was tested with Gimp 2.8
+;
+; New versions will be distributed from http://registry.gimp.org/ only
 ;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -24,45 +26,45 @@
 ;
 ; Define the function
 ;
-(define (script-fu-Eg-AddFilmGrain InImage InLayer InFlatten InMidCol InMidRad InShadCol InShadRad InMid1Blur InMid2Blur InShad1Blur InShad2Blur InMid1Sharp InShad1Sharp)
+(define (script-fu-Eg-AddFilmGrain InImage InLayer InFlatten InShadCol InShadRad InMid1Blur InMid2Blur InShad1Blur InShad2Blur)
 ;
 ; Save history			
 ;
 	(gimp-image-undo-group-start InImage)
 	(if (= (car (gimp-drawable-is-rgb InLayer)) FALSE ) (gimp-image-convert-rgb InImage))
+	(gimp-context-set-foreground '(128 128 128))
 ;
 	(let*	(
-		(Midtone1Layer (car (gimp-layer-new InImage (car (gimp-image-width InImage)) (car (gimp-image-height InImage))  RGBA-IMAGE "Noise 1 - midtones" 20 NORMAL-MODE)))
-		(Midtone2Layer (car (gimp-layer-new InImage (car (gimp-image-width InImage)) (car (gimp-image-height InImage))  RGBA-IMAGE "Noise 2 - midtones" 20 NORMAL-MODE)))
-		(ShadHL1Layer (car (gimp-layer-new InImage (car (gimp-image-width InImage)) (car (gimp-image-height InImage))  RGBA-IMAGE "Noise 1 - shadows" 85 NORMAL-MODE)))
-		(ShadHL2Layer (car (gimp-layer-new InImage (car (gimp-image-width InImage)) (car (gimp-image-height InImage))  RGBA-IMAGE "Noise 2 - shadows" 40 NORMAL-MODE)))
+		(Midtone1Layer (car (gimp-layer-new InImage (car (gimp-image-width InImage)) (car (gimp-image-height InImage))  RGBA-IMAGE "Noise 1 - midtones" 80 OVERLAY-MODE)))
+		(Midtone2Layer (car (gimp-layer-new InImage (car (gimp-image-width InImage)) (car (gimp-image-height InImage))  RGBA-IMAGE "Noise 2 - midtones" 80 OVERLAY-MODE)))
+		(ShadHL1Layer (car (gimp-layer-new InImage (car (gimp-image-width InImage)) (car (gimp-image-height InImage))  RGBA-IMAGE "Noise 1 - shadows" 80 OVERLAY-MODE)))
+		(ShadHL2Layer (car (gimp-layer-new InImage (car (gimp-image-width InImage)) (car (gimp-image-height InImage))  RGBA-IMAGE "Noise 2 - shadows" 80 OVERLAY-MODE)))
 		)
-		(gimp-drawable-fill Midtone1Layer TRANSPARENT-FILL)
-		(gimp-drawable-fill Midtone2Layer TRANSPARENT-FILL)
-		(gimp-drawable-fill ShadHL1Layer TRANSPARENT-FILL)
-		(gimp-drawable-fill ShadHL2Layer TRANSPARENT-FILL)
-		(gimp-image-add-layer InImage Midtone1Layer -1)
-		(gimp-image-add-layer InImage Midtone2Layer -1)
-		(gimp-image-add-layer InImage ShadHL1Layer -1)
-		(gimp-image-add-layer InImage ShadHL2Layer -1)
-		(gimp-selection-none InImage)
+		(gimp-drawable-fill Midtone1Layer FOREGROUND-FILL)
+		(gimp-drawable-fill Midtone2Layer FOREGROUND-FILL)
+		(gimp-drawable-fill ShadHL1Layer FOREGROUND-FILL)
+		(gimp-drawable-fill ShadHL2Layer FOREGROUND-FILL)
+		(gimp-image-insert-layer InImage Midtone1Layer 0 -1)
+		(gimp-image-insert-layer InImage Midtone2Layer 0 -1)
+		(gimp-image-insert-layer InImage ShadHL1Layer 0 -1)
+		(gimp-image-insert-layer InImage ShadHL2Layer 0 -1)
 ;
-		(gimp-by-color-select InLayer InMidCol InMidRad CHANNEL-OP-REPLACE TRUE TRUE 3 TRUE)
-		(plug-in-rgb-noise TRUE InImage Midtone1Layer FALSE FALSE 1 1 1 1)
-		(plug-in-rgb-noise TRUE InImage Midtone2Layer FALSE FALSE 1 1 1 1)
+		(plug-in-hsv-noise TRUE InImage Midtone1Layer 2 0 0 100)
+		(plug-in-hsv-noise TRUE InImage Midtone2Layer 2 0 0 100)
 ;
-		(gimp-by-color-select InLayer InShadCol InShadRad CHANNEL-OP-REPLACE TRUE TRUE 3 TRUE)
-		(plug-in-rgb-noise TRUE InImage ShadHL1Layer FALSE FALSE 1 1 1 1)
-		(plug-in-rgb-noise TRUE InImage ShadHL2Layer FALSE FALSE 1 1 1 1)
+		(gimp-context-set-antialias TRUE)
+		(gimp-context-set-feather TRUE)
+		(gimp-context-set-feather-radius 3 3)
+		(gimp-context-set-sample-merged TRUE)
+		(gimp-image-select-color InImage CHANNEL-OP-REPLACE InLayer InShadCol)
+		(plug-in-hsv-noise TRUE InImage ShadHL1Layer 2 0 0 100)
+		(plug-in-hsv-noise TRUE InImage ShadHL2Layer 2 0 0 100)
 		(gimp-selection-none InImage)
 ;
 		(plug-in-gauss TRUE InImage Midtone1Layer InMid1Blur InMid1Blur TRUE)
 		(plug-in-gauss TRUE InImage Midtone2Layer InMid2Blur InMid2Blur TRUE)
 		(plug-in-gauss TRUE InImage ShadHL1Layer InShad1Blur InShad1Blur TRUE)
 		(plug-in-gauss TRUE InImage ShadHL2Layer InShad2Blur InShad2Blur TRUE)
-;
-		(plug-in-unsharp-mask TRUE InImage Midtone1Layer InMid1Sharp 0 0)
-		(plug-in-unsharp-mask TRUE InImage ShadHL1Layer InShad1Sharp 0 0)
 ;		
 ; Flatten the image, if we need to
 ;
@@ -96,21 +98,17 @@
 	"Add realistic film grain to BW images"
 	"Martin Egger (martin.egger@gmx.net)"
 	"Martin Egger, Bern, Switzerland"
-	"18.11.2007"
+	"29.02.2012"
 	"RGB* GRAY*"
 	SF-IMAGE	"The Image"		0
 	SF-DRAWABLE	"The Layer"		0
 	SF-TOGGLE	"Flatten Image"	FALSE
-	SF-COLOR	"Midtone Color"	'(140 140 140)
-	SF-ADJUSTMENT	"Midtone Selection Range"	'(50.0 1.0 100.0 1.0 0 2 0)
 	SF-COLOR	"Shadow Color"	'(35 35 35)
-	SF-ADJUSTMENT	"Shadow Selection Range"	'(35.0 1.0 100.0 1.0 0 2 0)
-	SF-ADJUSTMENT	"Midtone 1 Blur Radius"	'(2.5 0.5 10.0 0.5 0 2 0)
-	SF-ADJUSTMENT	"Midtone 2 Blur Radius"	'(2.5 0.5 10.0 0.5 0 2 0)
-	SF-ADJUSTMENT	"Shadow 1 Blur Radius"	'(20 0.5 50.0 0.5 0 2 0)
-	SF-ADJUSTMENT	"Shadow 2 Blur Radius"	'(2.5 0.5 10.0 0.5 0 2 0)
-	SF-ADJUSTMENT	"Mitdone 1 Sharpen Radius"	'(80 0.0 150.0 5.0 0 2 0)
-	SF-ADJUSTMENT	"Shadow 1 Sharpen Radius"	'(80 0.0 150.0 5.0 0 2 0)
+	SF-ADJUSTMENT	"Shadow Selection Range"	'(50.0 1.0 100.0 1.0 0 2 0)
+	SF-ADJUSTMENT	"Midtone 1 Blur Radius"	'(3.0 0.5 50.0 0.5 0 2 0)
+	SF-ADJUSTMENT	"Midtone 2 Blur Radius"	'(1.5 0.5 10.0 0.5 0 2 0)
+	SF-ADJUSTMENT	"Shadow 1 Blur Radius"	'(3.0 0.5 50.0 0.5 0 2 0)
+	SF-ADJUSTMENT	"Shadow 2 Blur Radius"	'(1.5 0.5 10.0 0.5 0 2 0)
 )
 ;
 (script-fu-menu-register "script-fu-Eg-AddFilmGrain"
