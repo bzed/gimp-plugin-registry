@@ -1,3 +1,31 @@
+gimp-plugin-registry (4.20120506) unstable; urgency=low
+
+  * [7c4a2de4] Move to Debian native versions.
+    Remove upstream-branch from gbp.conf.
+  * [94ead067] Update add-filmgrain.
+  * [6717b8fe] Upda contactsheet.
+  * [f57eff58] Updating elsamuko plugins.
+  * [537b16cb] Updating ez-perspective plugin.
+  * [35dc23ce] Update focusblur plugin.
+  * [9cdca98f] Update layerfx plugin.
+  * [4f97f353] Update normalmap upstream url.
+  * [605dd2ee] Updating openraster plugin.
+  * [0e3f37df] Updating safe-for-web plugin.
+  * [e2d17490] Migrate from smart-sharpen (redux) to smart-seperate-sharpen.
+  * [1556dcd5] Rename file-xmc to file-xmc-2.6.
+    This is a fix to avoid my inbox being spammed by bug reports from all
+    the fools who install gimp from random Ubuntu PPAs.
+  * [324b9afb] Remove smart-sharpen scripts from gimp-fx-foundry.
+    We ship a nw version of these scripts.
+  * [69e0b4b6] Refreshing patches.
+  * [2939ac33] Updating debian/control and debian/copyright.
+  * [35b5282d] Add patcato get rid of individual glib headers.
+    Thanks to Michael Biebl (Closes: #665533)
+  * [b05b8c6e] Build c plugins with -fPIC.
+  * [dda8df0c] Bumping Standards-Version, no changes needed.
+
+ -- Bernd Zeimetz <bzed@debian.org>  Sun, 06 May 2012 00:14:46 +0200
+
 gimp-plugin-registry (3.5.4-1) unstable; urgency=low
 
   * [c94875ed] More fixes for weird Ubuntu issues.
