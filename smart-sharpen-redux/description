@@ -1,3 +1,0 @@
-* Smart Sharpen (redux) {version}:
-  This script implements the redux version of smart sharpening. It utilizes
-  the Unsharp Mask or Refocus plugin to sharpen the image.
