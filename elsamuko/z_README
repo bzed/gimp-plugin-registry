@@ -16,6 +16,9 @@ You will find the scripts then at these places in the GIMP image menu (tail -n1 
 ==> elsamuko-difference-layers.scm <==
 (script-fu-menu-register "elsamuko-difference-layers" _"<Image>/Layer")
 
+==> elsamuko-erosion-sharpen.scm <==
+(script-fu-menu-register "elsamuko-erosion-sharpen" _"<Image>/Filters/Enhance")
+
 ==> elsamuko-error-level-analysis.scm <==
 (script-fu-menu-register "elsamuko-error-level-analysis" _"<Image>/Image")
 
@@ -69,7 +72,6 @@ You will find the scripts then at these places in the GIMP image menu (tail -n1 
 
 ==> tuxcomputers-split-tone.scm <==
 (script-fu-menu-register "tuxcomputers-split-tone" _"<Image>/Script-Fu/Color")
-
 
 Happy gimping!
 elsamuko

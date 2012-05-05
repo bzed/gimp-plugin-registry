@@ -16,6 +16,8 @@
     the additive layer.
     Also you can change the modification intensity by changing the
     intensity of these two layers.
+  * Erosion Sharpen:
+    Sharpens the image with erosion and dilation.
   * Escape Line Script:
     This script creates escaping lines from any point. It's similar
     in function to the built-in Line-Nova Script, but much more
