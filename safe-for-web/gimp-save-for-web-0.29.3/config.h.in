@@ -90,7 +90,7 @@
 /* Save for Web */
 #undef PLUGIN_NAME
 
-/* 0.29.0 */
+/* 0.29.3 */
 #undef PLUGIN_VERSION
 
 /* Define to 1 if you have the ANSI C header files. */
