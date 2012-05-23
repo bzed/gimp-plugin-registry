@@ -1,1 +1,0 @@
-gimp-xmc-plugin-2.0.6/file-xmc.c
