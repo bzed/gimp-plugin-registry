@@ -1,3 +1,13 @@
+gimp-plugin-registry (5.20120523) unstable; urgency=low
+
+  * [c8cca220] Add gimp-resynthesizer plugin.
+    Thanks to Bryan Donlan <bdonlan@gmail.com> (Closes: #626317)
+  * [4c849dd7] Remove xmc plugin for Gimp 2.8
+  * [857d6172] Fix openraster description as suggested by lintian.
+  * [2a7e42c3] Updating copyright/control files.
+
+ -- Bernd Zeimetz <bzed@debian.org>  Wed, 23 May 2012 21:57:37 +0200
+
 gimp-plugin-registry (4.20120506) unstable; urgency=low
 
   * [7c4a2de4] Move to Debian native versions.
