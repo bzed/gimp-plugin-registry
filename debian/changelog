@@ -1,3 +1,10 @@
+gimp-plugin-registry (5.20120621) unstable; urgency=low
+
+  * [83567039] Add patch to avoid calling deprecated g_thread_init.
+               (LP: #1013003)
+
+ -- Bernd Zeimetz <bzed@debian.org>  Thu, 21 Jun 2012 22:54:56 +0200
+
 gimp-plugin-registry (5.20120523) unstable; urgency=low
 
   * [c8cca220] Add gimp-resynthesizer plugin.
