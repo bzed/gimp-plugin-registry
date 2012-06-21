@@ -1,3 +1,4 @@
+g_thread_init_deprecated
 focusblur_glib-single-include
 contact_sheet_menu_fix
 separate+_cflags
