@@ -1,0 +1,7 @@
+Description: Black and White Film Simulation
+ Converts the selected layer into Black and White using
+ the channel mixer. Tries to produce results resembling
+ tonal qualities of film.
+Homepage: http://serge.mankovski.com/photoblog/bw-film-simulation-in-gimp/
+Version: 1.1
+Uploaders: Bernd Zeimetz <bzed@debian.org>

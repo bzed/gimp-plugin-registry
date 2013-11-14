@@ -1,0 +1,5 @@
+Description: GIMP FX Foundry
+ Probably the largest script collection available for The GIMP.
+Homepage: https://gimpfx-foundry.svn.sourceforge.net/svnroot/gimpfx-foundry
+Version: r111
+Uploaders: Bernd Zeimetz <bzed@debian.org>

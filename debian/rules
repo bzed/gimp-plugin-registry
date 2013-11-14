@@ -1,129 +1,104 @@
 #!/usr/bin/make -f
+# -*- makefile -*-
 
 # Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
+export DH_VERBOSE=1
 
-include /usr/share/quilt/quilt.make
+PLUGINS := $(shell find $(CURDIR) -mindepth 1 -maxdepth 1 -name .git -prune -o -name .pc -prune -o -name debian -prune -o -type d -printf '%f\n' | sort)
 
-CFLAGS = -Wall -g -fPIC
-ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
-	CFLAGS += -O0
-else
-	CFLAGS += -O2
-endif
+%:
+	dh $@ --with quilt,python2,autotools_dev --parallel
 
-include tools.mk
+# Here follows a small shell snipped to call dh_auto_* for all plugins
+# Currently
+# - if a Makefile exists in the plugin directory
+#   we run dh_auto_$(1) with -O--sourcedirectory="$$plugin"
+# - if $${plugin}/src exists, we run dh_auto_$(1) on that directory
+# - else: fail :)
+DH_AUTO_CALL = 	if [ "$$auto_command" == "dh_auto_configure" ]; then \
+		    export options="$$options -- --enable-stack-protector" ;\
+		fi ;\
+		if [ -f $(CURDIR)/$$plugin/Makefile ]; then \
+			$$auto_command -O--sourcedirectory="$${plugin}" $$options; \
+		elif [ -d $(CURDIR)/$$plugin/src ]; then \
+			$$auto_command -O--sourcedirectory="$${plugin}/src" $$options; \
+		else \
+			echo failed to build $$plugin; exit 255 ; \
+		fi
 
-DESTDIR := $(CURDIR)/debian/gimp-plugin-registry
-
-debian/control: $(VERSION_FILES) $(DESC_FILES) debian/control.in
-	$(MAKE) -f debian/rules update-control
-
-debian/copyright: $(COPYRIGHT_FILES) debian/copyright.in
-	$(MAKE) -f debian/rules update-copyright
-	
-
-build: build-stamp
-
-build-stamp: $(QUILT_STAMPFN)
-	dh_testdir
-
-	for plugin in $(PLUGINS); do \
-	    $(MAKE) -C $$plugin CFLAGS="$(CFLAGS)" GIMPVER="$(GIMPVER)" build  || exit 1 ;\
-	done
-
-	touch $@
-
-clean: clean-patched debian/control debian/copyright
-clean-patched: unpatch
-	dh_testdir
-	dh_testroot
-	rm -f build-stamp configure-stamp
-
-	-for plugin in $(PLUGINS); do \
-	    $(MAKE) -C $$plugin GIMPVER="$(GIMPVER)" clean ;\
-	done
-
-	dh_clean 
-
-install: build
-	dh_testdir
-	dh_testroot
-	dh_clean -k 
-	dh_installdirs
-
-	for plugin in `echo $(PLUGINS) | sed 's,gimp-fx-foundry,,;s,^,gimp-fx-foundry ,'`; do \
-		$(MAKE) -C $$plugin DESTDIR=$(DESTDIR) \
-                                    PLUGINBINDIR=/usr/lib/gimp/2.0/plug-ins  \
-	                            PLUGINSCRIPTDIR=/usr/share/gimp/2.0/scripts \
-				    DOCDIR=/usr/share/doc/gimp-plugin-registry/$$plugin \
-	                            GIMPVER="$(GIMPVER)" \
-                                    install || exit 1 ;\
-		for readme in README README.Debian; do \
-	          if [ -r $$plugin/$$readme ]; then \
-                    install -m 755 -d $(DESTDIR)/usr/share/doc/gimp-plugin-registry/$$plugin ;\
-	            cp -L $$plugin/$$readme $(DESTDIR)/usr/share/doc/gimp-plugin-registry/$$plugin ;\
-	          fi ;\
-		done ;\
-	done
+PACKAGING_HELPER = /usr/bin/python $(CURDIR)/debian/packaging-helper.py
 
 
-# Build architecture-independent files here.
-binary-indep: build install
-# We have nothing to do by default.
+clean: $(PLUGINS:%=clean-%) debian/copyright debian/control
+	dh $@ --with quilt,python2,autotools_dev --parallel
+	rm -f debian/gimp-plugin-registry.install
+	rm -f debian/README.Debian.plugins
 
-# Build architecture-dependent files here.
-binary-arch: build install
-	dh_testdir
-	dh_testroot
-	dh_installchangelogs 
-	dh_installdocs
-	dh_link
-	dh_strip
-	dh_compress
-	dh_fixperms
-	dh_installdeb
-	dh_shlibdeps -l/usr/lib/lapack:/usr/lib/libblas
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
+clean-%:
+	rm -rf debian/$*
 
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install configure \
-        update-all update-copyright update-control 
-
-
-#### the following stuff is not needed to build the package,
-#### it's only for lazy maintainers.
-
-update-all: update-control update-copyright
-
-update-copyright:
-	( cat debian/copyright.in ;\
-	  for plugin in $(PLUGINS); do \
-	      echo; echo ;\
-	      echo '************************************************************' ;\
-	      echo "$$plugin:" ;\
-	      echo ;\
-	      if [ -f $$plugin/url ]; then \
-	        echo "The plugin was downloaded from:" ;\
-	        cat $$plugin/url ;\
-	        echo ;\
-	      fi ;\
-	      sed 's,^,  ,;s,^ *$$,,g' $$plugin/copyright ;\
-	  done ;\
-	) > debian/copyright
-
-update-control:
-	( cat debian/control.in ;\
-	  for plugin in $(PLUGINS); do \
-	    if [ -f $$plugin/version ]; then \
-	      p_version=`cat $$plugin/version` ;\
-	      sed "s%{version}%($$p_version)%g" $$plugin/description ;\
-	    else \
-	      cat $$plugin/description ;\
-	    fi | grep '[a-zA-Z]' | sed 's%^%   %';\
-	  done ;\
-	) > debian/control
+dh_auto_install-%:
+	# run dh_auto_install to debian/$plugin
+	set -e ;\
+	    export auto_command="dh_auto_install" ;\
+	    export plugin="$*" ;\
+	    export options="--destdir=debian/$*" ;\
+	    $(DH_AUTO_CALL)
+	if [ -d debian/$*/usr/lib/gimp-plugin-registry ]; then \
+	    mkdir -p debian/$*/usr/lib/gimp/2.0 ;\
+	    mv debian/$*/usr/lib/gimp-plugin-registry debian/$*/usr/lib/gimp/2.0/plug-ins ;\
+	fi
+	# add files to debian/nagios-plugins-contrib.install
+	set -e; find debian/$* -type f -printf '%h\n' | sort -u  |\
+	    while read dir; do \
+	        echo "$$dir/* `echo $$dir | sed 's,debian/$*/,,'`" ;\
+	    done >> debian/gimp-plugin-registry.install
+	# create shlibdeps for the plugin into a temp file
+	set -e; \
+	   opts=`find debian/$* -type f -exec file {} \; |\
+	   grep -E ' ELF ' |\
+	   sed 's,:.*,,;s,^,-e,' |\
+	   tr '\n' ' '` ;\
+	   if [ -n "$$opts" ]; then \
+	   	dpkg-shlibdeps -O $$opts | grep shlibs:Depends > debian/$*/substvars ;\
+	   fi
+       
+dh_auto_%:
+	set -e; \
+	    export auto_command=`echo $* | sed 's,-.*,,;s,^,dh_auto_,'` ;\
+	    export plugin=`echo $* | sed 's,.*-,,'` ;\
+	    $(DH_AUTO_CALL)
 
 
+override_dh_auto_build: $(PLUGINS:%=dh_auto_build-%)
+
+override_dh_auto_clean: $(PLUGINS:%=dh_auto_clean-%)
+
+override_dh_auto_configure: $(PLUGINS:%=dh_auto_configure-%)
+
+override_dh_auto_install: $(PLUGINS:%=dh_auto_install-%)
+	$(PACKAGING_HELPER) --generate-readme
+
+#override_dh_auto_test: $(PLUGINS:%=dh_auto_test-%)
+override_dh_auto_test: 
+	# nothign to do right now.
+
+override_dh_python2:
+	dh_python2
+	dh_python2 usr/lib/gimp/2.0/python
+
+CONTROL_FILES := $(shell for p in $(PLUGINS); do echo $$p/control; done)
+COPYRIGHT_FILES := $(shell for p in $(PLUGINS); do echo $$p/copyright; done)
+debian/copyright: debian/copyright.in debian/packaging-helper.py $(CONTROL_FILES) $(COPYRIGHT_FILES)
+	$(PACKAGING_HELPER) --copyright
+	-if [ -d .git ]; then git add $@; git commit -m 'Auto update of $@' $@; fi
+
+debian/control: debian/control.in debian/packaging-helper.py $(CONTROL_FILES)
+	$(PACKAGING_HELPER) --control
+	-if [ -d .git ]; then git add $@; git commit -m 'Auto update of $@' $@; fi
+
+
+watch:
+	@$(PACKAGING_HELPER) --watch
+
+.PHONY: watch override_dh_auto_build override_dh_auto_clean override_dh_auto_configure override_dh_auto_install override_dh_auto_test

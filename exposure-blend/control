@@ -1,0 +1,6 @@
+Description: Exposure Blend
+ Prompt for 3 images in a bracketed exposure series (e.g. 0,-2,+2 EV)
+ and blend these into a contrast enhanced image.
+Homepage: http://turtle.as.arizona.edu/jdsmith/exposure_blend.php
+Version: 1.3b
+Uploaders: Bernd Zeimetz <bzed@debian.org>

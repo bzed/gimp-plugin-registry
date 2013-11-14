@@ -1,0 +1,6 @@
+Description: Separate+
+ Separate+ is a plug-in that generates color separations from an RGB
+ image, proofs CMYK colors on the monitor and exports the CMYK TIFF file.
+Homepage: http://cue.yellowmagic.info/softwares/separate-plus/index.html
+Version: 0.5.8
+Uploaders: Bernd Zeimetz <bzed@debian.org>

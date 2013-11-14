@@ -1,0 +1,5 @@
+Description: Fix-CA
+ Corrects chromatic aberration in photos
+Homepage: http://kcd.sourceforge.net/fix-ca.php
+Version: 3.0.2
+Uploaders: Bernd Zeimetz <bzed@debian.org>

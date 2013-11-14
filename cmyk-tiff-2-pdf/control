@@ -1,0 +1,7 @@
+Description: CMYK Tiff 2 PDF for Gimp
+ This plugin completes the prepress workflow of using Separate+ to generate
+ CMYK Tiff images by allowing you to convert the saved CMYK Tiff image into
+ a PDF file.
+Homepage: http://my.opera.com/area42/blog/cmyk-tiff-2-pdf-for-gimp
+Version: 20090321
+Uploaders: Bernd Zeimetz <bzed@debian.org>

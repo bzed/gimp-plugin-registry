@@ -1,0 +1,5 @@
+Description: GIMP-Mask:
+ Do and undo several popular image masking (that is, censoring)
+ methods (CP, FL, Q0, MEKO).
+Homepage: http://registry.gimp.org/node/24496
+Uploaders: Bernd Zeimetz <bzed@debian.org>

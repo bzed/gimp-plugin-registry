@@ -1,0 +1,6 @@
+Description: Liquid Rescale
+ Content-aware rescaling. Keeps the features of the image while
+ rescaling along a single direction.
+Homepage: http://liquidrescale.wikidot.com/
+Version: 0.7.1
+Uploaders: Bernd Zeimetz <bzed@debian.org>

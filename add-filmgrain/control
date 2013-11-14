@@ -1,0 +1,5 @@
+Description: Add Film Grain
+ Helps adding realistic film grain to BW images.
+Homepage: http://registry.gimp.org/node/101
+Version: 2.8
+Uploaders: Bernd Zeimetz <bzed@debian.org>

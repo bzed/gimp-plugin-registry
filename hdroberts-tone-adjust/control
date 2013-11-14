@@ -1,0 +1,6 @@
+Description: Warming and Cooling Filters
+ Warm or cool an image using one of several methods:
+ Wratten, Roy's Warm, Brauer's Warm, Pasty Cadaveric Look
+Homepage: http://registry.gimp.org/node/24473
+Version: May 24, 2010
+Uploaders: Bernd Zeimetz <bzed@debian.org>

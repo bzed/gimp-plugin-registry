@@ -1,0 +1,7 @@
+Description: btn4ws
+ Generates a series of buttons in three states (passive, active, pressed)
+ with various selectable effects on them, as well as XHTML, CSS and
+ JavaScript code for using the buttons.
+Homepage: http://www.dittberner.info/projects/btn4ws
+Version: 0.8.0.1
+Uploaders: Bernd Zeimetz <bzed@debian.org>

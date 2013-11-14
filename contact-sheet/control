@@ -1,0 +1,5 @@
+Description: Contact Sheet
+ Generates a contact sheet(s) for a directory of images.
+Homepage: http://www.sullockenzlin.demon.nl/Gimp.html
+Version: 2.16
+Uploaders: Bernd Zeimetz <bzed@debian.org>

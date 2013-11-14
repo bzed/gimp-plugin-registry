@@ -1,0 +1,6 @@
+Description: Save for Web
+ Allows to experiment with various popular web format options. It shows
+ an automatically updated preview and file size statistics.
+Homepage: http://registry.gimp.org/node/33
+Version: 0.29.0
+Uploaders: Bernd Zeimetz <bzed@debian.org>

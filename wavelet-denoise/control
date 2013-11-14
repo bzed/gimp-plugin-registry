@@ -1,0 +1,8 @@
+Description: Wavelet Denoise
+ The wavelet denoise plugin is a tool to selectively reduce noise in
+ individual channels of an image with optional RGB<->YCbCr conversion.
+ It has a user interface to adjust the amount of denoising applied. The
+ wavelet nature of the algorithm makes the processing quite fast.
+Homepage: http://registry.gimp.org/node/4235
+Version: 0.3.1
+Uploaders: Bernd Zeimetz <bzed@debian.org>

@@ -1,0 +1,7 @@
+Description: David's Batch Processor
+ A simple batch processing plugin for The Gimp - it allows
+ the user to automatically perform operations (such as resize)
+ on a collection of image files.
+Homepage: http://members.ozemail.com.au/~hodsond/dbp.html
+Version: 1.1.9
+Uploaders: Bernd Zeimetz <bzed@debian.org>

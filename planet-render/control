@@ -1,0 +1,6 @@
+Description: Planet Render
+ Creates a planet. Color, size and sun orientation
+ can be set.
+Homepage: http://registry.gimp.org/node/21
+Version: 1-2
+Uploaders: Bernd Zeimetz <bzed@debian.org>

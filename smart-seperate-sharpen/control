@@ -1,0 +1,8 @@
+Description: Smart Seperate Sharpening
+ This script implements a new version of smart sharpening (redux)
+ combined with separate sharpen to give better results.
+ You can find more about Smart Sharpening at
+ http://www.gimpguru.org/Tutorials/SmartSharpening2/
+Homepage: http://registry.gimp.org/node/24876
+Version: 2.8
+Uploaders: Bernd Zeimetz <bzed@debian.org>

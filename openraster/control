@@ -1,0 +1,7 @@
+Description: OpenRaster load/save handler
+ OpenRaster is an effort by the Create project[1] to offer a standardized
+ and open interchange format for raster-based applications. This plugin
+ allows one to load and save files in the OpenRaster format.
+Homepage: http://gitorious.org/openraster/gimp-plugin-file-ora/blobs/master/file-ora.py
+Version: 20110529-1d32622
+Uploaders: Bernd Zeimetz <bzed@debian.org>

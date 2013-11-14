@@ -1,0 +1,7 @@
+Description: Layer-Effects
+ This is a series of scripts that implement various layer effects:
+ Drop Shadow, Inner Shadow, Outer Glow, Inner Glow, Bevel and Emboss,
+ Satin, Color Overlay, Gradient Overlay, Pattern Overlay, Stroke
+Homepage: http://registry.gimp.org/node/186
+Version: 4/12/2012
+Uploaders: Bernd Zeimetz <bzed@debian.org>
