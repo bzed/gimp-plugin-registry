@@ -4,7 +4,7 @@
 # Uncomment this to turn on verbose mode.
 export DH_VERBOSE=1
 
-PLUGINS := $(shell find $(CURDIR) -mindepth 1 -maxdepth 1 -name .git -prune -o -name .pc -prune -o -name debian -prune -o -type d -printf '%f\n' | sort)
+PLUGINS := $(shell find $(CURDIR) -mindepth 1 -maxdepth 1 -name .git -prune -o -name .pc -prune -o -name debian -prune -o -name old_plugins -prune -o -type d -printf '%f\n' | sort)
 
 %:
 	dh $@ --with quilt,python2,autotools_dev --parallel
@@ -15,7 +15,7 @@ PLUGINS := $(shell find $(CURDIR) -mindepth 1 -maxdepth 1 -name .git -prune -o -
 #   we run dh_auto_$(1) with -O--sourcedirectory="$$plugin"
 # - if $${plugin}/src exists, we run dh_auto_$(1) on that directory
 # - else: fail :)
-DH_AUTO_CALL = 	if [ "$$auto_command" == "dh_auto_configure" ]; then \
+DH_AUTO_CALL = 	if [ "$$auto_command" = "dh_auto_configure" ]; then \
 		    export options="$$options -- --enable-stack-protector" ;\
 		fi ;\
 		if [ -f $(CURDIR)/$$plugin/Makefile ]; then \
@@ -66,7 +66,7 @@ dh_auto_install-%:
 dh_auto_%:
 	set -e; \
 	    export auto_command=`echo $* | sed 's,-.*,,;s,^,dh_auto_,'` ;\
-	    export plugin=`echo $* | sed 's,.*-,,'` ;\
+	    export plugin=`echo $* | sed 's,[^-]*-,,'` ;\
 	    $(DH_AUTO_CALL)
 
 
