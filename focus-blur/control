@@ -3,3 +3,4 @@ Description: Focus-Blur
 Homepage: http://registry.gimp.org/node/1444
 Version: 3.2.6
 Uploaders: Bernd Zeimetz <bzed@debian.org>
+Build-Depends: libxml-parser-perl, libfftw3-dev

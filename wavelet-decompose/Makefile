@@ -6,7 +6,9 @@ build-stamp:
 	touch build-stamp
 
 install: build
-	make -C src/po install LOCALEDIR=$(DESTDIR)/usr/share/locale 
+	install -m 755 -d $(DESTDIR)$(PLUGINBINDIR)
+	install -m 755 -d $(DESTDIR)/usr/share/locale
+	make -C src/po install LOCALEDIR=$(DESTDIR)/usr/share/locale
 	install -m 755 src/src/wavelet-decompose $(DESTDIR)$(PLUGINBINDIR)
 
 clean:

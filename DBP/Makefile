@@ -14,6 +14,7 @@ clean:
 	-make -C src clean
 
 install:
+	mkdir -p $(DESTDIR)$(PLUGINBINDIR)
 	install -m 755 src/dbp $(DESTDIR)$(PLUGINBINDIR)
 	mkdir -p $(DESTDIR)$(DOCDIR)
 	install -m 644 src/dbp.html src/dbp-main.png src/dbp-fileSelector.png $(DESTDIR)$(DOCDIR)

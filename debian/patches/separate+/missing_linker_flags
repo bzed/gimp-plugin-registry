@@ -1,0 +1,11 @@
+--- a/separate+/src/Makefile
++++ b/separate+/src/Makefile
+@@ -37,7 +37,7 @@ CM      = -DENABLE_COLOR_MANAGEMENT
+ NLS     = -DENABLE_NLS -DGETTEXT_PACKAGE="\"$(GETTEXT_PACKAGE)\""
+ SEP_CFLAGS += $(GIMP_INCLUDE) $(GTK_INCLUDE) $(LCMS_INCLUDE) $(CM) $(NLS) \
+           -DUSE_ICC_BUTTON
+-LIBS    = $(GIMP_LIB) $(GTK_LIB) $(LCMS_LIB) $(TIFF_LIB) $(JPEG_LIB)
++LIBS    = $(GIMP_LIB) $(GTK_LIB) $(LCMS_LIB) $(TIFF_LIB) $(JPEG_LIB) -lm
+ 
+ SOURCES = $(SEPARATE_SOURCES) $(IMPORT_SOURCES) \
+           $(ICC_COLORSPACE_SOURCES) $(EXTRA_SOURCES)

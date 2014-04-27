@@ -1,0 +1,11 @@
+--- a/wavelet-decompose/src/po/Makefile
++++ b/wavelet-decompose/src/po/Makefile
+@@ -24,7 +24,7 @@ fi
+ 
+ install: $(LANGUAGES)
+ 	for L in $(LANGUAGES); \
+-	do install -v -m 0644 $$L.mo "$(LOCALEDIR)/$$L/LC_MESSAGES/gimp20-$(PLUGIN)-plug-in.mo"; \
++	do install -D -v -m 0644 $$L.mo "$(LOCALEDIR)/$$L/LC_MESSAGES/gimp20-$(PLUGIN)-plug-in.mo"; \
+ done
+ 
+ uninstall: $(LANGUAGES)

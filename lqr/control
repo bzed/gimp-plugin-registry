@@ -4,3 +4,4 @@ Description: Liquid Rescale
 Homepage: http://liquidrescale.wikidot.com/
 Version: 0.7.1
 Uploaders: Bernd Zeimetz <bzed@debian.org>
+Build-Depends: libxml-parser-perl, liblqr-1-0-dev

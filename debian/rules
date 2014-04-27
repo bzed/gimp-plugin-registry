@@ -4,10 +4,17 @@
 # Uncomment this to turn on verbose mode.
 export DH_VERBOSE=1
 
+GIMPVER := $(shell dpkg -s libgimp2.0-dev | grep Version | awk '{print $$2}')
+export GIMPVER
 PLUGINS := $(shell find $(CURDIR) -mindepth 1 -maxdepth 1 -name .git -prune -o -name .pc -prune -o -name debian -prune -o -name old_plugins -prune -o -type d -printf '%f\n' | sort)
+export PLUGINS
+PLUGINBINDIR := "/usr/lib/gimp/2.0/plug-ins"
+export PLUGINBINDIR
+PLUGINSCRIPTDIR := "/usr/share/gimp/2.0/scripts"
+export PLUGINSCRIPTDIR
 
 %:
-	dh $@ --with quilt,python2,autotools_dev --parallel
+	dh $@ --with quilt,python2,autotools_dev,autoreconf --parallel
 
 # Here follows a small shell snipped to call dh_auto_* for all plugins
 # Currently
@@ -30,9 +37,8 @@ PACKAGING_HELPER = /usr/bin/python $(CURDIR)/debian/packaging-helper.py
 
 
 clean: $(PLUGINS:%=clean-%) debian/copyright debian/control
-	dh $@ --with quilt,python2,autotools_dev --parallel
+	dh $@ --with quilt,python2,autotools_dev,autoreconf --parallel
 	rm -f debian/gimp-plugin-registry.install
-	rm -f debian/README.Debian.plugins
 
 clean-%:
 	rm -rf debian/$*

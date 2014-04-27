@@ -16,6 +16,7 @@ clean:
 	rm -f build/*.o build/refocus
 
 install:
+	install -m 755 -d $(DESTDIR)$(PLUGINBINDIR)
 	install -m 755 build/refocus $(DESTDIR)$(PLUGINBINDIR)
 	install -m 755 -d $(DESTDIR)$(DOCDIR)
 	install -m 644 src/doc/doc.html $(DESTDIR)$(DOCDIR)

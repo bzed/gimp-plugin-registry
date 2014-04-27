@@ -1,0 +1,17 @@
+--- a/wavelet-denoise/src/src/Makefile
++++ b/wavelet-denoise/src/src/Makefile
+@@ -1,4 +1,4 @@
+-CFLAGS = -O3 -Wall $(shell gimptool-2.0 --cflags)
++CFLAGS += -O3 -Wall $(shell gimptool-2.0 --cflags)
+ LIBS = $(shell gimptool-2.0 --libs)
+ PLUGIN = wavelet-denoise
+ SOURCES = plugin.c colorspace.c denoise.c wavelet.c events.c interface.c
+@@ -13,7 +13,7 @@ all: $(PLUGIN)
+ OBJECTS = $(subst .c,.o,$(SOURCES))
+ 
+ $(PLUGIN): $(OBJECTS)
+-	$(CC) $(CFLAGS) -o $@ $^ $(LIBS)
++	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) $(LDFLAGS)
+ 
+ %.o: %.c $(HEADERS)
+ 	$(CC) $(CFLAGS) -c -o $@ $*.c

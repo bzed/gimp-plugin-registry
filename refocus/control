@@ -7,3 +7,4 @@ Description: Refocus
  an unfocused camera.
 Version: 0.9.1
 Uploaders: Bernd Zeimetz <bzed@debian.org>
+Build-Depends: libblas-dev, liblapack-dev, libf2c2-dev

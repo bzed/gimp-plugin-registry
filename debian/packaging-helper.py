@@ -19,7 +19,7 @@ ALLOWED_FIELDS = ('Suggests',
 # find all plugins
 __basedir__ = os.path.realpath(os.path.dirname(sys.argv[0]) + os.path.sep + '..')
 __plugins__ = [p for p in os.listdir(__basedir__) 
-                   if (os.path.isdir(__basedir__ + os.path.sep + p) and p!='debian' and p!='.git' and p!='.pc')]
+                   if (os.path.isdir(__basedir__ + os.path.sep + p) and p!='debian' and p!='.git' and p!='.pc' and p!='old_plugins')]
 __plugins__.sort()
 
 __uploaders_re__ = re.compile(r', *')
@@ -36,6 +36,9 @@ def __get_control_data__():
         yield data
 
 def generate_debian_readme_plugins():
+# not needed for this package
+    return
+
     plugins_depends={}
     for plugin, _control in __get_control_data__():
         plugins_depends[plugin]={}

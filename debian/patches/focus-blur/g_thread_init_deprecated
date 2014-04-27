@@ -1,0 +1,14 @@
+--- a/focus-blur/src/src/gimpplugin.c
++++ b/focus-blur/src/src/gimpplugin.c
+@@ -116,9 +116,11 @@ run (const gchar         *name,
+   drawable_ID = param[2].data.d_drawable;
+ 
+ #ifdef ENABLE_MP
++#if !GLIB_CHECK_VERSION (2, 31, 0)
+   if (! g_thread_supported ())
+     g_thread_init (NULL);
+ #endif
++#endif
+ 
+   INIT_I18N ();
+ 

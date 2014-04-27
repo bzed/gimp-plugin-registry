@@ -1,12 +1,13 @@
 GIMPTOOL = /usr/bin/gimptool-2.0
 
 %: %.c
-	CFLAGS="$(CFLAGS) $(EXTRA_CFLAGS)" LDFLAGS="$(LFGLAGS) $(EXTRA_LDFLAGS)" $(GIMPTOOL) --build $<
+	CFLAGS="$(CFLAGS) $(EXTRA_CFLAGS)" LDFLAGS="$(LFGLAGS) $(EXTRA_LDFLAGS) -lm" $(GIMPTOOL) --build $<
 
 build: $(PLUGIN)
 
 install: build
-	install -m 755 $(PLUGIN) $(DESTDIR)$(PLUGINBINDIR)
+	mkdir -p $(DESTDIR)/$(PLUGINBINDIR)
+	install -m 755 $(PLUGIN) $(DESTDIR)/$(PLUGINBINDIR)
 
 clean:
 	rm -f $(PLUGIN)
