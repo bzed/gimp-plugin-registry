@@ -545,176 +545,181 @@ Public License, version 3, can be found in
 The copyright information for the included plugins follows here:
 
 
-
-************************************************************
-add-filmgrain:
-
-The plugin was downloaded from:
-http://registry.gimp.org/node/101
-
-  Martin Egger (martin.egger@gmx.net)
-  (C) 2006, Bern, Switzerland
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 3 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, see <http://www.gnu.org/licenses>.
-
-
-************************************************************
-btn4ws:
-
-The plugin was downloaded from:
-http://www.dittberner.info/projects/btn4ws
-
-  Copyright (C) 1999-2009  Jan Dittberner <jan@dittberner.info>
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-  02110-1301, USA
-
-
-************************************************************
-bw-simulation:
-
-The plugin was downloaded from:
-http://serge.mankovski.com/photoblog/bw-film-simulation-in-gimp/
-
-  Copyright Serge Mankovski <sevato@mankovski.com>  Toronto, Ontario, 2007
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this package; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-
-
-************************************************************
-cmyk-tiff-2-pdf:
-
-The plugin was downloaded from:
-http://my.opera.com/area42/blog/cmyk-tiff-2-pdf-for-gimp
-
-  Eckhard M. Jäger <Bart@neeneenee.de>
-  Copyright @ 2009 area42 - Agentur & Systempartner
-  http://www.area42.de
-
-  This program is free software; you can redistribute it and/or modify it under
-  the terms of the GNU General Public License V2 as published by the Free Software
-  Foundation;
-
-
-************************************************************
-contact-sheet:
-
-The plugin was downloaded from:
-http://www.sullockenzlin.demon.nl/Gimp.html
-
-  Copyright (C) 2008 Robin Gilham robin.gilham@gmail.com
-
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
-  MA 02110-1301, USA.
-
-
-************************************************************
 DBP:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://members.ozemail.com.au/~hodsond/dbp.html
 
   DBP (Dave's Batch Processor)
   A simple batch processor for the GIMP
   Copyright (C) 2001 - 2006 David Hodson
-
+  
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
-
+  
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
-
+  
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+  
 
+------------------------------------------------------------------------------
 
-************************************************************
+add-filmgrain:
+
+The plugin was downloaded from: 
+http://registry.gimp.org/node/101
+
+  Martin Egger (martin.egger@gmx.net)
+  (C) 2006, Bern, Switzerland
+  
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 3 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, see <http://www.gnu.org/licenses>.
+  
+
+------------------------------------------------------------------------------
+
+btn4ws:
+
+The plugin was downloaded from: 
+http://www.dittberner.info/projects/btn4ws
+
+  Copyright (C) 1999-2009  Jan Dittberner <jan@dittberner.info>
+  
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+  02110-1301, USA
+  
+
+------------------------------------------------------------------------------
+
+bw-simulation:
+
+The plugin was downloaded from: 
+http://serge.mankovski.com/photoblog/bw-film-simulation-in-gimp/
+
+  Copyright Serge Mankovski <sevato@mankovski.com>  Toronto, Ontario, 2007
+  
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with this package; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+  
+
+------------------------------------------------------------------------------
+
+cmyk-tiff-2-pdf:
+
+The plugin was downloaded from: 
+http://my.opera.com/area42/blog/cmyk-tiff-2-pdf-for-gimp
+
+  Eckhard M. Jäger <Bart@neeneenee.de>
+  Copyright @ 2009 area42 - Agentur & Systempartner
+  http://www.area42.de
+     
+  This program is free software; you can redistribute it and/or modify it under
+  the terms of the GNU General Public License V2 as published by the Free Software
+  Foundation;
+  
+
+------------------------------------------------------------------------------
+
+contact-sheet:
+
+The plugin was downloaded from: 
+http://www.sullockenzlin.demon.nl/Gimp.html
+
+  Copyright (C) 2008 Robin Gilham robin.gilham@gmail.com
+  
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
+  MA 02110-1301, USA.
+  
+
+------------------------------------------------------------------------------
+
 diana-holga2:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://registry.gimp.org/node/252
 
   21, 22, 23, 24, 25, 28, 29, 9 d'ecembre 2005, 12, 13, 15 mai 2006,
   15, 18 mars 2007, 29 janvier, 3 juin 2008
   (c) Jean-Pierre Sutto <jpsmail(at)free.fr>
   Published under GPL version 2
+  
 
+------------------------------------------------------------------------------
 
-************************************************************
 elsamuko:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://sites.google.com/site/elsamuko/gimp/
 
   El Samuko's GIMP scripts
-
+  
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 3 of the License, or
   (at your option) any later version.
-
+  
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
-
+  
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
   http://www.gnu.org/licenses/gpl-3.0.html
-
+  
   copyright:elsamuko-antique-border.scm: Copyright (C) 2008 elsamuko <elsamuko@web.de>
   copyright:elsamuko-che-guevara.scm: Copyright (C) 2009 elsamuko <elsamuko@web.de>
   copyright:elsamuko-cyanotype.scm: Copyright (C) 2010 elsamuko <elsamuko@web.de>
@@ -787,106 +792,111 @@ http://sites.google.com/site/elsamuko/gimp/
   mm1-vintage-look.scm:; Copyright (C) 1995 Spencer Kimball and Peter Mattis
   mm1-vintage-look.scm:; Copyright (C) 2008 Michael Maier info[at]mmip.net
   tuxcomputers-split-tone.scm:; Copyright (C) 2007 Harry Phillips <script-fu@tux.com.au>
+  
+  
 
+------------------------------------------------------------------------------
 
-
-************************************************************
 exposure-blend:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://turtle.as.arizona.edu/jdsmith/exposure_blend.php
 
    Copyright (C) 2006 J.D. Smith
-
+  
    exposure-blend is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License as
    published by the Free Software Foundation; either version 2, or (at
    your option) any later version.
-
+  
    exposure-blend is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
    General Public License for more details.
-
+  
    You should have received a copy of the GNU General Public License
    along with exposure-blend; see the file COPYING.  If not, write to
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth
    Floor, Boston, MA 02110-1301, USA.
+  
 
+------------------------------------------------------------------------------
 
-************************************************************
 ez-perspective:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://registry.gimp.org/node/24537
 
   By Nils R. Barth, 2010 June 28, Portland, OR, USA
-
+  
   I dedicate this program to the Public Domain, and claim no rights to it.
-
+  
   Formally, under the Creative Commons CC0 license:
-
+  
   To the extent possible under law, I, Nils Roland Barth have waived all
   copyright and related or neighboring rights to this program.
   This work is published from the United States of America.
+  
+  
 
+------------------------------------------------------------------------------
 
-
-************************************************************
 fix-ca:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://kcd.sourceforge.net/fix-ca.php
 
   Copyright (c) 2006, 2007 Kriang Lerdsuwanakij
                            <lerdsuwa@users.sourceforge.net>
-
+  
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
-
+  
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
-
+  
   You should have received a copy of the GNU General Public License
   along with this package; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+  
 
+------------------------------------------------------------------------------
 
-************************************************************
 focus-blur:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://registry.gimp.org/node/1444
 
   Focus Blur -- blur with focus plug-in.
   Copyright (C) 2002-2007 Kyoichiro Suda
-
+  
   The GIMP -- an image manipulation program
   Copyright (C) 1995 Spencer Kimball and Peter Mattis
-
+  
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
-
+  
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
-
+  
   You should have received a copy of the GNU General Public License
   along with this package; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+  
 
+------------------------------------------------------------------------------
 
-************************************************************
 gimp-fx-foundry:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 https://gimpfx-foundry.svn.sourceforge.net/svnroot/gimpfx-foundry
 
   The files from the Gimp FX Foundry project are licensed under the
@@ -894,22 +904,22 @@ https://gimpfx-foundry.svn.sourceforge.net/svnroot/gimpfx-foundry
   Additionally some files are available under the GPL version 2 or
   public domain. For details see the information in the headers of
   each file.
-
+  
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   at your option) any later version.
-
+  
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
-
+  
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+  
   The copyright information for each file follows:
-
+  
       alexios-duotone.scm: Copyright (C) 1995 Spencer Kimball and Peter Mattis
       alexios-photoframe.scm: Copyright (C) 1995 Spencer Kimball and Peter Mattis
       alfaro-color-temperature.scm: Copyright (C) 1995 Spencer Kimball and Peter Mattis
@@ -1078,533 +1088,547 @@ https://gimpfx-foundry.svn.sourceforge.net/svnroot/gimpfx-foundry
       xtns-pippin-gloss-orbs.scm: Copyright (C) 1995 Spencer Kimball and Peter Mattis
       xtns-zenkov-shrek-text.scm: Copyright (C) 1995 Spencer Kimball and Peter Mattis
       xtns-zenkov-shrek-text.scm: Copyright (c) 2004 Ivan Zenkov <ivan.zenkov@gmail.com>
+  
 
+------------------------------------------------------------------------------
 
-************************************************************
 gimp-mask:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://registry.gimp.org/node/24496
 
   Copyright (c) 1998  Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>
-
+  
   Modified for 1.2 and the Graphics Muse Tools CD
    by Michael J. Hammel
    01/2002
-
+  
   very minor modifications to make this work for GIMP 2.x
    by Anonymous
    06 June 2010
-
+  
   This program  is  free software;  you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published by the Free
   Software Foundation;  either version 2 of the License, or (at your option)
   any later version.
-
+  
   This program  is  distributed  in  the hope  that  it will be useful,  but
   WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
   or FITNESS FOR A PARTICULAR PURPOSE.  See  the  GNU General Public License
   for more details.
-
+  
   You  should have received  a copy of  the GNU General Public License along
   with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+  
 
+------------------------------------------------------------------------------
 
-************************************************************
 hdroberts-tone-adjust:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://registry.gimp.org/node/24473
 
   Copyright (C) 2010 Howard Roberts(howardroberts@comcast.net)
-
+  
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 3 of the License, or
   (at your option) any later version.
-
+  
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
-
+  
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software
   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+  
 
+------------------------------------------------------------------------------
 
-************************************************************
 layer-effects:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://registry.gimp.org/node/186
 
   GIMP Layer Effects
   Copyright (c) 2008 Jonathan Stipe
   JonStipe@prodigy.net
-
+  
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation, either version 3 of the License, or
   (at your option) any later version.
-
+  
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
-
+  
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  
 
+------------------------------------------------------------------------------
 
-************************************************************
 lqr:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://liquidrescale.wikidot.com/
 
   Upstream author: Carlo Baldassi <carlobaldassi@yahoo.it>
-
+  
   General license and copyright for this plugin:
-
+  
      GIMP LiquidRescaling Plug-in
      Copyright (C) 2007 Carlo Baldassi (the "Author") <carlobaldassi@yahoo.it>.
      (implementation based on the GIMP Plug-in Template by Michael Natterer)
      All Rights Reserved.
-
+  
      This plugin implements the algorithm described in the paper
      "Seam Carving for Content-Aware Image Resizing"
      by Shai Avidan and Ariel Shamir
      which can be found at http://www.faculty.idc.ac.il/arik/imret.pdf
-
+  
      This program is free software; you can redistribute it and/or modify
      it under the terms of the GNU General Public License as published by
      the Free Software Foundation; version 2 dated June, 1991.
-
+  
      This program is distributed in the hope that it will be useful,
      but WITHOUT ANY WARRANTY; without even the implied warranty of
      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
      GNU General Public License for more details.
-
+  
      You should have received a copy of the GNU General Public License
      along with this program; if not, write to the Free Software
      Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
-
-
+   
+  
   Files with different licenses and/or copyrights:
-
+  
    * plugin-intl.h (originally from the gimp-plugin-template):
-
+  
      Permission is hereby granted, free of charge, to any person obtaining a
      copy of this software and associated documentation files (the "Software"),
      to deal in the Software without restriction, including without limitation
      the rights to use, copy, modify, merge, publish, distribute, sublicense,
      and/or sell copies of the Software, and to permit persons to whom the
      Software is furnished to do so, subject to the following conditions:
-
+  
      The above copyright notice and this permission notice shall be included
      in all copies or substantial portions of the Software.
-
+  
      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
      OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
      THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
      IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
      CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+  
      Except as contained in this notice, the name of the Author of the
      Software shall not be used in advertising or otherwise to promote the
      sale, use or other dealings in this Software without prior written
      authorization from the Author.
-
-
+  
+  
    * mkinstalldirs:
-
+  
      Public Domain
      Author: Noah Friedman <friedman@prep.ai.mit.edu>
+  
+  
+  
 
+------------------------------------------------------------------------------
 
-
-
-************************************************************
 normalmap:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://code.google.com/p/gimp-normalmap/
 
   Copyright (C) 2002 Shawn Kirst <skirst@fuse.net>
-
+  
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU General Public
   License as published by the Free Software Foundation; either
   version 2 of the License, or (at your option) any later version.
-
+  
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
   General Public License for more details.
-
+  
   You should have received a copy of the GNU General Public License
   along with this program; see the file COPYING.  If not, write to
   the Free Software Foundation, Inc., 51 Franklin Street,
   Fifth Floor, Boston, MA 02110-1301, USA.
+  
 
+------------------------------------------------------------------------------
 
-************************************************************
 openraster:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://gitorious.org/openraster/gimp-plugin-file-ora/blobs/master/file-ora.py
 
   This file (file-ora.py) is part of oratools
     http://gitorious.org/mypaint/oratools
   Copyright (C) 2009 by Jon Nordby <jononor@gmail.com>
-
+  
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
-
+  
   Based on MyPaint source code by Martin Renold
   http://gitorious.org/mypaint/mypaint/blobs/edd84bcc1e091d0d56aa6d26637aa8a925987b6a/lib/document.py
+  
+  
 
+------------------------------------------------------------------------------
 
-
-************************************************************
 planet-render:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://registry.gimp.org/node/21
 
   (C) 2005-2007 Aurore D. "Rore", aurore.d@gmail.com
-
+  
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
-
+  
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
-
+  
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+  
 
+------------------------------------------------------------------------------
 
-************************************************************
 refocus:
 
   Upstream Author:
    Ernst Lippe <ernstl@users.sourceforge.net>
-
+  
   Copyright:
    refocus is Copyright (C) 1999-2003 Ernst Lippe
-
-
+  
+  
   This program is free software; you can redistribute it and/or modify it
   under the terms of the GNU General Public License as published by the
   Free Software Foundation; either version 2, or (at your option) any
   later version.
-
+  
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
-
+  
   You should have received a copy of the GNU Library General Public
   License along with this library; if not, write to the
   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
   Boston, MA  02110-1301, USA
-
+  
   On Debian systems, the complete text of the GNU General
   Public License can be found in `/usr/share/common-licenses/GPL-2'.
-
-
+  
+  
   Other copyright information, by file:
-
+  
   All are published under GPL, see above.
-
+  
   * gimppreview.c:
     Copyright (C) 1998-1999 Shawn T. Amundson
     Modifications (C) 1999-2003 Ernst Lippe
-
+  
     Some of the checkerboard & image combination code is based of
     code Copyright 1997 (C) Federico Mena Quintero and is used
     here by permission.
-
-
+  
+  
   * gimppreview.h:
     Copyright (C) 1998-1999 Shawn T. Amundson
     Modifications (C) 1999-2003 Ernst Lippe
-
-
+   
+  
   * refocus.c:
     Copyright (C) 1999-2003 Ernst Lippe
     Based on the Convolution Matrix plug-in by Lauri Alanko <la@iki.fi>
+  
 
+------------------------------------------------------------------------------
 
-************************************************************
 resynthesizer:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 https://github.com/bootchk/resynthesizer/tags
 
   GIMP Resynthesizer Plugin Suite
   ===============================
-
+  
     Copyright 2000 2008  Paul Francis Harrison
     Copyright 2002  Laurent Despeyroux
     Copyright 2002  David Rodríguez García
     Copyright 2010-2011  Lloyd Konneker <bootch@nc.rr.com>
-
+  
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-
+  
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
-
+  
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  
 
+------------------------------------------------------------------------------
 
-************************************************************
 safe-for-web:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://registry.gimp.org/node/33
 
   Save for Web plug-in for The GIMP
-
+  
   Copyright (C) 2006-2007, Aurimas Juška
-
+  
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
   version 2 of the License, or (at your option) any later version.
-
+  
   This library is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
   Lesser General Public License for more details.
-
+  
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the
   Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston,
   MA 02110-1301, USA.
-
-
+  
+  
   Files with different Copyrights/Licenses:
-
+  
   - cursors/*,cursors.*:
      Eye of Gnome image viewer - mouse cursors
-
+  
      Copyright (C) 2000 The Free Software Foundation
-
+  
      Author: Federico Mena-Quintero <federico@gnu.org>
-
+  
      This program is free software; you can redistribute it and/or modify
      it under the terms of the GNU General Public License as published by
      the Free Software Foundation; either version 2 of the License, or
      (at your option) any later version.
-
+  
      This program is distributed in the hope that it will be useful,
      but WITHOUT ANY WARRANTY; without even the implied warranty of
      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
      GNU General Public License for more details.
-
+  
      You should have received a copy of the GNU General Public License
      along with this program; if not, write to the Free Software
      Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
-
-
+  
+  
   - plugin-intl.h:
-
+     
      Permission is hereby granted, free of charge, to any person obtaining a copy
      of this software and associated documentation files (the "Software"), to deal
      in the Software without restriction, including without limitation the rights
      to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
      copies of the Software, and to permit persons to whom the Software is fur-
      nished to do so, subject to the following conditions:
-
+     
      The above copyright notice and this permission notice shall be included in
      all copies or substantial portions of the Software.
-
+     
      THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FIT-
      NESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
      AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
      IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CON-
      NECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+     
      Except as contained in this notice, the name of the Author of the
      Software shall not be used in advertising or otherwise to promote the sale,
      use or other dealings in this Software without prior written authorization
      from the Author.
-
+  
   - webx_prefs.*:
-
+  
      Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
-
+    
      This program is free software; you can redistribute it and/or modify
      it under the terms of the GNU General Public License as published by
      the Free Software Foundation; either version 2 of the License, or
      (at your option) any later version.
-
+    
      This program is distributed in the hope that it will be useful,
      but WITHOUT ANY WARRANTY; without even the implied warranty of
      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
      GNU General Public License for more details.
-
+    
      You should have received a copy of the GNU General Public License
      along with this program; if not, write to the Free Software
      Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
+  
 
+------------------------------------------------------------------------------
 
-************************************************************
 separate+:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://cue.yellowmagic.info/softwares/separate-plus/index.html
 
   separate+ 0.5 - image processing plug-in for the Gimp
-
+  
   Copyright (C) 2002-2004 Alastair Robinson (blackfive@fakenhamweb.co.uk),
   Based on code by Andrew Kieschnick and Peter Kirchgessner
   Modified by Yoshinori Yamakawa (yam@yellowmagic.info)
-
+  
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
   (at your option) any later version.
-
+  
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
-
+  
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
-
-
-
+  
+  
+  
   The following files have a different copyright and/or license:
-
+  
   - icc*.{c,h}, import.c:
       Copyright (C) 2007-2008 Yoshinori Yamakawa (yam@yellowmagic.info)
-
+  
       This program is free software; you can redistribute it and/or modify
       it under the terms of the GNU General Public License as published by
       the Free Software Foundation; either version 2 of the License, or
       (at your option) any later version.
-
+  
       This program is distributed in the hope that it will be useful,
       but WITHOUT ANY WARRANTY; without even the implied warranty of
       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
       GNU General Public License for more details.
-
+  
       You should have received a copy of the GNU General Public License
       along with this program; if not, write to the Free Software
       Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
-
-
+  
+  
   - sRGB/sRGB_type2.icc:
       Copyright(C) 2010 Yoshinori Yamakawa
-
+  
       Permission is hereby granted, free of charge, to any person obtaining a copy
       of this software and associated documentation files (the "Software"), to deal
       in the Software without restriction, including without limitation the rights
       to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
       copies of the Software, and to permit persons to whom the Software is
       furnished to do so, subject to the following conditions:
-
+  
       The above copyright notice and this permission notice shall be included in
       all copies or substantial portions of the Software.
-
+  
       THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
       IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
       FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
       AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
       LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
       OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  
+  
 
+------------------------------------------------------------------------------
 
-
-************************************************************
 smart-seperate-sharpen:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://registry.gimp.org/node/24876
 
   Martin Egger (martin.egger@gmx.net),
   Michael Kolodny (m_kolodny@phreego.com) added 'Texture Sharpening'
   and included 'Seperate Sharpen'
   Copyright (C) 2012, Bern, Switzerland
-
-
+  
+  
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 3 of the License, or
   (at your option) any later version.
-
+  
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
-
+  
   You should have received a copy of the GNU General Public License
   along with this program; if not, see <http://www.gnu.org/licenses>.
+  
+  
 
+------------------------------------------------------------------------------
 
-
-************************************************************
 streak:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://registry.gimp.org/node/29
 
   Copyright (C) Reinhard Geisler
-
+  
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License (version 2) as
   published by the Free Software Foundation.
-
+  
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU General Public License for more details.
-
+  
   You should have received a copy of the GNU General Public License
   along with this program; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
   02110-1301, USA
+  
 
+------------------------------------------------------------------------------
 
-************************************************************
 traditional-orton:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://registry.gimp.org/node/24441
 
   Copyright (c) 2010 Cardinal Peak
-
+  
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
   copies of the Software, and to permit persons to whom the Software is
   furnished to do so, subject to the following conditions:
-
+  
   The above copyright notice and this permission notice shall be included in
   all copies or substantial portions of the Software.
-
+  
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -1612,37 +1636,42 @@ http://registry.gimp.org/node/24441
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
+  
 
+------------------------------------------------------------------------------
 
-************************************************************
 wavelet-decompose:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://registry.gimp.org/node/11742
 
   Wavelet decompose GIMP plugin
-
+   
   Copyright 2008 by Marco Rossini
-
+  
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License version 2+
   as published by the Free Software Foundation.
+  
+  
+  
 
+------------------------------------------------------------------------------
 
-
-
-************************************************************
 wavelet-denoise:
 
-The plugin was downloaded from:
+The plugin was downloaded from: 
 http://registry.gimp.org/node/4235
 
   wavelet-denoise.c
   Copyright 2008 by Marco Rossini
-
+  
   Implements the wavelet denoise code of UFRaw by Udi Fuchs
   which itself bases on the code by Dave Coffin
-
+  
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License version 2
   as published by the Free Software Foundation.
+  
+
+
