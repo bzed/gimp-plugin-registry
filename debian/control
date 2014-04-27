@@ -2,13 +2,11 @@ Source: gimp-plugin-registry
 Section: graphics
 Priority: optional
 Maintainer: Bernd Zeimetz <bzed@debian.org>
-Build-Depends: debhelper (>= 5), autotools-dev, quilt,
- libgimp2.0-dev (>= 2.6), libxml-parser-perl,
- libblas-dev, liblapack-dev, libf2c2-dev, libfftw3-dev, libglew-dev,
- libgtkglext1-dev, liblcms1-dev, libtiff4-dev,
- liblqr-1-0-dev (>= 0.3.0), intltool,
- libxcursor-dev, python, automake, autoconf, libglib2.0-dev
-Standards-Version: 3.9.0
+Uploaders: Bernd Zeimetz <bzed@debian.org>
+Build-Depends: autotools-dev, quilt, libgimp2.0-dev, intltool,
+ python, automake, autoconf, autotools-dev, dh-autoreconf,
+ libxml-parser-perl, libfftw3-dev, liblqr-1-0-dev, libglew-dev, libgtkglext1-dev, libblas-dev, liblapack-dev, libf2c2-dev, liblcms1-dev, libtiff-dev, debhelper (>= 8.0.0), libglib2.0-dev
+Standards-Version: 3.9.5
 Vcs-Git: git://git.recluse.de/debian/pkg-gimp-plugin-registry.git
 Vcs-Browser: http://git.recluse.de/?p=debian/pkg-gimp-plugin-registry.git;a=summary
 
@@ -16,39 +14,39 @@ Package: gimp-plugin-registry
 Architecture: any
 Depends: gimp (>= 2.6),
  ${shlibs:Depends}, ${misc:Depends},
- python, libtiff-tools, xdg-utils
-Suggests: icc-profiles
+ python, libtiff-tools, xdg-utils,
+Suggests: icc-profiles, 
 Breaks: gimp-refocus (<< 0.9.0-2), gimp-save-for-web, gimp-resynthesizer (<< 0.16-2~)
 Replaces: gimp-refocus (<< 0.9.0-2), gimp-save-for-web, gimp-resynthesizer
 Provides: gimp-save-for-web, gimp-resynthesizer
 Enhances: gimp
-Recommends: gimp-gmic
+Recommends: gimp-gmic, 
 Description: repository of optional extensions for GIMP
  The package contains the following plugins:
  .
-   * Add Film Grain (2.8):
-     Helps adding realistic film grain to BW images.
-   * btn4ws (0.8.0.1):
-     Generates a series of buttons in three states (passive, active, pressed)
-     with various selectable effects on them, as well as XHTML, CSS and
-     JavaScript code for using the buttons.
-   * Black and White Film Simulation (1.1):
-     Converts the selected layer into Black and White using
-     the channel mixer. Tries to produce results resembling
-     tonal qualities of film.
-   * CMYK Tiff 2 PDF for Gimp (20090321):
-     This plugin completes the prepress workflow of using Separate+ to generate
-     CMYK Tiff images by allowing you to convert the saved CMYK Tiff image into
-     a PDF file.
-   * Contact Sheet (2.16):
-     Generates a contact sheet(s) for a directory of images.
-   * David's Batch Processor (1.1.9):
+   * DBP (1.1.9): David's Batch Processor
      A simple batch processing plugin for The Gimp - it allows
      the user to automatically perform operations (such as resize)
      on a collection of image files.
-   * Diana-Holga2 (c):
+   * add-filmgrain (2.8): Add Film Grain
+     Helps adding realistic film grain to BW images.
+   * btn4ws (0.8.0.1): btn4ws
+     Generates a series of buttons in three states (passive, active, pressed)
+     with various selectable effects on them, as well as XHTML, CSS and
+     JavaScript code for using the buttons.
+   * bw-simulation (1.1): Black and White Film Simulation
+     Converts the selected layer into Black and White using
+     the channel mixer. Tries to produce results resembling
+     tonal qualities of film.
+   * cmyk-tiff-2-pdf (20090321): CMYK Tiff 2 PDF for Gimp
+     This plugin completes the prepress workflow of using Separate+ to generate
+     CMYK Tiff images by allowing you to convert the saved CMYK Tiff image into
+     a PDF file.
+   * contact-sheet (2.16): Contact Sheet
+     Generates a contact sheet(s) for a directory of images.
+   * diana-holga2 (c): Diana-Holga2
      Diana/Holga Toys Cameras effect simulator.
-   * El Samuko GIMP Scripts:
+   * elsamuko: El Samuko GIMP Scripts:
      * Antique Photo Border Script:
        This script simulates a yellowed and slightly jagged border
        like these of old photographies.
@@ -105,82 +103,82 @@ Description: repository of optional extensions for GIMP
        This script simulates the 3 Color Technicolor effect.
      * Vintage Look Script:
        This script simulates a 70s vintage look.
-      * Exposure Blend (1.3b):
-        Prompt for 3 images in a bracketed exposure series (e.g. 0,-2,+2 EV)
-        and blend these into a contrast enhanced image.
-   * EZ Perspective:
+   * exposure-blend (1.3b): Exposure Blend
+     Prompt for 3 images in a bracketed exposure series (e.g. 0,-2,+2 EV)
+     and blend these into a contrast enhanced image.
+   * ez-perspective: EZ Perspective:
      Specialized tool for easily correcting or changing perspective.
-   * Fix-CA (3.0.2):
+   * fix-ca (3.0.2): Fix-CA
      Corrects chromatic aberration in photos
-   * Focus-Blur (3.2.6):
+   * focus-blur (3.2.6): Focus-Blur
      This plugin tries to simulate an out-of-focus blur
-   * GIMP FX Foundry (r111):
+   * gimp-fx-foundry (r111): GIMP FX Foundry
      Probably the largest script collection available for The GIMP.
-   * GIMP-Mask:
+   * gimp-mask: GIMP-Mask:
      Do and undo several popular image masking (that is, censoring)
      methods (CP, FL, Q0, MEKO).
-   * Warming and Cooling Filters (May 24, 2010):
+   * hdroberts-tone-adjust (May 24, 2010): Warming and Cooling Filters
      Warm or cool an image using one of several methods:
      Wratten, Roy's Warm, Brauer's Warm, Pasty Cadaveric Look
-   * Layer-Effects (4/12/2012):
+   * layer-effects (4/12/2012): Layer-Effects
      This is a series of scripts that implement various layer effects:
      Drop Shadow, Inner Shadow, Outer Glow, Inner Glow, Bevel and Emboss,
      Satin, Color Overlay, Gradient Overlay, Pattern Overlay, Stroke
-   * Liquid Rescale (0.7.1):
+   * lqr (0.7.1): Liquid Rescale
      Content-aware rescaling. Keeps the features of the image while
      rescaling along a single direction.
-   * Normalmap (1.2.2):
+   * normalmap (1.2.2): Normalmap
      Allows you to convert images into RGB normal maps for use in
      per-pixel lighting applications.
-   * OpenRaster load/save handler (20110529-1d32622):
+   * openraster (20110529-1d32622): OpenRaster load/save handler
      OpenRaster is an effort by the Create project[1] to offer a standardized
      and open interchange format for raster-based applications. This plugin
      allows one to load and save files in the OpenRaster format.
-   * Planet Render (1-2):
+   * planet-render (1-2): Planet Render
      Creates a planet. Color, size and sun orientation
      can be set.
-   * Refocus (0.9.1):
+   * refocus (0.9.1): Refocus
      The GIMP plugin to refocus images using FIR Wiener filtering.
      During image processing operations such as scanning and scaling, images
      tend to get blurry. The blurred impression of these images is due to the
      fact that image pixels are averaged with their neighbors. Blurred images
      don't have sharp boundaries and look as though they have been taken with
      an unfocused camera.
-   * Resynthesizer (2.0):
+   * resynthesizer (2.0): Resynthesizer
      Gimp plugin for texture synthesis
      This gimp plugin takes samples of textures, and synthesizes larger textures
      from them.  It can be used to extend textures (including making tileable
      textures), remove objects from textures, and make themed images.
-   * Save for Web (0.29.0):
+   * safe-for-web (0.29.0): Save for Web
      Allows to experiment with various popular web format options. It shows
      an automatically updated preview and file size statistics.
-   * Separate+ (0.5.8):
+   * separate+ (0.5.8): Separate+
      Separate+ is a plug-in that generates color separations from an RGB
      image, proofs CMYK colors on the monitor and exports the CMYK TIFF file.
-   * Smart Seperate Sharpening (2.8):
+   * smart-seperate-sharpen (2.8): Smart Seperate Sharpening
      This script implements a new version of smart sharpening (redux)
      combined with separate sharpen to give better results.
      You can find more about Smart Sharpening at
      http://www.gimpguru.org/Tutorials/SmartSharpening2/
-   * Streak-Camera simulation (0.6):
+   * streak (0.6): Streak-Camera simulation
      A streak camera images an object through a slit -
      thus getting a "one dimensional image". This image is
      propagated along the second dimension of the image plane
      at a constant speed. The result is a picture of the time
      dependency of the object.
-   * Traditional Orton:
-     This is an effect invented by Michael Orton in the 1990’s, which
+   * traditional-orton: Traditional Orton:
+     This is an effect invented by Michael Orton in the 1990s, which
      consists of taking two copies of an image, one blurred, and one sharp,
      and mixing them to produce an image with a dreamy quality. It is
      especially well suited to landscape and flower photography.
-   * Wavelet Decompose (0.1.2):
+   * wavelet-decompose (0.1.2): Wavelet Decompose
      The wavelet decompose plugin decomposes a layer of an image into layers
      of wavelet scales. This means that you can edit the image on different
      detail scales (frequencies). The trivial recomposition of the image can
      be done by GIMP's layer modes so you can see the results of your
      modifications instantly. Among the applications are retouching, noise
      reduction, and enhancing global contrast.
-   * Wavelet Denoise (0.3.1):
+   * wavelet-denoise (0.3.1): Wavelet Denoise
      The wavelet denoise plugin is a tool to selectively reduce noise in
      individual channels of an image with optional RGB<->YCbCr conversion.
      It has a user interface to adjust the amount of denoising applied. The
