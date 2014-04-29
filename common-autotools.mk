@@ -1,4 +1,6 @@
 
+include common-settings.mk
+
 SRCDIR = ./src
 
 

@@ -2,15 +2,14 @@ Source: gimp-plugin-registry
 Section: graphics
 Priority: optional
 Maintainer: Bernd Zeimetz <bzed@debian.org>
-Build-Depends: debhelper (>= 5), autotools-dev, quilt,
- libgimp2.0-dev (>= 2.6), libxml-parser-perl,
- libblas-dev, liblapack-dev, libf2c2-dev, libfftw3-dev, libglew-dev,
- libgtkglext1-dev, liblcms1-dev, libtiff4-dev,
- liblqr-1-0-dev (>= 0.3.0), intltool,
- libxcursor-dev, python, automake, autoconf, libglib2.0-dev
-Standards-Version: 3.9.0
-Vcs-Git: git://git.recluse.de/debian/pkg-gimp-plugin-registry.git
-Vcs-Browser: http://git.recluse.de/?p=debian/pkg-gimp-plugin-registry.git;a=summary
+Uploaders: Bernd Zeimetz <bzed@debian.org>
+Build-Depends: autotools-dev, quilt, libgimp2.0-dev, intltool,
+ python, automake, autoconf, autotools-dev, dh-autoreconf,
+ libxml-parser-perl, libfftw3-dev, liblqr-1-0-dev, libglew-dev, libgtkglext1-dev, libblas-dev, liblapack-dev, libf2c2-dev, automake (>= 1.6), autoconf (>= 2.54), liblcms1-dev, libtiff-dev, debhelper (>= 8.0.0), libglib2.0-dev,
+ python-debian
+Standards-Version: 3.9.5
+Vcs-Git: https://github.com/bzed/gimp-plugin-registry.git
+Vcs-Browser: https://github.com/bzed/gimp-plugin-registry
 
 Package: gimp-plugin-registry
 Architecture: any

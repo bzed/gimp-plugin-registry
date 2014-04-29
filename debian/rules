@@ -54,7 +54,7 @@ dh_auto_install-%:
 	    mkdir -p debian/$*/usr/lib/gimp/2.0 ;\
 	    mv debian/$*/usr/lib/gimp-plugin-registry debian/$*/usr/lib/gimp/2.0/plug-ins ;\
 	fi
-	# add files to debian/nagios-plugins-contrib.install
+	# add files to debian/gimp-plugin-registry.install
 	set -e; find debian/$* -type f -printf '%h\n' | sort -u  |\
 	    while read dir; do \
 	        echo "$$dir/* `echo $$dir | sed 's,debian/$*/,,'`" ;\

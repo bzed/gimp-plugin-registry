@@ -1,3 +1,5 @@
+include common-settings.mk
+
 GIMPTOOL = /usr/bin/gimptool-2.0
 
 %: %.c

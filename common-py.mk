@@ -1,3 +1,6 @@
+
+include common-settings.mk
+
 PYDEFAULT := $(shell pyversions -vd)
 PYCOMPILE := $(shell which pycompile| grep -v 'not found')
 

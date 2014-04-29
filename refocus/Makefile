@@ -1,4 +1,6 @@
 
+include ../common-settings.mk
+
 CC=gcc
 
 build: build-stamp
