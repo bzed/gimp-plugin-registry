@@ -83,7 +83,7 @@ override_dh_auto_clean: $(PLUGINS:%=dh_auto_clean-%)
 override_dh_auto_configure: $(PLUGINS:%=dh_auto_configure-%)
 
 override_dh_auto_install: $(PLUGINS:%=dh_auto_install-%)
-	$(PACKAGING_HELPER) --generate-readme
+	#$(PACKAGING_HELPER) --generate-readme
 
 #override_dh_auto_test: $(PLUGINS:%=dh_auto_test-%)
 override_dh_auto_test: 
