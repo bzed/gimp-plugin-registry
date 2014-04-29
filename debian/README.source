@@ -1,8 +1,63 @@
-gimp-plugin-registry (2.0-1) unstable; urgency=low
+gimp-plugin-registry - Plugins for GIMP
+--------------------------------------------------------------------------
 
-  * The gimp-plugin-registry packaging uses quilt to manage patches
-    at build time. Please install the package 'quilt' and see
-    /usr/share/doc/quilt/README.source
+
+This README.source should give a short instruction about the
+way the gimp-plugin-registry repository is structured
+and defines basic policies.
+
+* build-system: git-buildpackage. As we build a Debian native
+  package pristine-tar is not necessary.
+
+* debian/changelog:
+  - preferable generated using git-dch
+  - versioning schema: X.$(date '+%Y%m%d'). X will be
+    increased by one with each release. In case there are
+    bugfixes in stable releases necessary, use
+    X.$(date '+%Y%m%d').Y
+    See http://kitenet.net/~joey/blog/entry/version_numbers/
     for details.
 
- -- Bernd Zeimetz <bzed@debian.org>  Sun, 15 Mar 2009 00:21:54 +0100
+* debian/copyright.in, debian/control.in:
+  Base files we fill automatically with information from
+  all plugins to generate the full files.
+  This is done in the clean target.
+  DO NOT MODIFY debian/control or debian/copyright!
+
+* GIMP plugins:
+  - one directory per plugin
+  - required files:
+    * $plugin/control: file format similar to debian/control.
+      - Required is the Description and Uploaders part.
+        Add Depends, Build-Depends, Recommends, Suggests
+        and Homepage to have their content added to debian/control/
+        debian/copyright.
+      - Add Version to be able to track an upstream version of
+        the plugin.
+      - Add Watch to check for new versions using
+        ./debian/packaging-helper.py
+        Format:
+        Watch URL python-regex
+        Watch URL SHA1:sha1sum
+      - Don't add empty lines - only the first paragraph will be
+        handled.
+    * $plugin/copyright: copyright information for the files
+      in $plugin. Will be added to debian/copyright
+      automatically, properly indented and with a header which
+      describes that the coming block is for the files in $plugin.
+      ** DEP-5 IS NOT SUPPORTED **
+  - what you should have:
+    Currently there are two options on how to build and install
+    plugins:
+    * you have a single script or file or need some hand-made
+      build system anyway:
+      add $plugin/Makefile and implement the all / install / clean
+      targets. include ../common.mk is there for common tasks.
+      If $plugin/Makefile exists the way described below *will not*
+      be built.
+    * your plugin comes with a fancy build system already:
+      extract the source in $plugin and let a symlink called 'src'
+      point to the subdirectory of $plugin.
+      If dh_auto_* is not able to build the plugin, please use
+      the Makefile way as described above.
+
