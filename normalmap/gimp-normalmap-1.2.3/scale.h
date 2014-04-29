@@ -22,9 +22,16 @@
 #ifndef __SCALE_H
 #define __SCALE_H
 
-float cubic_interpolate(float a, float b, float c, float d, float x);
 void scale_pixels(unsigned char *dst, int dw, int dh,
                   unsigned char *src, int sw, int sh,
                   int bpp);
+
+static inline int icerp(int a, int b, int c, int d, int x)
+{
+   int p = (d - c) - (a - b);
+   int q = (a - b) - p;
+   int r = c - a;
+   return((x * (x * (x * p + (q << 7)) + (r << 14)) + (b << 21)) >> 21);
+}
 
 #endif

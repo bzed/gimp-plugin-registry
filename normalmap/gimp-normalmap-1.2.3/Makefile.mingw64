@@ -1,22 +1,20 @@
 
-GIMPTOOL=gimptool-2.0
+GIMPTOOL=/usr/x86_64-w64-mingw32/sys-root/mingw/bin/gimptool-2.0
 
-CC=gcc
-CFLAGS=-O3 -Wall `pkg-config --cflags gtk+-2.0 gtkglext-1.0 gimp-2.0`
-LD=gcc
-LDFLAGS=
+CC=x86_64-w64-mingw32-gcc
+CFLAGS=-O3 -Wall `x86_64-w64-mingw32-pkg-config --cflags gtk+-2.0 gtkglext-1.0 gimp-2.0 glew`
+LDFLAGS=-mwindows
 
-TARGET=normalmap
+TARGET=normalmap.exe
 
 OBJS=normalmap.o preview3d.o scale.o
 
-LIBS=`pkg-config --libs gtk+-2.0 gtkglext-1.0 gimp-2.0 gimpui-2.0` \
--L/usr/X11R6/lib -lGLEW
+LIBS=`x86_64-w64-mingw32-pkg-config --libs gtk+-2.0 gtkglext-1.0 gimp-2.0 gimpui-2.0 glew`
 
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(LD) $(LDFLAGS) $(OBJS) $(LIBS) -o $(TARGET)
+	$(CC) $(LDFLAGS) $(OBJS) $(LIBS) -o $(TARGET)
 		 
 clean:
 	rm -f *.o $(TARGET)

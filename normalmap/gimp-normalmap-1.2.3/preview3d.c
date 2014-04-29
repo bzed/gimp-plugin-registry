@@ -145,18 +145,18 @@ static const char *normal_frag_source =
    "varying vec3 normal;\n"
    "varying vec3 tangent;\n"
    "varying vec3 binormal;\n"
-   
+
    "uniform sampler2D sNormal;\n"
    "uniform sampler2D sDiffuse;\n"
    "uniform sampler2D sGloss;\n\n"
-   
+
    "uniform vec3 lightDir;\n"
    "uniform bool specular;\n"
    "uniform float specular_exp;\n"
    "uniform vec3 ambient_color;\n"
    "uniform vec3 diffuse_color;\n"
    "uniform vec3 specular_color;\n\n"
-      
+
    "void main()\n"
    "{\n"
    "   vec3 V = normalize(vpos);\n"
@@ -174,25 +174,25 @@ static const char *normal_frag_source =
    "   }\n"
    "   gl_FragColor.rgb = ambient_color * diffuse + color;\n"
    "}\n";
-      
+
 static const char *parallax_frag_source =
    "varying vec2 tex;\n"
    "varying vec3 vpos;\n"
    "varying vec3 normal;\n"
    "varying vec3 tangent;\n"
    "varying vec3 binormal;\n"
-   
+
    "uniform sampler2D sNormal;\n"
    "uniform sampler2D sDiffuse;\n"
    "uniform sampler2D sGloss;\n\n"
-   
+
    "uniform vec3 lightDir;\n"
    "uniform bool specular;\n"
    "uniform float specular_exp;\n"
    "uniform vec3 ambient_color;\n"
    "uniform vec3 diffuse_color;\n"
    "uniform vec3 specular_color;\n\n"
-      
+
    "void main()\n"
    "{\n"
    "   mat3 TBN = mat3(tangent, binormal, normal);\n"
@@ -461,7 +461,7 @@ static void mat_invert(matrix m)
    T(3,1) = -(M(3, 0) * T(0, 1) + M(3, 1) * T(1, 1) + M(3, 2) * T(2, 1));
    T(3,2) = -(M(3, 0) * T(0, 2) + M(3, 1) * T(1, 2) + M(3, 2) * T(2, 2));
    T(3,3) = 1;
-   
+
    memcpy(m, t, 16 * sizeof(float));
 }
 
@@ -481,7 +481,7 @@ static void mat_mult_vec(vec3 v, matrix m)
    t[0] = M(0, 0) * v[0] + M(0, 1) * v[1] + M(0, 2) * v[2];
    t[1] = M(1, 0) * v[0] + M(1, 1) * v[1] + M(1, 2) * v[2];
    t[2] = M(2, 0) * v[0] + M(2, 1) * v[1] + M(2, 2) * v[2];
-   
+
    v[0] = t[0];
    v[1] = t[1];
    v[2] = t[2];
@@ -547,16 +547,16 @@ static void quat_mul(vec4 r, vec4 a, vec4 b)
 static void quat_rotate(vec4 q, float a, float x, float y, float z)
 {
    float hs, len, ilen;
-   
+
    len = sqrtf(x * x + y * y + z * z);
    if(len == 0) return;
    ilen = 1.0f / len;
    x *= ilen;
    y *= ilen;
    z *= ilen;
-   
+
    a = (a * (M_PI / 180.0f)) * 0.5f;
-   
+
    hs = sinf(a);
    q[0] = x * hs;
    q[1] = y * hs;
@@ -588,11 +588,11 @@ static void init(GtkWidget *widget, gpointer data)
 
    if(!gdk_gl_drawable_gl_begin(gldrawable, glcontext))
       return;
-      
+
    err = glewInit();
    if(err != GLEW_OK)
    {
-      g_message((char*)glewGetErrorString(err));
+      g_message("%s", (char *)glewGetErrorString(err));
       _gl_error = 1;
    }
 
@@ -623,12 +623,12 @@ static void init(GtkWidget *widget, gpointer data)
    }
 
    if(_gl_error) return;
-   
+
    glGenTextures(1, &diffuse_tex);
    glGenTextures(1, &gloss_tex);
    glGenTextures(1, &normal_tex);
    glGenTextures(1, &white_tex);
-   
+
    glGetIntegerv(GL_MAX_TEXTURE_UNITS, &num_mtus);
 
    glActiveTexture(GL_TEXTURE0);
@@ -648,7 +648,7 @@ static void init(GtkWidget *widget, gpointer data)
    glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND0_RGB, GL_SRC_COLOR);
    glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE1_RGB, GL_TEXTURE);
    glTexEnvi(GL_TEXTURE_ENV, GL_OPERAND1_RGB, GL_SRC_COLOR);
-   
+
    glBindTexture(GL_TEXTURE_2D, white_tex);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -664,12 +664,12 @@ static void init(GtkWidget *widget, gpointer data)
       glBindTexture(GL_TEXTURE_2D, white_tex);
    }
 
-   has_glsl = GLEW_ARB_shader_objects && GLEW_ARB_vertex_shader && 
+   has_glsl = GLEW_ARB_shader_objects && GLEW_ARB_vertex_shader &&
       GLEW_ARB_fragment_shader;
    has_npot = GLEW_ARB_texture_non_power_of_two;
    has_generate_mipmap = GLEW_SGIS_generate_mipmap;
    has_aniso = GLEW_EXT_texture_filter_anisotropic;
-   
+
    if(has_glsl)
    {
       GLhandleARB prog, vert_shader, frag_shader;
@@ -706,10 +706,10 @@ static void init(GtkWidget *widget, gpointer data)
          g_message("Vertex shader failed to compile:\n%s\n", info);
          g_free(info);
       }
-      
+
       prog = glCreateProgramObjectARB();
       glAttachObjectARB(prog, vert_shader);
-      
+
       frag_shader = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
       glShaderSourceARB(frag_shader, 1, &normal_frag_source, 0);
       glCompileShaderARB(frag_shader);
@@ -728,7 +728,7 @@ static void init(GtkWidget *widget, gpointer data)
          prog = 0;
       }
       glDeleteObjectARB(frag_shader);
-      
+
       if(prog)
       {
          glLinkProgramARB(prog);
@@ -745,12 +745,12 @@ static void init(GtkWidget *widget, gpointer data)
             prog = 0;
          }
       }
-      
+
       programs[BUMPMAP_NORMAL] = prog;
 
       prog = glCreateProgramObjectARB();
       glAttachObjectARB(prog, vert_shader);
-      
+
       frag_shader = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
       glShaderSourceARB(frag_shader, 1, &parallax_frag_source, 0);
       glCompileShaderARB(frag_shader);
@@ -774,7 +774,7 @@ static void init(GtkWidget *widget, gpointer data)
       {
          glLinkProgramARB(prog);
          glGetObjectParameterivARB(prog, GL_OBJECT_LINK_STATUS_ARB, &res);
-         
+
          if(!res)
          {
             glGetObjectParameterivARB(prog, GL_OBJECT_INFO_LOG_LENGTH_ARB, &len);
@@ -786,21 +786,21 @@ static void init(GtkWidget *widget, gpointer data)
             prog = 0;
          }
       }
-      
+
       programs[BUMPMAP_PARALLAX] = prog;
-      
+
       if(max_instructions >= 200)
       {
          prog = glCreateProgramObjectARB();
          glAttachObjectARB(prog, vert_shader);
-      
+
          if(max_indirections < 100)
             sources[0] = "#define ATI 1\n";
          else
             sources[0] = "";
-         
+
          sources[1] = pom_frag_source;
-      
+
          frag_shader = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
          glShaderSourceARB(frag_shader, 2, sources, 0);
          glCompileShaderARB(frag_shader);
@@ -819,12 +819,12 @@ static void init(GtkWidget *widget, gpointer data)
             prog = 0;
          }
          glDeleteObjectARB(frag_shader);
-      
+
          if(prog)
          {
             glLinkProgramARB(prog);
             glGetObjectParameterivARB(prog, GL_OBJECT_LINK_STATUS_ARB, &res);
-            
+
             if(!res)
             {
                glGetObjectParameterivARB(prog, GL_OBJECT_INFO_LOG_LENGTH_ARB, &len);
@@ -837,7 +837,7 @@ static void init(GtkWidget *widget, gpointer data)
                prog = 0;
             }
          }
-            
+
          programs[BUMPMAP_POM] = prog;
       }
       else
@@ -847,7 +847,7 @@ static void init(GtkWidget *widget, gpointer data)
       {
          prog = glCreateProgramObjectARB();
          glAttachObjectARB(prog, vert_shader);
-         
+
          frag_shader = glCreateShaderObjectARB(GL_FRAGMENT_SHADER_ARB);
          glShaderSourceARB(frag_shader, 1, &relief_frag_source, 0);
          glCompileShaderARB(frag_shader);
@@ -866,12 +866,12 @@ static void init(GtkWidget *widget, gpointer data)
             prog = 0;
          }
          glDeleteObjectARB(frag_shader);
-         
+
          if(prog)
          {
             glLinkProgramARB(prog);
             glGetObjectParameterivARB(prog, GL_OBJECT_LINK_STATUS_ARB, &res);
-            
+
             if(!res)
             {
                glGetObjectParameterivARB(prog, GL_OBJECT_INFO_LOG_LENGTH_ARB, &len);
@@ -883,7 +883,7 @@ static void init(GtkWidget *widget, gpointer data)
                prog = 0;
             }
          }
-         
+
          programs[BUMPMAP_RELIEF] = prog;
       }
       else
@@ -901,7 +901,7 @@ static void init(GtkWidget *widget, gpointer data)
          loc = glGetUniformLocationARB(programs[BUMPMAP_NORMAL], "sGloss");
          glUniform1iARB(loc, 2);
       }
-      
+
       if(programs[BUMPMAP_PARALLAX])
       {
          glUseProgramObjectARB(programs[BUMPMAP_PARALLAX]);
@@ -925,7 +925,7 @@ static void init(GtkWidget *widget, gpointer data)
          loc = glGetUniformLocationARB(programs[BUMPMAP_POM], "depth_factor");
          glUniform1fARB(loc, depth_factor);
       }
-      
+
       if(programs[BUMPMAP_RELIEF])
       {
          glUseProgramObjectARB(programs[BUMPMAP_RELIEF]);
@@ -949,9 +949,9 @@ static void init(GtkWidget *widget, gpointer data)
                          object_info[i].num_verts * 16 * sizeof(float),
                          object_info[i].verts, GL_STATIC_DRAW_ARB);
       }
-      
+
       glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
-      
+
       menu = gtk_option_menu_get_menu(GTK_OPTION_MENU(bumpmapping_opt));
       curr = gtk_container_get_children(GTK_CONTAINER(menu));
       for(i = 0; i < BUMPMAP_MAX && curr; ++i)
@@ -976,7 +976,7 @@ static void init(GtkWidget *widget, gpointer data)
    light_rot[0] = light_rot[1] = light_rot[2] = 0;
    scene_rot[0] = scene_rot[1] = scene_rot[2] = 0;
    zoom = 2;
-   
+
    gdk_gl_drawable_gl_end(gldrawable);
 }
 
@@ -988,7 +988,7 @@ static void draw_object(int obj, vec3 l, matrix m)
    vec2 uv;
    float *verts;
    unsigned short *indices;
-   
+
    if(obj < 0 || obj >= OBJECT_MAX) return;
 
    if(has_glsl)
@@ -996,7 +996,7 @@ static void draw_object(int obj, vec3 l, matrix m)
       glBindBufferARB(GL_ARRAY_BUFFER_ARB, object_info[obj].vbo);
 
 #define OFFSET(x) ((void*)((x) * sizeof(float)))
-      
+
       glVertexPointer(4, GL_FLOAT, vsize, OFFSET(0));
       glNormalPointer(GL_FLOAT, vsize, OFFSET(12));
       glClientActiveTexture(GL_TEXTURE4);
@@ -1010,12 +1010,12 @@ static void draw_object(int obj, vec3 l, matrix m)
       glEnableClientState(GL_TEXTURE_COORD_ARRAY);
       glEnableClientState(GL_VERTEX_ARRAY);
       glEnableClientState(GL_NORMAL_ARRAY);
-      
-#undef OFFSET      
-      
+
+#undef OFFSET
+
       glDrawElements(GL_TRIANGLES, object_info[obj].num_indices,
                      GL_UNSIGNED_SHORT, object_info[obj].indices);
-      
+
       glDisableClientState(GL_VERTEX_ARRAY);
       glDisableClientState(GL_NORMAL_ARRAY);
       glClientActiveTexture(GL_TEXTURE4);
@@ -1024,14 +1024,14 @@ static void draw_object(int obj, vec3 l, matrix m)
       glDisableClientState(GL_TEXTURE_COORD_ARRAY);
       glClientActiveTexture(GL_TEXTURE0);
       glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-      
+
       glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
    }
    else
    {
       verts = object_info[obj].verts;
       indices = object_info[obj].indices;
-         
+
       glBegin(GL_TRIANGLES);
       for(i = 0; i < object_info[obj].num_indices; ++i)
       {
@@ -1048,10 +1048,10 @@ static void draw_object(int obj, vec3 l, matrix m)
          c[0] = c[0] * 0.5f + 0.5f;
          c[1] = c[1] * 0.5f + 0.5f;
          c[2] = c[2] * 0.5f + 0.5f;
-         
+
          uv[0] = verts[16 * indices[i] + 4] * uvscale[0];
          uv[1] = verts[16 * indices[i] + 5] * uvscale[1];
-         
+
          glColor3fv(c);
          glNormal3fv(&verts[16 * indices[i] + 12]);
          glMultiTexCoord2fv(GL_TEXTURE0, uv);
@@ -1073,21 +1073,21 @@ static gint expose(GtkWidget *widget, GdkEventExpose *event)
    GdkGLContext *glcontext = gtk_widget_get_gl_context(widget);
    GdkGLDrawable *gldrawable = gtk_widget_get_gl_drawable(widget);
    GLhandleARB prog = 0;
-   
+
    if(event->count > 0) return(1);
-   
+
    if(!gdk_gl_drawable_gl_begin(gldrawable, glcontext))
       return(1);
-   
+
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-   
+
    if(_gl_error)
    {
       gdk_gl_drawable_swap_buffers(gldrawable);
       gdk_gl_drawable_gl_end(gldrawable);
       return(1);
    }
-   
+
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
    glRotatef(scene_rot[0], 1, 0, 0);
@@ -1112,7 +1112,7 @@ static gint expose(GtkWidget *widget, GdkEventExpose *event)
    quat_mul(qrot, qt, qz);
    vec4_normalize(qrot, qrot);
    quat_get_direction(l, qrot);
-   
+
    if(has_glsl)
    {
       prog = programs[bumpmapping];
@@ -1132,15 +1132,15 @@ static gint expose(GtkWidget *widget, GdkEventExpose *event)
       loc = glGetUniformLocationARB(prog, "uvscale");
       glUniform2fvARB(loc, 1, uvscale);
    }
-   
+
    draw_object(object_type, l, m);
 
    if(has_glsl)
       glUseProgramObjectARB(0);
-      
+
    gdk_gl_drawable_swap_buffers(gldrawable);
    gdk_gl_drawable_gl_end(gldrawable);
-   
+
    return(1);
 }
 
@@ -1149,27 +1149,27 @@ static gint configure(GtkWidget *widget, GdkEventConfigure *event)
    GdkGLContext *glcontext;
    GdkGLDrawable *gldrawable;
    int w, h;
-   
+
    g_return_val_if_fail(widget && event, FALSE);
-   
+
    glcontext = gtk_widget_get_gl_context(widget);
    gldrawable = gtk_widget_get_gl_drawable(widget);
-   
+
    if(!gdk_gl_drawable_gl_begin(gldrawable,glcontext))
       return(1);
-   
+
    w = widget->allocation.width;
    h = widget->allocation.height;
-      
+
    glViewport(0, 0, w, h);
-      
+
    glMatrixMode(GL_PROJECTION);
    glLoadIdentity();
    gluPerspective(60, (float)w / (float)h, 0.1f, 100);
-      
+
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
-   
+
    gdk_gl_drawable_gl_end(gldrawable);
 
    return(1);
@@ -1188,7 +1188,7 @@ static gint motion_notify(GtkWidget *widget, GdkEventMotion *event)
    float dx, dy;
    float *rot;
    GdkModifierType state;
-   
+
    if(event->is_hint)
    {
 #ifndef WIN32
@@ -1204,13 +1204,13 @@ static gint motion_notify(GtkWidget *widget, GdkEventMotion *event)
 
    dx = -0.25f * (float)(mx - x);
    dy = -0.25f * (float)(my - y);
-   
+
    rot = object_rot;
    if(rotate_type == ROTATE_LIGHT)
       rot = light_rot;
    else if(rotate_type == ROTATE_SCENE)
       rot = scene_rot;
-   
+
    if(state & GDK_BUTTON1_MASK)
    {
       rot[1] += cosf(rot[0] / 180.0f * M_PI) * dx;
@@ -1221,12 +1221,12 @@ static gint motion_notify(GtkWidget *widget, GdkEventMotion *event)
    {
       zoom += (-dy * 0.2f);
    }
-   
+
    mx = x;
    my = y;
-   
+
    gtk_widget_queue_draw(widget);
-   
+
    return(1);
 }
 
@@ -1239,7 +1239,7 @@ static void window_destroy(GtkWidget *widget, gpointer data)
 static void get_nearest_pot(int w, int h, int *w_pot, int *h_pot)
 {
    int n, next_pot, prev_pot, d1, d2;
-   
+
    if(!IS_POT(w))
    {
       next_pot = 1;
@@ -1249,7 +1249,7 @@ static void get_nearest_pot(int w, int h, int *w_pot, int *h_pot)
          next_pot = 1 << n;
          if(next_pot >= w) break;
       }
-      
+
       if(next_pot < w)
          *w_pot = next_pot;
       else
@@ -1264,7 +1264,7 @@ static void get_nearest_pot(int w, int h, int *w_pot, int *h_pot)
    }
    else
       *w_pot = w;
-   
+
    if(!IS_POT(h))
    {
       next_pot = 1;
@@ -1274,7 +1274,7 @@ static void get_nearest_pot(int w, int h, int *w_pot, int *h_pot)
          next_pot = 1 << n;
          if(next_pot >= h) break;
       }
-      
+
       if(next_pot < h)
          *h_pot = next_pot;
       else
@@ -1299,9 +1299,9 @@ static void diffusemap_callback(gint32 id, gpointer data)
    unsigned char *pixels, *tmp, *mip;
    GimpPixelRgn src_rgn;
    GLenum type = 0;
-   
+
    if(_gl_error) return;
-   
+
    if(id == normalmap_drawable_id)
    {
       if(white_tex != 0)
@@ -1312,13 +1312,13 @@ static void diffusemap_callback(gint32 id, gpointer data)
       gtk_widget_queue_draw(glarea);
       return;
    }
-   
+
    drawable = gimp_drawable_get(id);
-   
+
    w = drawable->width;
    h = drawable->height;
    bpp = drawable->bpp;
-   
+
    switch(bpp)
    {
       case 1: type = GL_LUMINANCE;       break;
@@ -1326,7 +1326,7 @@ static void diffusemap_callback(gint32 id, gpointer data)
       case 3: type = GL_RGB;             break;
       case 4: type = GL_RGBA;            break;
    }
-   
+
    pixels = g_malloc(w * h * bpp);
    gimp_pixel_rgn_init(&src_rgn, drawable, 0, 0, w, h, 0, 0);
    gimp_pixel_rgn_get_rect(&src_rgn, pixels, 0, 0, w, h);
@@ -1373,11 +1373,11 @@ static void diffusemap_callback(gint32 id, gpointer data)
          g_free(mip);
       }
    }
-   
+
    g_free(pixels);
-   
+
    gimp_drawable_detach(drawable);
-   
+
    gtk_widget_queue_draw(glarea);
 }
 
@@ -1389,10 +1389,10 @@ static void glossmap_callback(gint32 id, gpointer data)
    unsigned char *pixels, *tmp, *mip;
    GimpPixelRgn src_rgn;
    GLenum type = 0;
-   
+
    if(_gl_error) return;
    if(num_mtus < 3) return;
-   
+
    if(id == normalmap_drawable_id)
    {
       if(white_tex != 0)
@@ -1403,13 +1403,13 @@ static void glossmap_callback(gint32 id, gpointer data)
       gtk_widget_queue_draw(glarea);
       return;
    }
-   
+
    drawable = gimp_drawable_get(id);
-   
+
    w = drawable->width;
    h = drawable->height;
    bpp = drawable->bpp;
-   
+
    switch(bpp)
    {
       case 1: type = GL_LUMINANCE;       break;
@@ -1417,11 +1417,11 @@ static void glossmap_callback(gint32 id, gpointer data)
       case 3: type = GL_RGB;             break;
       case 4: type = GL_RGBA;            break;
    }
-   
+
    pixels = g_malloc(w * h * bpp);
    gimp_pixel_rgn_init(&src_rgn, drawable, 0, 0, w, h, 0, 0);
    gimp_pixel_rgn_get_rect(&src_rgn, pixels, 0, 0, w, h);
-   
+
    if(!has_npot && !(IS_POT(w) && IS_POT(h)))
    {
       get_nearest_pot(w, h, &w_pot, &h_pot);
@@ -1445,7 +1445,7 @@ static void glossmap_callback(gint32 id, gpointer data)
       glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP_SGIS, GL_TRUE);
    glTexImage2D(GL_TEXTURE_2D, 0, type, w, h, 0,
                 type, GL_UNSIGNED_BYTE, pixels);
-   
+
    if(!has_generate_mipmap)
    {
       mipw = w;
@@ -1464,23 +1464,23 @@ static void glossmap_callback(gint32 id, gpointer data)
          g_free(mip);
       }
    }
-   
+
    g_free(pixels);
-   
+
    gimp_drawable_detach(drawable);
-   
+
    gtk_widget_queue_draw(glarea);
 }
 
 static void object_selected(GtkWidget *widget, gpointer data)
 {
-   object_type = (int)(long)data;
+   object_type = (int)((size_t)data);
    gtk_widget_queue_draw(glarea);
 }
 
 static void bumpmapping_clicked(GtkWidget *widget, gpointer data)
 {
-   bumpmapping = (int)(long)data;
+   bumpmapping = (int)((size_t)data);
    gtk_widget_queue_draw(glarea);
 }
 
@@ -1515,7 +1515,7 @@ static void color_changed(GtkWidget *widget, gpointer data)
 {
    float *c = (float*)data;
    GimpRGB color;
-   
+
    gimp_color_button_get_color(GIMP_COLOR_BUTTON(widget), &color);
    c[0] = color.r;
    c[1] = color.g;
@@ -1527,12 +1527,12 @@ static void color_changed(GtkWidget *widget, gpointer data)
 static void rotate_type_toggled(GtkWidget *widget, gpointer data)
 {
    if(gtk_toggle_tool_button_get_active(GTK_TOGGLE_TOOL_BUTTON(widget)))
-      rotate_type = (int)(long)data;
+      rotate_type = (int)((size_t)data);
 }
 
 static void uvscale_changed(GtkWidget *widget, gpointer data)
 {
-   int n = (int)(long)data;
+   int n = (int)((size_t)data);
    float v = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widget));
    GtkWidget *btn = g_object_get_data(G_OBJECT(widget), "chain");
 
@@ -1550,25 +1550,25 @@ static void uvscale_changed(GtkWidget *widget, gpointer data)
          gtk_spin_button_set_value(GTK_SPIN_BUTTON(uvscale_spin1), v);
       }
    }
-      
+
    gtk_widget_queue_draw(glarea);
 }
 
 static void reset_view_clicked(GtkWidget *widget, gpointer data)
 {
    GimpRGB c;
-   
+
    object_rot[0] = object_rot[1] = object_rot[2] = 0;
    light_rot[0] = light_rot[1] = light_rot[2] = 0;
    scene_rot[0] = scene_rot[1] = scene_rot[2] = 0;
    zoom = 2;
-   
+
    specular_exp = 32.0f;
    ambient_color[0] = ambient_color[1] = ambient_color[2] = 0.2f;
    diffuse_color[0] = diffuse_color[1] = diffuse_color[2] = 1.0f;
    specular_color[0] = specular_color[1] = specular_color[2] = 1.0f;
    uvscale[0] = uvscale[1] = 1;
-   
+
    gtk_toggle_tool_button_set_active(GTK_TOGGLE_TOOL_BUTTON(rotate_obj_btn), 1);
    gtk_option_menu_set_history(GTK_OPTION_MENU(object_opt), 0);
    gtk_option_menu_set_history(GTK_OPTION_MENU(bumpmapping_opt), 0);
@@ -1576,7 +1576,7 @@ static void reset_view_clicked(GtkWidget *widget, gpointer data)
    gtk_range_set_value(GTK_RANGE(specular_exp_range), specular_exp);
    gtk_spin_button_set_value(GTK_SPIN_BUTTON(uvscale_spin1), uvscale[0]);
    gtk_spin_button_set_value(GTK_SPIN_BUTTON(uvscale_spin2), uvscale[1]);
-   
+
    gimp_rgb_set(&c, ambient_color[0], ambient_color[1], ambient_color[2]);
    gimp_color_button_set_color(GIMP_COLOR_BUTTON(ambient_color_btn), &c);
    gimp_rgb_set(&c, diffuse_color[0], diffuse_color[1], diffuse_color[2]);
@@ -1588,7 +1588,7 @@ static void reset_view_clicked(GtkWidget *widget, gpointer data)
    specular = 0;
    rotate_type = ROTATE_OBJECT;
    object_type = OBJECT_QUAD;
-   
+
    gtk_widget_queue_draw(glarea);
 }
 
@@ -1622,7 +1622,7 @@ void show_3D_preview(GimpDrawable *drawable)
    {
       "Normal", "Parallax", "Parallax Occlusion", "Relief"
    };
-   
+
    bumpmapping = 0;
    specular = 0;
    specular_exp = 32.0f;
@@ -1630,11 +1630,11 @@ void show_3D_preview(GimpDrawable *drawable)
    diffuse_color[0] = diffuse_color[1] = diffuse_color[2] = 1.0f;
    specular_color[0] = specular_color[1] = specular_color[2] = 1.0f;
    uvscale[0] = uvscale[1] = 1;
-   
+
    if(_active) return;
-   
+
    normalmap_drawable_id = drawable->drawable_id;
-   
+
    glconfig = gdk_gl_config_new_by_mode(GDK_GL_MODE_RGBA |
                                         GDK_GL_MODE_DEPTH |
                                         GDK_GL_MODE_DOUBLE);
@@ -1650,18 +1650,18 @@ void show_3D_preview(GimpDrawable *drawable)
    gtk_container_set_reallocate_redraws(GTK_CONTAINER(window), TRUE);
    gtk_signal_connect(GTK_OBJECT(window), "destroy",
                       GTK_SIGNAL_FUNC(window_destroy), 0);
-   
+
    vbox = gtk_vbox_new(0, 0);
    gtk_container_add(GTK_CONTAINER(window), vbox);
    gtk_widget_show(vbox);
-   
+
    tooltips = gtk_tooltips_new();
-   
+
    toolbar = gtk_toolbar_new();
    gtk_widget_show(toolbar);
    gtk_toolbar_set_style(GTK_TOOLBAR(toolbar), GTK_TOOLBAR_ICONS);
    gtk_box_pack_start(GTK_BOX(vbox), toolbar, 0, 0, 0);
-   
+
    group = NULL;
 
    toolbtn = gtk_radio_tool_button_new(group);
@@ -1678,7 +1678,7 @@ void show_3D_preview(GimpDrawable *drawable)
                       GTK_SIGNAL_FUNC(rotate_type_toggled),
                       (gpointer)ROTATE_OBJECT);
    group = gtk_radio_tool_button_get_group(GTK_RADIO_TOOL_BUTTON(toolbtn));
-   
+
    toolbtn = gtk_radio_tool_button_new(group);
    gtk_tool_button_set_label(GTK_TOOL_BUTTON(toolbtn), "");
    pixbuf = gdk_pixbuf_new_from_xpm_data(light_xpm);
@@ -1706,7 +1706,7 @@ void show_3D_preview(GimpDrawable *drawable)
                       GTK_SIGNAL_FUNC(rotate_type_toggled),
                       (gpointer)ROTATE_SCENE);
    group = gtk_radio_tool_button_get_group(GTK_RADIO_TOOL_BUTTON(toolbtn));
-   
+
    toolbtn = gtk_separator_tool_item_new();
    gtk_widget_show(GTK_WIDGET(toolbtn));
    gtk_container_add(GTK_CONTAINER(toolbar), GTK_WIDGET(toolbtn));
@@ -1726,7 +1726,7 @@ void show_3D_preview(GimpDrawable *drawable)
    toolbtn = gtk_separator_tool_item_new();
    gtk_widget_show(GTK_WIDGET(toolbtn));
    gtk_container_add(GTK_CONTAINER(toolbar), GTK_WIDGET(toolbtn));
-   
+
    toolbtn = gtk_tool_item_new();
    gtk_widget_show(GTK_WIDGET(toolbtn));
    gtk_container_add(GTK_CONTAINER(toolbar), GTK_WIDGET(toolbtn));
@@ -1737,26 +1737,26 @@ void show_3D_preview(GimpDrawable *drawable)
    toolbtn = gtk_tool_item_new();
    gtk_widget_show(GTK_WIDGET(toolbtn));
    gtk_container_add(GTK_CONTAINER(toolbar), GTK_WIDGET(toolbtn));
-   
+
    opt = gtk_option_menu_new();
    object_opt = opt;
    gtk_widget_show(opt);
    gtk_container_add(GTK_CONTAINER(toolbtn), opt);
-      
+
    menu = gtk_menu_new();
 
    for(i = 0; i < OBJECT_MAX; ++i)
    {
       menuitem = gtk_menu_item_new_with_label(object_strings[i]);
-      gtk_signal_connect(GTK_OBJECT(menuitem), "activate", 
+      gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
                          GTK_SIGNAL_FUNC(object_selected),
-                         (gpointer)(long)i);
+                         (gpointer)((size_t)i));
       gtk_widget_show(menuitem);
       gtk_menu_append(GTK_MENU(menu), menuitem);
    }
-   
+
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(opt), menu);
-   
+
    glarea = gtk_drawing_area_new();
    gtk_widget_set_usize(glarea, 500, 300);
    gtk_widget_set_gl_capability(glarea, glconfig, 0, 1, GDK_GL_RGBA_TYPE);
@@ -1773,7 +1773,7 @@ void show_3D_preview(GimpDrawable *drawable)
                       GTK_SIGNAL_FUNC(button_press), 0);
    gtk_signal_connect(GTK_OBJECT(glarea), "configure_event",
                       GTK_SIGNAL_FUNC(configure), 0);
-   
+
    gtk_box_pack_start(GTK_BOX(vbox), glarea, 1, 1, 0);
 
    table = gtk_table_new(11, 2, 0);
@@ -1783,14 +1783,14 @@ void show_3D_preview(GimpDrawable *drawable)
    gtk_table_set_row_spacings(GTK_TABLE(table), 5);
    gtk_box_pack_start(GTK_BOX(vbox), table, 0, 0, 0);
    gtk_widget_show(table);
-   
+
    opt = gtk_option_menu_new();
    gtk_widget_show(opt);
    menu = gimp_drawable_menu_new(0, diffusemap_callback, 0, normalmap_drawable_id);
    gtk_option_menu_set_menu(GTK_OPTION_MENU(opt), menu);
    gimp_table_attach_aligned(GTK_TABLE(table), 0, 0, "Diffuse map:", 0, 0.5,
                              opt, 1, 0);
-   
+
    opt = gtk_option_menu_new();
    gloss_opt = opt;
    gtk_widget_show(opt);
@@ -1798,29 +1798,29 @@ void show_3D_preview(GimpDrawable *drawable)
    gtk_option_menu_set_menu(GTK_OPTION_MENU(opt), menu);
    gimp_table_attach_aligned(GTK_TABLE(table), 0, 1, "Gloss map:", 0, 0.5,
                              opt, 1, 0);
-   
+
    opt = gtk_option_menu_new();
    bumpmapping_opt = opt;
    gtk_widget_show(opt);
-   
+
    gimp_table_attach_aligned(GTK_TABLE(table), 0, 2,
                              "Bump mapping:", 0, 0.5,
                              opt, 1, 0);
-   
+
    menu = gtk_menu_new();
 
    for(i = 0; i < BUMPMAP_MAX; ++i)
    {
       menuitem = gtk_menu_item_new_with_label(bumpmap_strings[i]);
-      gtk_signal_connect(GTK_OBJECT(menuitem), "activate", 
+      gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
                          GTK_SIGNAL_FUNC(bumpmapping_clicked),
-                         (gpointer)(long)i);
+                         (gpointer)((size_t)i));
       gtk_widget_show(menuitem);
       gtk_menu_append(GTK_MENU(menu), menuitem);
    }
-   
+
 	gtk_option_menu_set_menu(GTK_OPTION_MENU(opt), menu);
-   
+
    check = gtk_check_button_new_with_label("Specular lighting");
    specular_check = check;
    gtk_widget_show(check);
@@ -1829,7 +1829,7 @@ void show_3D_preview(GimpDrawable *drawable)
                     (GtkAttachOptions)(0), 0, 0);
    gtk_signal_connect(GTK_OBJECT(check), "clicked",
                       GTK_SIGNAL_FUNC(toggle_clicked), &specular);
-   
+
    specular_exp_range = hscale = gtk_hscale_new(GTK_ADJUSTMENT(gtk_adjustment_new(32, 0, 256, 1, 8, 0)));
    gtk_widget_show(hscale);
    gtk_scale_set_value_pos(GTK_SCALE(hscale), GTK_POS_RIGHT);
@@ -1837,10 +1837,10 @@ void show_3D_preview(GimpDrawable *drawable)
                              hscale, 1, 0);
    gtk_signal_connect(GTK_OBJECT(hscale), "value_changed",
                       GTK_SIGNAL_FUNC(specular_exp_changed), 0);
-   
-   
+
+
    gimp_rgb_set(&color, ambient_color[0], ambient_color[1], ambient_color[2]);
-   ambient_color_btn = btn = gimp_color_button_new("Ambient color", 0, 15, &color, GIMP_COLOR_AREA_FLAT);
+   ambient_color_btn = btn = gimp_color_button_new("Ambient color", 30, 15, &color, GIMP_COLOR_AREA_FLAT);
    gtk_widget_show(btn);
    gimp_color_button_set_color(GIMP_COLOR_BUTTON(btn), &color);
    gimp_table_attach_aligned(GTK_TABLE(table), 0, 5, "Ambient color:", 0, 0.5,
@@ -1849,30 +1849,30 @@ void show_3D_preview(GimpDrawable *drawable)
                       GTK_SIGNAL_FUNC(color_changed), (gpointer)ambient_color);
 
    gimp_rgb_set(&color, diffuse_color[0], diffuse_color[1], diffuse_color[2]);
-   diffuse_color_btn = btn = gimp_color_button_new("Diffuse color", 0, 15, &color, GIMP_COLOR_AREA_FLAT);
+   diffuse_color_btn = btn = gimp_color_button_new("Diffuse color", 30, 15, &color, GIMP_COLOR_AREA_FLAT);
    gtk_widget_show(btn);
    gimp_color_button_set_color(GIMP_COLOR_BUTTON(btn), &color);
    gimp_table_attach_aligned(GTK_TABLE(table), 0, 6, "Diffuse color:", 0, 0.5,
                              btn, 1, 0);
    gtk_signal_connect(GTK_OBJECT(btn), "color_changed",
                       GTK_SIGNAL_FUNC(color_changed), (gpointer)diffuse_color);
-   
+
    gimp_rgb_set(&color, specular_color[0], specular_color[1], specular_color[2]);
-   specular_color_btn = btn = gimp_color_button_new("Specular color", 0, 15, &color, GIMP_COLOR_AREA_FLAT);
+   specular_color_btn = btn = gimp_color_button_new("Specular color", 30, 15, &color, GIMP_COLOR_AREA_FLAT);
    gtk_widget_show(btn);
    gimp_color_button_set_color(GIMP_COLOR_BUTTON(btn), &color);
    gimp_table_attach_aligned(GTK_TABLE(table), 0, 7, "Specular color:", 0, 0.5,
                              btn, 1, 0);
    gtk_signal_connect(GTK_OBJECT(btn), "color_changed",
                       GTK_SIGNAL_FUNC(color_changed), (gpointer)specular_color);
-   
+
    table2 = gtk_table_new(2, 2, 0);
    gtk_widget_show(table2);
    gtk_table_set_col_spacings(GTK_TABLE(table2), 5);
    gtk_table_set_row_spacings(GTK_TABLE(table2), 5);
    gimp_table_attach_aligned(GTK_TABLE(table), 0, 8, "UV scale:", 0, 0.5,
                              table2, 1, 0);
-   
+
    adj = gtk_adjustment_new(1, 0, 1000, 1, 10, 10);
    spin = gtk_spin_button_new(GTK_ADJUSTMENT(adj), 1, 4);
    uvscale_spin1 = spin;
@@ -1894,17 +1894,17 @@ void show_3D_preview(GimpDrawable *drawable)
    gtk_table_attach(GTK_TABLE(table2), spin, 0, 1, 1, 2,
                     (GtkAttachOptions)(GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions)(0), 0, 0);
-   
+
    btn = gimp_chain_button_new(GIMP_CHAIN_RIGHT);
    gtk_widget_show(btn);
    gimp_chain_button_set_active(GIMP_CHAIN_BUTTON(btn), 1);
    gtk_table_attach(GTK_TABLE(table2), btn, 1, 2, 0, 2,
                     (GtkAttachOptions)(0),
                     (GtkAttachOptions)(0), 0, 0);
-   
+
    g_object_set_data(G_OBJECT(uvscale_spin1), "chain", btn);
    g_object_set_data(G_OBJECT(uvscale_spin2), "chain", btn);
-   
+
    btn = gtk_button_new_with_label("Reset view");
    gtk_widget_show(btn);
    gtk_table_attach(GTK_TABLE(table), btn, 0, 2, 10, 11,
@@ -1912,10 +1912,10 @@ void show_3D_preview(GimpDrawable *drawable)
                     (GtkAttachOptions)(0), 0, 0);
    gtk_signal_connect(GTK_OBJECT(btn), "clicked",
                       GTK_SIGNAL_FUNC(reset_view_clicked), 0);
-   
+
    gtk_widget_show(glarea);
    gtk_widget_show(window);
-   
+
    _active = 1;
 }
 
@@ -1932,10 +1932,10 @@ void update_3D_preview(unsigned int w, unsigned int h, int bpp,
    int w_pot, h_pot, mipw, miph, n;
    unsigned char *pixels = image;
    unsigned char *mip;
-   
+
    if(!_active) return;
    if(_gl_error) return;
-   
+
    if(!has_npot && !(IS_POT(w) && IS_POT(h)))
    {
       get_nearest_pot(w, h, &w_pot, &h_pot);
@@ -1957,7 +1957,7 @@ void update_3D_preview(unsigned int w, unsigned int h, int bpp,
       glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP_SGIS, GL_TRUE);
    glTexImage2D(GL_TEXTURE_2D, 0, bpp, w, h, 0,
                 (bpp == 4) ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, pixels);
-   
+
    if(!has_generate_mipmap)
    {
       mipw = w;
@@ -1976,10 +1976,10 @@ void update_3D_preview(unsigned int w, unsigned int h, int bpp,
          g_free(mip);
       }
    }
-   
+
    if(pixels != image)
       g_free(pixels);
-   
+
    gtk_widget_queue_draw(glarea);
 }
 

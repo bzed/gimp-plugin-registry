@@ -290,41 +290,62 @@ static void rotate_array(float *dst, float *src, int size)
 static int sample_alpha_map(unsigned char *pixels, int x, int y,
                             int w, int h, int sw, int sh)
 {
-   float fx, fy, dx, dy;
-   float v, r0, r1, r2, r3;
-   int ix, iy;
+   int ix, iy, wx, wy, v;
+   int a, b, c, d;
+   unsigned char *s;
    
-   fx = ((float)x / (float)sw) * (float)w;
-   fy = ((float)y / (float)sh) * (float)h;
-   ix = (int)floor(fx);
-   iy = (int)floor(fy);
-   dx = fx - (float)ix;
-   dy = fy - (float)iy;
+   if(sh > 1)
+   {
+      iy = (((h - 1) * y) << 7) / (sh - 1);
+      if(y == sh - 1) --iy;
+      wy = iy & 0x7f;
+      iy >>= 7;
+   }
+   else
+      iy = wy = 0;
    
-#define VAL(x, y) \
-   (float)pixels[((y) < 0 ? 0 : (y) >= h ? h - 1 : (y)) * w + \
-                 ((x) < 0 ? 0 : (x) >= w ? w - 1 : (x))]
+   if(sw > 1)
+   {
+      ix = (((w - 1) * x) << 7) / (sw - 1);
+      if(x == sw - 1) --ix;
+      wx = ix & 0x7f;
+      ix >>= 7;
+   }
+   else
+      ix = wx = 0;
    
-   r0 = cubic_interpolate(VAL(ix - 1, iy - 1),
-                          VAL(ix,     iy - 1),
-                          VAL(ix + 1, iy - 1),
-                          VAL(ix + 2, iy - 1), dx);
-   r1 = cubic_interpolate(VAL(ix - 1, iy    ),
-                          VAL(ix,     iy    ),
-                          VAL(ix + 1, iy    ),
-                          VAL(ix + 2, iy    ), dx);
-   r2 = cubic_interpolate(VAL(ix - 1, iy + 1),
-                          VAL(ix,     iy + 1),
-                          VAL(ix + 1, iy + 1),
-                          VAL(ix + 2, iy + 1), dx);
-   r3 = cubic_interpolate(VAL(ix - 1, iy + 2),
-                          VAL(ix,     iy + 2),
-                          VAL(ix + 1, iy + 2),
-                          VAL(ix + 2, iy + 2), dx);
-#undef VAL
+   s = pixels + ((iy - 1) * w + (ix - 1));
    
-   v = cubic_interpolate(r0, r1, r2, r3, dy);
+   b = icerp(s[w + 0],
+             s[w + 1],
+             s[w + 2],
+             s[w + 3], wx);
+   if(iy > 0)
+   {
+      a = icerp(s[0],
+                s[1],
+                s[2],
+                s[3], wx);
+   }
+   else
+      a = b;
    
+   c = icerp(s[2 * w + 0],
+             s[2 * w + 1],
+             s[2 * w + 2],
+             s[2 * w + 3], wx);
+   if(iy < sh - 1)
+   {
+      d = icerp(s[3 * w + 0],
+                s[3 * w + 1],
+                s[3 * w + 2],
+                s[3 * w + 3], wx);
+   }
+   else
+      d = c;
+   
+   v = icerp(a, b, c, d, wy);
+            
    if(v <   0) v = 0;
    if(v > 255) v = 255;
    
@@ -1147,9 +1168,9 @@ static gint idle_callback(gpointer data)
 
 static void filter_type_selected(GtkWidget *widget, gpointer data)
 {
-   if(nmapvals.filter != (gint)(long)data)
+   if(nmapvals.filter != (gint)((size_t)data))
    {
-      nmapvals.filter = (gint)(long)data;
+      nmapvals.filter = (gint)((size_t)data);
       update_preview = 1;
    }
 }
@@ -1170,9 +1191,9 @@ static void height_source_selected(GtkWidget *widget, gpointer data)
 {
    GtkWidget *opt;
    
-   if(nmapvals.height_source == (gint)(long)data) return;
+   if(nmapvals.height_source == (gint)((size_t)data)) return;
    
-   nmapvals.height_source = (gint)(long)data;
+   nmapvals.height_source = (gint)((size_t)data);
    
    opt = g_object_get_data(G_OBJECT(widget), "conversion_opt");
    if(!nmapvals.height_source)
@@ -1191,9 +1212,9 @@ static void height_source_selected(GtkWidget *widget, gpointer data)
 
 static void alpha_result_selected(GtkWidget *widget, gpointer data)
 {
-   if(nmapvals.alpha != (gint)(long)data)
+   if(nmapvals.alpha != (gint)((size_t)data))
    {
-      nmapvals.alpha = (gint)(long)data;
+      nmapvals.alpha = (gint)((size_t)data);
       update_preview = 1;
    }
 }
@@ -1202,9 +1223,9 @@ static void conversion_selected(GtkWidget *widget, gpointer data)
 {
    GtkWidget *contrast_spin;
    
-   if(nmapvals.conversion != (gint)(long)data)
+   if(nmapvals.conversion != (gint)((size_t)data))
    {
-      nmapvals.conversion = (gint)(long)data;
+      nmapvals.conversion = (gint)((size_t)data);
       contrast_spin = g_object_get_data(G_OBJECT(widget), "contrast_spin");
       gtk_widget_set_sensitive(contrast_spin, nmapvals.conversion == CONVERT_HEIGHTMAP);
       update_preview = 1;
@@ -1227,9 +1248,9 @@ static void dudv_selected(GtkWidget *widget, gpointer data)
    GimpDrawable *drawable;
    GtkWidget *opt;
    
-   if(nmapvals.dudv == (gint)(long)data) return;
+   if(nmapvals.dudv == (gint)((size_t)data)) return;
    
-   nmapvals.dudv = (gint)(long)data;
+   nmapvals.dudv = (gint)((size_t)data);
    
    drawable = g_object_get_data(G_OBJECT(widget), "drawable");
    opt = g_object_get_data(G_OBJECT(widget), "alpha_opt");

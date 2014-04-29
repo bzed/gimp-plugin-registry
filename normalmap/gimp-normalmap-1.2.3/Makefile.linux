@@ -2,20 +2,19 @@
 GIMPTOOL=gimptool-2.0
 
 CC=gcc
-CFLAGS=-O3 -Wall `pkg-config --cflags gtk+-2.0 gtkglext-1.0 gimp-2.0` -DWIN32
-LD=gcc
-LDFLAGS=-mwindows
+CFLAGS=-O3 -Wall `pkg-config --cflags gtk+-2.0 gtkglext-1.0 gimp-2.0`
 
-TARGET=normalmap.exe
+TARGET=normalmap
 
 OBJS=normalmap.o preview3d.o scale.o
 
-LIBS=`pkg-config --libs gtk+-2.0 gtkglext-1.0 gimp-2.0 gimpui-2.0` -lglew32
+LIBS=`pkg-config --libs gtk+-2.0 gtkglext-1.0 gimp-2.0 gimpui-2.0` \
+-L/usr/X11R6/lib -lGLEW
 
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(LD) $(LDFLAGS) $(OBJS) $(LIBS) -o $(TARGET)
+	$(CC) $(LDFLAGS) $(OBJS) $(LIBS) -o $(TARGET)
 		 
 clean:
 	rm -f *.o $(TARGET)

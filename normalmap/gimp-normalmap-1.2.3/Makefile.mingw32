@@ -1,0 +1,32 @@
+
+GIMPTOOL=/usr/i686-w64-mingw32/sys-root/mingw/bin/gimptool-2.0
+
+CC=i686-w64-mingw32-gcc
+CFLAGS=-O3 -Wall `i686-w64-mingw32-pkg-config --cflags gtk+-2.0 gtkglext-1.0 gimp-2.0 glew`
+LDFLAGS=-mwindows
+
+TARGET=normalmap.exe
+
+OBJS=normalmap.o preview3d.o scale.o
+
+LIBS=`i686-w64-mingw32-pkg-config --libs gtk+-2.0 gtkglext-1.0 gimp-2.0 gimpui-2.0 glew`
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CC) $(LDFLAGS) $(OBJS) $(LIBS) -o $(TARGET)
+		 
+clean:
+	rm -f *.o $(TARGET)
+	
+install: all
+	$(GIMPTOOL) --install-bin $(TARGET)
+		
+.c.o:
+	$(CC) -c $(CFLAGS) $<
+	  
+normalmap.o: normalmap.c scale.h preview3d.h Makefile
+preview3d.o: preview3d.c scale.h  objects/cube.h objects/quad.h \
+objects/sphere.h objects/torus.h objects/teapot.h pixmaps/object.xpm \
+pixmaps/light.xpm pixmaps/scene.xpm pixmaps/full.xpm Makefile
+scale.o: scale.c Makefile
