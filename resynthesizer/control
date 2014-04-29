@@ -6,4 +6,4 @@ Description: Resynthesizer
 Homepage: https://github.com/bootchk/resynthesizer/tags
 Version: 2.0
 Uploaders: Bernd Zeimetz <bzed@debian.org>
-Build-Depends: libxml-parser-perl
+Build-Depends: libxml-parser-perl, automake (>= 1.6), autoconf (>= 2.54)
