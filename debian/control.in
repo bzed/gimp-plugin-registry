@@ -8,8 +8,8 @@ Build-Depends: autotools-dev, quilt, libgimp2.0-dev, intltool,
  #AUTO_UPDATE_Build-Depends#, debhelper (>= 8.0.0), libglib2.0-dev,
  python-debian
 Standards-Version: 3.9.5
-Vcs-Git: git://git.recluse.de/debian/pkg-gimp-plugin-registry.git
-Vcs-Browser: http://git.recluse.de/?p=debian/pkg-gimp-plugin-registry.git;a=summary
+Vcs-Git: https://github.com/bzed/gimp-plugin-registry.git
+Vcs-Browser: https://github.com/bzed/gimp-plugin-registry
 
 Package: gimp-plugin-registry
 Architecture: any
