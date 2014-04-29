@@ -1,3 +1,25 @@
+gimp-plugin-registry (5.20140429) unstable; urgency=low
+
+  * [07aa8a09] Migrate to the packaging system taken from nagios-plugins-contrib.
+  * [54be3d44] Fix plugin name generation.
+  * [f71bba3f] Rework the whole packagaging scripts / magic.
+    Also make package buildable again by adding
+    missing -lm flags (Closes: #740995, #704713).
+  * [04ebb23a] Use dh compat level 9.
+  * [b8c457e7] Disable dh_autoreconf for now.
+  * [d18cbfca] Updating normalmap to 1.2.3
+  * [b23b3b88] Update resynthesizer to latest git version.
+  * [6f1bb1e2] There is no readme to generate.
+    Don't call the packaging helper.
+  * [81546ad7] Add python-debian as build dependency.
+  * [a36e9fad] Use github as Vcs source.
+  * [73944fc2] Define DOCDIR, handle isntalled files properly.
+  * [76a8dc76] Auto update of debian/control
+  * [d1cde231] Auto update of debian/copyright
+  * [1d05b9aa] Fix common-settings.mk includes.
+
+ -- Bernd Zeimetz <bzed@debian.org>  Tue, 29 Apr 2014 23:56:24 +0200
+
 gimp-plugin-registry (5.20120621) unstable; urgency=low
 
   * [83567039] Add patch to avoid calling deprecated g_thread_init.
