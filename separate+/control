@@ -4,4 +4,4 @@ Description: Separate+
 Homepage: http://cue.yellowmagic.info/softwares/separate-plus/index.html
 Version: 0.5.8
 Uploaders: Bernd Zeimetz <bzed@debian.org>
-Build-Depends: liblcms1-dev, libtiff-dev
+Build-Depends: liblcms2-dev, libtiff-dev

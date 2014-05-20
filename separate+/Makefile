@@ -1,7 +1,7 @@
 build: build-stamp
 
 build-stamp:
-	make -C src TARGETS="separate separate_import" CC="gcc -g $(CFLAGS)"
+	make -C src TARGETS="separate separate_import" CC="gcc -g $(CFLAGS)" USE_LCMS2=yes
 	touch build-stamp
 
 install: build
