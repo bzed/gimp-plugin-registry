@@ -1,8 +1,6 @@
 add-filmgrain/menu
 diana-holga2/menu
 contact-sheet/menu
-separate+/cflags
-separate+/missing_includes
 separate+/missing_linker_flags
 bw-simulation/color-mixer-fix
 DBP/menu
