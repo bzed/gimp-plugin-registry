@@ -1,3 +1,15 @@
+gimp-plugin-registry (7.20140602) unstable; urgency=medium
+
+  * [b8040b86] Update debian/README.source and add a symlink for github
+  * [b73b5126] Migrato to lcms2.
+    Thanks to Moritz Muehlenhoff (Closes: #745528)
+  * [e018d41b] Auto update of debian/control
+  * [6f8c53e9] Removing old seperate+ patches.
+  * Bump version number, skipping version 6 as it went forgotten
+    during the last upload....
+
+ -- Bernd Zeimetz <bzed@debian.org>  Mon, 02 Jun 2014 22:48:39 +0200
+
 gimp-plugin-registry (5.20140429) unstable; urgency=low
 
   * [07aa8a09] Migrate to the packaging system taken from nagios-plugins-contrib.
