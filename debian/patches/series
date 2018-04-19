@@ -14,5 +14,4 @@ refocus/fix_warnings
 refocus/use_lapack
 fix-ca/menu
 wavelet-denoise/ldflags
-wavelet-decompose/install_-d
 wavelet-denoise/install_-d
