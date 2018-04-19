@@ -1,3 +1,10 @@
+gimp-plugin-registry (7.20140602+nmu1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Drop wavelet-decompose plugin: included in gimp 2.10 (Closes: #895387)
+
+ -- Jeremy Bicha <jbicha@debian.org>  Thu, 19 Apr 2018 12:25:13 -0400
+
 gimp-plugin-registry (7.20140602) unstable; urgency=medium
 
   * [b8040b86] Update debian/README.source and add a symlink for github
