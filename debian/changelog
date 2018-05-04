@@ -1,9 +1,16 @@
+gimp-plugin-registry (8.20180504) UNRELEASED; urgency=medium
+
+  *  Ack'ing NMU, thanks Jeremy!
+
+ -- Bernd Zeimetz <bzed@debian.org>  Fri, 04 May 2018 20:10:05 +0200
+
 gimp-plugin-registry (7.20140602+nmu1) unstable; urgency=medium
 
+  [ Jeremy Bicha ]
   * Non-maintainer upload.
   * Drop wavelet-decompose plugin: included in gimp 2.10 (Closes: #895387)
 
- -- Jeremy Bicha <jbicha@debian.org>  Thu, 19 Apr 2018 12:25:13 -0400
+ -- Bernd Zeimetz <bzed@debian.org>  Fri, 04 May 2018 20:09:43 +0200
 
 gimp-plugin-registry (7.20140602) unstable; urgency=medium
 
