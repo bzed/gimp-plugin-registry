@@ -10,8 +10,6 @@ focus-blur/g_thread_init_deprecated
 focus-blur/glib-single-include
 cmyk-tiff-2-pdf/pdfviewer
 bw-simulation/menu
-refocus/fix_warnings
-refocus/use_lapack
 fix-ca/menu
 wavelet-denoise/ldflags
 wavelet-denoise/install_-d
