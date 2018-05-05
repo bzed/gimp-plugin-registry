@@ -1,8 +1,10 @@
-gimp-plugin-registry (8.20180504) UNRELEASED; urgency=medium
+gimp-plugin-registry (8.20180505) unstable; urgency=medium
 
-  *  Ack'ing NMU, thanks Jeremy!
+  * Ack'ing NMU, thanks Jeremy!
+  * Removing all plugins which don't build with GIMP 2.10.
+    Closes: #897480
 
- -- Bernd Zeimetz <bzed@debian.org>  Fri, 04 May 2018 20:10:05 +0200
+ -- Bernd Zeimetz <bzed@debian.org>  Sat, 05 May 2018 14:31:59 +0200
 
 gimp-plugin-registry (7.20140602+nmu1) unstable; urgency=medium
 
