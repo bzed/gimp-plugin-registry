@@ -1,6 +1,0 @@
-Description: Focus-Blur
- This plugin tries to simulate an out-of-focus blur
-Homepage: http://registry.gimp.org/node/1444
-Version: 3.2.6
-Uploaders: Bernd Zeimetz <bzed@debian.org>
-Build-Depends: libxml-parser-perl, libfftw3-dev
