@@ -1,7 +1,0 @@
-Description: Normalmap
- Allows you to convert images into RGB normal maps for use in
- per-pixel lighting applications.
-Homepage: http://code.google.com/p/gimp-normalmap/
-Version: 1.2.3
-Uploaders: Bernd Zeimetz <bzed@debian.org>
-Build-Depends: libglew-dev, libgtkglext1-dev
