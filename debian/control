@@ -5,7 +5,7 @@ Maintainer: Bernd Zeimetz <bzed@debian.org>
 Uploaders: Bernd Zeimetz <bzed@debian.org>
 Build-Depends: autotools-dev, quilt, libgimp2.0-dev, intltool,
  python, automake, autoconf, autotools-dev, dh-autoreconf,
- libxml-parser-perl, libfftw3-dev, liblqr-1-0-dev, libglew-dev, libgtkglext1-dev, libblas-dev, liblapack-dev, libf2c2-dev, automake (>= 1.6), autoconf (>= 2.54), liblcms2-dev, libtiff-dev, debhelper (>= 8.0.0), libglib2.0-dev,
+ libxml-parser-perl, liblqr-1-0-dev, automake (>= 1.6), autoconf (>= 2.54), liblcms2-dev, libtiff-dev, debhelper (>= 8.0.0), libglib2.0-dev,
  python-debian
 Standards-Version: 3.9.5
 Vcs-Git: https://github.com/bzed/gimp-plugin-registry.git
@@ -111,8 +111,6 @@ Description: repository of optional extensions for GIMP
      Specialized tool for easily correcting or changing perspective.
    * fix-ca (3.0.2): Fix-CA
      Corrects chromatic aberration in photos
-   * focus-blur (3.2.6): Focus-Blur
-     This plugin tries to simulate an out-of-focus blur
    * gimp-fx-foundry (r111): GIMP FX Foundry
      Probably the largest script collection available for The GIMP.
    * gimp-mask: GIMP-Mask:
@@ -128,9 +126,6 @@ Description: repository of optional extensions for GIMP
    * lqr (0.7.1): Liquid Rescale
      Content-aware rescaling. Keeps the features of the image while
      rescaling along a single direction.
-   * normalmap (1.2.3): Normalmap
-     Allows you to convert images into RGB normal maps for use in
-     per-pixel lighting applications.
    * openraster (20110529-1d32622): OpenRaster load/save handler
      OpenRaster is an effort by the Create project[1] to offer a standardized
      and open interchange format for raster-based applications. This plugin
@@ -138,13 +133,6 @@ Description: repository of optional extensions for GIMP
    * planet-render (1-2): Planet Render
      Creates a planet. Color, size and sun orientation
      can be set.
-   * refocus (0.9.1): Refocus
-     The GIMP plugin to refocus images using FIR Wiener filtering.
-     During image processing operations such as scanning and scaling, images
-     tend to get blurry. The blurred impression of these images is due to the
-     fact that image pixels are averaged with their neighbors. Blurred images
-     don't have sharp boundaries and look as though they have been taken with
-     an unfocused camera.
    * resynthesizer (2.0): Resynthesizer
      Gimp plugin for texture synthesis
      This gimp plugin takes samples of textures, and synthesizes larger textures
