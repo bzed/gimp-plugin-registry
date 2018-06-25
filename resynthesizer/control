@@ -4,6 +4,6 @@ Description: Resynthesizer
  from them.  It can be used to extend textures (including making tileable
  textures), remove objects from textures, and make themed images.
 Homepage: https://github.com/bootchk/resynthesizer/tags
-Version: 2.0
+Version: 2.0.3
 Uploaders: Bernd Zeimetz <bzed@debian.org>
 Build-Depends: libxml-parser-perl, automake (>= 1.6), autoconf (>= 2.54)
