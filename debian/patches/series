@@ -5,7 +5,6 @@ separate+/missing_linker_flags
 bw-simulation/color-mixer-fix
 DBP/menu
 DBP/gcc4.3-fixes
-resynthesizer/g_thread_init_deprecated
 cmyk-tiff-2-pdf/pdfviewer
 bw-simulation/menu
 fix-ca/menu
