@@ -133,7 +133,7 @@ Description: repository of optional extensions for GIMP
    * planet-render (1-2): Planet Render
      Creates a planet. Color, size and sun orientation
      can be set.
-   * resynthesizer (2.0): Resynthesizer
+   * resynthesizer (2.0.3): Resynthesizer
      Gimp plugin for texture synthesis
      This gimp plugin takes samples of textures, and synthesizes larger textures
      from them.  It can be used to extend textures (including making tileable
