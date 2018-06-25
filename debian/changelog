@@ -1,3 +1,14 @@
+gimp-plugin-registry (9.20180625) unstable; urgency=medium
+
+  * [b24cbac] Auto update of debian/control
+  * [9811c42] Auto update of debian/copyright
+  * [06d3881] Auto update of debian/control
+  * [a951bf6] Updating resynthesizer to 2.0.3
+  * [ccf98aa] Add .travis.yml from <http://travis.debian.net>
+  * [f6fbbaf] remove resynthesizer patches
+
+ -- Bernd Zeimetz <bzed@debian.org>  Mon, 25 Jun 2018 23:54:35 +0200
+
 gimp-plugin-registry (8.20180505) unstable; urgency=medium
 
   * Ack'ing NMU, thanks Jeremy!
