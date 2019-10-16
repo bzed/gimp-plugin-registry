@@ -15,7 +15,7 @@ Package: gimp-plugin-registry
 Architecture: any
 Depends: gimp (>= 2.6),
  ${shlibs:Depends}, ${misc:Depends},
- python, libtiff-tools, xdg-utils,
+ python, libtiff-tools, xdg-utils, gimp-python,
 Suggests: icc-profiles, #AUTO_UPDATE_Suggests#
 Breaks: gimp-refocus (<< 0.9.0-2), gimp-save-for-web, gimp-resynthesizer (<< 0.16-2~)
 Replaces: gimp-refocus (<< 0.9.0-2), gimp-save-for-web, gimp-resynthesizer
