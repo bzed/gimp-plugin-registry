@@ -6,7 +6,7 @@ Uploaders: #AUTO_UPDATE_Uploaders#
 Build-Depends: autotools-dev, quilt, libgimp2.0-dev, intltool,
  python, automake, autoconf, autotools-dev, dh-autoreconf,
  #AUTO_UPDATE_Build-Depends#, debhelper (>= 8.0.0), libglib2.0-dev,
- python-debian
+ python3, python3-debian
 Standards-Version: 3.9.5
 Vcs-Git: https://github.com/bzed/gimp-plugin-registry.git
 Vcs-Browser: https://github.com/bzed/gimp-plugin-registry
