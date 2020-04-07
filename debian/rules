@@ -33,7 +33,7 @@ DH_AUTO_CALL = 	if [ "$$auto_command" = "dh_auto_configure" ]; then \
 			echo failed to build $$plugin; exit 255 ; \
 		fi
 
-PACKAGING_HELPER = /usr/bin/python $(CURDIR)/debian/packaging-helper.py
+PACKAGING_HELPER = /usr/bin/python3 $(CURDIR)/debian/packaging-helper.py
 
 
 clean: $(PLUGINS:%=clean-%) debian/copyright debian/control
